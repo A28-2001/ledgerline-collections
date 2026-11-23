@@ -1,0 +1,3 @@
+# Disclosure: what was prepared before Begin
+
+Before pressing Begin, I prepared the plan, a generic code skeleton (a Python pipeline, a customer-name matcher and a Next.js app), made-up sample data to test it with, templates for this one-pager and the video, and research on existing collections and payment-matching products. None of that used Ledgerline's data room, because the files only open after Begin. Everything that uses Ledgerline's data (the column mapping, the numbers, the findings, the accuracy check and the video) was done after Begin, and the git history shows the timestamps of both.

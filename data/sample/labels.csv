@@ -1,0 +1,91 @@
+invoice_id,true_verdict,note
+1435,paid,unmatched bank payment for this bill
+1531,paid,unmatched bank payment for this bill
+1459,paid,unmatched bank payment for this bill
+1667,paid,unmatched bank payment for this bill
+1936,paid,unmatched bank payment for this bill
+1034,paid,unmatched bank payment for this bill
+1508,paid,unmatched bank payment for this bill
+2129,paid,unmatched bank payment for this bill
+1098,paid,"paid and linked, but still open in the accounting export"
+1170,paid,"paid and linked, but still open in the accounting export"
+1984,paid,"paid and linked, but still open in the accounting export"
+1741,hold,open billing complaint
+1790,hold,open billing complaint
+1618,hold,open billing complaint
+1617,hold,open billing complaint
+1616,hold,open billing complaint
+1061,hold,open billing complaint
+1060,hold,open billing complaint
+1853,hold,open billing complaint
+1852,hold,open billing complaint
+1656,hold,open billing complaint
+1655,hold,open billing complaint
+2154,hold,open billing complaint
+2119,hold,open billing complaint
+2070,hold,billing complaint in vague words
+1398,hold,billing complaint in vague words
+2142,hold,serious open escalation
+1816,hold,serious open escalation
+1605,hold,serious open escalation
+1604,hold,serious open escalation
+1337,hold,bill does not match the contract
+1023,hold,bill does not match the contract
+1888,hold,bill does not match the contract
+1447,hold,bill does not match the contract
+2095,hold,bill does not match the contract
+2082,hold,bill does not match the contract
+1828,send,failed card: update-card email
+1827,call,long overdue or large
+1826,call,long overdue or large
+1569,send,open product complaint: softer reminder
+1496,send,failed card: update-card email
+1205,send,failed card: update-card email
+2130,send,simply late
+1277,send,open product complaint: softer reminder
+1122,send,simply late
+1121,call,long overdue or large
+1120,call,long overdue or large
+1036,send,simply late
+1035,call,long overdue or large
+1924,send,simply late
+1923,call,long overdue or large
+1922,call,long overdue or large
+1109,send,open product complaint: softer reminder
+1108,call,long overdue or large
+1107,call,long overdue or large
+1411,send,simply late
+1072,send,open product complaint: softer reminder
+1071,call,long overdue or large
+1070,call,long overdue or large
+2081,call,long overdue or large
+1668,send,simply late
+1630,send,open product complaint: softer reminder
+1629,call,long overdue or large
+1133,send,open product complaint: softer reminder
+1132,call,long overdue or large
+1131,call,long overdue or large
+1241,send,failed card: update-card email
+1802,send,simply late
+1983,call,long overdue or large
+1982,call,long overdue or large
+1716,send,simply late
+1715,call,long overdue or large
+1714,call,long overdue or large
+2008,send,simply late
+1424,send,simply late
+1423,call,long overdue or large
+1253,send,open product complaint: softer reminder
+1313,send,failed card: update-card email
+1312,call,long overdue or large
+1593,send,simply late
+1592,call,long overdue or large
+1591,call,long overdue or large
+1509,send,simply late
+1533,send,simply late
+1532,call,long overdue or large
+1766,send,simply late
+1765,call,long overdue or large
+1545,send,simply late
+1544,call,long overdue or large
+9001,call,not in the billing system: a person checks

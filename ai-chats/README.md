@@ -1,0 +1,39 @@
+# AI conversations
+
+The hand-in asks for **all AI conversations**. Every one goes in this folder, including the prep before Begin.
+
+## Naming
+
+`NN_tool_what_YYYY-MM-DD.ext`, for example:
+
+- `01_claude-code_prep-and-plan_2026-11-23.jsonl`
+- `02_claude-code_build-v1_2026-11-23.jsonl`
+- `03_groq_tool-prompts_2026-11-24.json`
+
+Number them in the order they happened, so a reviewer can read them as a story.
+
+## How to export
+
+- **Claude Code (desktop app or terminal):** each session is saved on your Mac as a `.jsonl` file under `~/.claude/projects/`, in a folder named after the project path. Copy the file here. You can also ask Claude in the session to export the transcript.
+- **Claude.ai chats (browser or app):** use Share to create a link, or copy the conversation into a `.md` file. A share link can be opened by anyone who has it, so a `.md` copy is safer.
+- **The tool's own AI calls (Groq):** the pipeline caches every prompt and answer. Copy that log here at the end. It shows exactly what the AI was asked.
+- **Anything else** (ChatGPT, another assistant): export or copy it as text. If it was used, it goes in.
+
+## Before handing in: privacy check
+
+Search every file for these and replace them with `[redacted]`, noting in this README that you did:
+
+- Names of people who aren't part of the challenge (for example, anyone who referred you)
+- Email addresses and phone numbers
+- API keys or tokens (search for `gsk_`, `sk-`, `key`)
+
+The fictional Ledgerline people (Maya, Dana, Tom, Sam, Renata) can stay.
+
+## List
+
+| # | File | Tool | What happened | Before or after Begin |
+|---|---|---|---|---|
+| 01 | [ ] | Claude Code | Prep: read the challenge, picked the process, critic round 1, plan v2, checklist, generic kit, build-vs-buy research. Started in a temporary app folder, moved to this project at about 4:10 pm on 23 Nov | Before |
+| 02 | [ ] | | | |
+| 03 | [ ] | | | |
+| 04 | [ ] | | | |

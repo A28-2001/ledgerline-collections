@@ -1,0 +1,111 @@
+customer_id,name,segment,plan,arr,account_manager,renewal_date,billing_email
+C0001,Evergreen Dental Inc,SMB,Core,6084,Jordan Lee,2026-09-01,billing@evergreendentali.example
+C0002,Highland Health LLC,SMB,Pro,16560,Jordan Lee,2026-03-01,billing@highlandhealthll.example
+C0003,Maple Realty Inc,Mid-market,Core,64092,Sam Carter,2026-04-01,billing@maplerealtyinc.example
+C0004,Summit Supply Inc,Enterprise,Core,141252,Jordan Lee,2026-02-01,billing@summitsupplyinc.example
+C0005,Northstar Partners Inc,SMB,Pro,22752,Priya Shah,2026-06-01,billing@northstarpartner.example
+C0006,Clearwater Freight Inc,SMB,Core,17700,Elena Ortiz,2026-02-01,billing@clearwaterfreigh.example
+C0007,Northwind Dental LLC,SMB,Pro,6084,Priya Shah,2026-06-01,billing@northwinddentall.example
+C0008,Maple Partners,SMB,Pro,4212,Marcus Hill,2026-03-01,billing@maplepartners.example
+C0009,Northwind Partners LLC,SMB,Core,4248,Marcus Hill,2026-06-01,billing@northwindpartner.example
+C0010,Granite Supply Inc,SMB,Pro,6372,Priya Shah,2026-03-01,billing@granitesupplyinc.example
+C0011,Brightway Freight LLC,SMB,Scale,8496,Priya Shah,2026-07-01,billing@brightwayfreight.example
+C0012,Upland Studios Co,Mid-market,Pro,38916,Priya Shah,2026-04-01,billing@uplandstudiosco.example
+C0013,Keystone Builders Inc,SMB,Pro,11172,Marcus Hill,2026-04-01,billing@keystonebuilders.example
+C0014,Juniper Software LLC,SMB,Pro,14868,Priya Shah,2026-02-01,billing@junipersoftwarel.example
+C0015,Granite Freight Co,SMB,Core,13248,Elena Ortiz,2026-09-01,billing@granitefreightco.example
+C0016,Orchard Realty LLC,SMB,Scale,15576,Marcus Hill,2026-06-01,billing@orchardrealtyllc.example
+C0017,Juniper Analytics Inc,SMB,Scale,8232,Priya Shah,2026-07-01,billing@juniperanalytics.example
+C0018,Cedar Freight Inc,SMB,Scale,14904,Elena Ortiz,2026-04-01,billing@cedarfreightinc.example
+C0019,Redstone Builders Co,Mid-market,Core,65268,Jordan Lee,2026-03-01,billing@redstonebuilders.example
+C0020,Driftwood Health LLC,SMB,Core,20700,Jordan Lee,2026-04-01,billing@driftwoodhealthl.example
+C0021,Bluepeak Clinics Group,SMB,Scale,2808,Sam Carter,2026-08-01,billing@bluepeakclinicsg.example
+C0022,Brightway Dental Group,SMB,Scale,8280,Marcus Hill,2026-04-01,billing@brightwaydentalg.example
+C0023,Cedar Partners Co,SMB,Pro,7020,Priya Shah,2026-04-01,billing@cedarpartnersco.example
+C0024,Lakeside Supply,SMB,Pro,10296,Sam Carter,2026-07-01,billing@lakesidesupply.example
+C0025,Northstar Builders Co,Mid-market,Core,88164,Marcus Hill,2026-08-01,billing@northstarbuilder.example
+C0026,Clearwater Foods Inc,Mid-market,Scale,96876,Jordan Lee,2026-10-01,billing@clearwaterfoodsi.example
+C0027,Cedar Logistics Inc,Mid-market,Pro,25668,Marcus Hill,2026-08-01,billing@cedarlogisticsin.example
+C0028,Maple Software Co,SMB,Core,12936,Priya Shah,2026-01-01,billing@maplesoftwareco.example
+C0029,Cedar Builders LLC,SMB,Scale,8532,Marcus Hill,2026-08-01,billing@cedarbuildersllc.example
+C0030,Meridian Dental Group,Mid-market,Scale,21060,Elena Ortiz,2026-05-01,billing@meridiandentalgr.example
+C0031,Orchard Labs Inc,Mid-market,Scale,106176,Elena Ortiz,2026-06-01,billing@orchardlabsinc.example
+C0032,Lakeside Analytics LLC,Mid-market,Scale,36504,Elena Ortiz,2026-06-01,billing@lakesideanalytic.example
+C0033,Redstone Analytics LLC,Mid-market,Pro,71208,Marcus Hill,2026-10-01,billing@redstoneanalytic.example
+C0034,Foxglove Health Inc,Mid-market,Core,59472,Elena Ortiz,2026-06-01,billing@foxglovehealthin.example
+C0035,Oakridge Supply Inc,Mid-market,Core,91008,Elena Ortiz,2026-02-01,billing@oakridgesupplyin.example
+C0036,Cedar Studios Inc,Mid-market,Scale,51336,Sam Carter,2026-05-01,billing@cedarstudiosinc.example
+C0037,Ironwood Partners Inc,Enterprise,Pro,248400,Marcus Hill,2026-05-01,billing@ironwoodpartners.example
+C0038,Silverline Health Inc,SMB,Pro,12936,Sam Carter,2026-08-01,billing@silverlinehealth.example
+C0039,Granite Partners LLC,SMB,Pro,7488,Jordan Lee,2026-03-01,billing@granitepartnersl.example
+C0040,Foxglove Analytics LLC,Mid-market,Core,50508,Marcus Hill,2026-03-01,billing@foxgloveanalytic.example
+C0041,Maple Builders Inc,SMB,Pro,4116,Jordan Lee,2026-10-01,billing@maplebuildersinc.example
+C0042,Keystone Analytics Group,Mid-market,Pro,95748,Sam Carter,2026-08-01,billing@keystoneanalytic.example
+C0043,Orchard Dental LLC,Enterprise,Core,161424,Priya Shah,2026-02-01,billing@orcharddentalllc.example
+C0044,Oakridge Studios Inc,Mid-market,Scale,36456,Elena Ortiz,2026-05-01,billing@oakridgestudiosi.example
+C0045,Quarry Foods Inc,SMB,Core,8496,Priya Shah,2026-02-01,billing@quarryfoodsinc.example
+C0046,Vantage Freight Inc,Mid-market,Scale,55932,Jordan Lee,2026-02-01,billing@vantagefreightin.example
+C0047,Upland Realty Co,Enterprise,Core,92040,Priya Shah,2026-10-01,billing@uplandrealtyco.example
+C0048,Harbor Foods Inc,Mid-market,Core,70380,Marcus Hill,2026-02-01,billing@harborfoodsinc.example
+C0049,Brightway Partners Co,SMB,Scale,4956,Jordan Lee,2026-07-01,billing@brightwaypartner.example
+C0050,Highland Studios Group,SMB,Core,9360,Marcus Hill,2026-09-01,billing@highlandstudiosg.example
+C0051,Northstar Studios Group,SMB,Pro,2340,Jordan Lee,2026-02-01,billing@northstarstudios.example
+C0052,Redstone Foods LLC,Mid-market,Scale,53088,Sam Carter,2026-04-01,billing@redstonefoodsllc.example
+C0053,Willow Labs Inc,Mid-market,Scale,48144,Marcus Hill,2026-05-01,billing@willowlabsinc.example
+C0054,Juniper Logistics LLC,SMB,Core,13248,Priya Shah,2026-06-01,billing@juniperlogistics.example
+C0055,Summit Realty Inc,SMB,Pro,16560,Jordan Lee,2026-03-01,billing@summitrealtyinc.example
+C0056,Ironwood Software Inc,SMB,Core,15732,Elena Ortiz,2026-03-01,billing@ironwoodsoftware.example
+C0057,Tidewater Studios Inc,SMB,Scale,12420,Jordan Lee,2026-08-01,billing@tidewaterstudios.example
+C0058,Silverline Freight,Enterprise,Core,79560,Marcus Hill,2026-08-01,billing@silverlinefreigh.example
+C0059,Upland Partners Co,Mid-market,Pro,57960,Sam Carter,2026-09-01,billing@uplandpartnersco.example
+C0060,Brightway Builders Inc,SMB,Core,14076,Elena Ortiz,2026-03-01,billing@brightwaybuilder.example
+C0061,Foxglove Clinics Inc,Enterprise,Scale,129996,Marcus Hill,2026-06-01,billing@foxgloveclinicsi.example
+C0062,Foxglove Outfitters,Mid-market,Scale,52140,Marcus Hill,2026-05-01,billing@foxgloveoutfitte.example
+C0063,Juniper Health LLC,Mid-market,Pro,31752,Priya Shah,2026-10-01,billing@juniperhealthllc.example
+C0064,Evergreen Analytics Inc,SMB,Core,6372,Priya Shah,2026-03-01,billing@evergreenanalyti.example
+C0065,Pinecrest Freight LLC,Enterprise,Core,137124,Priya Shah,2026-08-01,billing@pinecrestfreight.example
+C0066,Upland Logistics Inc,SMB,Core,5664,Priya Shah,2026-06-01,billing@uplandlogisticsi.example
+C0067,Northstar Clinics Co,Mid-market,Scale,30888,Marcus Hill,2026-08-01,billing@northstarclinics.example
+C0068,Willow Software LLC,SMB,Core,2808,Elena Ortiz,2026-09-01,billing@willowsoftwarell.example
+C0069,Willow Outfitters Inc,Mid-market,Core,64584,Marcus Hill,2026-05-01,billing@willowoutfitters.example
+C0070,Meridian Supply Co,SMB,Core,7488,Elena Ortiz,2026-04-01,billing@meridiansupplyco.example
+C0071,Driftwood Foods LLC,Enterprise,Scale,146940,Priya Shah,2026-04-01,billing@driftwoodfoodsll.example
+C0072,Redstone Software LLC,Mid-market,Scale,29028,Jordan Lee,2026-02-01,billing@redstonesoftware.example
+C0073,Brightway Software,Mid-market,Core,46800,Elena Ortiz,2026-01-01,billing@brightwaysoftwar.example
+C0074,Oakridge Logistics,SMB,Pro,18012,Elena Ortiz,2026-09-01,billing@oakridgelogistic.example
+C0075,Quarry Labs Inc,Mid-market,Core,92736,Jordan Lee,2026-08-01,billing@quarrylabsinc.example
+C0076,Summit Outfitters Co,Mid-market,Pro,96048,Elena Ortiz,2026-09-01,billing@summitoutfitters.example
+C0077,Pinecrest Foods Inc,Mid-market,Pro,78660,Marcus Hill,2026-04-01,billing@pinecrestfoodsin.example
+C0078,Maple Outfitters,SMB,Core,10764,Elena Ortiz,2026-02-01,billing@mapleoutfitters.example
+C0079,Cedar Dental Inc,Enterprise,Scale,150696,Elena Ortiz,2026-06-01,billing@cedardentalinc.example
+C0080,Vantage Builders Inc,SMB,Pro,17388,Sam Carter,2026-02-01,billing@vantagebuildersi.example
+C0081,Juniper Partners LLC,SMB,Core,17064,Priya Shah,2026-05-01,billing@juniperpartnersl.example
+C0082,Harbor Realty Inc,Mid-market,Core,51012,Sam Carter,2026-01-01,billing@harborrealtyinc.example
+C0083,Vantage Partners LLC,SMB,Core,13272,Priya Shah,2026-01-01,billing@vantagepartnersl.example
+C0084,Orchard Partners LLC,Mid-market,Core,55932,Marcus Hill,2026-07-01,billing@orchardpartnersl.example
+C0085,Driftwood Freight LLC,SMB,Pro,6468,Jordan Lee,2026-05-01,billing@driftwoodfreight.example
+C0086,Oakridge Partners LLC,SMB,Pro,5616,Jordan Lee,2026-01-01,billing@oakridgepartners.example
+C0087,Highland Clinics LLC,SMB,Pro,16284,Priya Shah,2026-01-01,billing@highlandclinicsl.example
+C0088,Granite Health Group,SMB,Core,14076,Marcus Hill,2026-06-01,billing@granitehealthgro.example
+C0089,Foxglove Supply Co,Mid-market,Core,63720,Jordan Lee,2026-03-01,billing@foxglovesupplyco.example
+C0090,Upland Outfitters,SMB,Scale,20700,Elena Ortiz,2026-10-01,billing@uplandoutfitters.example
+C0091,Upland Dental LLC,SMB,Pro,9912,Elena Ortiz,2026-05-01,billing@uplanddentalllc.example
+C0092,Maple Dental Co,Mid-market,Pro,101436,Sam Carter,2026-07-01,billing@mapledentalco.example
+C0093,Northwind Studios,Mid-market,Scale,36432,Jordan Lee,2026-06-01,billing@northwindstudios.example
+C0094,Maple Studios LLC,Mid-market,Pro,87216,Elena Ortiz,2026-06-01,billing@maplestudiosllc.example
+C0095,Evergreen Logistics LLC,Mid-market,Pro,63516,Sam Carter,2026-05-01,billing@evergreenlogisti.example
+C0096,Cedar Outfitters Inc,SMB,Pro,14700,Sam Carter,2026-02-01,billing@cedaroutfittersi.example
+C0097,Meridian Analytics Inc,Mid-market,Pro,50268,Elena Ortiz,2026-04-01,billing@meridiananalytic.example
+C0098,Willow Foods Co,SMB,Core,13272,Marcus Hill,2026-09-01,billing@willowfoodsco.example
+C0099,Foxglove Labs LLC,Mid-market,Pro,54756,Sam Carter,2026-04-01,billing@foxglovelabsllc.example
+C0100,Brightway Realty Inc,Enterprise,Pro,291984,Marcus Hill,2026-08-01,billing@brightwayrealtyi.example
+C0101,Oakridge Outfitters,SMB,Scale,9204,Sam Carter,2026-02-01,billing@oakridgeoutfitte.example
+C0102,Clearwater Labs LLC,SMB,Pro,9828,Marcus Hill,2026-04-01,billing@clearwaterlabsll.example
+C0103,Keystone Labs LLC,SMB,Scale,9996,Marcus Hill,2026-02-01,billing@keystonelabsllc.example
+C0104,Tidewater Foods Inc,SMB,Core,16560,Jordan Lee,2026-01-01,billing@tidewaterfoodsin.example
+C0105,Redstone Freight Group,SMB,Pro,11232,Jordan Lee,2026-04-01,billing@redstonefreightg.example
+C0106,Upland Builders Inc,Mid-market,Scale,38844,Sam Carter,2026-08-01,billing@uplandbuildersin.example
+C0107,Bluepeak Supply Inc,SMB,Scale,9408,Marcus Hill,2026-02-01,billing@bluepeaksupplyin.example
+C0108,Silverline Clinics Co,Mid-market,Core,40356,Jordan Lee,2026-06-01,billing@silverlineclinic.example
+C0109,Maple Foods LLC,SMB,Scale,12420,Priya Shah,2026-08-01,billing@maplefoodsllc.example
+C0110,Brightway Labs LLC,SMB,Scale,5148,Elena Ortiz,2026-05-01,billing@brightwaylabsllc.example

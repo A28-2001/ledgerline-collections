@@ -1,0 +1,356 @@
+ticket_id,company,created_at,status,priority,category,subject,body
+T-20001,Meridian Supply Co,2026-10-23T16:58:00,open,normal,billing,Overcharged this month,We were overcharged on invoice INV-1741. The price per seat doesn't match our contract.
+T-20002,summit outfitters co,2026-10-25T10:20:00,pending,normal,billing,Overcharged this month,We were overcharged on invoice INV-1790. The price per seat doesn't match our contract.
+T-20003,tidewater studios inc,2026-10-27T10:46:00,open,normal,billing,Overcharged this month,We were overcharged on invoice INV-1618. The price per seat doesn't match our contract.
+T-20004,Clearwater Freight Inc,2026-10-29T12:09:00,pending,normal,billing,Dispute on invoice INV-1061,We dispute this invoice. We cancelled the add-on in June but are still being charged.
+T-20005,Vantage Partners LLC,2026-10-23T17:39:00,open,normal,billing,Overcharged this month,We were overcharged on invoice INV-1853. The price per seat doesn't match our contract.
+T-20006,Foxglove Outfitters,2026-10-21T13:05:00,open,normal,billing,Overcharged this month,We were overcharged on invoice INV-1656. The price per seat doesn't match our contract.
+T-20007,Brightway Labs,2026-10-14T10:54:00,open,normal,billing,Dispute on invoice INV-2154,We dispute this invoice. We cancelled the add-on in June but are still being charged.
+T-20008,Bluepeak Supply Inc,2026-10-17T11:02:00,pending,normal,billing,Dispute on invoice INV-2119,We dispute this invoice. We cancelled the add-on in June but are still being charged.
+T-20009,clearwater labs llc,2026-10-23T11:47:00,open,normal,general,Question about this month,Why did this month's number jump so much? We didn't add anyone to the team.
+T-20010,Cedar Studios Inc,2026-10-19T10:59:00,open,normal,general,Question about this month,Why did this month's number jump so much? We didn't add anyone to the team.
+T-20011,Maple Foods LLC,2026-10-23T15:56:00,open,urgent,outage,Escalation: repeated outages,Third outage this month. Our COO wants a call. We are reviewing whether to stay.
+T-20012,vantage builders inc,2026-10-27T17:47:00,open,urgent,outage,Escalation: repeated outages,Third outage this month. Our COO wants a call. We are reviewing whether to stay.
+T-20013,Ironwood Software,2026-10-24T17:38:00,open,urgent,outage,Escalation: repeated outages,Third outage this month. Our COO wants a call. We are reviewing whether to stay.
+T-20014,willow labs inc,2026-10-12T08:33:00,open,normal,bug,Sync errors,We keep getting sync errors and lost two days of entries.
+T-20015,cedar partners co,2026-10-26T08:56:00,open,normal,bug,Dashboard not loading,The main dashboard spins forever for half the team. Very frustrating.
+T-20016,Northwind Dental LLC,2026-10-22T08:35:00,open,normal,bug,Sync errors,We keep getting sync errors and lost two days of entries.
+T-20017,Upland Partners,2026-10-17T08:12:00,open,normal,bug,Sync errors,We keep getting sync errors and lost two days of entries.
+T-20018,brightway freight llc,2026-10-20T12:29:00,open,normal,bug,Dashboard not loading,The main dashboard spins forever for half the team. Very frustrating.
+T-20019,Northstar Builders,2026-10-24T08:44:00,open,normal,bug,Dashboard not loading,The main dashboard spins forever for half the team. Very frustrating.
+T-20020,keystone builders inc,2026-10-13T15:05:00,open,normal,bug,Export is broken,The CSV export has been failing since Tuesday. This is blocking our month-end.
+T-20021,cedar outfitters inc,2026-07-21T16:08:00,closed,normal,billing,Invoice looks wrong,"Hi, our latest invoice charges us for 29 seats but we only have 25. Please fix before we pay."
+T-20022,Pinecrest Foods,2026-07-28T10:29:00,closed,normal,billing,Dispute on invoice INV-1802,We dispute this invoice. We cancelled the add-on in June but are still being charged.
+T-20023,Willow Software LLC,2026-07-16T13:44:00,closed,normal,billing,Overcharged this month,We were overcharged on invoice INV-1716. The price per seat doesn't match our contract.
+T-20024,Foxglove Supply Co,2026-08-12T15:40:00,closed,normal,billing,Invoice looks wrong,"Hi, our latest invoice charges us for 93 seats but we only have 90. Please fix before we pay."
+T-20025,brightway software,2026-07-30T16:39:00,closed,normal,billing,Invoice looks wrong,"Hi, our latest invoice charges us for 107 seats but we only have 100. Please fix before we pay."
+T-20026,cedar partners co,2026-07-07T15:18:00,closed,high,bug,Dashboard not loading,The main dashboard spins forever for half the team. Very frustrating.
+T-20027,juniper partners llc,2026-09-14T08:29:00,closed,normal,how-to,How do I add a user?,Where do I go to invite a new teammate?
+T-20028,Evergreen Analytics,2026-09-08T15:29:00,closed,high,bug,Export is broken,The CSV export has been failing since Tuesday. This is blocking our month-end.
+T-20029,Willow Labs Inc,2026-09-15T16:52:00,closed,low,how-to,How do I add a user?,Where do I go to invite a new teammate?
+T-20030,upland builders inc,2026-07-24T17:53:00,closed,normal,how-to,How do I add a user?,Where do I go to invite a new teammate?
+T-20031,Maple Outfitters,2026-10-26T12:39:00,closed,low,how-to,Change report dates,How can I change the default date range on reports?
+T-20032,Driftwood Freight,2026-09-15T08:05:00,closed,normal,bug,Dashboard not loading,The main dashboard spins forever for half the team. Very frustrating.
+T-20033,Foxglove Labs LLC,2026-08-17T10:07:00,open,high,how-to,SSO setup,Do you have docs for setting up single sign-on?
+T-20034,Foxglove Supply,2026-08-12T17:03:00,closed,high,bug,Sync errors,We keep getting sync errors and lost two days of entries.
+T-20035,Juniper Software,2026-09-19T12:27:00,closed,low,feature request,Bulk edit,It would be great to bulk edit records.
+T-20036,Maple Outfitters,2026-08-03T16:46:00,closed,normal,bug,Export is broken,The CSV export has been failing since Tuesday. This is blocking our month-end.
+T-20037,Juniper Partners LLC,2026-09-07T08:29:00,closed,normal,feature request,Bulk edit,It would be great to bulk edit records.
+T-20038,Juniper Partners LLC,2026-09-04T16:51:00,closed,high,bug,Dashboard not loading,The main dashboard spins forever for half the team. Very frustrating.
+T-20039,Harbor Realty Inc,2026-09-20T12:32:00,closed,normal,how-to,Change report dates,How can I change the default date range on reports?
+T-20040,driftwood foods llc,2026-07-01T17:01:00,closed,normal,how-to,Change report dates,How can I change the default date range on reports?
+T-20041,bluepeak supply inc,2026-08-12T08:41:00,closed,normal,how-to,SSO setup,Do you have docs for setting up single sign-on?
+T-20042,cedar freight inc,2026-09-19T08:53:00,closed,normal,feature request,Bulk edit,It would be great to bulk edit records.
+T-20043,Northstar Clinics,2026-10-01T13:04:00,closed,low,how-to,How do I add a user?,Where do I go to invite a new teammate?
+T-20044,driftwood health llc,2026-07-04T17:38:00,closed,high,how-to,SSO setup,Do you have docs for setting up single sign-on?
+T-20045,Highland Studios Group,2026-07-15T08:17:00,closed,normal,how-to,SSO setup,Do you have docs for setting up single sign-on?
+T-20046,willow labs inc,2026-08-31T11:33:00,closed,normal,how-to,Change report dates,How can I change the default date range on reports?
+T-20047,Granite Partners,2026-08-17T08:51:00,closed,low,how-to,How do I add a user?,Where do I go to invite a new teammate?
+T-20048,foxglove outfitters,2026-07-20T16:19:00,closed,normal,billing,Double charged?,It looks like we were billed twice for the same period. Can you check and refund?
+T-20049,Brightway Realty,2026-10-07T16:07:00,open,normal,how-to,SSO setup,Do you have docs for setting up single sign-on?
+T-20050,evergreen dental inc,2026-07-06T09:33:00,closed,low,how-to,Change report dates,How can I change the default date range on reports?
+T-20051,Foxglove Labs LLC,2026-08-09T11:18:00,closed,normal,bug,Sync errors,We keep getting sync errors and lost two days of entries.
+T-20052,Cedar Studios Inc,2026-08-05T09:00:00,closed,low,feature request,Bulk edit,It would be great to bulk edit records.
+T-20053,Vantage Builders Inc,2026-07-14T10:45:00,closed,normal,feature request,Bulk edit,It would be great to bulk edit records.
+T-20054,Keystone Labs,2026-08-01T08:08:00,closed,normal,how-to,SSO setup,Do you have docs for setting up single sign-on?
+T-20055,Summit Supply,2026-09-25T10:45:00,closed,high,feature request,Feature idea: dark mode,Would love a dark mode option.
+T-20056,Pinecrest Foods Inc,2026-09-19T11:45:00,closed,high,bug,Sync errors,We keep getting sync errors and lost two days of entries.
+T-20057,Willow Foods Co,2026-09-07T15:06:00,closed,high,bug,Sync errors,We keep getting sync errors and lost two days of entries.
+T-20058,upland partners co,2026-09-21T10:55:00,closed,high,how-to,Change report dates,How can I change the default date range on reports?
+T-20059,Cedar Dental,2026-08-16T09:30:00,closed,normal,how-to,Change report dates,How can I change the default date range on reports?
+T-20060,Granite Freight,2026-08-29T16:06:00,closed,normal,how-to,Change report dates,How can I change the default date range on reports?
+T-20061,Redstone Foods,2026-10-10T17:26:00,closed,low,bug,Dashboard not loading,The main dashboard spins forever for half the team. Very frustrating.
+T-20062,Orchard Labs Inc,2026-09-09T17:27:00,closed,high,bug,Dashboard not loading,The main dashboard spins forever for half the team. Very frustrating.
+T-20063,Oakridge Outfitters,2026-09-11T17:53:00,closed,normal,billing,Overcharged this month,We were overcharged on invoice our last invoice. The price per seat doesn't match our contract.
+T-20064,Juniper Health LLC,2026-09-15T15:11:00,closed,high,how-to,Change report dates,How can I change the default date range on reports?
+T-20065,Foxglove Analytics,2026-07-09T08:05:00,closed,low,billing,Dispute on invoice our last invoice,We dispute this invoice. We cancelled the add-on in June but are still being charged.
+T-20066,Maple Software Co,2026-07-18T16:18:00,closed,low,bug,Export is broken,The CSV export has been failing since Tuesday. This is blocking our month-end.
+T-20067,highland studios group,2026-08-27T12:36:00,closed,normal,bug,Export is broken,The CSV export has been failing since Tuesday. This is blocking our month-end.
+T-20068,Clearwater Labs,2026-08-08T17:32:00,closed,high,billing,Double charged?,It looks like we were billed twice for the same period. Can you check and refund?
+T-20069,Redstone Foods LLC,2026-10-18T16:52:00,closed,normal,bug,Sync errors,We keep getting sync errors and lost two days of entries.
+T-20070,vantage freight inc,2026-08-06T14:40:00,closed,low,how-to,How do I add a user?,Where do I go to invite a new teammate?
+T-20071,Maple Builders Inc,2026-08-21T10:30:00,closed,high,bug,Dashboard not loading,The main dashboard spins forever for half the team. Very frustrating.
+T-20072,Cedar Freight Inc,2026-08-19T10:08:00,closed,normal,how-to,Change report dates,How can I change the default date range on reports?
+T-20073,Highland Health,2026-07-03T10:05:00,closed,normal,how-to,SSO setup,Do you have docs for setting up single sign-on?
+T-20074,Cedar Freight,2026-08-23T15:24:00,pending,normal,bug,Dashboard not loading,The main dashboard spins forever for half the team. Very frustrating.
+T-20075,vantage freight inc,2026-08-24T11:45:00,closed,low,how-to,SSO setup,Do you have docs for setting up single sign-on?
+T-20076,Pinecrest Freight,2026-10-27T13:07:00,closed,normal,how-to,How do I add a user?,Where do I go to invite a new teammate?
+T-20077,Quarry Labs Inc,2026-09-27T17:05:00,closed,normal,feature request,Bulk edit,It would be great to bulk edit records.
+T-20078,Lakeside Analytics LLC,2026-10-03T13:34:00,closed,low,feature request,Bulk edit,It would be great to bulk edit records.
+T-20079,Brightway Realty Inc,2026-08-28T13:51:00,closed,high,how-to,SSO setup,Do you have docs for setting up single sign-on?
+T-20080,Silverline Health,2026-07-05T08:40:00,closed,normal,how-to,SSO setup,Do you have docs for setting up single sign-on?
+T-20081,Foxglove Clinics,2026-09-12T10:32:00,closed,normal,feature request,Feature idea: dark mode,Would love a dark mode option.
+T-20082,Granite Supply Inc,2026-08-05T12:00:00,closed,normal,bug,Export is broken,The CSV export has been failing since Tuesday. This is blocking our month-end.
+T-20083,Evergreen Logistics LLC,2026-07-23T11:31:00,open,high,how-to,Change report dates,How can I change the default date range on reports?
+T-20084,lakeside supply,2026-10-19T10:53:00,closed,low,bug,Export is broken,The CSV export has been failing since Tuesday. This is blocking our month-end.
+T-20085,evergreen analytics inc,2026-08-22T10:13:00,closed,normal,bug,Sync errors,We keep getting sync errors and lost two days of entries.
+T-20086,Oakridge Logistics,2026-08-14T14:30:00,closed,normal,bug,Export is broken,The CSV export has been failing since Tuesday. This is blocking our month-end.
+T-20087,granite partners llc,2026-07-24T15:16:00,closed,normal,feature request,Bulk edit,It would be great to bulk edit records.
+T-20088,Redstone Builders,2026-08-25T13:33:00,closed,low,feature request,Bulk edit,It would be great to bulk edit records.
+T-20089,Granite Health Group,2026-07-13T09:16:00,pending,high,billing,Double charged?,It looks like we were billed twice for the same period. Can you check and refund?
+T-20090,Orchard Partners LLC,2026-08-29T10:20:00,closed,normal,feature request,Feature idea: dark mode,Would love a dark mode option.
+T-20091,Driftwood Foods,2026-07-02T15:22:00,closed,low,how-to,Change report dates,How can I change the default date range on reports?
+T-20092,Cedar Builders LLC,2026-08-02T17:42:00,closed,low,bug,Sync errors,We keep getting sync errors and lost two days of entries.
+T-20093,Bluepeak Supply Inc,2026-09-15T17:08:00,closed,low,how-to,SSO setup,Do you have docs for setting up single sign-on?
+T-20094,Brightway Partners Co,2026-10-24T12:29:00,closed,normal,bug,Export is broken,The CSV export has been failing since Tuesday. This is blocking our month-end.
+T-20095,driftwood freight llc,2026-09-20T13:16:00,closed,normal,billing,Dispute on invoice our last invoice,We dispute this invoice. We cancelled the add-on in June but are still being charged.
+T-20096,bluepeak clinics group,2026-08-05T12:52:00,closed,high,bug,Dashboard not loading,The main dashboard spins forever for half the team. Very frustrating.
+T-20097,Foxglove Health Inc,2026-07-09T15:06:00,closed,normal,how-to,SSO setup,Do you have docs for setting up single sign-on?
+T-20098,redstone builders co,2026-08-25T09:02:00,closed,normal,feature request,Feature idea: dark mode,Would love a dark mode option.
+T-20099,Granite Supply Inc,2026-08-29T08:59:00,closed,high,how-to,How do I add a user?,Where do I go to invite a new teammate?
+T-20100,Northstar Partners Inc,2026-08-04T15:30:00,closed,normal,bug,Dashboard not loading,The main dashboard spins forever for half the team. Very frustrating.
+T-20101,ironwood software inc,2026-09-22T15:07:00,closed,normal,how-to,How do I add a user?,Where do I go to invite a new teammate?
+T-20102,Brightway Software,2026-08-15T09:23:00,closed,normal,feature request,Bulk edit,It would be great to bulk edit records.
+T-20103,Willow Outfitters Inc,2026-08-13T16:02:00,closed,high,bug,Dashboard not loading,The main dashboard spins forever for half the team. Very frustrating.
+T-20104,Highland Studios,2026-08-08T15:05:00,closed,high,bug,Export is broken,The CSV export has been failing since Tuesday. This is blocking our month-end.
+T-20105,Juniper Partners LLC,2026-07-25T17:15:00,closed,normal,how-to,How do I add a user?,Where do I go to invite a new teammate?
+T-20106,juniper health llc,2026-07-23T15:01:00,closed,normal,how-to,Change report dates,How can I change the default date range on reports?
+T-20107,Northstar Partners Inc,2026-08-13T16:29:00,closed,low,how-to,Change report dates,How can I change the default date range on reports?
+T-20108,highland clinics llc,2026-09-07T15:41:00,closed,normal,bug,Export is broken,The CSV export has been failing since Tuesday. This is blocking our month-end.
+T-20109,Maple Realty,2026-07-13T08:11:00,closed,low,feature request,Feature idea: dark mode,Would love a dark mode option.
+T-20110,Juniper Partners LLC,2026-08-09T17:04:00,closed,low,how-to,Change report dates,How can I change the default date range on reports?
+T-20111,Redstone Freight,2026-07-15T09:51:00,closed,high,bug,Sync errors,We keep getting sync errors and lost two days of entries.
+T-20112,clearwater foods inc,2026-10-12T17:34:00,closed,high,how-to,Change report dates,How can I change the default date range on reports?
+T-20113,Cedar Freight Inc,2026-10-10T09:17:00,closed,low,how-to,SSO setup,Do you have docs for setting up single sign-on?
+T-20114,Redstone Builders,2026-07-22T17:02:00,closed,normal,bug,Sync errors,We keep getting sync errors and lost two days of entries.
+T-20115,cedar freight inc,2026-10-17T09:00:00,closed,high,how-to,How do I add a user?,Where do I go to invite a new teammate?
+T-20116,evergreen dental inc,2026-07-12T15:44:00,closed,normal,how-to,Change report dates,How can I change the default date range on reports?
+T-20117,juniper analytics inc,2026-09-20T17:44:00,closed,high,how-to,Change report dates,How can I change the default date range on reports?
+T-20118,Northstar Partners,2026-09-30T16:15:00,closed,low,feature request,Bulk edit,It would be great to bulk edit records.
+T-20119,northstar builders co,2026-09-06T16:32:00,closed,low,how-to,SSO setup,Do you have docs for setting up single sign-on?
+T-20120,Cedar Builders LLC,2026-09-19T10:43:00,closed,normal,feature request,Feature idea: dark mode,Would love a dark mode option.
+T-20121,Maple Foods,2026-08-30T08:03:00,closed,high,billing,Overcharged this month,We were overcharged on invoice our last invoice. The price per seat doesn't match our contract.
+T-20122,Vantage Partners,2026-07-27T15:02:00,closed,high,how-to,Change report dates,How can I change the default date range on reports?
+T-20123,Juniper Software,2026-10-27T09:57:00,closed,normal,bug,Export is broken,The CSV export has been failing since Tuesday. This is blocking our month-end.
+T-20124,Orchard Labs,2026-09-14T13:14:00,closed,high,bug,Export is broken,The CSV export has been failing since Tuesday. This is blocking our month-end.
+T-20125,brightway realty inc,2026-07-30T09:30:00,closed,high,how-to,How do I add a user?,Where do I go to invite a new teammate?
+T-20126,Quarry Labs Inc,2026-10-22T10:29:00,closed,normal,feature request,Bulk edit,It would be great to bulk edit records.
+T-20127,Northwind Studios,2026-08-15T08:17:00,open,normal,how-to,How do I add a user?,Where do I go to invite a new teammate?
+T-20128,cedar freight inc,2026-08-29T17:10:00,closed,normal,how-to,Change report dates,How can I change the default date range on reports?
+T-20129,clearwater labs llc,2026-07-14T09:26:00,closed,normal,bug,Sync errors,We keep getting sync errors and lost two days of entries.
+T-20130,Brightway Labs LLC,2026-09-03T14:47:00,closed,high,feature request,Bulk edit,It would be great to bulk edit records.
+T-20131,Lakeside Analytics,2026-08-25T08:02:00,closed,normal,how-to,SSO setup,Do you have docs for setting up single sign-on?
+T-20132,foxglove clinics inc,2026-09-03T09:28:00,closed,high,bug,Dashboard not loading,The main dashboard spins forever for half the team. Very frustrating.
+T-20133,Evergreen Analytics Inc,2026-09-10T11:41:00,closed,high,how-to,How do I add a user?,Where do I go to invite a new teammate?
+T-20134,Upland Studios,2026-09-24T17:47:00,closed,normal,how-to,How do I add a user?,Where do I go to invite a new teammate?
+T-20135,Quarry Labs Inc,2026-08-28T13:40:00,closed,normal,how-to,SSO setup,Do you have docs for setting up single sign-on?
+T-20136,Brightway Builders,2026-07-01T12:27:00,open,high,bug,Sync errors,We keep getting sync errors and lost two days of entries.
+T-20137,Meridian Analytics,2026-10-30T13:47:00,closed,normal,how-to,SSO setup,Do you have docs for setting up single sign-on?
+T-20138,Maple Partners,2026-10-25T17:02:00,closed,low,feature request,Feature idea: dark mode,Would love a dark mode option.
+T-20139,upland realty co,2026-09-21T10:21:00,closed,low,how-to,SSO setup,Do you have docs for setting up single sign-on?
+T-20140,Orchard Labs Inc,2026-09-22T12:32:00,closed,normal,feature request,Feature idea: dark mode,Would love a dark mode option.
+T-20141,Granite Health,2026-07-07T09:30:00,closed,normal,how-to,Change report dates,How can I change the default date range on reports?
+T-20142,Upland Dental LLC,2026-10-14T09:12:00,closed,normal,feature request,Bulk edit,It would be great to bulk edit records.
+T-20143,Upland Partners Co,2026-08-20T12:07:00,closed,normal,how-to,Change report dates,How can I change the default date range on reports?
+T-20144,Upland Outfitters,2026-07-20T14:43:00,closed,normal,how-to,SSO setup,Do you have docs for setting up single sign-on?
+T-20145,meridian supply co,2026-08-30T08:18:00,closed,normal,billing,Dispute on invoice our last invoice,We dispute this invoice. We cancelled the add-on in June but are still being charged.
+T-20146,Northstar Builders Co,2026-09-01T13:31:00,closed,normal,how-to,Change report dates,How can I change the default date range on reports?
+T-20147,Summit Outfitters,2026-09-06T12:10:00,closed,high,bug,Dashboard not loading,The main dashboard spins forever for half the team. Very frustrating.
+T-20148,clearwater labs llc,2026-08-31T10:22:00,closed,normal,how-to,Change report dates,How can I change the default date range on reports?
+T-20149,ironwood partners inc,2026-07-22T10:10:00,closed,normal,feature request,Bulk edit,It would be great to bulk edit records.
+T-20150,Orchard Labs Inc,2026-08-10T16:45:00,closed,high,how-to,Change report dates,How can I change the default date range on reports?
+T-20151,Northstar Partners,2026-08-14T09:58:00,closed,high,bug,Sync errors,We keep getting sync errors and lost two days of entries.
+T-20152,Summit Supply Inc,2026-09-02T16:32:00,closed,high,how-to,Change report dates,How can I change the default date range on reports?
+T-20153,Orchard Dental LLC,2026-08-07T17:46:00,closed,normal,bug,Sync errors,We keep getting sync errors and lost two days of entries.
+T-20154,Tidewater Studios,2026-07-15T09:19:00,closed,high,how-to,How do I add a user?,Where do I go to invite a new teammate?
+T-20155,Summit Supply Inc,2026-10-16T11:37:00,closed,normal,how-to,How do I add a user?,Where do I go to invite a new teammate?
+T-20156,Willow Software,2026-08-26T15:43:00,closed,normal,how-to,How do I add a user?,Where do I go to invite a new teammate?
+T-20157,Oakridge Partners LLC,2026-09-04T17:32:00,closed,high,billing,Overcharged this month,We were overcharged on invoice our last invoice. The price per seat doesn't match our contract.
+T-20158,Maple Partners,2026-08-16T12:22:00,closed,high,billing,Double charged?,It looks like we were billed twice for the same period. Can you check and refund?
+T-20159,quarry foods inc,2026-08-27T14:51:00,open,normal,how-to,SSO setup,Do you have docs for setting up single sign-on?
+T-20160,Tidewater Studios,2026-08-07T09:09:00,closed,high,how-to,How do I add a user?,Where do I go to invite a new teammate?
+T-20161,cedar logistics inc,2026-10-20T09:00:00,closed,normal,how-to,How do I add a user?,Where do I go to invite a new teammate?
+T-20162,Willow Labs,2026-08-04T17:48:00,closed,high,bug,Export is broken,The CSV export has been failing since Tuesday. This is blocking our month-end.
+T-20163,cedar freight inc,2026-10-15T17:19:00,closed,high,how-to,How do I add a user?,Where do I go to invite a new teammate?
+T-20164,Evergreen Analytics Inc,2026-08-29T15:07:00,closed,low,feature request,Feature idea: dark mode,Would love a dark mode option.
+T-20165,Orchard Partners LLC,2026-08-06T09:48:00,closed,high,bug,Sync errors,We keep getting sync errors and lost two days of entries.
+T-20166,Cedar Studios,2026-07-09T12:40:00,closed,normal,feature request,Bulk edit,It would be great to bulk edit records.
+T-20167,Granite Health Group,2026-09-27T17:03:00,closed,normal,feature request,Feature idea: dark mode,Would love a dark mode option.
+T-20168,Redstone Builders Co,2026-07-04T13:26:00,closed,normal,how-to,Change report dates,How can I change the default date range on reports?
+T-20169,Harbor Realty Inc,2026-08-15T10:48:00,closed,normal,billing,Invoice looks wrong,"Hi, our latest invoice charges us for 116 seats but we only have 109. Please fix before we pay."
+T-20170,keystone builders inc,2026-07-22T12:17:00,closed,normal,feature request,Bulk edit,It would be great to bulk edit records.
+T-20171,Granite Health Group,2026-08-16T12:23:00,closed,normal,bug,Export is broken,The CSV export has been failing since Tuesday. This is blocking our month-end.
+T-20172,Brightway Realty,2026-08-13T11:50:00,open,low,feature request,Feature idea: dark mode,Would love a dark mode option.
+T-20173,Redstone Software LLC,2026-10-15T10:59:00,open,high,bug,Dashboard not loading,The main dashboard spins forever for half the team. Very frustrating.
+T-20174,Maple Realty,2026-08-09T17:33:00,closed,normal,feature request,Feature idea: dark mode,Would love a dark mode option.
+T-20175,Willow Foods Co,2026-07-23T10:44:00,closed,low,billing,Invoice looks wrong,"Hi, our latest invoice charges us for 18 seats but we only have 14. Please fix before we pay."
+T-20176,Meridian Dental,2026-07-27T09:04:00,closed,normal,how-to,How do I add a user?,Where do I go to invite a new teammate?
+T-20177,Maple Realty Inc,2026-08-06T16:37:00,closed,low,bug,Export is broken,The CSV export has been failing since Tuesday. This is blocking our month-end.
+T-20178,Maple Partners,2026-10-25T09:50:00,closed,low,feature request,Bulk edit,It would be great to bulk edit records.
+T-20179,Orchard Realty LLC,2026-07-27T09:09:00,closed,normal,billing,Overcharged this month,We were overcharged on invoice our last invoice. The price per seat doesn't match our contract.
+T-20180,maple foods llc,2026-08-05T17:15:00,closed,normal,bug,Dashboard not loading,The main dashboard spins forever for half the team. Very frustrating.
+T-20181,Pinecrest Freight LLC,2026-07-13T12:10:00,closed,low,feature request,Feature idea: dark mode,Would love a dark mode option.
+T-20182,Meridian Analytics,2026-10-01T10:28:00,closed,normal,feature request,Bulk edit,It would be great to bulk edit records.
+T-20183,Highland Clinics,2026-07-24T14:07:00,closed,high,billing,Dispute on invoice our last invoice,We dispute this invoice. We cancelled the add-on in June but are still being charged.
+T-20184,Willow Foods Co,2026-07-16T12:35:00,closed,normal,billing,Dispute on invoice our last invoice,We dispute this invoice. We cancelled the add-on in June but are still being charged.
+T-20185,Northwind Studios,2026-08-11T12:43:00,closed,high,how-to,Change report dates,How can I change the default date range on reports?
+T-20186,Silverline Clinics,2026-09-09T09:57:00,closed,high,how-to,Change report dates,How can I change the default date range on reports?
+T-20187,silverline clinics co,2026-07-06T15:43:00,closed,normal,bug,Export is broken,The CSV export has been failing since Tuesday. This is blocking our month-end.
+T-20188,Juniper Software LLC,2026-09-05T17:06:00,closed,low,how-to,How do I add a user?,Where do I go to invite a new teammate?
+T-20189,Evergreen Logistics,2026-07-22T14:07:00,closed,normal,billing,Double charged?,It looks like we were billed twice for the same period. Can you check and refund?
+T-20190,meridian dental group,2026-10-01T17:37:00,closed,high,bug,Dashboard not loading,The main dashboard spins forever for half the team. Very frustrating.
+T-20191,Oakridge Supply,2026-10-11T14:31:00,closed,high,bug,Dashboard not loading,The main dashboard spins forever for half the team. Very frustrating.
+T-20192,Upland Logistics,2026-10-07T10:01:00,closed,low,how-to,Change report dates,How can I change the default date range on reports?
+T-20193,keystone builders inc,2026-09-22T14:38:00,closed,high,bug,Sync errors,We keep getting sync errors and lost two days of entries.
+T-20194,highland clinics llc,2026-08-08T15:50:00,closed,low,how-to,How do I add a user?,Where do I go to invite a new teammate?
+T-20195,brightway builders inc,2026-09-23T16:34:00,closed,normal,how-to,SSO setup,Do you have docs for setting up single sign-on?
+T-20196,Maple Realty,2026-07-05T14:28:00,closed,high,billing,Invoice looks wrong,"Hi, our latest invoice charges us for 115 seats but we only have 109. Please fix before we pay."
+T-20197,Upland Partners,2026-07-23T10:19:00,closed,normal,how-to,SSO setup,Do you have docs for setting up single sign-on?
+T-20198,Maple Dental,2026-10-06T17:30:00,closed,high,how-to,SSO setup,Do you have docs for setting up single sign-on?
+T-20199,Foxglove Clinics,2026-07-21T14:39:00,closed,high,feature request,Bulk edit,It would be great to bulk edit records.
+T-20200,Highland Clinics LLC,2026-08-06T13:22:00,closed,low,how-to,SSO setup,Do you have docs for setting up single sign-on?
+T-20201,Tidewater Foods,2026-07-04T13:26:00,closed,normal,bug,Dashboard not loading,The main dashboard spins forever for half the team. Very frustrating.
+T-20202,quarry foods inc,2026-08-01T09:55:00,closed,normal,how-to,SSO setup,Do you have docs for setting up single sign-on?
+T-20203,Foxglove Analytics LLC,2026-07-22T14:36:00,closed,low,how-to,SSO setup,Do you have docs for setting up single sign-on?
+T-20204,Upland Logistics Inc,2026-08-04T14:20:00,closed,high,billing,Invoice looks wrong,"Hi, our latest invoice charges us for 13 seats but we only have 8. Please fix before we pay."
+T-20205,Oakridge Logistics,2026-09-01T13:10:00,closed,normal,how-to,Change report dates,How can I change the default date range on reports?
+T-20206,Cedar Dental Inc,2026-08-25T08:19:00,closed,low,how-to,SSO setup,Do you have docs for setting up single sign-on?
+T-20207,Oakridge Logistics,2026-07-29T17:21:00,closed,low,how-to,SSO setup,Do you have docs for setting up single sign-on?
+T-20208,oakridge supply inc,2026-10-11T12:32:00,closed,high,how-to,How do I add a user?,Where do I go to invite a new teammate?
+T-20209,Keystone Labs LLC,2026-09-23T16:29:00,closed,normal,how-to,Change report dates,How can I change the default date range on reports?
+T-20210,Oakridge Partners,2026-07-24T10:36:00,closed,low,bug,Sync errors,We keep getting sync errors and lost two days of entries.
+T-20211,Evergreen Analytics,2026-10-14T17:54:00,closed,high,how-to,Change report dates,How can I change the default date range on reports?
+T-20212,Foxglove Labs,2026-10-28T11:09:00,closed,low,billing,Overcharged this month,We were overcharged on invoice our last invoice. The price per seat doesn't match our contract.
+T-20213,cedar outfitters inc,2026-08-08T09:40:00,closed,high,bug,Dashboard not loading,The main dashboard spins forever for half the team. Very frustrating.
+T-20214,Cedar Logistics,2026-08-04T14:15:00,closed,normal,bug,Dashboard not loading,The main dashboard spins forever for half the team. Very frustrating.
+T-20215,Granite Freight,2026-07-04T14:27:00,closed,normal,how-to,Change report dates,How can I change the default date range on reports?
+T-20216,Vantage Partners LLC,2026-07-26T12:42:00,closed,normal,billing,Double charged?,It looks like we were billed twice for the same period. Can you check and refund?
+T-20217,driftwood foods llc,2026-10-18T09:20:00,closed,high,how-to,How do I add a user?,Where do I go to invite a new teammate?
+T-20218,maple outfitters,2026-07-09T14:53:00,pending,normal,how-to,SSO setup,Do you have docs for setting up single sign-on?
+T-20219,northwind studios,2026-07-31T16:16:00,closed,low,bug,Sync errors,We keep getting sync errors and lost two days of entries.
+T-20220,Evergreen Analytics,2026-07-31T14:51:00,closed,normal,bug,Dashboard not loading,The main dashboard spins forever for half the team. Very frustrating.
+T-20221,Cedar Outfitters Inc,2026-08-07T12:28:00,closed,normal,bug,Export is broken,The CSV export has been failing since Tuesday. This is blocking our month-end.
+T-20222,Willow Labs Inc,2026-09-14T09:20:00,closed,low,how-to,Change report dates,How can I change the default date range on reports?
+T-20223,meridian supply co,2026-09-26T13:30:00,closed,normal,how-to,Change report dates,How can I change the default date range on reports?
+T-20224,maple dental co,2026-08-09T08:44:00,closed,low,how-to,SSO setup,Do you have docs for setting up single sign-on?
+T-20225,Oakridge Outfitters,2026-08-02T09:34:00,closed,normal,bug,Sync errors,We keep getting sync errors and lost two days of entries.
+T-20226,Orchard Labs Inc,2026-08-19T11:19:00,closed,high,bug,Dashboard not loading,The main dashboard spins forever for half the team. Very frustrating.
+T-20227,cedar logistics inc,2026-07-21T15:30:00,pending,high,bug,Export is broken,The CSV export has been failing since Tuesday. This is blocking our month-end.
+T-20228,Evergreen Logistics LLC,2026-10-16T12:32:00,closed,high,how-to,How do I add a user?,Where do I go to invite a new teammate?
+T-20229,Northwind Partners LLC,2026-09-16T08:41:00,closed,normal,how-to,Change report dates,How can I change the default date range on reports?
+T-20230,Vantage Partners LLC,2026-08-26T12:20:00,closed,normal,how-to,How do I add a user?,Where do I go to invite a new teammate?
+T-20231,Oakridge Logistics,2026-07-21T13:28:00,closed,normal,how-to,SSO setup,Do you have docs for setting up single sign-on?
+T-20232,Foxglove Outfitters,2026-07-18T13:51:00,closed,normal,bug,Export is broken,The CSV export has been failing since Tuesday. This is blocking our month-end.
+T-20233,ironwood partners inc,2026-08-23T11:01:00,closed,high,how-to,Change report dates,How can I change the default date range on reports?
+T-20234,Maple Realty Inc,2026-09-21T10:03:00,closed,normal,billing,Invoice looks wrong,"Hi, our latest invoice charges us for 115 seats but we only have 109. Please fix before we pay."
+T-20235,redstone foods llc,2026-09-15T09:00:00,closed,low,bug,Dashboard not loading,The main dashboard spins forever for half the team. Very frustrating.
+T-20236,maple dental co,2026-10-07T11:55:00,pending,high,feature request,Feature idea: dark mode,Would love a dark mode option.
+T-20237,Redstone Freight,2026-08-06T11:38:00,closed,high,bug,Dashboard not loading,The main dashboard spins forever for half the team. Very frustrating.
+T-20238,Maple Software,2026-08-06T10:01:00,closed,normal,billing,Dispute on invoice our last invoice,We dispute this invoice. We cancelled the add-on in June but are still being charged.
+T-20239,Silverline Health,2026-07-31T15:05:00,closed,high,billing,Overcharged this month,We were overcharged on invoice our last invoice. The price per seat doesn't match our contract.
+T-20240,Highland Health LLC,2026-08-20T14:47:00,closed,high,feature request,Feature idea: dark mode,Would love a dark mode option.
+T-20241,pinecrest foods inc,2026-07-13T15:58:00,closed,low,how-to,How do I add a user?,Where do I go to invite a new teammate?
+T-20242,Vantage Freight,2026-07-07T14:19:00,closed,low,billing,Invoice looks wrong,"Hi, our latest invoice charges us for 64 seats but we only have 59. Please fix before we pay."
+T-20243,Northstar Studios Group,2026-07-17T16:31:00,closed,low,bug,Sync errors,We keep getting sync errors and lost two days of entries.
+T-20244,Oakridge Studios Inc,2026-07-17T08:08:00,closed,high,bug,Export is broken,The CSV export has been failing since Tuesday. This is blocking our month-end.
+T-20245,evergreen analytics inc,2026-10-15T12:39:00,closed,normal,bug,Dashboard not loading,The main dashboard spins forever for half the team. Very frustrating.
+T-20246,Bluepeak Supply Inc,2026-08-03T15:48:00,closed,normal,bug,Dashboard not loading,The main dashboard spins forever for half the team. Very frustrating.
+T-20247,Driftwood Health LLC,2026-10-27T11:11:00,closed,high,feature request,Feature idea: dark mode,Would love a dark mode option.
+T-20248,Northstar Partners Inc,2026-07-21T13:45:00,closed,high,feature request,Feature idea: dark mode,Would love a dark mode option.
+T-20249,Redstone Software LLC,2026-09-02T12:11:00,closed,normal,feature request,Feature idea: dark mode,Would love a dark mode option.
+T-20250,Bluepeak Supply,2026-09-04T17:00:00,closed,normal,how-to,SSO setup,Do you have docs for setting up single sign-on?
+T-20251,willow software llc,2026-07-24T09:56:00,closed,high,bug,Export is broken,The CSV export has been failing since Tuesday. This is blocking our month-end.
+T-20252,orchard dental llc,2026-09-26T09:53:00,open,high,how-to,Change report dates,How can I change the default date range on reports?
+T-20253,Keystone Analytics,2026-07-11T12:38:00,closed,high,how-to,SSO setup,Do you have docs for setting up single sign-on?
+T-20254,driftwood freight llc,2026-07-06T17:08:00,closed,high,how-to,Change report dates,How can I change the default date range on reports?
+T-20255,Maple Software Co,2026-07-10T09:35:00,closed,normal,bug,Dashboard not loading,The main dashboard spins forever for half the team. Very frustrating.
+T-20256,Maple Outfitters,2026-08-21T11:10:00,closed,normal,how-to,Change report dates,How can I change the default date range on reports?
+T-20257,Highland Studios,2026-08-06T14:47:00,closed,normal,bug,Export is broken,The CSV export has been failing since Tuesday. This is blocking our month-end.
+T-20258,Tidewater Foods Inc,2026-07-05T13:32:00,closed,normal,billing,Double charged?,It looks like we were billed twice for the same period. Can you check and refund?
+T-20259,clearwater foods inc,2026-10-22T13:39:00,closed,normal,feature request,Bulk edit,It would be great to bulk edit records.
+T-20260,Lakeside Supply,2026-08-24T10:59:00,closed,normal,how-to,Change report dates,How can I change the default date range on reports?
+T-20261,Evergreen Analytics Inc,2026-09-21T15:19:00,closed,normal,feature request,Bulk edit,It would be great to bulk edit records.
+T-20262,Driftwood Health LLC,2026-09-26T09:58:00,open,high,billing,Double charged?,It looks like we were billed twice for the same period. Can you check and refund?
+T-20263,Clearwater Freight,2026-09-04T17:52:00,closed,high,feature request,Bulk edit,It would be great to bulk edit records.
+T-20264,Redstone Analytics,2026-09-13T10:50:00,closed,low,how-to,How do I add a user?,Where do I go to invite a new teammate?
+T-20265,lakeside supply,2026-07-06T15:39:00,closed,normal,bug,Dashboard not loading,The main dashboard spins forever for half the team. Very frustrating.
+T-20266,tidewater foods inc,2026-09-07T17:16:00,closed,normal,how-to,How do I add a user?,Where do I go to invite a new teammate?
+T-20267,Highland Clinics LLC,2026-09-07T15:29:00,closed,high,how-to,How do I add a user?,Where do I go to invite a new teammate?
+T-20268,foxglove supply co,2026-09-23T17:23:00,closed,high,how-to,Change report dates,How can I change the default date range on reports?
+T-20269,Foxglove Supply Co,2026-09-27T08:12:00,closed,high,bug,Dashboard not loading,The main dashboard spins forever for half the team. Very frustrating.
+T-20270,Granite Freight Co,2026-09-28T11:27:00,open,normal,bug,Dashboard not loading,The main dashboard spins forever for half the team. Very frustrating.
+T-20271,silverline clinics co,2026-07-24T10:30:00,closed,normal,bug,Export is broken,The CSV export has been failing since Tuesday. This is blocking our month-end.
+T-20272,Summit Realty,2026-07-22T15:30:00,closed,normal,how-to,SSO setup,Do you have docs for setting up single sign-on?
+T-20273,Maple Realty,2026-09-13T14:03:00,closed,normal,bug,Export is broken,The CSV export has been failing since Tuesday. This is blocking our month-end.
+T-20274,Orchard Dental,2026-09-19T17:38:00,closed,high,how-to,Change report dates,How can I change the default date range on reports?
+T-20275,Maple Studios,2026-08-07T17:46:00,closed,low,feature request,Bulk edit,It would be great to bulk edit records.
+T-20276,Cedar Dental Inc,2026-10-24T08:27:00,closed,high,billing,Overcharged this month,We were overcharged on invoice our last invoice. The price per seat doesn't match our contract.
+T-20277,Oakridge Logistics,2026-07-09T13:28:00,closed,high,how-to,Change report dates,How can I change the default date range on reports?
+T-20278,Upland Outfitters,2026-07-21T15:14:00,closed,normal,how-to,SSO setup,Do you have docs for setting up single sign-on?
+T-20279,pinecrest freight llc,2026-10-25T14:26:00,closed,high,how-to,How do I add a user?,Where do I go to invite a new teammate?
+T-20280,bluepeak supply inc,2026-09-22T10:39:00,closed,normal,billing,Dispute on invoice our last invoice,We dispute this invoice. We cancelled the add-on in June but are still being charged.
+T-20281,Cedar Logistics Inc,2026-10-04T17:31:00,closed,high,how-to,How do I add a user?,Where do I go to invite a new teammate?
+T-20282,Keystone Builders,2026-07-29T08:22:00,closed,normal,bug,Export is broken,The CSV export has been failing since Tuesday. This is blocking our month-end.
+T-20283,Foxglove Health,2026-07-21T17:14:00,closed,low,how-to,How do I add a user?,Where do I go to invite a new teammate?
+T-20284,Orchard Realty LLC,2026-09-01T08:49:00,closed,normal,feature request,Bulk edit,It would be great to bulk edit records.
+T-20285,Redstone Software,2026-07-20T09:06:00,open,low,how-to,Change report dates,How can I change the default date range on reports?
+T-20286,Oakridge Outfitters,2026-10-09T09:55:00,open,low,bug,Sync errors,We keep getting sync errors and lost two days of entries.
+T-20287,cedar logistics inc,2026-07-21T10:41:00,closed,high,billing,Dispute on invoice our last invoice,We dispute this invoice. We cancelled the add-on in June but are still being charged.
+T-20288,upland realty co,2026-07-18T08:15:00,closed,normal,how-to,Change report dates,How can I change the default date range on reports?
+T-20289,Bluepeak Supply Inc,2026-08-13T13:45:00,closed,normal,bug,Sync errors,We keep getting sync errors and lost two days of entries.
+T-20290,meridian analytics inc,2026-09-19T10:51:00,closed,normal,how-to,SSO setup,Do you have docs for setting up single sign-on?
+T-20291,Summit Realty,2026-08-22T08:28:00,closed,high,how-to,SSO setup,Do you have docs for setting up single sign-on?
+T-20292,Redstone Builders Co,2026-09-30T10:27:00,closed,low,bug,Export is broken,The CSV export has been failing since Tuesday. This is blocking our month-end.
+T-20293,maple partners,2026-07-05T16:18:00,closed,normal,how-to,SSO setup,Do you have docs for setting up single sign-on?
+T-20294,Juniper Logistics LLC,2026-09-26T13:00:00,closed,normal,how-to,SSO setup,Do you have docs for setting up single sign-on?
+T-20295,Upland Builders,2026-09-06T11:56:00,closed,normal,how-to,SSO setup,Do you have docs for setting up single sign-on?
+T-20296,meridian supply co,2026-09-18T14:49:00,closed,high,bug,Sync errors,We keep getting sync errors and lost two days of entries.
+T-20297,clearwater foods inc,2026-07-11T10:33:00,closed,normal,bug,Dashboard not loading,The main dashboard spins forever for half the team. Very frustrating.
+T-20298,meridian supply co,2026-07-12T10:01:00,closed,normal,how-to,SSO setup,Do you have docs for setting up single sign-on?
+T-20299,Summit Supply,2026-09-08T16:07:00,closed,normal,bug,Dashboard not loading,The main dashboard spins forever for half the team. Very frustrating.
+T-20300,Maple Studios LLC,2026-08-17T08:48:00,closed,normal,how-to,SSO setup,Do you have docs for setting up single sign-on?
+T-20301,orchard partners llc,2026-08-27T17:36:00,closed,low,billing,Dispute on invoice our last invoice,We dispute this invoice. We cancelled the add-on in June but are still being charged.
+T-20302,Maple Dental Co,2026-09-19T17:43:00,closed,normal,bug,Dashboard not loading,The main dashboard spins forever for half the team. Very frustrating.
+T-20303,Cedar Freight,2026-09-05T13:29:00,closed,low,bug,Dashboard not loading,The main dashboard spins forever for half the team. Very frustrating.
+T-20304,Keystone Builders Inc,2026-08-24T10:30:00,closed,high,how-to,How do I add a user?,Where do I go to invite a new teammate?
+T-20305,Maple Software,2026-08-17T14:55:00,closed,high,how-to,SSO setup,Do you have docs for setting up single sign-on?
+T-20306,foxglove health inc,2026-09-20T10:09:00,closed,high,feature request,Bulk edit,It would be great to bulk edit records.
+T-20307,Pinecrest Freight,2026-09-30T08:47:00,closed,low,how-to,SSO setup,Do you have docs for setting up single sign-on?
+T-20308,Bluepeak Clinics Group,2026-08-17T12:02:00,open,high,billing,Invoice looks wrong,"Hi, our latest invoice charges us for 9 seats but we only have 6. Please fix before we pay."
+T-20309,Northstar Clinics,2026-08-17T10:09:00,closed,normal,how-to,Change report dates,How can I change the default date range on reports?
+T-20310,oakridge outfitters,2026-07-07T15:00:00,pending,normal,feature request,Feature idea: dark mode,Would love a dark mode option.
+T-20311,Orchard Realty,2026-07-09T17:28:00,closed,low,feature request,Bulk edit,It would be great to bulk edit records.
+T-20312,Oakridge Studios,2026-08-30T15:42:00,closed,normal,bug,Export is broken,The CSV export has been failing since Tuesday. This is blocking our month-end.
+T-20313,silverline freight,2026-10-02T13:34:00,closed,high,how-to,Change report dates,How can I change the default date range on reports?
+T-20314,Clearwater Freight Inc,2026-08-05T08:36:00,closed,normal,billing,Invoice looks wrong,"Hi, our latest invoice charges us for 34 seats but we only have 25. Please fix before we pay."
+T-20315,Juniper Partners LLC,2026-09-29T16:05:00,closed,normal,bug,Sync errors,We keep getting sync errors and lost two days of entries.
+T-20316,Northstar Builders,2026-09-08T08:07:00,closed,low,billing,Overcharged this month,We were overcharged on invoice our last invoice. The price per seat doesn't match our contract.
+T-20317,driftwood freight llc,2026-07-24T17:28:00,pending,normal,billing,Overcharged this month,We were overcharged on invoice our last invoice. The price per seat doesn't match our contract.
+T-20318,Brightway Freight LLC,2026-09-16T08:21:00,closed,normal,bug,Dashboard not loading,The main dashboard spins forever for half the team. Very frustrating.
+T-20319,Ironwood Software Inc,2026-07-04T09:34:00,closed,normal,how-to,Change report dates,How can I change the default date range on reports?
+T-20320,Brightway Dental Group,2026-07-24T14:43:00,closed,normal,how-to,How do I add a user?,Where do I go to invite a new teammate?
+T-20321,Brightway Dental Group,2026-08-11T14:06:00,closed,normal,how-to,How do I add a user?,Where do I go to invite a new teammate?
+T-20322,maple builders inc,2026-08-20T08:12:00,closed,normal,how-to,Change report dates,How can I change the default date range on reports?
+T-20323,Orchard Labs Inc,2026-09-14T15:35:00,closed,high,bug,Export is broken,The CSV export has been failing since Tuesday. This is blocking our month-end.
+T-20324,willow labs inc,2026-07-04T08:17:00,closed,high,how-to,SSO setup,Do you have docs for setting up single sign-on?
+T-20325,Driftwood Foods,2026-09-25T09:54:00,closed,normal,billing,Double charged?,It looks like we were billed twice for the same period. Can you check and refund?
+T-20326,harbor realty inc,2026-10-09T16:28:00,pending,normal,feature request,Feature idea: dark mode,Would love a dark mode option.
+T-20327,Clearwater Freight Inc,2026-08-29T15:17:00,closed,normal,how-to,SSO setup,Do you have docs for setting up single sign-on?
+T-20328,Pinecrest Foods,2026-09-26T17:53:00,closed,high,how-to,Change report dates,How can I change the default date range on reports?
+T-20329,Upland Logistics Inc,2026-07-21T09:53:00,closed,low,how-to,Change report dates,How can I change the default date range on reports?
+T-20330,Cedar Freight,2026-08-05T15:17:00,open,normal,bug,Sync errors,We keep getting sync errors and lost two days of entries.
+T-20331,Lakeside Analytics LLC,2026-08-11T10:41:00,closed,high,bug,Sync errors,We keep getting sync errors and lost two days of entries.
+T-20332,evergreen dental inc,2026-07-01T14:34:00,open,high,bug,Sync errors,We keep getting sync errors and lost two days of entries.
+T-20333,brightway freight llc,2026-09-22T15:43:00,closed,low,bug,Sync errors,We keep getting sync errors and lost two days of entries.
+T-20334,orchard realty llc,2026-08-13T08:07:00,closed,normal,how-to,Change report dates,How can I change the default date range on reports?
+T-20335,brightway builders inc,2026-07-25T13:12:00,closed,normal,how-to,SSO setup,Do you have docs for setting up single sign-on?
+T-20336,Upland Studios Co,2026-09-19T15:23:00,closed,normal,bug,Sync errors,We keep getting sync errors and lost two days of entries.
+T-20337,northstar partners inc,2026-10-24T14:07:00,closed,normal,how-to,How do I add a user?,Where do I go to invite a new teammate?
+T-20338,cedar studios inc,2026-09-02T17:36:00,closed,normal,feature request,Feature idea: dark mode,Would love a dark mode option.
+T-20339,cedar partners co,2026-07-17T11:56:00,closed,low,how-to,How do I add a user?,Where do I go to invite a new teammate?
+T-20340,Northstar Clinics,2026-08-05T12:43:00,closed,low,bug,Sync errors,We keep getting sync errors and lost two days of entries.
+T-20341,redstone software llc,2026-07-01T12:07:00,open,normal,bug,Dashboard not loading,The main dashboard spins forever for half the team. Very frustrating.
+T-20342,Granite Health Group,2026-09-02T14:34:00,closed,low,feature request,Feature idea: dark mode,Would love a dark mode option.
+T-20343,Silverline Freight,2026-08-20T11:44:00,closed,low,how-to,SSO setup,Do you have docs for setting up single sign-on?
+T-20344,Summit Realty Inc,2026-08-30T09:01:00,closed,normal,billing,Overcharged this month,We were overcharged on invoice our last invoice. The price per seat doesn't match our contract.
+T-20345,Foxglove Outfitters,2026-07-04T11:21:00,closed,normal,how-to,Change report dates,How can I change the default date range on reports?
+T-20346,Bluepeak Supply,2026-08-12T15:48:00,closed,normal,how-to,How do I add a user?,Where do I go to invite a new teammate?
+T-20347,keystone builders inc,2026-09-13T14:20:00,closed,low,bug,Export is broken,The CSV export has been failing since Tuesday. This is blocking our month-end.
+T-20348,Maple Foods LLC,2026-09-14T14:04:00,closed,low,bug,Dashboard not loading,The main dashboard spins forever for half the team. Very frustrating.
+T-20349,Juniper Software,2026-09-10T14:14:00,closed,high,bug,Dashboard not loading,The main dashboard spins forever for half the team. Very frustrating.
+T-20350,Pinecrest Foods,2026-09-18T14:56:00,closed,low,bug,Dashboard not loading,The main dashboard spins forever for half the team. Very frustrating.
+T-20351,Vantage Builders Inc,2026-08-13T11:06:00,closed,low,bug,Dashboard not loading,The main dashboard spins forever for half the team. Very frustrating.
+T-20352,Juniper Software,2026-09-30T12:22:00,closed,normal,how-to,SSO setup,Do you have docs for setting up single sign-on?
+T-20353,Juniper Logistics LLC,2026-09-18T10:19:00,closed,normal,feature request,Feature idea: dark mode,Would love a dark mode option.
+T-20354,quarry labs inc,2026-09-22T10:30:00,closed,normal,how-to,SSO setup,Do you have docs for setting up single sign-on?
+T-20355,Foxglove Analytics,2026-08-07T10:03:00,closed,normal,bug,Export is broken,The CSV export has been failing since Tuesday. This is blocking our month-end.

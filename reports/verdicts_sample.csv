@@ -1,0 +1,91 @@
+invoice_id,customer,amount,days_overdue,verdict,cause,needs_review,why
+1802,Pinecrest Foods Inc,6555.0,15,send,simply_late,False,"Second reminder: 15 days overdue, nothing blocking"
+1509,Harbor Foods Inc,5865.0,15,send,simply_late,False,"Second reminder: 15 days overdue, nothing blocking"
+1205,Redstone Builders Co,5439.0,30,send,card_failed,False,Card failed: send the update-card note
+1036,Maple Realty Inc,5341.0,15,send,simply_late,False,"Second reminder: 15 days overdue, nothing blocking"
+1924,Foxglove Supply Co,5310.0,30,send,simply_late,False,"Final reminder: 30 days overdue, nothing blocking"
+1630,Upland Partners Co,4830.0,30,send,unhappy,False,Send a softer reminder (open product complaint)
+1496,Vantage Freight Inc,4661.0,15,send,card_failed,False,Card failed: send the update-card note
+1569,Willow Labs Inc,4012.0,15,send,unhappy,False,Send a softer reminder (open product complaint)
+1766,Brightway Software,3900.0,15,send,simply_late,False,"Second reminder: 15 days overdue, nothing blocking"
+2130,Silverline Clinics Co,3363.0,30,send,simply_late,False,"Final reminder: 30 days overdue, nothing blocking"
+1122,Upland Studios Co,3243.0,15,send,simply_late,False,"Second reminder: 15 days overdue, nothing blocking"
+1668,Juniper Health LLC,2646.0,15,send,simply_late,False,"Second reminder: 15 days overdue, nothing blocking"
+1828,Juniper Partners LLC,1422.0,30,send,card_failed,False,Card failed: send the update-card note
+1593,Summit Realty Inc,1380.0,30,send,simply_late,False,"Final reminder: 30 days overdue, nothing blocking"
+2008,Cedar Outfitters Inc,1225.0,15,send,simply_late,False,"Second reminder: 15 days overdue, nothing blocking"
+1411,Silverline Health Inc,1078.0,30,send,simply_late,False,"Final reminder: 30 days overdue, nothing blocking"
+1313,Maple Software Co,1078.0,30,send,card_failed,False,Card failed: send the update-card note
+1133,Keystone Builders Inc,931.0,30,send,unhappy,False,Send a softer reminder (open product complaint)
+1533,Highland Studios Group,780.0,15,send,simply_late,False,"Second reminder: 15 days overdue, nothing blocking"
+1241,Brightway Dental Group,690.0,15,send,card_failed,False,Card failed: send the update-card note
+1424,Granite Partners LLC,624.0,15,send,simply_late,False,"Second reminder: 15 days overdue, nothing blocking"
+1072,Northwind Dental LLC,507.0,15,send,unhappy,False,Send a softer reminder (open product complaint)
+1716,Willow Software LLC,234.0,15,send,simply_late,False,"Second reminder: 15 days overdue, nothing blocking"
+1545,Northstar Studios Group,195.0,30,send,simply_late,False,"Final reminder: 30 days overdue, nothing blocking"
+1790,Summit Outfitters Co,8004.0,15,hold,unhappy,False,Open billing complaint: chasing payment now would make it worse.
+1277,Northstar Builders Co,7347.0,15,hold,unhappy,True,An open ticket might be a billing complaint or a serious escalation (the AI judges disagreed). We don't chase until a person reads it.
+1656,Foxglove Outfitters,4345.0,15,hold,unhappy,False,Open billing complaint: chasing payment now would make it worse.
+1655,Foxglove Outfitters,4345.0,45,hold,unhappy,False,Open billing complaint: chasing payment now would make it worse.
+1398,Cedar Studios Inc,4278.0,30,hold,unhappy,False,Open billing complaint: chasing payment now would make it worse.
+1023,Highland Health LLC,2070.0,15,hold,wrong_bill,False,"The bill doesn't match the contract: billed for 30 seats, contract says 20. Fix the bill before asking for money."
+1337,Meridian Dental Group,1989.0,15,hold,wrong_bill,False,"The bill doesn't match the contract: billed for 51 seats, contract says 45. Fix the bill before asking for money."
+2082,Tidewater Foods Inc,1794.0,30,hold,wrong_bill,False,A billing ticket from 2026-07-05 is closed. Mentioned for context; it doesn't block the reminder.
+1061,Clearwater Freight Inc,1475.0,15,hold,unhappy,False,Open billing complaint: chasing payment now would make it worse.
+1060,Clearwater Freight Inc,1475.0,45,hold,unhappy,False,Open billing complaint: chasing payment now would make it worse.
+1816,Vantage Builders Inc,1449.0,30,hold,unhappy,False,Serious open escalation with support. Money talk waits until it's resolved.
+1605,Ironwood Software Inc,1311.0,30,hold,unhappy,False,Serious open escalation with support. Money talk waits until it's resolved.
+1604,Ironwood Software Inc,1311.0,61,hold,unhappy,False,Serious open escalation with support. Money talk waits until it's resolved.
+1853,Vantage Partners LLC,1106.0,15,hold,unhappy,False,Open billing complaint: chasing payment now would make it worse.
+1852,Vantage Partners LLC,1106.0,45,hold,unhappy,False,Open billing complaint: chasing payment now would make it worse.
+2095,Redstone Freight Group,1092.0,15,hold,wrong_bill,False,"The bill doesn't match the contract: billed for 28 seats, contract says 24. Fix the bill before asking for money."
+2142,Maple Foods LLC,1035.0,30,hold,unhappy,False,Serious open escalation with support. Money talk waits until it's resolved.
+1618,Tidewater Studios Inc,1035.0,15,hold,unhappy,False,Open billing complaint: chasing payment now would make it worse.
+1617,Tidewater Studios Inc,1035.0,45,hold,unhappy,False,Open billing complaint: chasing payment now would make it worse.
+1616,Tidewater Studios Inc,1035.0,76,hold,unhappy,False,Open billing complaint: chasing payment now would make it worse.
+1888,Oakridge Partners LLC,936.0,15,hold,wrong_bill,False,A billing ticket from 2026-09-04 is closed. Mentioned for context; it doesn't block the reminder.
+1447,Maple Builders Inc,833.0,30,hold,wrong_bill,False,"The bill doesn't match the contract: billed for 17 seats, contract says 7. Fix the bill before asking for money."
+2070,Clearwater Labs LLC,819.0,15,hold,unhappy,False,Open billing complaint: chasing payment now would make it worse.
+2119,Bluepeak Supply Inc,784.0,15,hold,unhappy,False,Open billing complaint: chasing payment now would make it worse.
+1109,Brightway Freight LLC,708.0,30,hold,unhappy,True,An open ticket might be a billing complaint or a serious escalation (the AI judges disagreed). We don't chase until a person reads it.
+1108,Brightway Freight LLC,708.0,61,hold,unhappy,True,An open ticket might be a billing complaint or a serious escalation (the AI judges disagreed). We don't chase until a person reads it.
+1107,Brightway Freight LLC,708.0,92,hold,unhappy,True,An open ticket might be a billing complaint or a serious escalation (the AI judges disagreed). We don't chase until a person reads it.
+1741,Meridian Supply Co,624.0,15,hold,unhappy,False,Open billing complaint: chasing payment now would make it worse.
+1253,Cedar Partners Co,585.0,30,hold,unhappy,True,An open ticket might be a billing complaint or a serious escalation (the AI judges disagreed). We don't chase until a person reads it.
+2154,Brightway Labs LLC,429.0,15,hold,unhappy,False,Open billing complaint: chasing payment now would make it worse.
+1459,Keystone Analytics Group,7979.0,15,paid,paid,False,An unmatched bank payment from this customer equals this bill. It was probably paid but never matched.
+1984,Maple Studios LLC,7268.0,15,paid,paid,False,"A payment linked to this bill was received, but the accounting export still shows it open."
+1508,Harbor Foods Inc,5865.0,46,paid,paid,True,An unmatched bank payment from this customer equals this bill. It was probably paid but never matched.
+1034,Maple Realty Inc,5341.0,76,paid,paid,True,An unmatched bank payment from this customer equals this bill. It was probably paid but never matched.
+1435,Foxglove Analytics LLC,4209.0,15,paid,paid,False,An unmatched bank payment from this customer equals this bill. It was probably paid but never matched.
+2129,Silverline Clinics Co,3363.0,61,paid,paid,True,An unmatched bank payment from this customer equals this bill. It was probably paid but never matched.
+1667,Juniper Health LLC,2646.0,45,paid,paid,True,An unmatched bank payment from this customer equals this bill. It was probably paid but never matched.
+1936,Upland Outfitters,1725.0,30,paid,paid,False,An unmatched bank payment from this customer equals this bill. It was probably paid but never matched.
+1170,Orchard Realty LLC,1298.0,15,paid,paid,False,"A payment linked to this bill was received, but the accounting export still shows it open."
+1531,Highland Studios Group,780.0,77,paid,paid,True,An unmatched bank payment from this customer equals this bill. It was probably paid but never matched.
+1098,Granite Supply Inc,531.0,15,paid,paid,False,"A payment linked to this bill was received, but the accounting export still shows it open."
+1983,Maple Studios LLC,7268.0,46,call,simply_late,False,Call: 46 days overdue
+1982,Maple Studios LLC,7268.0,77,call,simply_late,False,Call: 77 days overdue
+1035,Maple Realty Inc,5341.0,45,call,simply_late,False,Call: 45 days overdue
+1923,Foxglove Supply Co,5310.0,61,call,simply_late,False,Call: 61 days overdue
+1922,Foxglove Supply Co,5310.0,92,call,simply_late,False,Call: 92 days overdue
+1629,Upland Partners Co,4830.0,61,call,unhappy,False,Call: 61 days overdue
+1765,Brightway Software,3900.0,45,call,simply_late,False,Call: 45 days overdue
+1121,Upland Studios Co,3243.0,45,call,simply_late,False,Call: 45 days overdue
+1120,Upland Studios Co,3243.0,76,call,simply_late,False,Call: 76 days overdue
+9001,Westbrook Consulting,1800.0,122,call,simply_late,True,Call: 122 days overdue
+1827,Juniper Partners LLC,1422.0,61,call,simply_late,False,Call: 61 days overdue
+1826,Juniper Partners LLC,1422.0,92,call,simply_late,False,Call: 92 days overdue
+2081,Tidewater Foods Inc,1380.0,61,call,simply_late,False,Call: 61 days overdue
+1592,Summit Realty Inc,1380.0,61,call,simply_late,False,Call: 61 days overdue
+1591,Summit Realty Inc,1380.0,92,call,simply_late,False,Call: 92 days overdue
+1312,Maple Software Co,1078.0,61,call,simply_late,False,Call: 61 days overdue
+1132,Keystone Builders Inc,931.0,61,call,unhappy,False,Call: 61 days overdue
+1131,Keystone Builders Inc,931.0,92,call,unhappy,False,Call: 92 days overdue
+1532,Highland Studios Group,780.0,46,call,simply_late,False,Call: 46 days overdue
+1423,Granite Partners LLC,624.0,45,call,simply_late,False,Call: 45 days overdue
+1071,Northwind Dental LLC,507.0,46,call,unhappy,False,Call: 46 days overdue
+1070,Northwind Dental LLC,507.0,77,call,unhappy,False,Call: 77 days overdue
+1715,Willow Software LLC,234.0,46,call,simply_late,False,Call: 46 days overdue
+1714,Willow Software LLC,234.0,77,call,simply_late,False,Call: 77 days overdue
+1544,Northstar Studios Group,195.0,61,call,simply_late,False,Call: 61 days overdue

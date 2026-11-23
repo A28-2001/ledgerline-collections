@@ -1,0 +1,18 @@
+# Real data room files stay out of the repo
+data/raw/
+data/cache/
+data/labels.csv
+# Secrets
+.env
+.env.*
+!.env.example
+# Python
+__pycache__/
+.venv/
+*.pyc
+# Node
+node_modules/
+.next/
+out/
+.vercel
+.DS_Store
