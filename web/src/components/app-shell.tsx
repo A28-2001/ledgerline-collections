@@ -4,6 +4,7 @@ import { BarChart3, Building2, Inbox, Menu, MessageSquareText, ShieldCheck, Tria
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState, type ReactNode } from "react";
+import { GlossaryButton } from "@/components/shared/info-tip";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
@@ -13,8 +14,8 @@ const NAV = [
   { href: "/", label: "Today", icon: Inbox },
   { href: "/why", label: "Why overdue", icon: BarChart3 },
   { href: "/customers", label: "Customers", icon: Building2 },
-  { href: "/proof", label: "Proof", icon: ShieldCheck },
-  { href: "/summary", label: "Morning summary", icon: MessageSquareText },
+  { href: "/proof", label: "How sure are we", icon: ShieldCheck },
+  { href: "/summary", label: "Morning message", icon: MessageSquareText },
 ] as const;
 
 function isActive(pathname: string, href: string) {
@@ -87,9 +88,12 @@ export function AppShell({
           <Brand companyName={companyName} />
         </div>
         <NavLinks />
-        <div className="mt-auto flex items-center justify-between gap-2 px-1.5 pt-4 text-xs text-muted-foreground">
-          <span>Data as of {asOf}</span>
-          <ThemeToggle />
+        <div className="mt-auto space-y-2 px-1.5 pt-4 text-xs text-muted-foreground">
+          <GlossaryButton />
+          <div className="flex items-center justify-between gap-2 border-t pt-3">
+            <span>Data as of {asOf}</span>
+            <ThemeToggle />
+          </div>
         </div>
       </aside>
 
@@ -97,6 +101,7 @@ export function AppShell({
         <header className="sticky top-0 z-30 flex h-14 items-center justify-between border-b bg-background/85 px-4 backdrop-blur md:hidden">
           <Brand companyName={companyName} />
           <div className="flex items-center gap-1">
+            <GlossaryButton compact />
             <ThemeToggle />
             <Sheet open={open} onOpenChange={setOpen}>
               <SheetTrigger asChild>

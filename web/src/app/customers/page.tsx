@@ -43,7 +43,7 @@ export default function CustomersPage() {
                 <TableHead className="pl-4">Customer</TableHead>
                 <TableHead className="hidden sm:table-cell">Segment</TableHead>
                 <TableHead className="text-right">Overdue</TableHead>
-                <TableHead className="hidden md:table-cell">Top verdict</TableHead>
+                <TableHead className="hidden md:table-cell">What to do</TableHead>
                 <TableHead className="hidden pr-4 text-right md:table-cell">Weakest match</TableHead>
               </TableRow>
             </TableHeader>

@@ -171,7 +171,7 @@ async function CustomerBody({ params }: { params: PageProps<"/customers/[id]">["
                   <TableHead className="pl-6">System</TableHead>
                   <TableHead>Name there</TableHead>
                   <TableHead className="hidden sm:table-cell">Matched by</TableHead>
-                  <TableHead className="pr-6 text-right">Score</TableHead>
+                  <TableHead className="pr-6 text-right">How sure</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>

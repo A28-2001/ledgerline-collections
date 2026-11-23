@@ -13,7 +13,7 @@ export const VERDICT_META: Record<
   send: {
     label: "Send reminder",
     short: "Send",
-    description: "Safe to send the reminder today.",
+    description: "Nothing is blocking: a reminder email can go out today.",
     badge:
       "bg-blue-50 text-blue-700 ring-blue-600/20 dark:bg-blue-400/10 dark:text-blue-300 dark:ring-blue-400/30",
     dot: "bg-blue-500",
@@ -22,7 +22,7 @@ export const VERDICT_META: Record<
   hold: {
     label: "Hold",
     short: "Hold",
-    description: "Don't chase yet. Someone owns the next step, with a deadline.",
+    description: "Pause and hand to the owner. Don't chase until they act, by a deadline.",
     badge:
       "bg-amber-50 text-amber-800 ring-amber-600/25 dark:bg-amber-400/10 dark:text-amber-300 dark:ring-amber-400/30",
     dot: "bg-amber-500",
@@ -31,16 +31,16 @@ export const VERDICT_META: Record<
   paid: {
     label: "Probably paid",
     short: "Paid?",
-    description: "A payment seems to cover it. Confirm and close it.",
+    description: "A payment seems to cover it. Check the payment and close the bill. No reminder.",
     badge:
       "bg-emerald-50 text-emerald-700 ring-emerald-600/20 dark:bg-emerald-400/10 dark:text-emerald-300 dark:ring-emerald-400/30",
     dot: "bg-emerald-500",
     chart: "var(--verdict-paid)",
   },
   call: {
-    label: "Call",
+    label: "Call them",
     short: "Call",
-    description: "Too big or too late for an email. A person calls.",
+    description: "Too late, too large or too unclear for an email. A person calls.",
     badge:
       "bg-violet-50 text-violet-700 ring-violet-600/20 dark:bg-violet-400/10 dark:text-violet-300 dark:ring-violet-400/30",
     dot: "bg-violet-500",
@@ -77,16 +77,16 @@ export const CAUSE_META: Record<Cause, { label: string; color: string; descripti
 };
 
 export const CONFIDENCE_LABEL: Record<Confidence, string> = {
-  high: "High confidence",
-  medium: "Medium confidence",
-  low: "Low confidence",
+  high: "How sure: high",
+  medium: "How sure: medium",
+  low: "How sure: low",
 };
 
 export const TONE_LABEL: Record<Tone, string> = {
   standard: "Standard",
   soft: "Softer tone",
   card_update: "Card update",
-  none: "Call notes",
+  none: "No message",
 };
 
 export function formatMoney(value: number, currency = "USD", compact = false): string {
@@ -160,4 +160,83 @@ export function invoiceById(id: string): Invoice | undefined {
 
 export function customerHref(id: string): string {
   return `/customers/${encodeURIComponent(id)}`;
+}
+
+// ---------------------------------------------------------------------------------------------
+// Plain words. One glossary, used everywhere, so the same idea always has the same name.
+export const GLOSSARY: { term: string; meaning: string }[] = [
+  { term: "What to do", meaning: "The tool's suggestion for each bill: send a reminder, hold, probably paid, or call them. A person approves it." },
+  { term: "Send reminder", meaning: VERDICT_META.send.description },
+  { term: "Hold", meaning: VERDICT_META.hold.description },
+  { term: "Probably paid", meaning: VERDICT_META.paid.description },
+  { term: "Call them", meaning: VERDICT_META.call.description },
+  { term: "Why it's overdue", meaning: "The reason behind the late bill: simply late, unhappy customer, already paid, wrong bill or failed card." },
+  { term: "Check first", meaning: "The tool isn't sure: the AI judges disagreed, or the customer match is weak. A person decides." },
+  { term: "AI double-check", meaning: "Two different AI models read each ticket on their own. If they disagree, nobody is chased until a person reads it." },
+  { term: "Proof", meaning: "The records behind a suggestion: the ticket, payment or contract, with the file and row it came from." },
+  { term: "Protected", meaning: "Money we would have chased by mistake: bills that look paid, customers with an open billing complaint or escalation, and bills that don't match the contract." },
+];
+
+export const MATCH_METHOD_LABEL: Record<string, string> = {
+  exact_id: "Same customer ID",
+  exact_name: "Same name",
+  fuzzy: "Close spelling",
+  ai: "AI judges agreed",
+  unmatched: "No match: a person checks",
+};
+
+export const VOTE_LABEL: Record<string, string> = {
+  billing_complaint: "Billing complaint",
+  serious_escalation: "Serious escalation",
+  other_complaint: "Other complaint",
+  not_a_complaint: "Not a complaint",
+  disagree: "Disagree",
+  unclear: "Unclear",
+  yes: "Same customer",
+  no: "Different customer",
+};
+
+export function judgeLabel(judge: string): string {
+  return judge === "rules" ? "Keyword rules" : judge;
+}
+
+export const AGE_BUCKETS = ["1-30", "31-60", "61-90", "90+"] as const;
+
+const DEFINITE_HOLD = /^(Open billing complaint|Serious open escalation|The bill doesn.t match)/;
+
+// A hold that exists only because the two AI judges disagreed about a ticket. These are
+// "not sure yet", not "found a problem", so they are kept out of the protected total.
+export function isUnsureHold(inv: Invoice): boolean {
+  return (
+    inv.verdict === "hold" &&
+    inv.reasons.some((r) => /judges disagreed/i.test(r.text)) &&
+    !inv.reasons.some((r) => DEFINITE_HOLD.test(r.text))
+  );
+}
+
+export function sumAmount(list: Invoice[]): number {
+  return list.reduce((s, i) => s + i.amount, 0);
+}
+
+export function moneyStats(invoices: Invoice[]) {
+  const by = (v: Verdict) => invoices.filter((i) => i.verdict === v);
+  const unsure = invoices.filter(isUnsureHold);
+  const paid = sumAmount(by("paid"));
+  const hold = sumAmount(by("hold"));
+  const unsureAmount = sumAmount(unsure);
+  return {
+    overdue: sumAmount(invoices),
+    count: invoices.length,
+    protected: paid + hold - unsureAmount,
+    protectedCount: by("paid").length + by("hold").length - unsure.length,
+    unsureAmount,
+    unsureCount: unsure.length,
+    readyToCollect: sumAmount(by("send")) + sumAmount(by("call")),
+    readyCount: by("send").length + by("call").length,
+    checkFirst: invoices.filter((i) => i.needsReview).length,
+  };
+}
+
+export function pluralize(n: number, one: string, many = `${one}s`): string {
+  return `${n.toLocaleString("en-US")} ${n === 1 ? one : many}`;
 }

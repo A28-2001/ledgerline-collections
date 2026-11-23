@@ -4,7 +4,7 @@ import { PageHeader } from "@/components/shared/page-header";
 import { CopyButton } from "@/components/shared/copy-button";
 import { formatDate, results } from "@/lib/data";
 
-export const metadata: Metadata = { title: "Morning summary" };
+export const metadata: Metadata = { title: "Morning message" };
 
 export default function SummaryPage() {
   const { morningSummary: s, meta } = results;
@@ -13,8 +13,8 @@ export default function SummaryPage() {
   return (
     <>
       <PageHeader
-        title="Morning summary"
-        description="The message the finance team gets each morning, in chat or email. One read tells them what to approve, what's on hold, and what needs a call."
+        title="Morning message"
+        description="What the finance team reads first thing, in chat or email: what to approve, what's on hold, and who to call."
         actions={<CopyButton text={plain} label="Copy message" variant="default" size="default" />}
       />
 

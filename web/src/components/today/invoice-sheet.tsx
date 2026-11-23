@@ -10,6 +10,7 @@ import {
   Loader2,
   Mail,
   MessageSquareWarning,
+  Phone,
   Receipt,
   ScrollText,
   Sparkles,
@@ -46,9 +47,11 @@ import {
   daysBetween,
   formatDate,
   formatMoney,
+  judgeLabel,
   TONE_LABEL,
   VERDICT_META,
   VERDICTS,
+  VOTE_LABEL,
 } from "@/lib/data";
 import type { Evidence, Invoice, Tone, Verdict } from "@/lib/types";
 import { cn } from "@/lib/utils";
@@ -64,9 +67,9 @@ const EVIDENCE_ICON: Record<Evidence["kind"], typeof FileText> = {
 
 const APPROVE_LABEL: Record<Verdict, string> = {
   send: "Approve reminder",
-  hold: "Approve hold",
-  paid: "Confirm probably paid",
-  call: "Approve call",
+  hold: "Hand off hold",
+  paid: "Confirm it's paid",
+  call: "Add to call list",
 };
 
 function Section({ title, icon: Icon, children }: { title: string; icon: typeof FileText; children: React.ReactNode }) {
@@ -191,7 +194,7 @@ function InvoiceDetail({
           {inv.needsReview && !decision && (
             <Alert className="border-rose-500/30 bg-rose-50 text-rose-900 dark:bg-rose-400/10 dark:text-rose-100">
               <Flag aria-hidden="true" />
-              <AlertTitle>Needs a person</AlertTitle>
+              <AlertTitle>Check first</AlertTitle>
               <AlertDescription className="text-rose-900/80 dark:text-rose-100/80">
                 {inv.reviewReason ?? "The tool isn't sure about this one."}
               </AlertDescription>
@@ -214,7 +217,7 @@ function InvoiceDetail({
             </Alert>
           )}
 
-          <Section title="Why" icon={FileText}>
+          <Section title="Why the tool suggests this" icon={FileText}>
             <ol className="space-y-2.5">
               {inv.reasons.map((r, i) => (
                 <li key={i} className="rounded-lg border bg-card p-3 text-sm">
@@ -246,7 +249,7 @@ function InvoiceDetail({
           </Section>
 
           {inv.hold && (
-            <Section title="Hold" icon={CalendarClock}>
+            <Section title="Hold: pause and hand to the owner" icon={CalendarClock}>
               <div className="rounded-lg border border-amber-500/30 bg-amber-50/60 p-3 text-sm dark:bg-amber-400/5">
                 <div className="flex flex-wrap items-center justify-between gap-2">
                   <span className="flex items-center gap-2 font-medium">
@@ -259,7 +262,7 @@ function InvoiceDetail({
                     {holdDays !== null && (
                       <span className="text-muted-foreground">
                         {" "}
-                        · {holdDays} {Math.abs(holdDays) === 1 ? "day" : "days"} from the run date
+                        · {holdDays} {Math.abs(holdDays) === 1 ? "day" : "days"} to act
                       </span>
                     )}
                   </span>
@@ -272,21 +275,37 @@ function InvoiceDetail({
             </Section>
           )}
 
-          {inv.draft ? (
+          {inv.draft && inv.draft.tone !== "none" && inv.draft.body ? (
             <DraftSection invoice={inv} />
           ) : (
-            <Section title="Message" icon={Mail}>
-              <p className="rounded-lg border border-dashed p-3 text-sm text-muted-foreground">
-                No message for this bill. {verdict === "paid" ? "Confirm the payment and close it instead." : "It's on hold until the owner acts."}
-              </p>
+            <Section title={verdict === "call" ? "Before you call" : "Message"} icon={verdict === "call" ? Phone : Mail}>
+              <div className="rounded-lg border border-dashed p-3 text-sm text-muted-foreground">
+                {verdict === "paid" && "No reminder. Check the payment under Proof, then close the bill in the accounting tool."}
+                {verdict === "hold" && "No reminder while the bill is on hold. The owner talks to the customer first."}
+                {verdict === "send" && "No draft for this bill. Write the reminder by hand, or change what to do."}
+                {verdict === "call" && (
+                  <>
+                    <p>
+                      Call about <span className="font-medium text-foreground">{formatMoney(inv.amount, inv.currency)}</span>, due{" "}
+                      {formatDate(inv.dueDate)} ({inv.daysOverdue} days late).
+                      {inv.draft?.to && (
+                        <>
+                          {" "}Contact: <span className="font-medium text-foreground">{inv.draft.to}</span>.
+                        </>
+                      )}
+                    </p>
+                    <p className="mt-1.5">Talking points: the reasons above.</p>
+                  </>
+                )}
+              </div>
             </Section>
           )}
 
           {inv.agreement && (
-            <Section title="Agreement check" icon={Sparkles}>
+            <Section title="AI double-check" icon={Sparkles}>
               <div className="rounded-lg border">
-                <div className="flex items-center justify-between border-b px-3 py-2 text-sm">
-                  <span className="text-muted-foreground">Each judge classified the ticket on its own.</span>
+                <div className="flex items-center justify-between gap-3 border-b px-3 py-2 text-sm">
+                  <span className="text-muted-foreground">Keyword rules and two AI models read the ticket separately.</span>
                   <Badge
                     className={cn(
                       "ring-1 ring-inset",
@@ -295,14 +314,14 @@ function InvoiceDetail({
                         : "bg-rose-50 text-rose-700 ring-rose-600/20 dark:bg-rose-400/10 dark:text-rose-300",
                     )}
                   >
-                    {inv.agreement.agree ? "Agree" : "Disagree"}
+                    {inv.agreement.agree ? "AI agrees" : "AI disagrees"}
                   </Badge>
                 </div>
                 <ul className="divide-y text-sm">
                   {inv.agreement.votes.map((v, i) => (
                     <li key={i} className="flex items-center justify-between gap-3 px-3 py-2">
-                      <span className="truncate text-muted-foreground">{v.judge}</span>
-                      <span className="shrink-0 font-mono text-xs">{v.answer}</span>
+                      <span className="truncate text-muted-foreground">{judgeLabel(v.judge)}</span>
+                      <span className="shrink-0 text-xs font-medium">{VOTE_LABEL[v.answer] ?? v.answer}</span>
                     </li>
                   ))}
                 </ul>
@@ -310,7 +329,7 @@ function InvoiceDetail({
             </Section>
           )}
 
-          <Section title="Evidence" icon={Receipt}>
+          <Section title="Proof" icon={Receipt}>
             {inv.evidence.length === 0 ? (
               <p className="rounded-lg border border-dashed p-3 text-sm text-muted-foreground">No linked records.</p>
             ) : (
@@ -363,7 +382,7 @@ function InvoiceDetail({
           </Button>
         ) : (
           <Button variant="outline" onClick={() => setOverrideOpen(true)}>
-            Change verdict
+            Change what to do
           </Button>
         )}
         {!decision && (
@@ -421,7 +440,7 @@ function DraftSection({ invoice: inv }: { invoice: Invoice }) {
   }
 
   return (
-    <Section title={isCallNotes ? "Call notes" : "Message"} icon={Mail}>
+    <Section title={isCallNotes ? "Call notes" : "Draft message"} icon={Mail}>
       <div className="rounded-lg border">
         <dl className="space-y-1 border-b px-3 py-2.5 text-sm">
           <div className="flex gap-2">
@@ -515,7 +534,7 @@ function OverrideDialog({
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Change the verdict</DialogTitle>
+          <DialogTitle>Change what to do</DialogTitle>
           <DialogDescription>
             The tool said <span className="font-medium text-foreground">{VERDICT_META[current].label}</span>. Your reason
             is logged and used to measure how often the tool is right.
@@ -529,7 +548,7 @@ function OverrideDialog({
           }}
         >
           <div className="space-y-1.5">
-            <Label htmlFor="override-verdict">New verdict</Label>
+            <Label htmlFor="override-verdict">Do this instead</Label>
             <Select value={verdict} onValueChange={(v) => setVerdict(v as Verdict)}>
               <SelectTrigger id="override-verdict" className="w-full">
                 <SelectValue />
