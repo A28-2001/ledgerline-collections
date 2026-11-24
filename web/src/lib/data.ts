@@ -76,10 +76,11 @@ export const CAUSE_META: Record<Cause, { label: string; color: string; descripti
   },
 };
 
+// Shown on a bill only when it matters: a clear answer needs no label.
 export const CONFIDENCE_LABEL: Record<Confidence, string> = {
-  high: "How sure: high",
-  medium: "How sure: medium",
-  low: "How sure: low",
+  high: "Sure",
+  medium: "Fairly sure",
+  low: "Check first",
 };
 
 export const TONE_LABEL: Record<Tone, string> = {
@@ -171,17 +172,19 @@ export const GLOSSARY: { term: string; meaning: string }[] = [
   { term: "Probably paid", meaning: VERDICT_META.paid.description },
   { term: "Call them", meaning: VERDICT_META.call.description },
   { term: "Why it's overdue", meaning: "The reason behind the late bill: simply late, unhappy customer, already paid, wrong bill or failed card." },
-  { term: "Check first", meaning: "The tool isn't sure: the AI judges disagreed, or the customer match is weak. A person decides." },
-  { term: "AI double-check", meaning: "Two different AI models read each ticket on their own. If they disagree, nobody is chased until a person reads it." },
+  { term: "Check first", meaning: "The tool isn't sure: the AI wasn't sure what a ticket means, a payment could belong to more than one bill, or the customer match is weak. A person decides these before anything else." },
+  { term: "AI double-check", meaning: "Two different AI models read each ticket on their own. If they disagree, the AI wasn't sure, and nobody is chased until a person reads it." },
   { term: "Proof", meaning: "The records behind a suggestion: the ticket, payment or contract, with the file and row it came from." },
-  { term: "Protected", meaning: "Money we would have chased by mistake: bills that look paid, customers with an open billing complaint or escalation, and bills that don't match the contract." },
+  { term: "Don't chase today", meaning: "Money we would have chased by mistake: bills that look paid, customers with an open billing complaint or escalation, and bills that don't match the contract." },
+  { term: "Chase today", meaning: "Bills with nothing blocking them: reminders to send and customers to call." },
+  { term: "Decision", meaning: "One click by a person: each bill to check first, plus one click to approve each step. The tool never acts on its own." },
 ];
 
 export const MATCH_METHOD_LABEL: Record<string, string> = {
   exact_id: "Same customer ID",
   exact_name: "Same name",
   fuzzy: "Close spelling",
-  ai: "AI judges agreed",
+  ai: "AI checks agreed",
   unmatched: "No match: a person checks",
 };
 
@@ -204,14 +207,12 @@ export const AGE_BUCKETS = ["1-30", "31-60", "61-90", "90+"] as const;
 
 const DEFINITE_HOLD = /^(Open billing complaint|Serious open escalation|The bill doesn.t match)/;
 
-// A hold that exists only because the two AI judges disagreed about a ticket. These are
-// "not sure yet", not "found a problem", so they are kept out of the protected total.
+// A hold that exists only because the AI wasn't sure what a ticket means (its two checks
+// disagreed). These are "not sure yet", not "found a problem", so they are kept out of
+// the "don't chase today" total.
+const UNSURE = /AI wasn.t sure|judges disagreed|checks disagreed/i;
 export function isUnsureHold(inv: Invoice): boolean {
-  return (
-    inv.verdict === "hold" &&
-    inv.reasons.some((r) => /judges disagreed/i.test(r.text)) &&
-    !inv.reasons.some((r) => DEFINITE_HOLD.test(r.text))
-  );
+  return inv.verdict === "hold" && inv.reasons.some((r) => UNSURE.test(r.text)) && !inv.reasons.some((r) => DEFINITE_HOLD.test(r.text));
 }
 
 export function sumAmount(list: Invoice[]): number {
@@ -227,12 +228,16 @@ export function moneyStats(invoices: Invoice[]) {
   return {
     overdue: sumAmount(invoices),
     count: invoices.length,
-    protected: paid + hold - unsureAmount,
-    protectedCount: by("paid").length + by("hold").length - unsure.length,
+    dontChase: paid + hold - unsureAmount,
+    dontChaseCount: by("paid").length + by("hold").length - unsure.length,
     unsureAmount,
     unsureCount: unsure.length,
-    readyToCollect: sumAmount(by("send")) + sumAmount(by("call")),
-    readyCount: by("send").length + by("call").length,
+    chase: sumAmount(by("send")) + sumAmount(by("call")),
+    chaseCount: by("send").length + by("call").length,
+    byVerdict: Object.fromEntries(VERDICTS.map((v) => [v, { amount: sumAmount(by(v)), count: by(v).length }])) as Record<
+      Verdict,
+      { amount: number; count: number }
+    >,
     checkFirst: invoices.filter((i) => i.needsReview).length,
   };
 }

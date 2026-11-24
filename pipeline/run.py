@@ -154,14 +154,14 @@ def main() -> None:
     total = sum(i["amount"] for i in invoices)
     no_chase = by_verdict["paid"]["amount"] + by_verdict["hold"]["amount"]
     pct = no_chase / total if total else 0
-    # Holds that exist only because the AI judges disagreed are kept out of the headline: they're "unsure", not "found".
+    # Holds that exist only because the AI wasn't sure are kept out of the headline: they're "unsure", not "found".
     unsure = sum(r.amount for r in engine._rows if r.flags.get("disputed_hold") and not (
         r.flags.get("complaint_hold") or r.flags.get("wrong_bill") or r.flags.get("paid_linked") or r.flags.get("paid_unmatched")))
     sure = no_chase - unsure
     pct = sure / total if total else 0
     headline = (f"{money(sure)} of {money(total)} overdue ({pct:.0%}) sits with customers we shouldn't chase today: "
                 f"they've probably paid, they're unhappy, or the bill is wrong."
-                + (f" Another {money(unsure)} is paused until a person reads a ticket the AI judges disagreed on." if unsure else ""))
+                + (f" Another {money(unsure)} is paused until a person reads a ticket the AI wasn't sure about." if unsure else ""))
 
     labels_path = (ROOT / "data" / "labels.csv") if args.data != "sample" else folder / "labels.csv"
     acc, failures = accuracy(invoices, labels_path, "planted answers in the sample data" if args.data == "sample" else "hand-checked by me")

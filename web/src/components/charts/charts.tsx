@@ -245,7 +245,7 @@ export function Gauge({ value, label, sublabel }: { value: number; label: string
   );
 }
 
-// Two-part bar: e.g. judges agreed vs disagreed.
+// Two-part bar: e.g. AI checks agreed vs disagreed.
 export function SplitBar({
   parts,
   ariaLabel,

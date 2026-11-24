@@ -40,6 +40,7 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle } from "@/components/ui/sheet";
 import { Textarea } from "@/components/ui/textarea";
+import { answerLine, keyProof, plainReview } from "@/lib/bill-text";
 import type { Decision } from "@/lib/decisions";
 import {
   CONFIDENCE_LABEL,
@@ -65,6 +66,15 @@ const EVIDENCE_ICON: Record<Evidence["kind"], typeof FileText> = {
   policy: FileText,
 };
 
+const EVIDENCE_WORD: Record<Evidence["kind"], string> = {
+  ticket: "See the ticket",
+  payment: "See the payment",
+  contract: "See the contract",
+  invoice: "See the bill",
+  contact: "See the contact",
+  policy: "See the policy",
+};
+
 const APPROVE_LABEL: Record<Verdict, string> = {
   send: "Approve reminder",
   hold: "Hand off hold",
@@ -88,6 +98,7 @@ export function InvoiceSheet({
   invoice,
   decision,
   asOf,
+  startWithChange = false,
   onOpenChange,
   onApprove,
   onOverride,
@@ -96,6 +107,7 @@ export function InvoiceSheet({
   invoice: Invoice | null;
   decision?: Decision;
   asOf: string;
+  startWithChange?: boolean;
   onOpenChange: (open: boolean) => void;
   onApprove: (inv: Invoice) => void;
   onOverride: (inv: Invoice, verdict: Verdict, reason: string) => void;
@@ -110,6 +122,7 @@ export function InvoiceSheet({
             invoice={invoice}
             decision={decision}
             asOf={asOf}
+            startWithChange={startWithChange}
             onApprove={onApprove}
             onOverride={onOverride}
             onUndo={onUndo}
@@ -124,6 +137,7 @@ function InvoiceDetail({
   invoice: inv,
   decision,
   asOf,
+  startWithChange,
   onApprove,
   onOverride,
   onUndo,
@@ -131,12 +145,13 @@ function InvoiceDetail({
   invoice: Invoice;
   decision?: Decision;
   asOf: string;
+  startWithChange: boolean;
   onApprove: (inv: Invoice) => void;
   onOverride: (inv: Invoice, verdict: Verdict, reason: string) => void;
   onUndo: (inv: Invoice) => void;
 }) {
   const [highlight, setHighlight] = useState<string | null>(null);
-  const [overrideOpen, setOverrideOpen] = useState(false);
+  const [overrideOpen, setOverrideOpen] = useState(startWithChange && !decision);
   const verdict = decision?.verdict ?? inv.verdict;
   const evidenceById = new Map(inv.evidence.map((e) => [e.id, e]));
 
@@ -147,6 +162,7 @@ function InvoiceDetail({
   }
 
   const holdDays = inv.hold ? daysBetween(asOf, inv.hold.deadline) : null;
+  const proof = keyProof(inv, verdict);
 
   return (
     <div className="flex h-full min-h-0 flex-col">
@@ -158,12 +174,15 @@ function InvoiceDetail({
               tool said <span className="font-medium">{VERDICT_META[inv.verdict].label}</span>
             </span>
           )}
-          <Badge variant="outline" className="font-normal">
-            {CONFIDENCE_LABEL[inv.confidence]}
-          </Badge>
-          {inv.reminderStage && (
-            <Badge variant="secondary" className="font-normal">
-              {inv.reminderStage}
+          {inv.confidence !== "high" && !decision && (
+            <Badge
+              variant="outline"
+              className={cn(
+                "font-normal",
+                inv.confidence === "low" && "border-rose-500/40 text-rose-700 dark:text-rose-300",
+              )}
+            >
+              {CONFIDENCE_LABEL[inv.confidence]}
             </Badge>
           )}
         </div>
@@ -182,11 +201,9 @@ function InvoiceDetail({
             )}
           </SheetTitle>
           <SheetDescription className="tabular mt-1">
-            <span className="font-mono">{inv.id}</span> · {formatMoney(inv.amount, inv.currency)} · due{" "}
-            {formatDate(inv.dueDate)} · {inv.daysOverdue} days late
+            {formatMoney(inv.amount, inv.currency)} · {inv.daysOverdue} days late · due {formatDate(inv.dueDate)}
           </SheetDescription>
         </div>
-        <p className="text-sm leading-relaxed">{inv.headline}</p>
       </SheetHeader>
 
       <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain">
@@ -196,7 +213,7 @@ function InvoiceDetail({
               <Flag aria-hidden="true" />
               <AlertTitle>Check first</AlertTitle>
               <AlertDescription className="text-rose-900/80 dark:text-rose-100/80">
-                {inv.reviewReason ?? "The tool isn't sure about this one."}
+                {plainReview(inv)}
               </AlertDescription>
             </Alert>
           )}
@@ -217,6 +234,28 @@ function InvoiceDetail({
             </Alert>
           )}
 
+          <section aria-label="What to do" className="rounded-xl border bg-muted/30 p-4">
+            <p className="text-xs font-semibold tracking-wide text-muted-foreground uppercase">What to do</p>
+            <p className="mt-1 text-base leading-snug font-medium">{answerLine(inv, verdict)}</p>
+            {proof && (
+              <div className="mt-3 rounded-lg border-l-4 bg-card p-3 text-sm" style={{ borderLeftColor: VERDICT_META[verdict].chart }}>
+                <p className="text-xs text-muted-foreground">{proof.label}</p>
+                <p className="mt-0.5 font-medium">{proof.title}</p>
+                {proof.detail && <p className="mt-1 leading-relaxed text-muted-foreground">{proof.detail}</p>}
+                {(proof.date || proof.audit) && (
+                  <p className="mt-1.5 text-[11px] text-muted-foreground/80">
+                    {proof.date}
+                    {proof.date && proof.audit && " · "}
+                    {proof.audit && <span className="font-mono">{proof.audit}</span>}
+                  </p>
+                )}
+              </div>
+            )}
+            <p className="mt-2 text-[11px] text-muted-foreground/80">
+              Invoice <span className="font-mono">{inv.id}</span>
+            </p>
+          </section>
+
           <Section title="Why the tool suggests this" icon={FileText}>
             <ol className="space-y-2.5">
               {inv.reasons.map((r, i) => (
@@ -225,8 +264,8 @@ function InvoiceDetail({
                   {(r.policyRef || r.evidenceIds.length > 0) && (
                     <div className="mt-2 flex flex-wrap items-center gap-1.5">
                       {r.policyRef && (
-                        <Badge variant="outline" className="font-mono text-[11px] font-normal">
-                          {r.policyRef}
+                        <Badge variant="outline" className="text-[11px] font-normal">
+                          Policy: {r.policyRef}
                         </Badge>
                       )}
                       {r.evidenceIds.map((id) =>
@@ -235,9 +274,10 @@ function InvoiceDetail({
                             key={id}
                             type="button"
                             onClick={() => jumpTo(id)}
-                            className="inline-flex h-5 items-center rounded-full bg-secondary px-2 font-mono text-[11px] text-secondary-foreground outline-none hover:bg-secondary/70 focus-visible:ring-2 focus-visible:ring-ring/50"
+                            title={evidenceById.get(id)!.recordId}
+                            className="inline-flex h-5 items-center rounded-full bg-secondary px-2 text-[11px] text-secondary-foreground outline-none hover:bg-secondary/70 focus-visible:ring-2 focus-visible:ring-ring/50"
                           >
-                            {evidenceById.get(id)!.recordId}
+                            {EVIDENCE_WORD[evidenceById.get(id)!.kind]}
                           </button>
                         ) : null,
                       )}
@@ -277,11 +317,9 @@ function InvoiceDetail({
 
           {inv.draft && inv.draft.tone !== "none" && inv.draft.body ? (
             <DraftSection invoice={inv} />
-          ) : (
+          ) : verdict === "paid" || verdict === "hold" ? null : (
             <Section title={verdict === "call" ? "Before you call" : "Message"} icon={verdict === "call" ? Phone : Mail}>
               <div className="rounded-lg border border-dashed p-3 text-sm text-muted-foreground">
-                {verdict === "paid" && "No reminder. Check the payment under Proof, then close the bill in the accounting tool."}
-                {verdict === "hold" && "No reminder while the bill is on hold. The owner talks to the customer first."}
                 {verdict === "send" && "No draft for this bill. Write the reminder by hand, or change what to do."}
                 {verdict === "call" && (
                   <>
@@ -314,7 +352,7 @@ function InvoiceDetail({
                         : "bg-rose-50 text-rose-700 ring-rose-600/20 dark:bg-rose-400/10 dark:text-rose-300",
                     )}
                   >
-                    {inv.agreement.agree ? "AI agrees" : "AI disagrees"}
+                    {inv.agreement.agree ? "AI agrees" : "The AI wasn't sure"}
                   </Badge>
                 </div>
                 <ul className="divide-y text-sm">
@@ -329,7 +367,7 @@ function InvoiceDetail({
             </Section>
           )}
 
-          <Section title="Proof" icon={Receipt}>
+          <Section title="All the proof" icon={Receipt}>
             {inv.evidence.length === 0 ? (
               <p className="rounded-lg border border-dashed p-3 text-sm text-muted-foreground">No linked records.</p>
             ) : (
@@ -356,13 +394,11 @@ function InvoiceDetail({
                               </Badge>
                             )}
                           </div>
-                          <p className="mt-0.5 text-xs text-muted-foreground">
-                            <span className="font-mono">
-                              {e.file} · {e.recordId}
-                            </span>
-                            {e.date && <> · {formatDate(e.date)}</>}
-                          </p>
+                          {e.date && <p className="mt-0.5 text-xs text-muted-foreground">{formatDate(e.date)}</p>}
                           {e.detail && <p className="mt-2 leading-relaxed text-muted-foreground">{e.detail}</p>}
+                          <p className="mt-1.5 font-mono text-[11px] text-muted-foreground/70">
+                            {e.file} · {e.recordId}
+                          </p>
                         </div>
                       </div>
                     </li>

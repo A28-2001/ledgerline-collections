@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { DaysHistogram, TopCustomersChart, VerdictLegend } from "@/components/charts/charts";
+import { AgeChart, TopCustomersChart, VerdictLegend } from "@/components/charts/charts";
 import { EmptyState } from "@/components/shared/empty-state";
 import { PageHeader } from "@/components/shared/page-header";
 import { CauseChart } from "@/components/why/cause-chart";
@@ -7,7 +7,7 @@ import { TicketsChart, TrendChart } from "@/components/why/trend-chart";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { CAUSE_META, formatMonth, formatMoney, formatPercent, results } from "@/lib/data";
-import { causeBreakdown, daysHistogram, topCustomers } from "@/lib/insights";
+import { ageBreakdown, causeBreakdown, daysHistogram, topCustomers } from "@/lib/insights";
 import type { TrendPoint } from "@/lib/types";
 
 export const metadata: Metadata = { title: "Why overdue" };
@@ -38,6 +38,7 @@ export default function WhyPage() {
   const causes = causeBreakdown(summary.byCause, total);
   const top = topCustomers(invoices, 10);
   const days = daysHistogram(invoices);
+  const age = ageBreakdown(invoices);
   const hasTickets = trend.some((t) => t.billingTickets !== null);
 
   return (
@@ -130,11 +131,20 @@ export default function WhyPage() {
 
         <Card className="min-w-0 xl:col-span-2">
           <CardHeader>
-            <CardTitle className="leading-snug">{days.title}</CardTitle>
-            <CardDescription>Number of overdue bills by days late</CardDescription>
+            <CardTitle className="leading-snug">{age.title}</CardTitle>
+            <CardDescription>
+              Overdue money by days late, coloured by what to do. {invoices.length > 0 && `${days.title}.`}
+            </CardDescription>
           </CardHeader>
           <CardContent>
-            {invoices.length === 0 ? <EmptyState title="No overdue bills" /> : <DaysHistogram rows={days.rows} />}
+            {invoices.length === 0 ? (
+              <EmptyState title="No overdue bills" />
+            ) : (
+              <>
+                <AgeChart rows={age.rows} />
+                <VerdictLegend className="mt-3" />
+              </>
+            )}
           </CardContent>
         </Card>
       </div>

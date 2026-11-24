@@ -1,12 +1,12 @@
 invoice_id,customer,tool_verdict,true_verdict,note,why_tool_said_it
 1790,Summit Outfitters Co,hold,,,Open billing complaint: chasing payment now would make it worse.
-1277,Northstar Builders Co,hold,,,An open ticket might be a billing complaint or a serious escalation (the AI judges disagreed). We don't chase until a person reads it.
+1277,Northstar Builders Co,hold,,,The AI wasn't sure whether this open ticket is about money or a serious problem (its two checks disagreed). We don't chase until a person reads it.
 1656,Foxglove Outfitters,hold,,,Open billing complaint: chasing payment now would make it worse.
 1655,Foxglove Outfitters,hold,,,Open billing complaint: chasing payment now would make it worse.
 1398,Cedar Studios Inc,hold,,,Open billing complaint: chasing payment now would make it worse.
 1023,Highland Health LLC,hold,,,"The bill doesn't match the contract: billed for 30 seats, contract says 20. Fix the bill before asking for money."
 1337,Meridian Dental Group,hold,,,"The bill doesn't match the contract: billed for 51 seats, contract says 45. Fix the bill before asking for money."
-2082,Tidewater Foods Inc,hold,,,A billing ticket from 2026-07-05 is closed. Mentioned for context; it doesn't block the reminder.
+2082,Tidewater Foods Inc,hold,,,"A billing ticket from Jul 5, 2026 is closed. Mentioned for context; it doesn't block the reminder."
 1061,Clearwater Freight Inc,hold,,,Open billing complaint: chasing payment now would make it worse.
 1060,Clearwater Freight Inc,hold,,,Open billing complaint: chasing payment now would make it worse.
 1816,Vantage Builders Inc,hold,,,Serious open escalation with support. Money talk waits until it's resolved.

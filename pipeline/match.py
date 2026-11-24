@@ -88,7 +88,7 @@ class Matcher:
                 if v["agree"] and v["answer"] == "yes":
                     return Match(cid, "ai", round(score / 100, 3), note="AI judges agreed")
                 return Match(None, "unmatched", round(score / 100, 3), candidate=cid,
-                             note="AI judges disagreed or said no: a person confirms")
+                             note="the AI wasn't sure: a person confirms")
             return Match(None, "unmatched", round(score / 100, 3), candidate=cid,
                          note="borderline name match: a person confirms")
         return Match(None, "unmatched", round(score / 100, 3), candidate=cid)

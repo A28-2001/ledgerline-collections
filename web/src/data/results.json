@@ -1,6 +1,6 @@
 {
  "meta": {
-  "generatedAt": "2026-11-23T22:34:15+00:00",
+  "generatedAt": "2026-11-24T00:15:00+00:00",
   "asOf": "2026-10-31",
   "dataSource": "sample",
   "companyName": "Demo Co",
@@ -93,7 +93,7 @@
    }
   ],
   "shouldNotChaseAmount": 96776.0,
-  "headline": "$86,720 of $222,603 overdue (39%) sits with customers we shouldn't chase today: they've probably paid, they're unhappy, or the bill is wrong. Another $10,056 is paused until a person reads a ticket the AI judges disagreed on."
+  "headline": "$86,720 of $222,603 overdue (39%) sits with customers we shouldn't chase today: they've probably paid, they're unhappy, or the bill is wrong. Another $10,056 is paused until a person reads a ticket the AI wasn't sure about."
  },
  "invoices": [
   {
@@ -112,7 +112,7 @@
    "headline": "Second reminder: 15 days overdue, nothing blocking",
    "reasons": [
     {
-     "text": "A billing ticket from 2026-07-28 is closed. Mentioned for context; it doesn't block the reminder.",
+     "text": "A billing ticket from Jul 28, 2026 is closed. Mentioned for context; it doesn't block the reminder.",
      "evidenceIds": [
       "ticket:T-20022"
      ],
@@ -176,15 +176,15 @@
      "file": "contracts.csv",
      "recordId": "K0077",
      "date": "2025-04-01",
-     "title": "Contract: 95 seats \u00d7 $69.00, 2025-04-01 to 2027-04-01"
+     "title": "Contract: 95 seats \u00d7 $69.00, Apr 1, 2025 to Apr 1, 2027"
     }
    ],
    "policyRef": "collections_policy.md \u00a72",
    "needsReview": false,
    "draft": {
     "to": "billing0@pinecrestfoodsin.example",
-    "subject": "Second reminder: invoice 1802 ($6,555) was due 2026-10-16",
-    "body": "Hi Pinecrest Foods Inc team,\n\nThis is a reminder that invoice 1802 for $6,555 was due on 2026-10-16 and is now 15 days overdue. Could you let us know when we can expect payment? If it's already on its way, thank you, and please ignore this note.\n\nThanks,\nFinance team",
+    "subject": "Second reminder: invoice 1802 ($6,555) was due Oct 16, 2026",
+    "body": "Hi Pinecrest Foods Inc team,\n\nThis is a reminder that invoice 1802 for $6,555 was due on Oct 16, 2026 and is now 15 days overdue. Could you let us know when we can expect payment? If it's already on its way, thank you, and please ignore this note.\n\nThanks,\nFinance team",
     "tone": "standard"
    },
    "reminderStage": "Second reminder"
@@ -219,15 +219,15 @@
      "file": "contracts.csv",
      "recordId": "K0048",
      "date": "2025-02-01",
-     "title": "Contract: 85 seats \u00d7 $69.00, 2025-02-01 to 2027-02-01"
+     "title": "Contract: 85 seats \u00d7 $69.00, Feb 1, 2025 to Feb 1, 2027"
     }
    ],
    "policyRef": "collections_policy.md \u00a72",
    "needsReview": false,
    "draft": {
     "to": "billing0@harborfoodsinc.example",
-    "subject": "Second reminder: invoice 1509 ($5,865) was due 2026-10-16",
-    "body": "Hi Harbor Foods Inc team,\n\nThis is a reminder that invoice 1509 for $5,865 was due on 2026-10-16 and is now 15 days overdue. Could you let us know when we can expect payment? If it's already on its way, thank you, and please ignore this note.\n\nThanks,\nFinance team",
+    "subject": "Second reminder: invoice 1509 ($5,865) was due Oct 16, 2026",
+    "body": "Hi Harbor Foods Inc team,\n\nThis is a reminder that invoice 1509 for $5,865 was due on Oct 16, 2026 and is now 15 days overdue. Could you let us know when we can expect payment? If it's already on its way, thank you, and please ignore this note.\n\nThanks,\nFinance team",
     "tone": "standard"
    },
    "reminderStage": "Second reminder"
@@ -255,7 +255,7 @@
      "policyRef": "collections_policy.md \u00a75"
     },
     {
-     "text": "Billing contact last active 2025-09-26: may be out of date.",
+     "text": "Billing contact last active sep 26, 2025: may be out of date.",
      "evidenceIds": [],
      "policyRef": null
     }
@@ -317,7 +317,7 @@
      "file": "contracts.csv",
      "recordId": "K0019",
      "date": "2025-03-01",
-     "title": "Contract: 111 seats \u00d7 $49.00, 2025-03-01 to 2027-03-01"
+     "title": "Contract: 111 seats \u00d7 $49.00, Mar 1, 2025 to Mar 1, 2027"
     },
     {
      "id": "payment:PAY-6047",
@@ -326,7 +326,7 @@
      "recordId": "PAY-6047",
      "date": "2026-10-01",
      "status": "failed",
-     "title": "Card payment of $5,439 failed on 2026-10-01"
+     "title": "Card payment of $5,439 failed on Oct 1, 2026"
     }
    ],
    "policyRef": "collections_policy.md \u00a75",
@@ -355,14 +355,14 @@
    "headline": "Second reminder: 15 days overdue, nothing blocking",
    "reasons": [
     {
-     "text": "A billing ticket from 2026-09-21 is closed. Mentioned for context; it doesn't block the reminder.",
+     "text": "A billing ticket from Sep 21, 2026 is closed. Mentioned for context; it doesn't block the reminder.",
      "evidenceIds": [
       "ticket:T-20234"
      ],
      "policyRef": null
     },
     {
-     "text": "A billing ticket from 2026-07-05 is closed. Mentioned for context; it doesn't block the reminder.",
+     "text": "A billing ticket from Jul 5, 2026 is closed. Mentioned for context; it doesn't block the reminder.",
      "evidenceIds": [
       "ticket:T-20196"
      ],
@@ -436,15 +436,15 @@
      "file": "contracts.csv",
      "recordId": "K0003",
      "date": "2025-04-01",
-     "title": "Contract: 109 seats \u00d7 $49.00, 2025-04-01 to 2027-04-01"
+     "title": "Contract: 109 seats \u00d7 $49.00, Apr 1, 2025 to Apr 1, 2027"
     }
    ],
    "policyRef": "collections_policy.md \u00a72",
    "needsReview": false,
    "draft": {
     "to": "billing0@maplerealtyinc.example",
-    "subject": "Second reminder: invoice 1036 ($5,341) was due 2026-10-16",
-    "body": "Hi Maple Realty Inc team,\n\nThis is a reminder that invoice 1036 for $5,341 was due on 2026-10-16 and is now 15 days overdue. Could you let us know when we can expect payment? If it's already on its way, thank you, and please ignore this note.\n\nThanks,\nFinance team",
+    "subject": "Second reminder: invoice 1036 ($5,341) was due Oct 16, 2026",
+    "body": "Hi Maple Realty Inc team,\n\nThis is a reminder that invoice 1036 for $5,341 was due on Oct 16, 2026 and is now 15 days overdue. Could you let us know when we can expect payment? If it's already on its way, thank you, and please ignore this note.\n\nThanks,\nFinance team",
     "tone": "standard"
    },
    "reminderStage": "Second reminder"
@@ -465,7 +465,7 @@
    "headline": "Final reminder: 30 days overdue, nothing blocking",
    "reasons": [
     {
-     "text": "A billing ticket from 2026-08-12 is closed. Mentioned for context; it doesn't block the reminder.",
+     "text": "A billing ticket from Aug 12, 2026 is closed. Mentioned for context; it doesn't block the reminder.",
      "evidenceIds": [
       "ticket:T-20024"
      ],
@@ -519,15 +519,15 @@
      "file": "contracts.csv",
      "recordId": "K0089",
      "date": "2025-03-01",
-     "title": "Contract: 90 seats \u00d7 $59.00, 2025-03-01 to 2027-03-01"
+     "title": "Contract: 90 seats \u00d7 $59.00, Mar 1, 2025 to Mar 1, 2027"
     }
    ],
    "policyRef": "collections_policy.md \u00a72",
    "needsReview": false,
    "draft": {
     "to": "billing0@foxglovesupplyco.example",
-    "subject": "Final reminder: invoice 1924 ($5,310) was due 2026-10-01",
-    "body": "Hi Foxglove Supply Co team,\n\nThis is a reminder that invoice 1924 for $5,310 was due on 2026-10-01 and is now 30 days overdue. Could you let us know when we can expect payment? If it's already on its way, thank you, and please ignore this note.\n\nThanks,\nFinance team",
+    "subject": "Final reminder: invoice 1924 ($5,310) was due Oct 1, 2026",
+    "body": "Hi Foxglove Supply Co team,\n\nThis is a reminder that invoice 1924 for $5,310 was due on Oct 1, 2026 and is now 30 days overdue. Could you let us know when we can expect payment? If it's already on its way, thank you, and please ignore this note.\n\nThanks,\nFinance team",
     "tone": "standard"
    },
    "reminderStage": "Final reminder"
@@ -602,7 +602,7 @@
      "file": "contracts.csv",
      "recordId": "K0059",
      "date": "2025-09-01",
-     "title": "Contract: 70 seats \u00d7 $69.00, 2025-09-01 to 2027-09-01"
+     "title": "Contract: 70 seats \u00d7 $69.00, Sep 1, 2025 to Sep 1, 2027"
     }
    ],
    "policyRef": "collections_policy.md \u00a72",
@@ -610,7 +610,7 @@
    "draft": {
     "to": "billing0@uplandpartnersco.example",
     "subject": "Invoice 1630: a gentle reminder",
-    "body": "Hi Upland Partners Co team,\n\nWe know your team has an open request with our support team, and they're on it. Separately, invoice 1630 for $4,830 was due on 2026-10-01. Whenever you get a chance, could you check on it? If anything about the invoice looks off, just reply and we'll sort it out.\n\nThanks,\nFinance team",
+    "body": "Hi Upland Partners Co team,\n\nWe know your team has an open request with our support team, and they're on it. Separately, invoice 1630 for $4,830 was due on Oct 1, 2026. Whenever you get a chance, could you check on it? If anything about the invoice looks off, just reply and we'll sort it out.\n\nThanks,\nFinance team",
     "tone": "soft"
    },
    "reminderStage": "Final reminder",
@@ -648,7 +648,7 @@
    "headline": "Card failed: send the update-card note",
    "reasons": [
     {
-     "text": "A billing ticket from 2026-07-07 is closed. Mentioned for context; it doesn't block the reminder.",
+     "text": "A billing ticket from Jul 7, 2026 is closed. Mentioned for context; it doesn't block the reminder.",
      "evidenceIds": [
       "ticket:T-20242"
      ],
@@ -699,7 +699,7 @@
      "file": "contracts.csv",
      "recordId": "K0046",
      "date": "2025-02-01",
-     "title": "Contract: 59 seats \u00d7 $79.00, 2025-02-01 to 2027-02-01"
+     "title": "Contract: 59 seats \u00d7 $79.00, Feb 1, 2025 to Feb 1, 2027"
     },
     {
      "id": "payment:PAY-6051",
@@ -708,7 +708,7 @@
      "recordId": "PAY-6051",
      "date": "2026-10-16",
      "status": "failed",
-     "title": "Card payment of $4,661 failed on 2026-10-16"
+     "title": "Card payment of $4,661 failed on Oct 16, 2026"
     }
    ],
    "policyRef": "collections_policy.md \u00a75",
@@ -811,7 +811,7 @@
      "file": "contracts.csv",
      "recordId": "K0053",
      "date": "2025-05-01",
-     "title": "Contract: 68 seats \u00d7 $59.00, 2025-05-01 to 2027-05-01"
+     "title": "Contract: 68 seats \u00d7 $59.00, May 1, 2025 to May 1, 2027"
     }
    ],
    "policyRef": "collections_policy.md \u00a72",
@@ -819,7 +819,7 @@
    "draft": {
     "to": "billing0@willowlabsinc.example",
     "subject": "Invoice 1569: a gentle reminder",
-    "body": "Hi Willow Labs Inc team,\n\nWe know your team has an open request with our support team, and they're on it. Separately, invoice 1569 for $4,012 was due on 2026-10-16. Whenever you get a chance, could you check on it? If anything about the invoice looks off, just reply and we'll sort it out.\n\nThanks,\nFinance team",
+    "body": "Hi Willow Labs Inc team,\n\nWe know your team has an open request with our support team, and they're on it. Separately, invoice 1569 for $4,012 was due on Oct 16, 2026. Whenever you get a chance, could you check on it? If anything about the invoice looks off, just reply and we'll sort it out.\n\nThanks,\nFinance team",
     "tone": "soft"
    },
    "reminderStage": "Second reminder",
@@ -857,7 +857,7 @@
    "headline": "Second reminder: 15 days overdue, nothing blocking",
    "reasons": [
     {
-     "text": "A billing ticket from 2026-07-30 is closed. Mentioned for context; it doesn't block the reminder.",
+     "text": "A billing ticket from Jul 30, 2026 is closed. Mentioned for context; it doesn't block the reminder.",
      "evidenceIds": [
       "ticket:T-20025"
      ],
@@ -891,15 +891,15 @@
      "file": "contracts.csv",
      "recordId": "K0073",
      "date": "2025-01-01",
-     "title": "Contract: 100 seats \u00d7 $39.00, 2025-01-01 to 2027-01-01"
+     "title": "Contract: 100 seats \u00d7 $39.00, Jan 1, 2025 to Jan 1, 2027"
     }
    ],
    "policyRef": "collections_policy.md \u00a72",
    "needsReview": false,
    "draft": {
     "to": "billing0@brightwaysoftwar.example",
-    "subject": "Second reminder: invoice 1766 ($3,900) was due 2026-10-16",
-    "body": "Hi Brightway Software team,\n\nThis is a reminder that invoice 1766 for $3,900 was due on 2026-10-16 and is now 15 days overdue. Could you let us know when we can expect payment? If it's already on its way, thank you, and please ignore this note.\n\nThanks,\nFinance team",
+    "subject": "Second reminder: invoice 1766 ($3,900) was due Oct 16, 2026",
+    "body": "Hi Brightway Software team,\n\nThis is a reminder that invoice 1766 for $3,900 was due on Oct 16, 2026 and is now 15 days overdue. Could you let us know when we can expect payment? If it's already on its way, thank you, and please ignore this note.\n\nThanks,\nFinance team",
     "tone": "standard"
    },
    "reminderStage": "Second reminder"
@@ -967,15 +967,15 @@
      "file": "contracts.csv",
      "recordId": "K0108",
      "date": "2025-06-01",
-     "title": "Contract: 57 seats \u00d7 $59.00, 2025-06-01 to 2027-06-01"
+     "title": "Contract: 57 seats \u00d7 $59.00, Jun 1, 2025 to Jun 1, 2027"
     }
    ],
    "policyRef": "collections_policy.md \u00a72",
    "needsReview": false,
    "draft": {
     "to": "billing0@silverlineclinic.example",
-    "subject": "Final reminder: invoice 2130 ($3,363) was due 2026-10-01",
-    "body": "Hi Silverline Clinics Co team,\n\nThis is a reminder that invoice 2130 for $3,363 was due on 2026-10-01 and is now 30 days overdue. Could you let us know when we can expect payment? If it's already on its way, thank you, and please ignore this note.\n\nThanks,\nFinance team",
+    "subject": "Final reminder: invoice 2130 ($3,363) was due Oct 1, 2026",
+    "body": "Hi Silverline Clinics Co team,\n\nThis is a reminder that invoice 2130 for $3,363 was due on Oct 1, 2026 and is now 30 days overdue. Could you let us know when we can expect payment? If it's already on its way, thank you, and please ignore this note.\n\nThanks,\nFinance team",
     "tone": "standard"
    },
    "reminderStage": "Final reminder"
@@ -1032,15 +1032,15 @@
      "file": "contracts.csv",
      "recordId": "K0012",
      "date": "2025-04-01",
-     "title": "Contract: 47 seats \u00d7 $69.00, 2025-04-01 to 2027-04-01"
+     "title": "Contract: 47 seats \u00d7 $69.00, Apr 1, 2025 to Apr 1, 2027"
     }
    ],
    "policyRef": "collections_policy.md \u00a72",
    "needsReview": false,
    "draft": {
     "to": "billing0@uplandstudiosco.example",
-    "subject": "Second reminder: invoice 1122 ($3,243) was due 2026-10-16",
-    "body": "Hi Upland Studios Co team,\n\nThis is a reminder that invoice 1122 for $3,243 was due on 2026-10-16 and is now 15 days overdue. Could you let us know when we can expect payment? If it's already on its way, thank you, and please ignore this note.\n\nThanks,\nFinance team",
+    "subject": "Second reminder: invoice 1122 ($3,243) was due Oct 16, 2026",
+    "body": "Hi Upland Studios Co team,\n\nThis is a reminder that invoice 1122 for $3,243 was due on Oct 16, 2026 and is now 15 days overdue. Could you let us know when we can expect payment? If it's already on its way, thank you, and please ignore this note.\n\nThanks,\nFinance team",
     "tone": "standard"
    },
    "reminderStage": "Second reminder"
@@ -1097,15 +1097,15 @@
      "file": "contracts.csv",
      "recordId": "K0063",
      "date": "2025-10-01",
-     "title": "Contract: 54 seats \u00d7 $49.00, 2025-10-01 to 2027-10-01"
+     "title": "Contract: 54 seats \u00d7 $49.00, Oct 1, 2025 to Oct 1, 2027"
     }
    ],
    "policyRef": "collections_policy.md \u00a72",
    "needsReview": false,
    "draft": {
     "to": "billing0@juniperhealthllc.example",
-    "subject": "Second reminder: invoice 1668 ($2,646) was due 2026-10-16",
-    "body": "Hi Juniper Health LLC team,\n\nThis is a reminder that invoice 1668 for $2,646 was due on 2026-10-16 and is now 15 days overdue. Could you let us know when we can expect payment? If it's already on its way, thank you, and please ignore this note.\n\nThanks,\nFinance team",
+    "subject": "Second reminder: invoice 1668 ($2,646) was due Oct 16, 2026",
+    "body": "Hi Juniper Health LLC team,\n\nThis is a reminder that invoice 1668 for $2,646 was due on Oct 16, 2026 and is now 15 days overdue. Could you let us know when we can expect payment? If it's already on its way, thank you, and please ignore this note.\n\nThanks,\nFinance team",
     "tone": "standard"
    },
    "reminderStage": "Second reminder"
@@ -1200,7 +1200,7 @@
      "file": "contracts.csv",
      "recordId": "K0081",
      "date": "2025-05-01",
-     "title": "Contract: 18 seats \u00d7 $79.00, 2025-05-01 to 2027-05-01"
+     "title": "Contract: 18 seats \u00d7 $79.00, May 1, 2025 to May 1, 2027"
     },
     {
      "id": "payment:PAY-6048",
@@ -1209,7 +1209,7 @@
      "recordId": "PAY-6048",
      "date": "2026-10-01",
      "status": "failed",
-     "title": "Card payment of $1,422 failed on 2026-10-01"
+     "title": "Card payment of $1,422 failed on Oct 1, 2026"
     }
    ],
    "policyRef": "collections_policy.md \u00a75",
@@ -1238,14 +1238,14 @@
    "headline": "Final reminder: 30 days overdue, nothing blocking",
    "reasons": [
     {
-     "text": "A billing ticket from 2026-08-30 is closed. Mentioned for context; it doesn't block the reminder.",
+     "text": "A billing ticket from Aug 30, 2026 is closed. Mentioned for context; it doesn't block the reminder.",
      "evidenceIds": [
       "ticket:T-20344"
      ],
      "policyRef": null
     },
     {
-     "text": "Billing contact last active 2025-09-26: may be out of date.",
+     "text": "Billing contact last active sep 26, 2025: may be out of date.",
      "evidenceIds": [],
      "policyRef": null
     }
@@ -1287,15 +1287,15 @@
      "file": "contracts.csv",
      "recordId": "K0055",
      "date": "2025-03-01",
-     "title": "Contract: 20 seats \u00d7 $69.00, 2025-03-01 to 2027-03-01"
+     "title": "Contract: 20 seats \u00d7 $69.00, Mar 1, 2025 to Mar 1, 2027"
     }
    ],
    "policyRef": "collections_policy.md \u00a72",
    "needsReview": false,
    "draft": {
     "to": "billing0@summitrealtyinc.example",
-    "subject": "Final reminder: invoice 1593 ($1,380) was due 2026-10-01",
-    "body": "Hi Summit Realty Inc team,\n\nThis is a reminder that invoice 1593 for $1,380 was due on 2026-10-01 and is now 30 days overdue. Could you let us know when we can expect payment? If it's already on its way, thank you, and please ignore this note.\n\nThanks,\nFinance team",
+    "subject": "Final reminder: invoice 1593 ($1,380) was due Oct 1, 2026",
+    "body": "Hi Summit Realty Inc team,\n\nThis is a reminder that invoice 1593 for $1,380 was due on Oct 1, 2026 and is now 30 days overdue. Could you let us know when we can expect payment? If it's already on its way, thank you, and please ignore this note.\n\nThanks,\nFinance team",
     "tone": "standard"
    },
    "reminderStage": "Final reminder"
@@ -1316,7 +1316,7 @@
    "headline": "Second reminder: 15 days overdue, nothing blocking",
    "reasons": [
     {
-     "text": "A billing ticket from 2026-07-21 is closed. Mentioned for context; it doesn't block the reminder.",
+     "text": "A billing ticket from Jul 21, 2026 is closed. Mentioned for context; it doesn't block the reminder.",
      "evidenceIds": [
       "ticket:T-20021"
      ],
@@ -1360,15 +1360,15 @@
      "file": "contracts.csv",
      "recordId": "K0096",
      "date": "2025-02-01",
-     "title": "Contract: 25 seats \u00d7 $49.00, 2025-02-01 to 2027-02-01"
+     "title": "Contract: 25 seats \u00d7 $49.00, Feb 1, 2025 to Feb 1, 2027"
     }
    ],
    "policyRef": "collections_policy.md \u00a72",
    "needsReview": false,
    "draft": {
     "to": "billing0@cedaroutfittersi.example",
-    "subject": "Second reminder: invoice 2008 ($1,225) was due 2026-10-16",
-    "body": "Hi Cedar Outfitters Inc team,\n\nThis is a reminder that invoice 2008 for $1,225 was due on 2026-10-16 and is now 15 days overdue. Could you let us know when we can expect payment? If it's already on its way, thank you, and please ignore this note.\n\nThanks,\nFinance team",
+    "subject": "Second reminder: invoice 2008 ($1,225) was due Oct 16, 2026",
+    "body": "Hi Cedar Outfitters Inc team,\n\nThis is a reminder that invoice 2008 for $1,225 was due on Oct 16, 2026 and is now 15 days overdue. Could you let us know when we can expect payment? If it's already on its way, thank you, and please ignore this note.\n\nThanks,\nFinance team",
     "tone": "standard"
    },
    "reminderStage": "Second reminder"
@@ -1389,7 +1389,7 @@
    "headline": "Final reminder: 30 days overdue, nothing blocking",
    "reasons": [
     {
-     "text": "A billing ticket from 2026-07-31 is closed. Mentioned for context; it doesn't block the reminder.",
+     "text": "A billing ticket from Jul 31, 2026 is closed. Mentioned for context; it doesn't block the reminder.",
      "evidenceIds": [
       "ticket:T-20239"
      ],
@@ -1423,15 +1423,15 @@
      "file": "contracts.csv",
      "recordId": "K0038",
      "date": "2025-08-01",
-     "title": "Contract: 22 seats \u00d7 $49.00, 2025-08-01 to 2027-08-01"
+     "title": "Contract: 22 seats \u00d7 $49.00, Aug 1, 2025 to Aug 1, 2027"
     }
    ],
    "policyRef": "collections_policy.md \u00a72",
    "needsReview": false,
    "draft": {
     "to": "billing0@silverlinehealth.example",
-    "subject": "Final reminder: invoice 1411 ($1,078) was due 2026-10-01",
-    "body": "Hi Silverline Health Inc team,\n\nThis is a reminder that invoice 1411 for $1,078 was due on 2026-10-01 and is now 30 days overdue. Could you let us know when we can expect payment? If it's already on its way, thank you, and please ignore this note.\n\nThanks,\nFinance team",
+    "subject": "Final reminder: invoice 1411 ($1,078) was due Oct 1, 2026",
+    "body": "Hi Silverline Health Inc team,\n\nThis is a reminder that invoice 1411 for $1,078 was due on Oct 1, 2026 and is now 30 days overdue. Could you let us know when we can expect payment? If it's already on its way, thank you, and please ignore this note.\n\nThanks,\nFinance team",
     "tone": "standard"
    },
    "reminderStage": "Final reminder"
@@ -1452,7 +1452,7 @@
    "headline": "Card failed: send the update-card note",
    "reasons": [
     {
-     "text": "A billing ticket from 2026-08-06 is closed. Mentioned for context; it doesn't block the reminder.",
+     "text": "A billing ticket from Aug 6, 2026 is closed. Mentioned for context; it doesn't block the reminder.",
      "evidenceIds": [
       "ticket:T-20238"
      ],
@@ -1466,7 +1466,7 @@
      "policyRef": "collections_policy.md \u00a75"
     },
     {
-     "text": "Billing contact last active 2025-09-26: may be out of date.",
+     "text": "Billing contact last active sep 26, 2025: may be out of date.",
      "evidenceIds": [],
      "policyRef": null
     }
@@ -1518,7 +1518,7 @@
      "file": "contracts.csv",
      "recordId": "K0028",
      "date": "2025-01-01",
-     "title": "Contract: 22 seats \u00d7 $49.00, 2025-01-01 to 2027-01-01"
+     "title": "Contract: 22 seats \u00d7 $49.00, Jan 1, 2025 to Jan 1, 2027"
     },
     {
      "id": "payment:PAY-6049",
@@ -1527,7 +1527,7 @@
      "recordId": "PAY-6049",
      "date": "2026-10-01",
      "status": "failed",
-     "title": "Card payment of $1,078 failed on 2026-10-01"
+     "title": "Card payment of $1,078 failed on Oct 1, 2026"
     }
    ],
    "policyRef": "collections_policy.md \u00a75",
@@ -1630,7 +1630,7 @@
      "file": "contracts.csv",
      "recordId": "K0013",
      "date": "2025-04-01",
-     "title": "Contract: 19 seats \u00d7 $49.00, 2025-04-01 to 2027-04-01"
+     "title": "Contract: 19 seats \u00d7 $49.00, Apr 1, 2025 to Apr 1, 2027"
     }
    ],
    "policyRef": "collections_policy.md \u00a72",
@@ -1638,7 +1638,7 @@
    "draft": {
     "to": "billing0@keystonebuilders.example",
     "subject": "Invoice 1133: a gentle reminder",
-    "body": "Hi Keystone Builders Inc team,\n\nWe know your team has an open request with our support team, and they're on it. Separately, invoice 1133 for $931 was due on 2026-10-01. Whenever you get a chance, could you check on it? If anything about the invoice looks off, just reply and we'll sort it out.\n\nThanks,\nFinance team",
+    "body": "Hi Keystone Builders Inc team,\n\nWe know your team has an open request with our support team, and they're on it. Separately, invoice 1133 for $931 was due on Oct 1, 2026. Whenever you get a chance, could you check on it? If anything about the invoice looks off, just reply and we'll sort it out.\n\nThanks,\nFinance team",
     "tone": "soft"
    },
    "reminderStage": "Final reminder",
@@ -1734,15 +1734,15 @@
      "file": "contracts.csv",
      "recordId": "K0050",
      "date": "2025-09-01",
-     "title": "Contract: 20 seats \u00d7 $39.00, 2025-09-01 to 2027-09-01"
+     "title": "Contract: 20 seats \u00d7 $39.00, Sep 1, 2025 to Sep 1, 2027"
     }
    ],
    "policyRef": "collections_policy.md \u00a72",
    "needsReview": false,
    "draft": {
     "to": "billing0@highlandstudiosg.example",
-    "subject": "Second reminder: invoice 1533 ($780) was due 2026-10-16",
-    "body": "Hi Highland Studios Group team,\n\nThis is a reminder that invoice 1533 for $780 was due on 2026-10-16 and is now 15 days overdue. Could you let us know when we can expect payment? If it's already on its way, thank you, and please ignore this note.\n\nThanks,\nFinance team",
+    "subject": "Second reminder: invoice 1533 ($780) was due Oct 16, 2026",
+    "body": "Hi Highland Studios Group team,\n\nThis is a reminder that invoice 1533 for $780 was due on Oct 16, 2026 and is now 15 days overdue. Could you let us know when we can expect payment? If it's already on its way, thank you, and please ignore this note.\n\nThanks,\nFinance team",
     "tone": "standard"
    },
    "reminderStage": "Second reminder"
@@ -1797,7 +1797,7 @@
      "file": "contracts.csv",
      "recordId": "K0022",
      "date": "2025-04-01",
-     "title": "Contract: 10 seats \u00d7 $69.00, 2025-04-01 to 2027-04-01"
+     "title": "Contract: 10 seats \u00d7 $69.00, Apr 1, 2025 to Apr 1, 2027"
     },
     {
      "id": "payment:PAY-6050",
@@ -1806,7 +1806,7 @@
      "recordId": "PAY-6050",
      "date": "2026-10-16",
      "status": "failed",
-     "title": "Card payment of $690 failed on 2026-10-16"
+     "title": "Card payment of $690 failed on Oct 16, 2026"
     }
    ],
    "policyRef": "collections_policy.md \u00a75",
@@ -1871,15 +1871,15 @@
      "file": "contracts.csv",
      "recordId": "K0039",
      "date": "2025-03-01",
-     "title": "Contract: 16 seats \u00d7 $39.00, 2025-03-01 to 2027-03-01"
+     "title": "Contract: 16 seats \u00d7 $39.00, Mar 1, 2025 to Mar 1, 2027"
     }
    ],
    "policyRef": "collections_policy.md \u00a72",
    "needsReview": false,
    "draft": {
     "to": "billing0@granitepartnersl.example",
-    "subject": "Second reminder: invoice 1424 ($624) was due 2026-10-16",
-    "body": "Hi Granite Partners LLC team,\n\nThis is a reminder that invoice 1424 for $624 was due on 2026-10-16 and is now 15 days overdue. Could you let us know when we can expect payment? If it's already on its way, thank you, and please ignore this note.\n\nThanks,\nFinance team",
+    "subject": "Second reminder: invoice 1424 ($624) was due Oct 16, 2026",
+    "body": "Hi Granite Partners LLC team,\n\nThis is a reminder that invoice 1424 for $624 was due on Oct 16, 2026 and is now 15 days overdue. Could you let us know when we can expect payment? If it's already on its way, thank you, and please ignore this note.\n\nThanks,\nFinance team",
     "tone": "standard"
    },
    "reminderStage": "Second reminder"
@@ -1924,7 +1924,7 @@
      "file": "contracts.csv",
      "recordId": "K0007",
      "date": "2025-06-01",
-     "title": "Contract: 13 seats \u00d7 $39.00, 2025-06-01 to 2027-06-01"
+     "title": "Contract: 13 seats \u00d7 $39.00, Jun 1, 2025 to Jun 1, 2027"
     }
    ],
    "policyRef": "collections_policy.md \u00a72",
@@ -1932,7 +1932,7 @@
    "draft": {
     "to": "billing0@northwinddentall.example",
     "subject": "Invoice 1072: a gentle reminder",
-    "body": "Hi Northwind Dental LLC team,\n\nWe know your team has an open request with our support team, and they're on it. Separately, invoice 1072 for $507 was due on 2026-10-16. Whenever you get a chance, could you check on it? If anything about the invoice looks off, just reply and we'll sort it out.\n\nThanks,\nFinance team",
+    "body": "Hi Northwind Dental LLC team,\n\nWe know your team has an open request with our support team, and they're on it. Separately, invoice 1072 for $507 was due on Oct 16, 2026. Whenever you get a chance, could you check on it? If anything about the invoice looks off, just reply and we'll sort it out.\n\nThanks,\nFinance team",
     "tone": "soft"
    },
    "reminderStage": "Second reminder",
@@ -1970,14 +1970,14 @@
    "headline": "Second reminder: 15 days overdue, nothing blocking",
    "reasons": [
     {
-     "text": "A billing ticket from 2026-07-16 is closed. Mentioned for context; it doesn't block the reminder.",
+     "text": "A billing ticket from Jul 16, 2026 is closed. Mentioned for context; it doesn't block the reminder.",
      "evidenceIds": [
       "ticket:T-20023"
      ],
      "policyRef": null
     },
     {
-     "text": "Billing contact last active 2025-09-26: may be out of date.",
+     "text": "Billing contact last active sep 26, 2025: may be out of date.",
      "evidenceIds": [],
      "policyRef": null
     }
@@ -2019,15 +2019,15 @@
      "file": "contracts.csv",
      "recordId": "K0068",
      "date": "2025-09-01",
-     "title": "Contract: 6 seats \u00d7 $39.00, 2025-09-01 to 2027-09-01"
+     "title": "Contract: 6 seats \u00d7 $39.00, Sep 1, 2025 to Sep 1, 2027"
     }
    ],
    "policyRef": "collections_policy.md \u00a72",
    "needsReview": false,
    "draft": {
     "to": "billing0@willowsoftwarell.example",
-    "subject": "Second reminder: invoice 1716 ($234) was due 2026-10-16",
-    "body": "Hi Willow Software LLC team,\n\nThis is a reminder that invoice 1716 for $234 was due on 2026-10-16 and is now 15 days overdue. Could you let us know when we can expect payment? If it's already on its way, thank you, and please ignore this note.\n\nThanks,\nFinance team",
+    "subject": "Second reminder: invoice 1716 ($234) was due Oct 16, 2026",
+    "body": "Hi Willow Software LLC team,\n\nThis is a reminder that invoice 1716 for $234 was due on Oct 16, 2026 and is now 15 days overdue. Could you let us know when we can expect payment? If it's already on its way, thank you, and please ignore this note.\n\nThanks,\nFinance team",
     "tone": "standard"
    },
    "reminderStage": "Second reminder"
@@ -2073,15 +2073,15 @@
      "file": "contracts.csv",
      "recordId": "K0051",
      "date": "2025-02-01",
-     "title": "Contract: 5 seats \u00d7 $39.00, 2025-02-01 to 2027-02-01"
+     "title": "Contract: 5 seats \u00d7 $39.00, Feb 1, 2025 to Feb 1, 2027"
     }
    ],
    "policyRef": "collections_policy.md \u00a72",
    "needsReview": false,
    "draft": {
     "to": "billing0@northstarstudios.example",
-    "subject": "Final reminder: invoice 1545 ($195) was due 2026-10-01",
-    "body": "Hi Northstar Studios Group team,\n\nThis is a reminder that invoice 1545 for $195 was due on 2026-10-01 and is now 30 days overdue. Could you let us know when we can expect payment? If it's already on its way, thank you, and please ignore this note.\n\nThanks,\nFinance team",
+    "subject": "Final reminder: invoice 1545 ($195) was due Oct 1, 2026",
+    "body": "Hi Northstar Studios Group team,\n\nThis is a reminder that invoice 1545 for $195 was due on Oct 1, 2026 and is now 30 days overdue. Could you let us know when we can expect payment? If it's already on its way, thank you, and please ignore this note.\n\nThanks,\nFinance team",
     "tone": "standard"
    },
    "reminderStage": "Final reminder"
@@ -2136,7 +2136,7 @@
      "file": "contracts.csv",
      "recordId": "K0076",
      "date": "2025-09-01",
-     "title": "Contract: 116 seats \u00d7 $69.00, 2025-09-01 to 2027-09-01"
+     "title": "Contract: 116 seats \u00d7 $69.00, Sep 1, 2025 to Sep 1, 2027"
     }
    ],
    "policyRef": "collections_policy.md \u00a74",
@@ -2184,17 +2184,17 @@
    "verdict": "hold",
    "cause": "unhappy",
    "confidence": "low",
-   "headline": "An open ticket might be a billing complaint or a serious escalation (the AI judges disagreed). We don't chase until a person reads it.",
+   "headline": "The AI wasn't sure whether this open ticket is about money or a serious problem (its two checks disagreed). We don't chase until a person reads it.",
    "reasons": [
     {
-     "text": "An open ticket might be a billing complaint or a serious escalation (the AI judges disagreed). We don't chase until a person reads it.",
+     "text": "The AI wasn't sure whether this open ticket is about money or a serious problem (its two checks disagreed). We don't chase until a person reads it.",
      "evidenceIds": [
       "ticket:T-20019"
      ],
      "policyRef": "sla_policy.md \u00a72"
     },
     {
-     "text": "A billing ticket from 2026-09-08 is closed. Mentioned for context; it doesn't block the reminder.",
+     "text": "A billing ticket from Sep 8, 2026 is closed. Mentioned for context; it doesn't block the reminder.",
      "evidenceIds": [
       "ticket:T-20316"
      ],
@@ -2248,7 +2248,7 @@
      "file": "contracts.csv",
      "recordId": "K0025",
      "date": "2025-08-01",
-     "title": "Contract: 93 seats \u00d7 $79.00, 2025-08-01 to 2027-08-01"
+     "title": "Contract: 93 seats \u00d7 $79.00, Aug 1, 2025 to Aug 1, 2027"
     }
    ],
    "policyRef": "sla_policy.md \u00a72",
@@ -2259,7 +2259,7 @@
     "body": "",
     "tone": "none"
    },
-   "reviewReason": "the AI judges disagreed about what this ticket means",
+   "reviewReason": "the AI wasn't sure what this ticket means",
    "agreement": {
     "agree": false,
     "votes": [
@@ -2307,7 +2307,7 @@
      "policyRef": "collections_policy.md \u00a74"
     },
     {
-     "text": "A billing ticket from 2026-07-20 is closed. Mentioned for context; it doesn't block the reminder.",
+     "text": "A billing ticket from Jul 20, 2026 is closed. Mentioned for context; it doesn't block the reminder.",
      "evidenceIds": [
       "ticket:T-20048"
      ],
@@ -2361,7 +2361,7 @@
      "file": "contracts.csv",
      "recordId": "K0062",
      "date": "2025-05-01",
-     "title": "Contract: 55 seats \u00d7 $79.00, 2025-05-01 to 2027-05-01"
+     "title": "Contract: 55 seats \u00d7 $79.00, May 1, 2025 to May 1, 2027"
     }
    ],
    "policyRef": "collections_policy.md \u00a74",
@@ -2419,7 +2419,7 @@
      "policyRef": "collections_policy.md \u00a74"
     },
     {
-     "text": "A billing ticket from 2026-07-20 is closed. Mentioned for context; it doesn't block the reminder.",
+     "text": "A billing ticket from Jul 20, 2026 is closed. Mentioned for context; it doesn't block the reminder.",
      "evidenceIds": [
       "ticket:T-20048"
      ],
@@ -2473,7 +2473,7 @@
      "file": "contracts.csv",
      "recordId": "K0062",
      "date": "2025-05-01",
-     "title": "Contract: 55 seats \u00d7 $79.00, 2025-05-01 to 2027-05-01"
+     "title": "Contract: 55 seats \u00d7 $79.00, May 1, 2025 to May 1, 2027"
     }
    ],
    "policyRef": "collections_policy.md \u00a74",
@@ -2578,7 +2578,7 @@
      "file": "contracts.csv",
      "recordId": "K0036",
      "date": "2025-05-01",
-     "title": "Contract: 62 seats \u00d7 $69.00, 2025-05-01 to 2027-05-01"
+     "title": "Contract: 62 seats \u00d7 $69.00, May 1, 2025 to May 1, 2027"
     }
    ],
    "policyRef": "collections_policy.md \u00a74",
@@ -2663,7 +2663,7 @@
      "file": "contracts.csv",
      "recordId": "K0002",
      "date": "2025-03-01",
-     "title": "Contract: 20 seats \u00d7 $69.00, 2025-03-01 to 2027-03-01"
+     "title": "Contract: 20 seats \u00d7 $69.00, Mar 1, 2025 to Mar 1, 2027"
     }
    ],
    "policyRef": "collections_policy.md \u00a74",
@@ -2731,7 +2731,7 @@
      "file": "contracts.csv",
      "recordId": "K0030",
      "date": "2025-05-01",
-     "title": "Contract: 45 seats \u00d7 $39.00, 2025-05-01 to 2027-05-01"
+     "title": "Contract: 45 seats \u00d7 $39.00, May 1, 2025 to May 1, 2027"
     }
    ],
    "policyRef": "collections_policy.md \u00a74",
@@ -2762,10 +2762,10 @@
    "verdict": "hold",
    "cause": "wrong_bill",
    "confidence": "high",
-   "headline": "A billing ticket from 2026-07-05 is closed. Mentioned for context; it doesn't block the reminder.",
+   "headline": "A billing ticket from Jul 5, 2026 is closed. Mentioned for context; it doesn't block the reminder.",
    "reasons": [
     {
-     "text": "A billing ticket from 2026-07-05 is closed. Mentioned for context; it doesn't block the reminder.",
+     "text": "A billing ticket from Jul 5, 2026 is closed. Mentioned for context; it doesn't block the reminder.",
      "evidenceIds": [
       "ticket:T-20258"
      ],
@@ -2816,7 +2816,7 @@
      "file": "contracts.csv",
      "recordId": "K0104",
      "date": "2025-01-01",
-     "title": "Contract: 20 seats \u00d7 $69.00, 2025-01-01 to 2027-01-01"
+     "title": "Contract: 20 seats \u00d7 $69.00, Jan 1, 2025 to Jan 1, 2027"
     }
    ],
    "policyRef": "collections_policy.md \u00a74",
@@ -2857,7 +2857,7 @@
      "policyRef": "collections_policy.md \u00a74"
     },
     {
-     "text": "A billing ticket from 2026-08-05 is closed. Mentioned for context; it doesn't block the reminder.",
+     "text": "A billing ticket from Aug 5, 2026 is closed. Mentioned for context; it doesn't block the reminder.",
      "evidenceIds": [
       "ticket:T-20314"
      ],
@@ -2911,7 +2911,7 @@
      "file": "contracts.csv",
      "recordId": "K0006",
      "date": "2025-02-01",
-     "title": "Contract: 25 seats \u00d7 $59.00, 2025-02-01 to 2027-02-01"
+     "title": "Contract: 25 seats \u00d7 $59.00, Feb 1, 2025 to Feb 1, 2027"
     }
    ],
    "policyRef": "collections_policy.md \u00a74",
@@ -2969,7 +2969,7 @@
      "policyRef": "collections_policy.md \u00a74"
     },
     {
-     "text": "A billing ticket from 2026-08-05 is closed. Mentioned for context; it doesn't block the reminder.",
+     "text": "A billing ticket from Aug 5, 2026 is closed. Mentioned for context; it doesn't block the reminder.",
      "evidenceIds": [
       "ticket:T-20314"
      ],
@@ -3023,7 +3023,7 @@
      "file": "contracts.csv",
      "recordId": "K0006",
      "date": "2025-02-01",
-     "title": "Contract: 25 seats \u00d7 $59.00, 2025-02-01 to 2027-02-01"
+     "title": "Contract: 25 seats \u00d7 $59.00, Feb 1, 2025 to Feb 1, 2027"
     }
    ],
    "policyRef": "collections_policy.md \u00a74",
@@ -3118,7 +3118,7 @@
      "file": "contracts.csv",
      "recordId": "K0080",
      "date": "2025-02-01",
-     "title": "Contract: 21 seats \u00d7 $69.00, 2025-02-01 to 2027-02-01"
+     "title": "Contract: 21 seats \u00d7 $69.00, Feb 1, 2025 to Feb 1, 2027"
     }
    ],
    "policyRef": "sla_policy.md \u00a72",
@@ -3213,7 +3213,7 @@
      "file": "contracts.csv",
      "recordId": "K0056",
      "date": "2025-03-01",
-     "title": "Contract: 19 seats \u00d7 $69.00, 2025-03-01 to 2027-03-01"
+     "title": "Contract: 19 seats \u00d7 $69.00, Mar 1, 2025 to Mar 1, 2027"
     }
    ],
    "policyRef": "sla_policy.md \u00a72",
@@ -3308,7 +3308,7 @@
      "file": "contracts.csv",
      "recordId": "K0056",
      "date": "2025-03-01",
-     "title": "Contract: 19 seats \u00d7 $69.00, 2025-03-01 to 2027-03-01"
+     "title": "Contract: 19 seats \u00d7 $69.00, Mar 1, 2025 to Mar 1, 2027"
     }
    ],
    "policyRef": "sla_policy.md \u00a72",
@@ -3366,7 +3366,7 @@
      "policyRef": "collections_policy.md \u00a74"
     },
     {
-     "text": "A billing ticket from 2026-07-26 is closed. Mentioned for context; it doesn't block the reminder.",
+     "text": "A billing ticket from Jul 26, 2026 is closed. Mentioned for context; it doesn't block the reminder.",
      "evidenceIds": [
       "ticket:T-20216"
      ],
@@ -3420,7 +3420,7 @@
      "file": "contracts.csv",
      "recordId": "K0083",
      "date": "2025-01-01",
-     "title": "Contract: 14 seats \u00d7 $79.00, 2025-01-01 to 2027-01-01"
+     "title": "Contract: 14 seats \u00d7 $79.00, Jan 1, 2025 to Jan 1, 2027"
     }
    ],
    "policyRef": "collections_policy.md \u00a74",
@@ -3478,7 +3478,7 @@
      "policyRef": "collections_policy.md \u00a74"
     },
     {
-     "text": "A billing ticket from 2026-07-26 is closed. Mentioned for context; it doesn't block the reminder.",
+     "text": "A billing ticket from Jul 26, 2026 is closed. Mentioned for context; it doesn't block the reminder.",
      "evidenceIds": [
       "ticket:T-20216"
      ],
@@ -3532,7 +3532,7 @@
      "file": "contracts.csv",
      "recordId": "K0083",
      "date": "2025-01-01",
-     "title": "Contract: 14 seats \u00d7 $79.00, 2025-01-01 to 2027-01-01"
+     "title": "Contract: 14 seats \u00d7 $79.00, Jan 1, 2025 to Jan 1, 2027"
     }
    ],
    "policyRef": "collections_policy.md \u00a74",
@@ -3617,7 +3617,7 @@
      "file": "contracts.csv",
      "recordId": "K0105",
      "date": "2025-04-01",
-     "title": "Contract: 24 seats \u00d7 $39.00, 2025-04-01 to 2027-04-01"
+     "title": "Contract: 24 seats \u00d7 $39.00, Apr 1, 2025 to Apr 1, 2027"
     }
    ],
    "policyRef": "collections_policy.md \u00a74",
@@ -3658,7 +3658,7 @@
      "policyRef": "sla_policy.md \u00a72"
     },
     {
-     "text": "A billing ticket from 2026-08-30 is closed. Mentioned for context; it doesn't block the reminder.",
+     "text": "A billing ticket from Aug 30, 2026 is closed. Mentioned for context; it doesn't block the reminder.",
      "evidenceIds": [
       "ticket:T-20121"
      ],
@@ -3712,7 +3712,7 @@
      "file": "contracts.csv",
      "recordId": "K0109",
      "date": "2025-08-01",
-     "title": "Contract: 15 seats \u00d7 $69.00, 2025-08-01 to 2027-08-01"
+     "title": "Contract: 15 seats \u00d7 $69.00, Aug 1, 2025 to Aug 1, 2027"
     }
    ],
    "policyRef": "sla_policy.md \u00a72",
@@ -3807,7 +3807,7 @@
      "file": "contracts.csv",
      "recordId": "K0057",
      "date": "2025-08-01",
-     "title": "Contract: 15 seats \u00d7 $69.00, 2025-08-01 to 2027-08-01"
+     "title": "Contract: 15 seats \u00d7 $69.00, Aug 1, 2025 to Aug 1, 2027"
     }
    ],
    "policyRef": "collections_policy.md \u00a74",
@@ -3902,7 +3902,7 @@
      "file": "contracts.csv",
      "recordId": "K0057",
      "date": "2025-08-01",
-     "title": "Contract: 15 seats \u00d7 $69.00, 2025-08-01 to 2027-08-01"
+     "title": "Contract: 15 seats \u00d7 $69.00, Aug 1, 2025 to Aug 1, 2027"
     }
    ],
    "policyRef": "collections_policy.md \u00a74",
@@ -3997,7 +3997,7 @@
      "file": "contracts.csv",
      "recordId": "K0057",
      "date": "2025-08-01",
-     "title": "Contract: 15 seats \u00d7 $69.00, 2025-08-01 to 2027-08-01"
+     "title": "Contract: 15 seats \u00d7 $69.00, Aug 1, 2025 to Aug 1, 2027"
     }
    ],
    "policyRef": "collections_policy.md \u00a74",
@@ -4045,10 +4045,10 @@
    "verdict": "hold",
    "cause": "wrong_bill",
    "confidence": "high",
-   "headline": "A billing ticket from 2026-09-04 is closed. Mentioned for context; it doesn't block the reminder.",
+   "headline": "A billing ticket from Sep 4, 2026 is closed. Mentioned for context; it doesn't block the reminder.",
    "reasons": [
     {
-     "text": "A billing ticket from 2026-09-04 is closed. Mentioned for context; it doesn't block the reminder.",
+     "text": "A billing ticket from Sep 4, 2026 is closed. Mentioned for context; it doesn't block the reminder.",
      "evidenceIds": [
       "ticket:T-20157"
      ],
@@ -4089,7 +4089,7 @@
      "file": "contracts.csv",
      "recordId": "K0086",
      "date": "2025-01-01",
-     "title": "Contract: 12 seats \u00d7 $39.00, 2025-01-01 to 2027-01-01"
+     "title": "Contract: 12 seats \u00d7 $39.00, Jan 1, 2025 to Jan 1, 2027"
     }
    ],
    "policyRef": "collections_policy.md \u00a74",
@@ -4157,7 +4157,7 @@
      "file": "contracts.csv",
      "recordId": "K0041",
      "date": "2025-10-01",
-     "title": "Contract: 7 seats \u00d7 $49.00, 2025-10-01 to 2027-10-01"
+     "title": "Contract: 7 seats \u00d7 $49.00, Oct 1, 2025 to Oct 1, 2027"
     }
    ],
    "policyRef": "collections_policy.md \u00a74",
@@ -4198,7 +4198,7 @@
      "policyRef": "collections_policy.md \u00a74"
     },
     {
-     "text": "A billing ticket from 2026-08-08 is closed. Mentioned for context; it doesn't block the reminder.",
+     "text": "A billing ticket from Aug 8, 2026 is closed. Mentioned for context; it doesn't block the reminder.",
      "evidenceIds": [
       "ticket:T-20068"
      ],
@@ -4252,7 +4252,7 @@
      "file": "contracts.csv",
      "recordId": "K0102",
      "date": "2025-04-01",
-     "title": "Contract: 21 seats \u00d7 $39.00, 2025-04-01 to 2027-04-01"
+     "title": "Contract: 21 seats \u00d7 $39.00, Apr 1, 2025 to Apr 1, 2027"
     }
    ],
    "policyRef": "collections_policy.md \u00a74",
@@ -4310,7 +4310,7 @@
      "policyRef": "collections_policy.md \u00a74"
     },
     {
-     "text": "A billing ticket from 2026-09-22 is closed. Mentioned for context; it doesn't block the reminder.",
+     "text": "A billing ticket from Sep 22, 2026 is closed. Mentioned for context; it doesn't block the reminder.",
      "evidenceIds": [
       "ticket:T-20280"
      ],
@@ -4404,7 +4404,7 @@
      "file": "contracts.csv",
      "recordId": "K0107",
      "date": "2025-02-01",
-     "title": "Contract: 16 seats \u00d7 $49.00, 2025-02-01 to 2027-02-01"
+     "title": "Contract: 16 seats \u00d7 $49.00, Feb 1, 2025 to Feb 1, 2027"
     }
    ],
    "policyRef": "collections_policy.md \u00a74",
@@ -4452,10 +4452,10 @@
    "verdict": "hold",
    "cause": "unhappy",
    "confidence": "low",
-   "headline": "An open ticket might be a billing complaint or a serious escalation (the AI judges disagreed). We don't chase until a person reads it.",
+   "headline": "The AI wasn't sure whether this open ticket is about money or a serious problem (its two checks disagreed). We don't chase until a person reads it.",
    "reasons": [
     {
-     "text": "An open ticket might be a billing complaint or a serious escalation (the AI judges disagreed). We don't chase until a person reads it.",
+     "text": "The AI wasn't sure whether this open ticket is about money or a serious problem (its two checks disagreed). We don't chase until a person reads it.",
      "evidenceIds": [
       "ticket:T-20018"
      ],
@@ -4499,7 +4499,7 @@
      "file": "contracts.csv",
      "recordId": "K0011",
      "date": "2025-07-01",
-     "title": "Contract: 12 seats \u00d7 $59.00, 2025-07-01 to 2027-07-01"
+     "title": "Contract: 12 seats \u00d7 $59.00, Jul 1, 2025 to Jul 1, 2027"
     }
    ],
    "policyRef": "sla_policy.md \u00a72",
@@ -4510,7 +4510,7 @@
     "body": "",
     "tone": "none"
    },
-   "reviewReason": "the AI judges disagreed about what this ticket means",
+   "reviewReason": "the AI wasn't sure what this ticket means",
    "agreement": {
     "agree": false,
     "votes": [
@@ -4548,10 +4548,10 @@
    "verdict": "hold",
    "cause": "unhappy",
    "confidence": "low",
-   "headline": "An open ticket might be a billing complaint or a serious escalation (the AI judges disagreed). We don't chase until a person reads it.",
+   "headline": "The AI wasn't sure whether this open ticket is about money or a serious problem (its two checks disagreed). We don't chase until a person reads it.",
    "reasons": [
     {
-     "text": "An open ticket might be a billing complaint or a serious escalation (the AI judges disagreed). We don't chase until a person reads it.",
+     "text": "The AI wasn't sure whether this open ticket is about money or a serious problem (its two checks disagreed). We don't chase until a person reads it.",
      "evidenceIds": [
       "ticket:T-20018"
      ],
@@ -4595,7 +4595,7 @@
      "file": "contracts.csv",
      "recordId": "K0011",
      "date": "2025-07-01",
-     "title": "Contract: 12 seats \u00d7 $59.00, 2025-07-01 to 2027-07-01"
+     "title": "Contract: 12 seats \u00d7 $59.00, Jul 1, 2025 to Jul 1, 2027"
     }
    ],
    "policyRef": "sla_policy.md \u00a72",
@@ -4606,7 +4606,7 @@
     "body": "",
     "tone": "none"
    },
-   "reviewReason": "the AI judges disagreed about what this ticket means",
+   "reviewReason": "the AI wasn't sure what this ticket means",
    "agreement": {
     "agree": false,
     "votes": [
@@ -4644,10 +4644,10 @@
    "verdict": "hold",
    "cause": "unhappy",
    "confidence": "low",
-   "headline": "An open ticket might be a billing complaint or a serious escalation (the AI judges disagreed). We don't chase until a person reads it.",
+   "headline": "The AI wasn't sure whether this open ticket is about money or a serious problem (its two checks disagreed). We don't chase until a person reads it.",
    "reasons": [
     {
-     "text": "An open ticket might be a billing complaint or a serious escalation (the AI judges disagreed). We don't chase until a person reads it.",
+     "text": "The AI wasn't sure whether this open ticket is about money or a serious problem (its two checks disagreed). We don't chase until a person reads it.",
      "evidenceIds": [
       "ticket:T-20018"
      ],
@@ -4691,7 +4691,7 @@
      "file": "contracts.csv",
      "recordId": "K0011",
      "date": "2025-07-01",
-     "title": "Contract: 12 seats \u00d7 $59.00, 2025-07-01 to 2027-07-01"
+     "title": "Contract: 12 seats \u00d7 $59.00, Jul 1, 2025 to Jul 1, 2027"
     }
    ],
    "policyRef": "sla_policy.md \u00a72",
@@ -4702,7 +4702,7 @@
     "body": "",
     "tone": "none"
    },
-   "reviewReason": "the AI judges disagreed about what this ticket means",
+   "reviewReason": "the AI wasn't sure what this ticket means",
    "agreement": {
     "agree": false,
     "votes": [
@@ -4750,7 +4750,7 @@
      "policyRef": "collections_policy.md \u00a74"
     },
     {
-     "text": "A billing ticket from 2026-08-30 is closed. Mentioned for context; it doesn't block the reminder.",
+     "text": "A billing ticket from Aug 30, 2026 is closed. Mentioned for context; it doesn't block the reminder.",
      "evidenceIds": [
       "ticket:T-20145"
      ],
@@ -4814,7 +4814,7 @@
      "file": "contracts.csv",
      "recordId": "K0070",
      "date": "2025-04-01",
-     "title": "Contract: 16 seats \u00d7 $39.00, 2025-04-01 to 2027-04-01"
+     "title": "Contract: 16 seats \u00d7 $39.00, Apr 1, 2025 to Apr 1, 2027"
     }
    ],
    "policyRef": "collections_policy.md \u00a74",
@@ -4862,10 +4862,10 @@
    "verdict": "hold",
    "cause": "unhappy",
    "confidence": "low",
-   "headline": "An open ticket might be a billing complaint or a serious escalation (the AI judges disagreed). We don't chase until a person reads it.",
+   "headline": "The AI wasn't sure whether this open ticket is about money or a serious problem (its two checks disagreed). We don't chase until a person reads it.",
    "reasons": [
     {
-     "text": "An open ticket might be a billing complaint or a serious escalation (the AI judges disagreed). We don't chase until a person reads it.",
+     "text": "The AI wasn't sure whether this open ticket is about money or a serious problem (its two checks disagreed). We don't chase until a person reads it.",
      "evidenceIds": [
       "ticket:T-20015"
      ],
@@ -4909,7 +4909,7 @@
      "file": "contracts.csv",
      "recordId": "K0023",
      "date": "2025-04-01",
-     "title": "Contract: 15 seats \u00d7 $39.00, 2025-04-01 to 2027-04-01"
+     "title": "Contract: 15 seats \u00d7 $39.00, Apr 1, 2025 to Apr 1, 2027"
     }
    ],
    "policyRef": "sla_policy.md \u00a72",
@@ -4920,7 +4920,7 @@
     "body": "",
     "tone": "none"
    },
-   "reviewReason": "the AI judges disagreed about what this ticket means",
+   "reviewReason": "the AI wasn't sure what this ticket means",
    "agreement": {
     "agree": false,
     "votes": [
@@ -4995,7 +4995,7 @@
      "file": "contracts.csv",
      "recordId": "K0110",
      "date": "2025-05-01",
-     "title": "Contract: 11 seats \u00d7 $39.00, 2025-05-01 to 2027-05-01"
+     "title": "Contract: 11 seats \u00d7 $39.00, May 1, 2025 to May 1, 2027"
     }
    ],
    "policyRef": "collections_policy.md \u00a74",
@@ -5061,7 +5061,7 @@
      "recordId": "PAY-6038",
      "date": "2026-10-20",
      "status": "succeeded",
-     "title": "$7,979 received on 2026-10-20 from \"KEYSTONE ANALYTICS GROUP\""
+     "title": "$7,979 received on Oct 20, 2026 from \"KEYSTONE ANALYTICS GROUP\""
     },
     {
      "id": "ticket:T-20253",
@@ -5079,7 +5079,7 @@
      "file": "contracts.csv",
      "recordId": "K0042",
      "date": "2025-08-01",
-     "title": "Contract: 101 seats \u00d7 $79.00, 2025-08-01 to 2027-08-01"
+     "title": "Contract: 101 seats \u00d7 $79.00, Aug 1, 2025 to Aug 1, 2027"
     }
    ],
    "policyRef": "collections_policy.md \u00a72",
@@ -5122,7 +5122,7 @@
      "recordId": "PAY-6046",
      "date": "2026-10-27",
      "status": "succeeded",
-     "title": "$7,268 received on 2026-10-27 from \"MAPLE STUDIOS LLC\""
+     "title": "$7,268 received on Oct 27, 2026 from \"MAPLE STUDIOS LLC\""
     },
     {
      "id": "ticket:T-20300",
@@ -5150,7 +5150,7 @@
      "file": "contracts.csv",
      "recordId": "K0094",
      "date": "2025-06-01",
-     "title": "Contract: 92 seats \u00d7 $79.00, 2025-06-01 to 2027-06-01"
+     "title": "Contract: 92 seats \u00d7 $79.00, Jun 1, 2025 to Jun 1, 2027"
     }
    ],
    "policyRef": "collections_policy.md \u00a72",
@@ -5193,7 +5193,7 @@
      "recordId": "PAY-6042",
      "date": "2026-10-21",
      "status": "succeeded",
-     "title": "$5,865 received on 2026-10-21 from \"HARBOR FOODS INC\""
+     "title": "$5,865 received on Oct 21, 2026 from \"HARBOR FOODS INC\""
     },
     {
      "id": "contract:K0048",
@@ -5201,7 +5201,7 @@
      "file": "contracts.csv",
      "recordId": "K0048",
      "date": "2025-02-01",
-     "title": "Contract: 85 seats \u00d7 $69.00, 2025-02-01 to 2027-02-01"
+     "title": "Contract: 85 seats \u00d7 $69.00, Feb 1, 2025 to Feb 1, 2027"
     }
    ],
    "policyRef": "collections_policy.md \u00a72",
@@ -5237,14 +5237,14 @@
      "policyRef": null
     },
     {
-     "text": "A billing ticket from 2026-09-21 is closed. Mentioned for context; it doesn't block the reminder.",
+     "text": "A billing ticket from Sep 21, 2026 is closed. Mentioned for context; it doesn't block the reminder.",
      "evidenceIds": [
       "ticket:T-20234"
      ],
      "policyRef": null
     },
     {
-     "text": "A billing ticket from 2026-07-05 is closed. Mentioned for context; it doesn't block the reminder.",
+     "text": "A billing ticket from Jul 5, 2026 is closed. Mentioned for context; it doesn't block the reminder.",
      "evidenceIds": [
       "ticket:T-20196"
      ],
@@ -5259,7 +5259,7 @@
      "recordId": "PAY-6041",
      "date": "2026-10-16",
      "status": "succeeded",
-     "title": "$5,341 received on 2026-10-16 from \"MAPLE REALTY INC\""
+     "title": "$5,341 received on Oct 16, 2026 from \"MAPLE REALTY INC\""
     },
     {
      "id": "ticket:T-20234",
@@ -5327,7 +5327,7 @@
      "file": "contracts.csv",
      "recordId": "K0003",
      "date": "2025-04-01",
-     "title": "Contract: 109 seats \u00d7 $49.00, 2025-04-01 to 2027-04-01"
+     "title": "Contract: 109 seats \u00d7 $49.00, Apr 1, 2025 to Apr 1, 2027"
     }
    ],
    "policyRef": "collections_policy.md \u00a72",
@@ -5363,7 +5363,7 @@
      "policyRef": null
     },
     {
-     "text": "A billing ticket from 2026-07-09 is closed. Mentioned for context; it doesn't block the reminder.",
+     "text": "A billing ticket from Jul 9, 2026 is closed. Mentioned for context; it doesn't block the reminder.",
      "evidenceIds": [
       "ticket:T-20065"
      ],
@@ -5378,7 +5378,7 @@
      "recordId": "PAY-6036",
      "date": "2026-10-20",
      "status": "succeeded",
-     "title": "$4,209 received on 2026-10-20 from \"FOXGLOVE ANALYTICS LLC\""
+     "title": "$4,209 received on Oct 20, 2026 from \"FOXGLOVE ANALYTICS LLC\""
     },
     {
      "id": "ticket:T-20355",
@@ -5416,7 +5416,7 @@
      "file": "contracts.csv",
      "recordId": "K0040",
      "date": "2025-03-01",
-     "title": "Contract: 61 seats \u00d7 $69.00, 2025-03-01 to 2027-03-01"
+     "title": "Contract: 61 seats \u00d7 $69.00, Mar 1, 2025 to Mar 1, 2027"
     }
    ],
    "policyRef": "collections_policy.md \u00a72",
@@ -5459,7 +5459,7 @@
      "recordId": "PAY-6043",
      "date": "2026-10-24",
      "status": "succeeded",
-     "title": "$3,363 received on 2026-10-24 from \"SILVERLINE CLINICS\""
+     "title": "$3,363 received on Oct 24, 2026 from \"SILVERLINE CLINICS\""
     },
     {
      "id": "ticket:T-20186",
@@ -5497,7 +5497,7 @@
      "file": "contracts.csv",
      "recordId": "K0108",
      "date": "2025-06-01",
-     "title": "Contract: 57 seats \u00d7 $59.00, 2025-06-01 to 2027-06-01"
+     "title": "Contract: 57 seats \u00d7 $59.00, Jun 1, 2025 to Jun 1, 2027"
     }
    ],
    "policyRef": "collections_policy.md \u00a72",
@@ -5541,7 +5541,7 @@
      "recordId": "PAY-6039",
      "date": "2026-10-18",
      "status": "succeeded",
-     "title": "$2,646 received on 2026-10-18 from \"JUNIPER HEALTH LLC\""
+     "title": "$2,646 received on Oct 18, 2026 from \"JUNIPER HEALTH LLC\""
     },
     {
      "id": "ticket:T-20064",
@@ -5569,7 +5569,7 @@
      "file": "contracts.csv",
      "recordId": "K0063",
      "date": "2025-10-01",
-     "title": "Contract: 54 seats \u00d7 $49.00, 2025-10-01 to 2027-10-01"
+     "title": "Contract: 54 seats \u00d7 $49.00, Oct 1, 2025 to Oct 1, 2027"
     }
    ],
    "policyRef": "collections_policy.md \u00a72",
@@ -5613,7 +5613,7 @@
      "recordId": "PAY-6040",
      "date": "2026-10-24",
      "status": "succeeded",
-     "title": "$1,725 received on 2026-10-24 from \"UPLAND OUTFITTERS\""
+     "title": "$1,725 received on Oct 24, 2026 from \"UPLAND OUTFITTERS\""
     },
     {
      "id": "ticket:T-20278",
@@ -5641,7 +5641,7 @@
      "file": "contracts.csv",
      "recordId": "K0090",
      "date": "2025-10-01",
-     "title": "Contract: 25 seats \u00d7 $69.00, 2025-10-01 to 2027-10-01"
+     "title": "Contract: 25 seats \u00d7 $69.00, Oct 1, 2025 to Oct 1, 2027"
     }
    ],
    "policyRef": "collections_policy.md \u00a72",
@@ -5676,7 +5676,7 @@
      "policyRef": null
     },
     {
-     "text": "A billing ticket from 2026-07-27 is closed. Mentioned for context; it doesn't block the reminder.",
+     "text": "A billing ticket from Jul 27, 2026 is closed. Mentioned for context; it doesn't block the reminder.",
      "evidenceIds": [
       "ticket:T-20179"
      ],
@@ -5691,7 +5691,7 @@
      "recordId": "PAY-6045",
      "date": "2026-10-24",
      "status": "succeeded",
-     "title": "$1,298 received on 2026-10-24 from \"ORCHARD REALTY LLC\""
+     "title": "$1,298 received on Oct 24, 2026 from \"ORCHARD REALTY LLC\""
     },
     {
      "id": "ticket:T-20284",
@@ -5739,7 +5739,7 @@
      "file": "contracts.csv",
      "recordId": "K0016",
      "date": "2025-06-01",
-     "title": "Contract: 22 seats \u00d7 $59.00, 2025-06-01 to 2027-06-01"
+     "title": "Contract: 22 seats \u00d7 $59.00, Jun 1, 2025 to Jun 1, 2027"
     }
    ],
    "policyRef": "collections_policy.md \u00a72",
@@ -5782,7 +5782,7 @@
      "recordId": "PAY-6037",
      "date": "2026-10-28",
      "status": "succeeded",
-     "title": "$780 received on 2026-10-28 from \"HIGHLAND STUDIOS GROUP\""
+     "title": "$780 received on Oct 28, 2026 from \"HIGHLAND STUDIOS GROUP\""
     },
     {
      "id": "ticket:T-20067",
@@ -5830,7 +5830,7 @@
      "file": "contracts.csv",
      "recordId": "K0050",
      "date": "2025-09-01",
-     "title": "Contract: 20 seats \u00d7 $39.00, 2025-09-01 to 2027-09-01"
+     "title": "Contract: 20 seats \u00d7 $39.00, Sep 1, 2025 to Sep 1, 2027"
     }
    ],
    "policyRef": "collections_policy.md \u00a72",
@@ -5874,7 +5874,7 @@
      "recordId": "PAY-6044",
      "date": "2026-10-25",
      "status": "succeeded",
-     "title": "$531 received on 2026-10-25 from \"GRANITE SUPPLY INC\""
+     "title": "$531 received on Oct 25, 2026 from \"GRANITE SUPPLY INC\""
     },
     {
      "id": "ticket:T-20099",
@@ -5902,7 +5902,7 @@
      "file": "contracts.csv",
      "recordId": "K0010",
      "date": "2025-03-01",
-     "title": "Contract: 9 seats \u00d7 $59.00, 2025-03-01 to 2027-03-01"
+     "title": "Contract: 9 seats \u00d7 $59.00, Mar 1, 2025 to Mar 1, 2027"
     }
    ],
    "policyRef": "collections_policy.md \u00a72",
@@ -5962,7 +5962,7 @@
      "file": "contracts.csv",
      "recordId": "K0094",
      "date": "2025-06-01",
-     "title": "Contract: 92 seats \u00d7 $79.00, 2025-06-01 to 2027-06-01"
+     "title": "Contract: 92 seats \u00d7 $79.00, Jun 1, 2025 to Jun 1, 2027"
     }
    ],
    "policyRef": "collections_policy.md \u00a73",
@@ -6022,7 +6022,7 @@
      "file": "contracts.csv",
      "recordId": "K0094",
      "date": "2025-06-01",
-     "title": "Contract: 92 seats \u00d7 $79.00, 2025-06-01 to 2027-06-01"
+     "title": "Contract: 92 seats \u00d7 $79.00, Jun 1, 2025 to Jun 1, 2027"
     }
    ],
    "policyRef": "collections_policy.md \u00a73",
@@ -6050,14 +6050,14 @@
    "headline": "Call: 45 days overdue",
    "reasons": [
     {
-     "text": "A billing ticket from 2026-09-21 is closed. Mentioned for context; it doesn't block the reminder.",
+     "text": "A billing ticket from Sep 21, 2026 is closed. Mentioned for context; it doesn't block the reminder.",
      "evidenceIds": [
       "ticket:T-20234"
      ],
      "policyRef": null
     },
     {
-     "text": "A billing ticket from 2026-07-05 is closed. Mentioned for context; it doesn't block the reminder.",
+     "text": "A billing ticket from Jul 5, 2026 is closed. Mentioned for context; it doesn't block the reminder.",
      "evidenceIds": [
       "ticket:T-20196"
      ],
@@ -6136,7 +6136,7 @@
      "file": "contracts.csv",
      "recordId": "K0003",
      "date": "2025-04-01",
-     "title": "Contract: 109 seats \u00d7 $49.00, 2025-04-01 to 2027-04-01"
+     "title": "Contract: 109 seats \u00d7 $49.00, Apr 1, 2025 to Apr 1, 2027"
     }
    ],
    "policyRef": "collections_policy.md \u00a73",
@@ -6164,7 +6164,7 @@
    "headline": "Call: 61 days overdue",
    "reasons": [
     {
-     "text": "A billing ticket from 2026-08-12 is closed. Mentioned for context; it doesn't block the reminder.",
+     "text": "A billing ticket from Aug 12, 2026 is closed. Mentioned for context; it doesn't block the reminder.",
      "evidenceIds": [
       "ticket:T-20024"
      ],
@@ -6223,7 +6223,7 @@
      "file": "contracts.csv",
      "recordId": "K0089",
      "date": "2025-03-01",
-     "title": "Contract: 90 seats \u00d7 $59.00, 2025-03-01 to 2027-03-01"
+     "title": "Contract: 90 seats \u00d7 $59.00, Mar 1, 2025 to Mar 1, 2027"
     }
    ],
    "policyRef": "collections_policy.md \u00a73",
@@ -6251,7 +6251,7 @@
    "headline": "Call: 92 days overdue",
    "reasons": [
     {
-     "text": "A billing ticket from 2026-08-12 is closed. Mentioned for context; it doesn't block the reminder.",
+     "text": "A billing ticket from Aug 12, 2026 is closed. Mentioned for context; it doesn't block the reminder.",
      "evidenceIds": [
       "ticket:T-20024"
      ],
@@ -6310,7 +6310,7 @@
      "file": "contracts.csv",
      "recordId": "K0089",
      "date": "2025-03-01",
-     "title": "Contract: 90 seats \u00d7 $59.00, 2025-03-01 to 2027-03-01"
+     "title": "Contract: 90 seats \u00d7 $59.00, Mar 1, 2025 to Mar 1, 2027"
     }
    ],
    "policyRef": "collections_policy.md \u00a73",
@@ -6397,7 +6397,7 @@
      "file": "contracts.csv",
      "recordId": "K0059",
      "date": "2025-09-01",
-     "title": "Contract: 70 seats \u00d7 $69.00, 2025-09-01 to 2027-09-01"
+     "title": "Contract: 70 seats \u00d7 $69.00, Sep 1, 2025 to Sep 1, 2027"
     }
    ],
    "policyRef": "collections_policy.md \u00a73",
@@ -6442,7 +6442,7 @@
    "headline": "Call: 45 days overdue",
    "reasons": [
     {
-     "text": "A billing ticket from 2026-07-30 is closed. Mentioned for context; it doesn't block the reminder.",
+     "text": "A billing ticket from Jul 30, 2026 is closed. Mentioned for context; it doesn't block the reminder.",
      "evidenceIds": [
       "ticket:T-20025"
      ],
@@ -6481,7 +6481,7 @@
      "file": "contracts.csv",
      "recordId": "K0073",
      "date": "2025-01-01",
-     "title": "Contract: 100 seats \u00d7 $39.00, 2025-01-01 to 2027-01-01"
+     "title": "Contract: 100 seats \u00d7 $39.00, Jan 1, 2025 to Jan 1, 2027"
     }
    ],
    "policyRef": "collections_policy.md \u00a73",
@@ -6541,7 +6541,7 @@
      "file": "contracts.csv",
      "recordId": "K0012",
      "date": "2025-04-01",
-     "title": "Contract: 47 seats \u00d7 $69.00, 2025-04-01 to 2027-04-01"
+     "title": "Contract: 47 seats \u00d7 $69.00, Apr 1, 2025 to Apr 1, 2027"
     }
    ],
    "policyRef": "collections_policy.md \u00a73",
@@ -6601,7 +6601,7 @@
      "file": "contracts.csv",
      "recordId": "K0012",
      "date": "2025-04-01",
-     "title": "Contract: 47 seats \u00d7 $69.00, 2025-04-01 to 2027-04-01"
+     "title": "Contract: 47 seats \u00d7 $69.00, Apr 1, 2025 to Apr 1, 2027"
     }
    ],
    "policyRef": "collections_policy.md \u00a73",
@@ -6742,7 +6742,7 @@
      "file": "contracts.csv",
      "recordId": "K0081",
      "date": "2025-05-01",
-     "title": "Contract: 18 seats \u00d7 $79.00, 2025-05-01 to 2027-05-01"
+     "title": "Contract: 18 seats \u00d7 $79.00, May 1, 2025 to May 1, 2027"
     }
    ],
    "policyRef": "collections_policy.md \u00a73",
@@ -6842,7 +6842,7 @@
      "file": "contracts.csv",
      "recordId": "K0081",
      "date": "2025-05-01",
-     "title": "Contract: 18 seats \u00d7 $79.00, 2025-05-01 to 2027-05-01"
+     "title": "Contract: 18 seats \u00d7 $79.00, May 1, 2025 to May 1, 2027"
     }
    ],
    "policyRef": "collections_policy.md \u00a73",
@@ -6870,7 +6870,7 @@
    "headline": "Call: 61 days overdue",
    "reasons": [
     {
-     "text": "A billing ticket from 2026-07-05 is closed. Mentioned for context; it doesn't block the reminder.",
+     "text": "A billing ticket from Jul 5, 2026 is closed. Mentioned for context; it doesn't block the reminder.",
      "evidenceIds": [
       "ticket:T-20258"
      ],
@@ -6919,7 +6919,7 @@
      "file": "contracts.csv",
      "recordId": "K0104",
      "date": "2025-01-01",
-     "title": "Contract: 20 seats \u00d7 $69.00, 2025-01-01 to 2027-01-01"
+     "title": "Contract: 20 seats \u00d7 $69.00, Jan 1, 2025 to Jan 1, 2027"
     }
    ],
    "policyRef": "collections_policy.md \u00a73",
@@ -6947,7 +6947,7 @@
    "headline": "Call: 61 days overdue",
    "reasons": [
     {
-     "text": "A billing ticket from 2026-08-30 is closed. Mentioned for context; it doesn't block the reminder.",
+     "text": "A billing ticket from Aug 30, 2026 is closed. Mentioned for context; it doesn't block the reminder.",
      "evidenceIds": [
       "ticket:T-20344"
      ],
@@ -6996,7 +6996,7 @@
      "file": "contracts.csv",
      "recordId": "K0055",
      "date": "2025-03-01",
-     "title": "Contract: 20 seats \u00d7 $69.00, 2025-03-01 to 2027-03-01"
+     "title": "Contract: 20 seats \u00d7 $69.00, Mar 1, 2025 to Mar 1, 2027"
     }
    ],
    "policyRef": "collections_policy.md \u00a73",
@@ -7024,7 +7024,7 @@
    "headline": "Call: 92 days overdue",
    "reasons": [
     {
-     "text": "A billing ticket from 2026-08-30 is closed. Mentioned for context; it doesn't block the reminder.",
+     "text": "A billing ticket from Aug 30, 2026 is closed. Mentioned for context; it doesn't block the reminder.",
      "evidenceIds": [
       "ticket:T-20344"
      ],
@@ -7073,7 +7073,7 @@
      "file": "contracts.csv",
      "recordId": "K0055",
      "date": "2025-03-01",
-     "title": "Contract: 20 seats \u00d7 $69.00, 2025-03-01 to 2027-03-01"
+     "title": "Contract: 20 seats \u00d7 $69.00, Mar 1, 2025 to Mar 1, 2027"
     }
    ],
    "policyRef": "collections_policy.md \u00a73",
@@ -7101,7 +7101,7 @@
    "headline": "Call: 61 days overdue",
    "reasons": [
     {
-     "text": "A billing ticket from 2026-08-06 is closed. Mentioned for context; it doesn't block the reminder.",
+     "text": "A billing ticket from Aug 6, 2026 is closed. Mentioned for context; it doesn't block the reminder.",
      "evidenceIds": [
       "ticket:T-20238"
      ],
@@ -7160,7 +7160,7 @@
      "file": "contracts.csv",
      "recordId": "K0028",
      "date": "2025-01-01",
-     "title": "Contract: 22 seats \u00d7 $49.00, 2025-01-01 to 2027-01-01"
+     "title": "Contract: 22 seats \u00d7 $49.00, Jan 1, 2025 to Jan 1, 2027"
     }
    ],
    "policyRef": "collections_policy.md \u00a73",
@@ -7267,7 +7267,7 @@
      "file": "contracts.csv",
      "recordId": "K0013",
      "date": "2025-04-01",
-     "title": "Contract: 19 seats \u00d7 $49.00, 2025-04-01 to 2027-04-01"
+     "title": "Contract: 19 seats \u00d7 $49.00, Apr 1, 2025 to Apr 1, 2027"
     }
    ],
    "policyRef": "collections_policy.md \u00a73",
@@ -7391,7 +7391,7 @@
      "file": "contracts.csv",
      "recordId": "K0013",
      "date": "2025-04-01",
-     "title": "Contract: 19 seats \u00d7 $49.00, 2025-04-01 to 2027-04-01"
+     "title": "Contract: 19 seats \u00d7 $49.00, Apr 1, 2025 to Apr 1, 2027"
     }
    ],
    "policyRef": "collections_policy.md \u00a73",
@@ -7488,7 +7488,7 @@
      "file": "contracts.csv",
      "recordId": "K0050",
      "date": "2025-09-01",
-     "title": "Contract: 20 seats \u00d7 $39.00, 2025-09-01 to 2027-09-01"
+     "title": "Contract: 20 seats \u00d7 $39.00, Sep 1, 2025 to Sep 1, 2027"
     }
    ],
    "policyRef": "collections_policy.md \u00a73",
@@ -7548,7 +7548,7 @@
      "file": "contracts.csv",
      "recordId": "K0039",
      "date": "2025-03-01",
-     "title": "Contract: 16 seats \u00d7 $39.00, 2025-03-01 to 2027-03-01"
+     "title": "Contract: 16 seats \u00d7 $39.00, Mar 1, 2025 to Mar 1, 2027"
     }
    ],
    "policyRef": "collections_policy.md \u00a73",
@@ -7605,7 +7605,7 @@
      "file": "contracts.csv",
      "recordId": "K0007",
      "date": "2025-06-01",
-     "title": "Contract: 13 seats \u00d7 $39.00, 2025-06-01 to 2027-06-01"
+     "title": "Contract: 13 seats \u00d7 $39.00, Jun 1, 2025 to Jun 1, 2027"
     }
    ],
    "policyRef": "collections_policy.md \u00a73",
@@ -7679,7 +7679,7 @@
      "file": "contracts.csv",
      "recordId": "K0007",
      "date": "2025-06-01",
-     "title": "Contract: 13 seats \u00d7 $39.00, 2025-06-01 to 2027-06-01"
+     "title": "Contract: 13 seats \u00d7 $39.00, Jun 1, 2025 to Jun 1, 2027"
     }
    ],
    "policyRef": "collections_policy.md \u00a73",
@@ -7724,7 +7724,7 @@
    "headline": "Call: 46 days overdue",
    "reasons": [
     {
-     "text": "A billing ticket from 2026-07-16 is closed. Mentioned for context; it doesn't block the reminder.",
+     "text": "A billing ticket from Jul 16, 2026 is closed. Mentioned for context; it doesn't block the reminder.",
      "evidenceIds": [
       "ticket:T-20023"
      ],
@@ -7773,7 +7773,7 @@
      "file": "contracts.csv",
      "recordId": "K0068",
      "date": "2025-09-01",
-     "title": "Contract: 6 seats \u00d7 $39.00, 2025-09-01 to 2027-09-01"
+     "title": "Contract: 6 seats \u00d7 $39.00, Sep 1, 2025 to Sep 1, 2027"
     }
    ],
    "policyRef": "collections_policy.md \u00a73",
@@ -7801,7 +7801,7 @@
    "headline": "Call: 77 days overdue",
    "reasons": [
     {
-     "text": "A billing ticket from 2026-07-16 is closed. Mentioned for context; it doesn't block the reminder.",
+     "text": "A billing ticket from Jul 16, 2026 is closed. Mentioned for context; it doesn't block the reminder.",
      "evidenceIds": [
       "ticket:T-20023"
      ],
@@ -7850,7 +7850,7 @@
      "file": "contracts.csv",
      "recordId": "K0068",
      "date": "2025-09-01",
-     "title": "Contract: 6 seats \u00d7 $39.00, 2025-09-01 to 2027-09-01"
+     "title": "Contract: 6 seats \u00d7 $39.00, Sep 1, 2025 to Sep 1, 2027"
     }
    ],
    "policyRef": "collections_policy.md \u00a73",
@@ -7900,7 +7900,7 @@
      "file": "contracts.csv",
      "recordId": "K0051",
      "date": "2025-02-01",
-     "title": "Contract: 5 seats \u00d7 $39.00, 2025-02-01 to 2027-02-01"
+     "title": "Contract: 5 seats \u00d7 $39.00, Feb 1, 2025 to Feb 1, 2027"
     }
    ],
    "policyRef": "collections_policy.md \u00a73",
@@ -8110,7 +8110,7 @@
      "recordId": "K0081",
      "date": "2025-05-01",
      "status": "active",
-     "title": "18 seats \u00d7 $79.00, to 2027-05-01"
+     "title": "18 seats \u00d7 $79.00, to May 1, 2027"
     }
    ],
    "segment": "SMB",
@@ -8283,7 +8283,7 @@
      "recordId": "K0002",
      "date": "2025-03-01",
      "status": "active",
-     "title": "20 seats \u00d7 $69.00, to 2027-03-01"
+     "title": "20 seats \u00d7 $69.00, to Mar 1, 2027"
     }
    ],
    "segment": "SMB",
@@ -8502,7 +8502,7 @@
      "recordId": "K0053",
      "date": "2025-05-01",
      "status": "active",
-     "title": "68 seats \u00d7 $59.00, to 2027-05-01"
+     "title": "68 seats \u00d7 $59.00, to May 1, 2027"
     }
    ],
    "segment": "Mid-market",
@@ -8685,7 +8685,7 @@
      "recordId": "K0046",
      "date": "2025-02-01",
      "status": "active",
-     "title": "59 seats \u00d7 $79.00, to 2027-02-01"
+     "title": "59 seats \u00d7 $79.00, to Feb 1, 2027"
     }
    ],
    "segment": "Mid-market",
@@ -8894,7 +8894,7 @@
      "recordId": "K0019",
      "date": "2025-03-01",
      "status": "active",
-     "title": "111 seats \u00d7 $49.00, to 2027-03-01"
+     "title": "111 seats \u00d7 $49.00, to Mar 1, 2027"
     }
    ],
    "segment": "Mid-market",
@@ -9075,7 +9075,7 @@
      "recordId": "K0056",
      "date": "2025-03-01",
      "status": "active",
-     "title": "19 seats \u00d7 $69.00, to 2027-03-01"
+     "title": "19 seats \u00d7 $69.00, to Mar 1, 2027"
     }
    ],
    "segment": "SMB",
@@ -9242,7 +9242,7 @@
      "recordId": "K0086",
      "date": "2025-01-01",
      "status": "active",
-     "title": "12 seats \u00d7 $39.00, to 2027-01-01"
+     "title": "12 seats \u00d7 $39.00, to Jan 1, 2027"
     }
    ],
    "segment": "SMB",
@@ -9427,7 +9427,7 @@
      "recordId": "K0062",
      "date": "2025-05-01",
      "status": "active",
-     "title": "55 seats \u00d7 $79.00, to 2027-05-01"
+     "title": "55 seats \u00d7 $79.00, to May 1, 2027"
     }
    ],
    "segment": "Mid-market",
@@ -9617,7 +9617,7 @@
      "recordId": "K0108",
      "date": "2025-06-01",
      "status": "active",
-     "title": "57 seats \u00d7 $59.00, to 2027-06-01"
+     "title": "57 seats \u00d7 $59.00, to Jun 1, 2027"
     }
    ],
    "segment": "Mid-market",
@@ -9802,7 +9802,7 @@
      "recordId": "K0083",
      "date": "2025-01-01",
      "status": "active",
-     "title": "14 seats \u00d7 $79.00, to 2027-01-01"
+     "title": "14 seats \u00d7 $79.00, to Jan 1, 2027"
     }
    ],
    "segment": "SMB",
@@ -10001,7 +10001,7 @@
      "recordId": "K0025",
      "date": "2025-08-01",
      "status": "active",
-     "title": "93 seats \u00d7 $79.00, to 2027-08-01"
+     "title": "93 seats \u00d7 $79.00, to Aug 1, 2027"
     }
    ],
    "segment": "Mid-market",
@@ -10204,7 +10204,7 @@
      "recordId": "K0070",
      "date": "2025-04-01",
      "status": "active",
-     "title": "16 seats \u00d7 $39.00, to 2027-04-01"
+     "title": "16 seats \u00d7 $39.00, to Apr 1, 2027"
     }
    ],
    "segment": "SMB",
@@ -10361,7 +10361,7 @@
      "recordId": "K0012",
      "date": "2025-04-01",
      "status": "active",
-     "title": "47 seats \u00d7 $69.00, to 2027-04-01"
+     "title": "47 seats \u00d7 $69.00, to Apr 1, 2027"
     }
    ],
    "segment": "Mid-market",
@@ -10573,7 +10573,7 @@
      "recordId": "K0003",
      "date": "2025-04-01",
      "status": "active",
-     "title": "109 seats \u00d7 $49.00, to 2027-04-01"
+     "title": "109 seats \u00d7 $49.00, to Apr 1, 2027"
     }
    ],
    "segment": "Mid-market",
@@ -10741,7 +10741,7 @@
      "recordId": "K0089",
      "date": "2025-03-01",
      "status": "active",
-     "title": "90 seats \u00d7 $59.00, to 2027-03-01"
+     "title": "90 seats \u00d7 $59.00, to Mar 1, 2027"
     }
    ],
    "segment": "Mid-market",
@@ -10908,7 +10908,7 @@
      "recordId": "K0011",
      "date": "2025-07-01",
      "status": "active",
-     "title": "12 seats \u00d7 $59.00, to 2027-07-01"
+     "title": "12 seats \u00d7 $59.00, to Jul 1, 2027"
     }
    ],
    "segment": "SMB",
@@ -11098,7 +11098,7 @@
      "recordId": "K0109",
      "date": "2025-08-01",
      "status": "active",
-     "title": "15 seats \u00d7 $69.00, to 2027-08-01"
+     "title": "15 seats \u00d7 $69.00, to Aug 1, 2027"
     }
    ],
    "segment": "SMB",
@@ -11265,7 +11265,7 @@
      "recordId": "K0038",
      "date": "2025-08-01",
      "status": "active",
-     "title": "22 seats \u00d7 $49.00, to 2027-08-01"
+     "title": "22 seats \u00d7 $49.00, to Aug 1, 2027"
     }
    ],
    "segment": "SMB",
@@ -11429,7 +11429,7 @@
      "recordId": "K0030",
      "date": "2025-05-01",
      "status": "active",
-     "title": "45 seats \u00d7 $39.00, to 2027-05-01"
+     "title": "45 seats \u00d7 $39.00, to May 1, 2027"
     }
    ],
    "segment": "Mid-market",
@@ -11570,7 +11570,7 @@
      "recordId": "K0007",
      "date": "2025-06-01",
      "status": "active",
-     "title": "13 seats \u00d7 $39.00, to 2027-06-01"
+     "title": "13 seats \u00d7 $39.00, to Jun 1, 2027"
     }
    ],
    "segment": "SMB",
@@ -11746,7 +11746,7 @@
      "recordId": "K0010",
      "date": "2025-03-01",
      "status": "active",
-     "title": "9 seats \u00d7 $59.00, to 2027-03-01"
+     "title": "9 seats \u00d7 $59.00, to Mar 1, 2027"
     }
    ],
    "segment": "SMB",
@@ -11913,7 +11913,7 @@
      "recordId": "K0057",
      "date": "2025-08-01",
      "status": "active",
-     "title": "15 seats \u00d7 $69.00, to 2027-08-01"
+     "title": "15 seats \u00d7 $69.00, to Aug 1, 2027"
     }
    ],
    "segment": "SMB",
@@ -12086,7 +12086,7 @@
      "recordId": "K0076",
      "date": "2025-09-01",
      "status": "active",
-     "title": "116 seats \u00d7 $69.00, to 2027-09-01"
+     "title": "116 seats \u00d7 $69.00, to Sep 1, 2027"
     }
    ],
    "segment": "Mid-market",
@@ -12259,7 +12259,7 @@
      "recordId": "K0041",
      "date": "2025-10-01",
      "status": "active",
-     "title": "7 seats \u00d7 $49.00, to 2027-10-01"
+     "title": "7 seats \u00d7 $49.00, to Oct 1, 2027"
     }
    ],
    "segment": "SMB",
@@ -12440,7 +12440,7 @@
      "recordId": "K0104",
      "date": "2025-01-01",
      "status": "active",
-     "title": "20 seats \u00d7 $69.00, to 2027-01-01"
+     "title": "20 seats \u00d7 $69.00, to Jan 1, 2027"
     }
    ],
    "segment": "SMB",
@@ -12633,7 +12633,7 @@
      "recordId": "K0102",
      "date": "2025-04-01",
      "status": "active",
-     "title": "21 seats \u00d7 $39.00, to 2027-04-01"
+     "title": "21 seats \u00d7 $39.00, to Apr 1, 2027"
     }
    ],
    "segment": "SMB",
@@ -12813,7 +12813,7 @@
      "recordId": "K0063",
      "date": "2025-10-01",
      "status": "active",
-     "title": "54 seats \u00d7 $49.00, to 2027-10-01"
+     "title": "54 seats \u00d7 $49.00, to Oct 1, 2027"
     }
    ],
    "segment": "Mid-market",
@@ -12998,7 +12998,7 @@
      "recordId": "K0059",
      "date": "2025-09-01",
      "status": "active",
-     "title": "70 seats \u00d7 $69.00, to 2027-09-01"
+     "title": "70 seats \u00d7 $69.00, to Sep 1, 2027"
     }
    ],
    "segment": "Mid-market",
@@ -13201,7 +13201,7 @@
      "recordId": "K0013",
      "date": "2025-04-01",
      "status": "active",
-     "title": "19 seats \u00d7 $49.00, to 2027-04-01"
+     "title": "19 seats \u00d7 $49.00, to Apr 1, 2027"
     }
    ],
    "segment": "SMB",
@@ -13377,7 +13377,7 @@
      "recordId": "K0022",
      "date": "2025-04-01",
      "status": "active",
-     "title": "10 seats \u00d7 $69.00, to 2027-04-01"
+     "title": "10 seats \u00d7 $69.00, to Apr 1, 2027"
     }
    ],
    "segment": "SMB",
@@ -13575,7 +13575,7 @@
      "recordId": "K0040",
      "date": "2025-03-01",
      "status": "active",
-     "title": "61 seats \u00d7 $69.00, to 2027-03-01"
+     "title": "61 seats \u00d7 $69.00, to Mar 1, 2027"
     }
    ],
    "segment": "Mid-market",
@@ -13758,7 +13758,7 @@
      "recordId": "K0080",
      "date": "2025-02-01",
      "status": "active",
-     "title": "21 seats \u00d7 $69.00, to 2027-02-01"
+     "title": "21 seats \u00d7 $69.00, to Feb 1, 2027"
     }
    ],
    "segment": "SMB",
@@ -13967,7 +13967,7 @@
      "recordId": "K0077",
      "date": "2025-04-01",
      "status": "active",
-     "title": "95 seats \u00d7 $69.00, to 2027-04-01"
+     "title": "95 seats \u00d7 $69.00, to Apr 1, 2027"
     }
    ],
    "segment": "Mid-market",
@@ -14133,7 +14133,7 @@
      "recordId": "K0094",
      "date": "2025-06-01",
      "status": "active",
-     "title": "92 seats \u00d7 $79.00, to 2027-06-01"
+     "title": "92 seats \u00d7 $79.00, to Jun 1, 2027"
     }
    ],
    "segment": "Mid-market",
@@ -14323,7 +14323,7 @@
      "recordId": "K0036",
      "date": "2025-05-01",
      "status": "active",
-     "title": "62 seats \u00d7 $69.00, to 2027-05-01"
+     "title": "62 seats \u00d7 $69.00, to May 1, 2027"
     }
    ],
    "segment": "Mid-market",
@@ -14496,7 +14496,7 @@
      "recordId": "K0068",
      "date": "2025-09-01",
      "status": "active",
-     "title": "6 seats \u00d7 $39.00, to 2027-09-01"
+     "title": "6 seats \u00d7 $39.00, to Sep 1, 2027"
     }
    ],
    "segment": "SMB",
@@ -14704,7 +14704,7 @@
      "recordId": "K0016",
      "date": "2025-06-01",
      "status": "active",
-     "title": "22 seats \u00d7 $59.00, to 2027-06-01"
+     "title": "22 seats \u00d7 $59.00, to Jun 1, 2027"
     }
    ],
    "segment": "SMB",
@@ -14862,7 +14862,7 @@
      "recordId": "K0110",
      "date": "2025-05-01",
      "status": "active",
-     "title": "11 seats \u00d7 $39.00, to 2027-05-01"
+     "title": "11 seats \u00d7 $39.00, to May 1, 2027"
     }
    ],
    "segment": "SMB",
@@ -15045,7 +15045,7 @@
      "recordId": "K0096",
      "date": "2025-02-01",
      "status": "active",
-     "title": "25 seats \u00d7 $49.00, to 2027-02-01"
+     "title": "25 seats \u00d7 $49.00, to Feb 1, 2027"
     }
    ],
    "segment": "SMB",
@@ -15210,7 +15210,7 @@
      "recordId": "K0039",
      "date": "2025-03-01",
      "status": "active",
-     "title": "16 seats \u00d7 $39.00, to 2027-03-01"
+     "title": "16 seats \u00d7 $39.00, to Mar 1, 2027"
     }
    ],
    "segment": "SMB",
@@ -15387,7 +15387,7 @@
      "recordId": "K0023",
      "date": "2025-04-01",
      "status": "active",
-     "title": "15 seats \u00d7 $39.00, to 2027-04-01"
+     "title": "15 seats \u00d7 $39.00, to Apr 1, 2027"
     }
    ],
    "segment": "SMB",
@@ -15572,7 +15572,7 @@
      "recordId": "K0028",
      "date": "2025-01-01",
      "status": "active",
-     "title": "22 seats \u00d7 $49.00, to 2027-01-01"
+     "title": "22 seats \u00d7 $49.00, to Jan 1, 2027"
     }
    ],
    "segment": "SMB",
@@ -15735,7 +15735,7 @@
      "recordId": "K0042",
      "date": "2025-08-01",
      "status": "active",
-     "title": "101 seats \u00d7 $79.00, to 2027-08-01"
+     "title": "101 seats \u00d7 $79.00, to Aug 1, 2027"
     }
    ],
    "segment": "Mid-market",
@@ -15974,7 +15974,7 @@
      "recordId": "K0107",
      "date": "2025-02-01",
      "status": "active",
-     "title": "16 seats \u00d7 $49.00, to 2027-02-01"
+     "title": "16 seats \u00d7 $49.00, to Feb 1, 2027"
     }
    ],
    "segment": "SMB",
@@ -16141,7 +16141,7 @@
      "recordId": "K0055",
      "date": "2025-03-01",
      "status": "active",
-     "title": "20 seats \u00d7 $69.00, to 2027-03-01"
+     "title": "20 seats \u00d7 $69.00, to Mar 1, 2027"
     }
    ],
    "segment": "SMB",
@@ -16288,7 +16288,7 @@
      "recordId": "K0048",
      "date": "2025-02-01",
      "status": "active",
-     "title": "85 seats \u00d7 $69.00, to 2027-02-01"
+     "title": "85 seats \u00d7 $69.00, to Feb 1, 2027"
     }
    ],
    "segment": "Mid-market",
@@ -16486,7 +16486,7 @@
      "recordId": "K0050",
      "date": "2025-09-01",
      "status": "active",
-     "title": "20 seats \u00d7 $39.00, to 2027-09-01"
+     "title": "20 seats \u00d7 $39.00, to Sep 1, 2027"
     }
    ],
    "segment": "SMB",
@@ -16653,7 +16653,7 @@
      "recordId": "K0105",
      "date": "2025-04-01",
      "status": "active",
-     "title": "24 seats \u00d7 $39.00, to 2027-04-01"
+     "title": "24 seats \u00d7 $39.00, to Apr 1, 2027"
     }
    ],
    "segment": "SMB",
@@ -16838,7 +16838,7 @@
      "recordId": "K0006",
      "date": "2025-02-01",
      "status": "active",
-     "title": "25 seats \u00d7 $59.00, to 2027-02-01"
+     "title": "25 seats \u00d7 $59.00, to Feb 1, 2027"
     }
    ],
    "segment": "SMB",
@@ -17003,7 +17003,7 @@
      "recordId": "K0073",
      "date": "2025-01-01",
      "status": "active",
-     "title": "100 seats \u00d7 $39.00, to 2027-01-01"
+     "title": "100 seats \u00d7 $39.00, to Jan 1, 2027"
     }
    ],
    "segment": "Mid-market",
@@ -17152,7 +17152,7 @@
      "recordId": "K0051",
      "date": "2025-02-01",
      "status": "active",
-     "title": "5 seats \u00d7 $39.00, to 2027-02-01"
+     "title": "5 seats \u00d7 $39.00, to Feb 1, 2027"
     }
    ],
    "segment": "SMB",
@@ -17325,7 +17325,7 @@
      "recordId": "K0090",
      "date": "2025-10-01",
      "status": "active",
-     "title": "25 seats \u00d7 $69.00, to 2027-10-01"
+     "title": "25 seats \u00d7 $69.00, to Oct 1, 2027"
     }
    ],
    "segment": "SMB",
@@ -17483,34 +17483,34 @@
     "invoiceId": "1277",
     "toolSaid": "hold",
     "truth": "send",
-    "why": "Correct answer: open product complaint: softer reminder. Tool's reason: An open ticket might be a billing complaint or a serious escalation (the AI judges disagreed). We don't chase until a person reads it."
+    "why": "Correct answer: open product complaint: softer reminder. Tool's reason: The AI wasn't sure whether this open ticket is about money or a serious problem (its two checks disagreed). We don't chase until a person reads it."
    },
    {
     "invoiceId": "1109",
     "toolSaid": "hold",
     "truth": "send",
-    "why": "Correct answer: open product complaint: softer reminder. Tool's reason: An open ticket might be a billing complaint or a serious escalation (the AI judges disagreed). We don't chase until a person reads it."
+    "why": "Correct answer: open product complaint: softer reminder. Tool's reason: The AI wasn't sure whether this open ticket is about money or a serious problem (its two checks disagreed). We don't chase until a person reads it."
    },
    {
     "invoiceId": "1108",
     "toolSaid": "hold",
     "truth": "call",
-    "why": "Correct answer: long overdue or large. Tool's reason: An open ticket might be a billing complaint or a serious escalation (the AI judges disagreed). We don't chase until a person reads it."
+    "why": "Correct answer: long overdue or large. Tool's reason: The AI wasn't sure whether this open ticket is about money or a serious problem (its two checks disagreed). We don't chase until a person reads it."
    },
    {
     "invoiceId": "1107",
     "toolSaid": "hold",
     "truth": "call",
-    "why": "Correct answer: long overdue or large. Tool's reason: An open ticket might be a billing complaint or a serious escalation (the AI judges disagreed). We don't chase until a person reads it."
+    "why": "Correct answer: long overdue or large. Tool's reason: The AI wasn't sure whether this open ticket is about money or a serious problem (its two checks disagreed). We don't chase until a person reads it."
    },
    {
     "invoiceId": "1253",
     "toolSaid": "hold",
     "truth": "send",
-    "why": "Correct answer: open product complaint: softer reminder. Tool's reason: An open ticket might be a billing complaint or a serious escalation (the AI judges disagreed). We don't chase until a person reads it."
+    "why": "Correct answer: open product complaint: softer reminder. Tool's reason: The AI wasn't sure whether this open ticket is about money or a serious problem (its two checks disagreed). We don't chase until a person reads it."
    }
   ],
-  "runtimeSeconds": 0.53
+  "runtimeSeconds": 0.61
  },
  "morningSummary": {
   "title": "Collections check, 2026-10-31",
@@ -17521,6 +17521,6 @@
    "25 need a phone call ($60,518).",
    "11 need a second look before anything goes out."
   ],
-  "text": "Good morning. $86,720 of $222,603 overdue (39%) sits with customers we shouldn't chase today: they've probably paid, they're unhappy, or the bill is wrong. Another $10,056 is paused until a person reads a ticket the AI judges disagreed on. Today: 24 reminders ready to send ($65,309). Approve all in one click. 30 on hold ($55,771): owners have until 2026-11-09. 11 probably paid already ($41,005): confirm and close. 25 need a phone call ($60,518). 11 need a second look before anything goes out."
+  "text": "Good morning. $86,720 of $222,603 overdue (39%) sits with customers we shouldn't chase today: they've probably paid, they're unhappy, or the bill is wrong. Another $10,056 is paused until a person reads a ticket the AI wasn't sure about. Today: 24 reminders ready to send ($65,309). Approve all in one click. 30 on hold ($55,771): owners have until 2026-11-09. 11 probably paid already ($41,005): confirm and close. 25 need a phone call ($60,518). 11 need a second look before anything goes out."
  }
 }

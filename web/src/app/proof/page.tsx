@@ -30,7 +30,7 @@ export default function ProofPage() {
     <>
       <PageHeader
         title="How sure are we"
-        description={`How far to trust today's list: how well customers were matched, how often the suggestions were right, where the AI judges disagreed, and where the tool is wrong. The full run took ${proof.runtimeSeconds.toFixed(1)} seconds.`}
+        description={`How far to trust today's list: how well customers were matched, how often the suggestions were right, where the AI wasn't sure, and where the tool is wrong. The full run took ${proof.runtimeSeconds.toFixed(1)} seconds.`}
       />
 
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
@@ -84,7 +84,7 @@ export default function ProofPage() {
         <Card>
           <CardHeader>
             <CardTitle className="leading-snug">
-              {aiOn ? `The two AI judges agreed on ${formatPercent(proof.agreementRate!)} of tickets` : "AI double-check was off for this run"}
+              {aiOn ? `The two AI checks agreed on ${formatPercent(proof.agreementRate!)} of tickets` : "AI double-check was off for this run"}
             </CardTitle>
             <CardDescription>Two different AI models read each relevant ticket on their own. When they disagree, nobody is chased until a person reads it.</CardDescription>
           </CardHeader>
@@ -101,8 +101,8 @@ export default function ProofPage() {
                 <p className="mt-4 text-sm">
                   <span className="tabular font-semibold">{pluralize(paused.length, "bill")}</span>{" "}
                   <span className="text-muted-foreground">
-                    ({formatMoney(paused.reduce((s, i) => s + i.amount, 0))}) paused only because the judges disagreed. They&apos;re not
-                    counted as protected money.
+                    ({formatMoney(paused.reduce((s, i) => s + i.amount, 0))}) paused only because the AI wasn&apos;t sure. They&apos;re not
+                    counted in &ldquo;Don&apos;t chase today&rdquo;.
                   </span>
                 </p>
               </>
@@ -217,7 +217,7 @@ export default function ProofPage() {
             Notes on this run
           </CardTitle>
           <CardDescription>
-            AI: {meta.aiMode === "groq" ? "two AI judges on" : "off (rules only)"} · {pluralize(meta.files.length, "file")} read
+            AI: {meta.aiMode === "groq" ? "two AI checks on" : "off (rules only)"} · {pluralize(meta.files.length, "file")} read
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">

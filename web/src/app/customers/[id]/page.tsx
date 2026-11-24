@@ -39,7 +39,7 @@ const MATCH_LABEL: Record<string, string> = {
   exact_id: "Exact ID",
   exact_name: "Exact name",
   fuzzy: "Fuzzy name",
-  ai: "AI (judges agreed)",
+  ai: "AI (two checks agreed)",
   unmatched: "Unmatched",
 };
 

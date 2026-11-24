@@ -41,6 +41,11 @@ def iso(x) -> str | None:
     return None if x is None or pd.isna(x) else pd.Timestamp(x).date().isoformat()
 
 
+def nice(x) -> str:
+    """A date people read: 'Oct 20, 2026'."""
+    return "" if x is None or pd.isna(x) else pd.Timestamp(x).strftime("%b %-d, %Y")
+
+
 def bucket(days: int) -> str:
     return "1-30" if days <= 30 else "31-60" if days <= 60 else "61-90" if days <= 90 else "90+"
 
@@ -255,7 +260,7 @@ class Engine:
                 eid = f"payment:{paid_ev['id']}"
                 ev.append({"id": eid, "kind": "payment", "file": self.cfg["files"]["payments"]["file"], "recordId": str(paid_ev["id"]),
                            "date": iso(paid_ev.get("date")), "status": "succeeded",
-                           "title": f"{money(paid_ev['amount'])} received on {iso(paid_ev.get('date'))} from \"{paid_ev.get('payer') or ''}\""})
+                           "title": f"{money(paid_ev['amount'])} received on {nice(paid_ev.get('date'))} from \"{paid_ev.get('payer') or ''}\""})
                 rs.append({"text": ("A payment linked to this bill was received, but the accounting export still shows it open."
                                     if row.flags.get("paid_linked") else
                                     "An unmatched bank payment from this customer equals this bill. It was probably paid but never matched."),
@@ -276,15 +281,15 @@ class Engine:
                     row.votes = t["agreement"]["votes"]
                 if not open_:
                     if label == "billing_complaint":
-                        rs.append({"text": f"A billing ticket from {iso(t['created'])} is closed. Mentioned for context; it doesn't block the reminder.",
+                        rs.append({"text": f"A billing ticket from {nice(t['created'])} is closed. Mentioned for context; it doesn't block the reminder.",
                                    "evidenceIds": [eid], "policyRef": None})
                     continue
                 if label == "disagree":
                     row.flags["ticket_disputed"] = True
-                    row.needs_review.append("the AI judges disagreed about what this ticket means")
+                    row.needs_review.append("the AI wasn't sure what this ticket means")
                     if any(v["answer"] in ("billing_complaint", "serious_escalation") for v in t["agreement"]["votes"]):
                         row.flags["disputed_hold"] = True  # when unsure, don't chase: a person reads it first
-                        rs.append({"text": "An open ticket might be a billing complaint or a serious escalation (the AI judges disagreed). We don't chase until a person reads it.",
+                        rs.append({"text": "The AI wasn't sure whether this open ticket is about money or a serious problem (its two checks disagreed). We don't chase until a person reads it.",
                                    "evidenceIds": [eid], "policyRef": self.p["sensitive_ref"]})
                     continue
                 if label == "billing_complaint":
@@ -310,7 +315,7 @@ class Engine:
                                "date": iso(k.get("start")),
                                "title": f"Contract: {int(k['seats']) if pd.notna(k.get('seats')) else '?'} seats × "
                                         f"{money(k['unit_price']) if pd.notna(k.get('unit_price')) else '?'}"
-                                        + (f", {iso(k.get('start'))} to {iso(k.get('end'))}" if pd.notna(k.get('start')) else "")})
+                                        + (f", {nice(k.get('start'))} to {nice(k.get('end'))}" if pd.notna(k.get('start')) else "")})
                     if chk and not chk[0]:
                         row.flags["wrong_bill"] = True
                         rs.append({"text": f"The bill doesn't match the contract: {chk[1]}. Fix the bill before asking for money.",
@@ -323,7 +328,7 @@ class Engine:
                 eid = f"payment:{f['id']}"
                 ev.append({"id": eid, "kind": "payment", "file": self.cfg["files"]["payments"]["file"], "recordId": str(f["id"]),
                            "date": iso(f.get("date")), "status": "failed",
-                           "title": f"Card payment of {money(f['amount'] or 0)} failed on {iso(f.get('date'))}"})
+                           "title": f"Card payment of {money(f['amount'] or 0)} failed on {nice(f.get('date'))}"})
                 row.flags["card_failed"] = True
                 rs.append({"text": "The card payment failed. Ask them to update the card (or let the billing tool's own retry email do it).",
                            "evidenceIds": [eid], "policyRef": self.p["card_ref"]})
@@ -340,7 +345,7 @@ class Engine:
                 c = pick.sort_values("last_active", ascending=False).iloc[0] if "last_active" in pick else pick.iloc[0]
                 stale = None
                 if pd.notna(c.get("last_active")) and (self.as_of - c["last_active"]).days > self.p["stale_contact_days"]:
-                    stale = f"billing contact last active {iso(c['last_active'])}: may be out of date"
+                    stale = f"billing contact last active {nice(c['last_active'])}: may be out of date"
                 return str(c.get("email") or c.get("name") or ""), stale
         if cid and cid in customers.index and pd.notna(customers.loc[cid].get("billing_email")):
             return str(customers.loc[cid]["billing_email"]), None
@@ -354,7 +359,7 @@ class Engine:
         return stage, ref
 
     def _draft(self, row: Row, verdict: str, tone: str, to: str, name: str) -> dict:
-        amt, inv, due = money(row.amount), row.display_id, iso(row.due)
+        amt, inv, due = money(row.amount), row.display_id, nice(row.due)
         if verdict != "send":
             return {"to": to, "subject": "", "body": "", "tone": "none"}
         if tone == "card_update":
@@ -476,7 +481,7 @@ class Engine:
             kk.append({"id": f"contract:{r['id']}", "kind": "contract", "file": self.cfg["files"]["contracts"]["file"],
                        "recordId": str(r["id"]), "date": iso(r.get("start")), "status": r.get("status") or "",
                        "title": f"{int(r['seats']) if pd.notna(r.get('seats')) else '?'} seats × "
-                                f"{money(r['unit_price']) if pd.notna(r.get('unit_price')) else '?'}, to {iso(r.get('end'))}"})
+                                f"{money(r['unit_price']) if pd.notna(r.get('unit_price')) else '?'}, to {nice(r.get('end'))}"})
         get = lambda f: None if pd.isna(c.get(f)) else c.get(f)  # noqa: E731
         out = {"id": cid, "name": str(c["name"]), "aliases": [], "invoiceIds": [], "tickets": tk, "payments": [], "contracts": kk}
         for f_in, f_out in (("segment", "segment"), ("plan", "plan"), ("account_manager", "accountManager")):
