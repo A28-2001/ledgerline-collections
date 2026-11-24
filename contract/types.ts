@@ -142,7 +142,12 @@ export interface Results {
     failures: Failure[];
     runtimeSeconds: number;
   };
-  morningSummary: { title: string; bullets: string[]; text: string };
+  morningSummary: {
+    title: string;
+    bullets: string[];
+    text: string;
+    routing?: { to: string; role: string; channel: string; cc: string | null; lines: string[]; by: string | null; intro?: string }[];
+  };
   monthOne?: {
     source: string;
     measures: { label: string; today: number | null; todayText: string; target: string }[];

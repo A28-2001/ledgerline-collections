@@ -27,7 +27,7 @@ export default function SummaryPage() {
             <div className="min-w-0">
               <p className="text-sm font-semibold">Collections check</p>
               <p className="text-xs text-muted-foreground">
-                to Finance team · data as of {formatDate(meta.asOf)}
+                to {s.routing?.[0]?.to ?? "Finance team"}{s.routing?.[0]?.cc ? `, copy to ${s.routing[0].cc}` : ""} · data as of {formatDate(meta.asOf)}
               </p>
             </div>
           </div>
@@ -51,6 +51,33 @@ export default function SummaryPage() {
             Open the Today page to approve. Nothing has been sent.
           </div>
         </div>
+
+        {s.routing && s.routing.length > 1 && (
+          <section className="mt-8" aria-label="Who gets what this morning">
+            <h2 className="text-lg font-semibold tracking-tight">Who gets what this morning</h2>
+            <p className="mt-1 text-sm text-muted-foreground">
+              One Slack direct message per person, once a day, never a channel post. Timings are the COO&apos;s starting point, for the VP Finance to confirm.
+            </p>
+            <ul className="mt-4 space-y-3">
+              {s.routing.slice(1).map((r) => (
+                <li key={r.to} className="rounded-xl border bg-card p-4 text-sm">
+                  <p className="font-semibold">
+                    To {r.to} <span className="font-normal text-muted-foreground">· {r.role} · {r.channel}{r.cc ? ` · copy to ${r.cc}` : ""}</span>
+                  </p>
+                  {r.intro && <p className="mt-1.5 leading-relaxed">{r.intro}</p>}
+                  <ul className="mt-2 space-y-1 text-muted-foreground">
+                    {r.lines.map((l, i) => (
+                      <li key={i} className="flex gap-2">
+                        <span className="mt-2 size-1 shrink-0 rounded-full bg-muted-foreground" aria-hidden="true" />
+                        <span>{l}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
       </div>
     </>
   );

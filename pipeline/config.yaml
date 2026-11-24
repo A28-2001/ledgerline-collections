@@ -66,7 +66,9 @@ policy:
   escalate_after_days: 90
   escalate_ref: "process_maps.md FIN-1: still unpaid at 90 days, escalate to the VP Finance"
   hold_business_days: 5          # Maya: five working days (VP Finance to confirm)
-  dispute_fix_days: 5            # Maya: corrected invoice or clear answer within five working days
+  dispute_fix_days: 5
+  am_pause_days: 3               # Maya: account manager gets 3 working days on an open-ticket pause
+  paid_match_days: 2             # Maya: Marcus matches probably-paid bills within 2 working days            # Maya: corrected invoice or clear answer within five working days
   hold_ref: "collections_policy.md: don't chase a dispute or open escalation until the account manager says so"
   card_ref: "billing_engine_rewrite_2026.md: Stripe retries failed cards three times over seven days, emailing each time"
   card_writeoff_days: 150
@@ -121,3 +123,4 @@ people:
   finance_owner: Priya Nair (AR Specialist)
   billing_owner: Ana Duarte (Billing Support Specialist)
   vp_finance: Dana Ruiz (VP Finance)
+  cash_owner: Marcus Bell (Staff Accountant)

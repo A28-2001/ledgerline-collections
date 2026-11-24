@@ -71,6 +71,8 @@ policy:
   paid_match_window_days: 60
   wrong_bill_tolerance: 0.02      # bill differs from contract by more than 2%
   stale_contact_days: 180
+  am_pause_days: 3
+  paid_match_days: 2
 
 matching:
   fuzzy_high: 92      # at or above: match

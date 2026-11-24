@@ -545,6 +545,12 @@ class Engine:
             long_ = row.days >= self.p["call_after_days"]
             if f.get("paid_linked") or f.get("paid_unmatched"):
                 verdict, cause = "paid", "paid"
+                matcher_name = str(self.cfg["people"].get("cash_owner", "Finance team")).split(" (")[0]
+                back_to = self.cfg["people"]["finance_owner"].split(" (")[0]
+                by = nice(add_business_days(self.as_of, int(self.p.get("paid_match_days", 2))))
+                row.reasons.append({"text": f"Goes to {matcher_name} to match the payment, with {back_to} copied so she knows it's on hold. "
+                                            f"If it isn't matched by {by}, it comes back to {back_to}.",
+                                    "evidenceIds": [], "policyRef": "Maya (COO): matching is Marcus's job; back to Priya after two working days"})
             elif f.get("dispute_hold"):
                 verdict, cause = "hold", "wrong_bill"
             elif f.get("complaint_hold") or f.get("disputed_hold") or f.get("open_ticket_hold"):
@@ -617,8 +623,11 @@ class Engine:
                                             "evidenceIds": [], "policyRef": "Maya (COO): corrected invoice or clear answer within 5 working days"})
                 else:
                     am = str(c["account_manager"]) if c is not None and pd.notna(c.get("account_manager")) else "Account manager"
-                    hold = {"owner": am, "ownerRole": "Account manager", "deadline": deadline,
-                            "action": "Talk to the customer about the open issue, then release or keep the hold. If nobody acts by the deadline, it returns to finance."}
+                    am_days = int(self.p.get("am_pause_days", 3))
+                    back_to = self.cfg["people"]["finance_owner"].split(" (")[0]
+                    hold = {"owner": am, "ownerRole": "Account manager (Slack direct message, one nudge a day)",
+                            "deadline": iso(add_business_days(self.as_of, am_days)),
+                            "action": f"Get the issue moving, or tell {back_to} the reminder can go. If neither happens within {am_days} working days, it comes back to {back_to} automatically."}
             policy_ref = next((r["policyRef"] for r in row.reasons if r.get("policyRef")), stage_ref)
             out = {
                 "id": row.display_id, "customerId": cid, "customerName": name, "amount": round(row.amount, 2),

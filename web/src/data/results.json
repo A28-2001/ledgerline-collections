@@ -1,6 +1,6 @@
 {
  "meta": {
-  "generatedAt": "2026-11-24T06:20:39+00:00",
+  "generatedAt": "2026-11-24T06:25:08+00:00",
   "asOf": "2026-10-31",
   "dataSource": "real",
   "companyName": "Ledgerline",
@@ -2131,9 +2131,9 @@
    },
    "hold": {
     "owner": "Nadia Sinclair",
-    "ownerRole": "Account manager",
-    "deadline": "2026-11-09",
-    "action": "Talk to the customer about the open issue, then release or keep the hold. If nobody acts by the deadline, it returns to finance."
+    "ownerRole": "Account manager (Slack direct message, one nudge a day)",
+    "deadline": "2026-11-05",
+    "action": "Get the issue moving, or tell Priya Nair the reminder can go. If neither happens within 3 working days, it comes back to Priya Nair automatically."
    },
    "autoSend": {
     "eligible": false,
@@ -2775,9 +2775,9 @@
    },
    "hold": {
     "owner": "Nadia Sinclair",
-    "ownerRole": "Account manager",
-    "deadline": "2026-11-09",
-    "action": "Talk to the customer about the open issue, then release or keep the hold. If nobody acts by the deadline, it returns to finance."
+    "ownerRole": "Account manager (Slack direct message, one nudge a day)",
+    "deadline": "2026-11-05",
+    "action": "Get the issue moving, or tell Priya Nair the reminder can go. If neither happens within 3 working days, it comes back to Priya Nair automatically."
    },
    "autoSend": {
     "eligible": false,
@@ -3040,9 +3040,9 @@
    },
    "hold": {
     "owner": "Maria Yardley",
-    "ownerRole": "Account manager",
-    "deadline": "2026-11-09",
-    "action": "Talk to the customer about the open issue, then release or keep the hold. If nobody acts by the deadline, it returns to finance."
+    "ownerRole": "Account manager (Slack direct message, one nudge a day)",
+    "deadline": "2026-11-05",
+    "action": "Get the issue moving, or tell Priya Nair the reminder can go. If neither happens within 3 working days, it comes back to Priya Nair automatically."
    },
    "autoSend": {
     "eligible": false,
@@ -3260,9 +3260,9 @@
    },
    "hold": {
     "owner": "Nadia Sinclair",
-    "ownerRole": "Account manager",
-    "deadline": "2026-11-09",
-    "action": "Talk to the customer about the open issue, then release or keep the hold. If nobody acts by the deadline, it returns to finance."
+    "ownerRole": "Account manager (Slack direct message, one nudge a day)",
+    "deadline": "2026-11-05",
+    "action": "Get the issue moving, or tell Priya Nair the reminder can go. If neither happens within 3 working days, it comes back to Priya Nair automatically."
    },
    "autoSend": {
     "eligible": false,
@@ -3378,9 +3378,9 @@
    "reviewReason": "a billing ticket from Oct 29, 2026 is marked solved: check it was really fixed",
    "hold": {
     "owner": "Nadia Sinclair",
-    "ownerRole": "Account manager",
-    "deadline": "2026-11-09",
-    "action": "Talk to the customer about the open issue, then release or keep the hold. If nobody acts by the deadline, it returns to finance."
+    "ownerRole": "Account manager (Slack direct message, one nudge a day)",
+    "deadline": "2026-11-05",
+    "action": "Get the issue moving, or tell Priya Nair the reminder can go. If neither happens within 3 working days, it comes back to Priya Nair automatically."
    },
    "autoSend": {
     "eligible": false,
@@ -3546,9 +3546,9 @@
    },
    "hold": {
     "owner": "Maria Yardley",
-    "ownerRole": "Account manager",
-    "deadline": "2026-11-09",
-    "action": "Talk to the customer about the open issue, then release or keep the hold. If nobody acts by the deadline, it returns to finance."
+    "ownerRole": "Account manager (Slack direct message, one nudge a day)",
+    "deadline": "2026-11-05",
+    "action": "Get the issue moving, or tell Priya Nair the reminder can go. If neither happens within 3 working days, it comes back to Priya Nair automatically."
    },
    "autoSend": {
     "eligible": false,
@@ -3584,6 +3584,11 @@
       "ticket:T880829"
      ],
      "policyRef": null
+    },
+    {
+     "text": "Goes to Marcus Bell to match the payment, with Priya Nair copied so she knows it's on hold. If it isn't matched by Nov 4, 2026, it comes back to Priya Nair.",
+     "evidenceIds": [],
+     "policyRef": "Maya (COO): matching is Marcus's job; back to Priya after two working days"
     }
    ],
    "evidence": [
@@ -3671,6 +3676,11 @@
       "payment:PAY-65766"
      ],
      "policyRef": "collections_policy.md: bank transfers take three to five working days to show as paid"
+    },
+    {
+     "text": "Goes to Marcus Bell to match the payment, with Priya Nair copied so she knows it's on hold. If it isn't matched by Nov 4, 2026, it comes back to Priya Nair.",
+     "evidenceIds": [],
+     "policyRef": "Maya (COO): matching is Marcus's job; back to Priya after two working days"
     }
    ],
    "evidence": [
@@ -3771,6 +3781,11 @@
       "ticket:T880078"
      ],
      "policyRef": null
+    },
+    {
+     "text": "Goes to Marcus Bell to match the payment, with Priya Nair copied so she knows it's on hold. If it isn't matched by Nov 4, 2026, it comes back to Priya Nair.",
+     "evidenceIds": [],
+     "policyRef": "Maya (COO): matching is Marcus's job; back to Priya after two working days"
     }
    ],
    "evidence": [
@@ -3858,6 +3873,11 @@
       "payment:PAY-65806"
      ],
      "policyRef": "collections_policy.md: bank transfers take three to five working days to show as paid"
+    },
+    {
+     "text": "Goes to Marcus Bell to match the payment, with Priya Nair copied so she knows it's on hold. If it isn't matched by Nov 4, 2026, it comes back to Priya Nair.",
+     "evidenceIds": [],
+     "policyRef": "Maya (COO): matching is Marcus's job; back to Priya after two working days"
     }
    ],
    "evidence": [
@@ -3924,6 +3944,11 @@
       "payment:PAY-65808"
      ],
      "policyRef": "collections_policy.md: bank transfers take three to five working days to show as paid"
+    },
+    {
+     "text": "Goes to Marcus Bell to match the payment, with Priya Nair copied so she knows it's on hold. If it isn't matched by Nov 4, 2026, it comes back to Priya Nair.",
+     "evidenceIds": [],
+     "policyRef": "Maya (COO): matching is Marcus's job; back to Priya after two working days"
     }
    ],
    "evidence": [
@@ -13696,7 +13721,7 @@
    }
   ],
   "failures": [],
-  "runtimeSeconds": 0.44
+  "runtimeSeconds": 0.41
  },
  "morningSummary": {
   "title": "Collections check, 2026-10-31",
@@ -13707,7 +13732,91 @@
    "11 need a phone call ($55,126).",
    "17 need a second look before anything goes out."
   ],
-  "text": "Good morning. $396,373 of $633,245 overdue (63%) sits with customers we shouldn't chase today: they've probably paid, they're unhappy, or the bill is wrong. Today: 20 reminders ready to send ($181,746). Approve all in one click. 18 on hold ($318,025): owners have until 2026-10-31. 5 probably paid already ($78,348): confirm and close. 11 need a phone call ($55,126). 17 need a second look before anything goes out."
+  "text": "Good morning. $396,373 of $633,245 overdue (63%) sits with customers we shouldn't chase today: they've probably paid, they're unhappy, or the bill is wrong. Today: 20 reminders ready to send ($181,746). Approve all in one click. 18 on hold ($318,025): owners have until 2026-10-31. 5 probably paid already ($78,348): confirm and close. 11 need a phone call ($55,126). 17 need a second look before anything goes out.",
+  "routing": [
+   {
+    "to": "Priya Nair",
+    "role": "AR Specialist",
+    "channel": "Slack direct message",
+    "cc": "Dana Ruiz",
+    "lines": [
+     "20 reminders ready to send ($181,746). Approve all in one click.",
+     "18 on hold ($318,025): owners have until 2026-10-31.",
+     "5 probably paid already ($78,348): confirm and close.",
+     "11 need a phone call ($55,126).",
+     "17 need a second look before anything goes out."
+    ],
+    "by": null
+   },
+   {
+    "to": "Marcus Bell",
+    "role": "Staff Accountant",
+    "channel": "Slack direct message",
+    "cc": "Priya Nair",
+    "lines": [
+     "Jessop & Orwell Agency: invoice INV-25784, $62,688",
+     "Brandt & Lowell CPAs: invoice INV-25806, $6,324",
+     "Kingsway Engineering Group: invoice INV-25469, $5,100",
+     "Castellano, Crane & Co: invoice INV-25845, $3,672",
+     "Yardley & Duarte Advisory: invoice INV-25867, $564"
+    ],
+    "by": "Nov 4",
+    "intro": "5 overdue bills look already paid. Please match them; Priya Nair is copied and holds the reminders."
+   },
+   {
+    "to": "Hannah Drummond",
+    "role": "Account manager",
+    "channel": "Slack direct message (one nudge a day)",
+    "cc": null,
+    "lines": [
+     "Brandt Ashby IT: invoice INV-25822, $26,112. The customer disputes this exact invoice in a support ticket and says they're holding payment until it's fixed",
+     "Castell Engineering: invoice INV-25764, $6,324. The customer disputes this exact invoice in a support ticket. The ticket is marked solved in Zendesk, but the ",
+     "Wexler Media: invoice INV-25811, $1,224. The customer disputes this exact invoice in a support ticket. The ticket is still open."
+    ],
+    "by": "Nov 5",
+    "intro": "3 of your accounts have a reminder paused. Get each issue moving or tell Priya Nair the reminder can go; after 3 working days it comes back to Priya Nair."
+   },
+   {
+    "to": "Maria Yardley",
+    "role": "Account manager",
+    "channel": "Slack direct message (one nudge a day)",
+    "cc": null,
+    "lines": [
+     "Delacroix, Jessop & Co: invoice INV-25834, $41,568. The customer disputes this exact invoice in a support ticket and says they're holding payment until it's fixed",
+     "Crane IT Partners: invoice INV-25902, $3,060. Serious open escalation with support. Money talk waits until it's resolved.",
+     "Ambrose & Lowell Advisory: invoice INV-25897, $658. Open product complaint (not about money): send, but in a softer tone, and tell the account manager."
+    ],
+    "by": "Nov 5",
+    "intro": "3 of your accounts have a reminder paused. Get each issue moving or tell Priya Nair the reminder can go; after 3 working days it comes back to Priya Nair."
+   },
+   {
+    "to": "Nadia Sinclair",
+    "role": "Account manager",
+    "channel": "Slack direct message (one nudge a day)",
+    "cc": null,
+    "lines": [
+     "Okafor & Nakamura LLP: invoice INV-25765, $46,848. The customer disputes this exact invoice in a support ticket and says they're holding payment until it's fixed",
+     "Eastman & Wexler CPAs: invoice INV-25873, $43,680. Open product complaint (not about money): send, but in a softer tone, and tell the account manager.",
+     "Kingsway Engineering Group: invoice INV-25852, $5,100. They have a ticket pending in Zendesk since Jul 20, 2026 (103 days). Chasing payment while their question is u",
+     "Harbor Engineering Group: invoice INV-25898, $1,833. They have a ticket pending in Zendesk since Jul 24, 2026 (99 days). Chasing payment while their question is un",
+     "Studio Marsh: invoice INV-25854, $1,410. They have a ticket pending in Zendesk since Sep 12, 2026 (49 days). Chasing payment while their question is un"
+    ],
+    "by": "Nov 5",
+    "intro": "5 of your accounts have a reminder paused. Get each issue moving or tell Priya Nair the reminder can go; after 3 working days it comes back to Priya Nair."
+   },
+   {
+    "to": "Nadia Upton",
+    "role": "Account manager",
+    "channel": "Slack direct message (one nudge a day)",
+    "cc": null,
+    "lines": [
+     "Riverside Partners: invoice INV-25787, $60,576. The customer disputes this exact invoice in a support ticket and says they're holding payment until it's fixed",
+     "Wexler & Hume Advisory: invoice INV-25712, $4,080. The customer disputes this exact invoice in a support ticket. The ticket is marked solved in Zendesk, but the "
+    ],
+    "by": "Nov 5",
+    "intro": "2 of your accounts have a reminder paused. Get each issue moving or tell Priya Nair the reminder can go; after 3 working days it comes back to Priya Nair."
+   }
+  ]
  },
  "monthOne": {
   "source": "Maya (COO), 24 Nov: the one number to watch, and her real test behind it",

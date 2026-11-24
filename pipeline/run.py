@@ -19,6 +19,7 @@ import time
 from datetime import datetime, timezone
 from pathlib import Path
 
+import numpy as np
 import pandas as pd
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
@@ -190,6 +191,33 @@ def main() -> None:
     ]
     morning = {"title": f"Collections check, {as_of.date().isoformat()}", "bullets": bullets,
                "text": f"Good morning. {headline} Today: " + " ".join(bullets)}
+    # Who gets what (Maya, 24 Nov): Slack direct messages, one a day per person, never a channel post.
+    ppl = cfg.get("people", {})
+    first = lambda x: str(x).split(" (")[0]  # noqa: E731
+    priya, dana, marcus = first(ppl.get("finance_owner", "Finance")), first(ppl.get("vp_finance", "")), first(ppl.get("cash_owner", ""))
+    routing = [{"to": priya, "role": "AR Specialist", "channel": "Slack direct message", "cc": dana or None,
+                "lines": bullets, "by": None}]
+    paid_bills = [i for i in invoices if i["verdict"] == "paid"]
+    if paid_bills and marcus:
+        routing.append({"to": marcus, "role": "Staff Accountant", "channel": "Slack direct message", "cc": priya,
+                        "lines": [f"{i['customerName']}: invoice {i['id']}, {money(i['amount'])}" for i in paid_bills],
+                        "by": pd.Timestamp(np.busday_offset(as_of.date(), int(cfg["policy"].get("paid_match_days", 2)), roll="forward")).strftime("%b %-d"),
+                        "intro": f"{len(paid_bills)} overdue bills look already paid. Please match them; {priya} is copied and holds the reminders."})
+    by_am: dict[str, list] = {}
+    for i in invoices:
+        h = i.get("hold") or {}
+        if i["verdict"] == "hold" and h.get("ownerRole", "").startswith("Account manager"):
+            by_am.setdefault(h["owner"], []).append(i)
+        elif i["verdict"] == "hold" and "with " in h.get("ownerRole", ""):
+            am = h["ownerRole"].split("with ")[-1].split(" for")[0]
+            by_am.setdefault(am, []).append(i)
+    for am, bills in sorted(by_am.items()):
+        routing.append({"to": am, "role": "Account manager", "channel": "Slack direct message (one nudge a day)", "cc": None,
+                        "lines": [f"{i['customerName']}: invoice {i['id']}, {money(i['amount'])}. {i['headline'][:110]}" for i in bills],
+                        "by": pd.Timestamp(np.busday_offset(as_of.date(), int(cfg["policy"].get("am_pause_days", 3)), roll="forward")).strftime("%b %-d"),
+                        "intro": f"{len(bills)} of your accounts have a reminder paused. Get each issue moving or tell {priya} the reminder can go; "
+                                 f"after {cfg['policy'].get('am_pause_days', 3)} working days it comes back to {priya}."})
+    morning["routing"] = routing
 
     notes = list(dict.fromkeys(data.notes))
     if str(cfg["ai"].get("ticket_text")).lower() in ("off", "false", "no"):

@@ -81,3 +81,15 @@ I'd switch yours off for the same kind of thing: chasing someone who's paid, or 
 - Every ticket subject and excerpt finance sees is masked (card numbers, bank details, emails, phone numbers), not just what an AI would read.
 - Production data path: read-only service accounts for QuickBooks (VP Finance approves) and Zendesk (Head of Support sets it up; Maya signs off). The export folder stays as the fallback. This run used the fallback (the data room files).
 - The proof page lists each source, how it connects, and who signs it off.
+
+## 8. Account manager pauses, Slack, and the probably-paid list
+
+**Us:** When a bill is paused because the customer has an open support ticket, how long should the account manager get before it comes back to Priya, and should those nudges reach them on Slack? Also, should the "probably paid" list go to Marcus, since he matches the payments, or to Priya?
+
+**Maya:** I'd give the account manager three working days to either get the issue moving or tell Priya the reminder can go, then it comes back to her automatically. Slack is right, since that's where they live, but send them a direct message rather than posting to a channel so it doesn't get lost, and only one nudge a day. The "probably paid" list should go to Marcus, because matching is his job and he's the one who can clear it. Copy Priya so she knows those invoices are on hold, and if Marcus hasn't matched one within two working days it should come back to her. Our VP Finance would confirm those timings, but that's where I'd start.
+
+**What it changes:**
+- Open-ticket and complaint pauses: the account manager has 3 working days to get the issue moving or tell Priya the reminder can go; then it comes back to Priya automatically.
+- Nudges: one Slack direct message a day per account manager, listing all their paused bills, never a channel post.
+- Probably paid: goes to Marcus Bell to match, with Priya copied; if not matched within 2 working days, it comes back to Priya.
+- The morning message page shows who gets what each day. Timings are Maya's starting point, for Dana to confirm.
