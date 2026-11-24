@@ -17,13 +17,13 @@ Every morning it asks five questions of each overdue bill and gives one answer, 
 | **Send** | Nothing blocks a polite reminder | 19 bills · $177,051 |
 | **Call** | 45+ days late, or already calling them | 9 bills · $9,384 |
 
-Priya's morning is **11 decisions**, built to take about 5 minutes, one customer at a time. Then her own step: 14 disputes, oldest first, each with a reply that names the issue. After the shadow week, each approved reminder opens in her own email app, written and addressed: she reads it and presses send. During the shadow week nothing goes out from the tool; she compares her calls with its suggestions (the COO's call, 24 Nov). Every other hold goes to an owner with a deadline that carries over day to day, and comes back to her if nobody acts.
+Priya's morning is **11 decisions**, built to take about 5 minutes (the shadow week will time it), one customer at a time. Then her own step: 14 disputes, oldest first, each with a reply that names the issue. After the shadow week, each approved reminder opens in her own email app, written and addressed: she reads it and presses send. During the shadow week nothing goes out from the tool; she compares her calls with its suggestions (the COO's call, 24 Nov). Every other hold goes to an owner with a deadline that carries over day to day, and comes back to her if nobody acts.
 
 ## What is AI, what stays with a person, and why
 
 - **A person decides every send.** Top-50 accounts, disputes, probably-paid bills, anything firmer than a nudge and every call always stay with a person: the COO's switch-off lines. Auto-send stays locked until a month of approvals is on record.
 - **AI as the auditor:** a separate AI model (Claude, in its own session) reviewed all 54 bills without seeing the tool's answers. Its first pass disagreed on 8: 5 rule errors (fixed), 2 judgment calls the COO has since confirmed, 1 kept on purpose. I propose running it weekly once legal approves a vendor.
-- **No AI on customer data in daily use until legal approves a vendor**, because the SLA policy requires a data agreement first; Amazon Bedrock (AWS is already a vendor) is with legal. In testing, before the COO's answer, Groq read masked tickets: that changed no answers, as rules catch all 14 disputes by their invoice number, and would move 9 bills in or out of Check first.
+- **No AI on customer data in daily use until legal approves a vendor**, because the SLA policy requires a data agreement first; Amazon Bedrock (AWS is already a vendor) is with legal. In testing, before the COO's answer, Groq read masked tickets: that changed no answers, as rules catch all 14 disputes by their invoice number; it would only change which 9 bills a person checks first.
 
 ## Proof, and where it fails
 

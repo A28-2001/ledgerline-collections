@@ -92,7 +92,7 @@ export default function ProofPage() {
     },
     {
       lead: "AI is measured before it's allowed:",
-      rest: up && up.cacheMisses === 0 ? `on these bills it changed ${up.verdictsChanged.length === 0 ? "no answers" : `${up.verdictsChanged.length} answers`} and would move ${up.checkFirstChanged} bills in or out of Check first. Once allowed, two models must agree or a person decides.` : "once allowed, two models must agree or a person decides.",
+      rest: up && up.cacheMisses === 0 ? `on these bills it changed ${up.verdictsChanged.length === 0 ? "no answers" : `${up.verdictsChanged.length} answers`}; it would only change which ${up.checkFirstChanged} bills a person checks first. Once allowed, two models must agree or a person decides.` : "once allowed, two models must agree or a person decides.",
     },
     { lead: "No threats, no invented facts:", rest: "emails come from Ledgerline's templates, checked for threat words." },
   ];

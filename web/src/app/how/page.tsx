@@ -135,8 +135,8 @@ export default function HowPage() {
               {up && up.cacheMisses === 0 && (
                 <>
                   {" "}
-                  Measured on these {up.bills} bills: it changed {up.verdictsChanged.length === 0 ? "no answers" : `${up.verdictsChanged.length} answers`}{" "}
-                  and moved {up.checkFirstChanged} bills in or out of Check first.
+                  Measured on these {up.bills} bills: it changed {up.verdictsChanged.length === 0 ? "no answers" : `${up.verdictsChanged.length} answers`}; it would only change which{" "}
+                  {up.checkFirstChanged} bills a person checks first.
                 </>
               )}
             </p>

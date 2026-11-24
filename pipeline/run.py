@@ -306,7 +306,8 @@ def main() -> None:
         bills = [i for i in bills if i not in ok_needed]
         lines = [f"Your OK on seats or price: {i['customerName']}, {money(i['amount'])} (Priya is fixing the bill)" for i in ok_needed]
         lines += [f"Paused: {i['customerName']}, {money(i['amount'])}" for i in bills]
-        lines += [f"Planned: {'reminder' if i['verdict'] == 'send' else 'call'} to {i['customerName']}, {money(i['amount'])}" for i in out_today]
+        if not cfg.get("shadow_week"):  # in the shadow week nothing goes out, so nothing is "planned"
+            lines += [f"Planned: {'reminder' if i['verdict'] == 'send' else 'call'} to {i['customerName']}, {money(i['amount'])}" for i in out_today]
         intro = []
         if ok_needed:
             intro.append(f"Priya needs your OK on {len(ok_needed)} {'dispute' if len(ok_needed) == 1 else 'disputes'} she's fixing.")

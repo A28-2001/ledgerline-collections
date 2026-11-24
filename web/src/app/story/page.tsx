@@ -137,7 +137,7 @@ export default function StoryPage() {
       id: "answer",
       kicker: "The answer",
       number: fmt(decisions),
-      numberNote: `decisions sort the morning, built to take about 5 minutes. Then ${allMine} disputes to fix, oldest first: the day's work.`,
+      numberNote: `decisions sort the morning, built to take about 5 minutes; the shadow week will time it. Then ${allMine} disputes to fix, oldest first: the day's work.`,
       text: [
         "Five questions decide each bill, in order: already paid → Probably paid; a reason to hold, or under 7 days late → Hold; 45+ days late → Call; nothing in the way → Send.",
         `**${formatMoney(summary.shouldNotChaseAmount)} isn't chased today.** ${count("send")} bills get a reminder once Priya approves.`,
@@ -161,7 +161,7 @@ export default function StoryPage() {
       numberNote: "customers the tool would chase who had paid or had a complaint open, by Maya's rule",
       text: [
         strict
-          ? `By the strictest reading it's **${strict}**: customers with a pending ticket that isn't about money. They wait in Check first, so Priya reads the ticket before a polite reminder.`
+          ? `**${strict} customers** have a pending ticket that isn't about money, so they wait in Check first: Priya reads it before a polite reminder.`
           : "Both of the COO's tests read 0.",
       ],
       source: "Checks on the How sure are we page; plan agreed with the COO",

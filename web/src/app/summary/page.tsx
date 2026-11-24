@@ -9,6 +9,7 @@ export const metadata: Metadata = { title: "Morning message" };
 
 export default function SummaryPage() {
   const { morningSummary: s, meta } = results;
+  const shadow = !!meta.shadowWeek; // Maya: nothing goes out from the tool in the shadow week
   const plain = [
     s.title,
     "",
@@ -21,7 +22,11 @@ export default function SummaryPage() {
     <>
       <PageHeader
         title="Morning message"
-        description="Every working day, one short Slack message each, copied from here until the Slack connection is approved. The rest is in the app."
+        description={
+          shadow
+            ? "Shadow week: Priya's own message is the only one used. The others are previews of what each person will get after the week."
+            : "Every working day, one short Slack message each, copied from here until the Slack connection is approved. The rest is in the app."
+        }
         actions={<CopyButton text={plain} label="Copy message" variant="default" size="default" />}
       />
 
@@ -65,7 +70,10 @@ export default function SummaryPage() {
 
         {s.routing && s.routing.length > 1 && (
           <section className="mt-8" aria-label="Everyone else">
-            <h2 className="text-base font-semibold tracking-tight">Everyone else gets one short message too</h2>
+            <h2 className="text-base font-semibold tracking-tight">
+              {shadow ? "After the shadow week, everyone else gets one short message too" : "Everyone else gets one short message too"}
+            </h2>
+            {shadow && <p className="mt-1 text-sm text-muted-foreground">Previews only: nothing goes out from the tool this week.</p>}
             <ul className="mt-3 space-y-2.5">
               {s.routing.slice(1).map((r) => (
                 <li key={r.to} className="rounded-xl border bg-card p-4 text-sm">
@@ -73,12 +81,14 @@ export default function SummaryPage() {
                     <p className="font-semibold">
                       {r.to} <span className="font-normal text-muted-foreground">· {r.role}</span>
                     </p>
-                    <CopyButton
-                      text={[r.intro ?? "", ...r.lines.map((l) => `• ${l}`), ...((r.more ?? 0) > 0 ? [`and ${r.more} more`] : []), ...(r.link ? ["", r.link] : [])]
-                        .filter((x, i) => x !== "" || i > 0)
-                        .join("\n")}
-                      label="Copy"
-                    />
+                    {!shadow && (
+                      <CopyButton
+                        text={[r.intro ?? "", ...r.lines.map((l) => `• ${l}`), ...((r.more ?? 0) > 0 ? [`and ${r.more} more`] : []), ...(r.link ? ["", r.link] : [])]
+                          .filter((x, i) => x !== "" || i > 0)
+                          .join("\n")}
+                        label="Copy"
+                      />
+                    )}
                   </div>
                   {r.intro && <p className="mt-1 leading-relaxed">{r.intro}</p>}
                   {r.lines.length > 0 && (
