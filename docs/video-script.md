@@ -1,6 +1,6 @@
 # Demo video script (about 7 minutes)
 
-Record the live site: https://ledgerline-collections.vercel.app. Browser full screen, light mode, zoom 110%. Close other tabs and notifications. Speak slowly; it's fine to pause.
+Record the live site: https://ledgerline-collections.vercel.app. Browser full screen, light mode (Light, at the bottom of the left panel), zoom 110%. Close other tabs and notifications. Speak slowly; it's fine to pause.
 
 Before recording: open the site in a private window, so no earlier clicks show as already decided.
 
@@ -21,19 +21,20 @@ Before recording: open the site in a private window, so no earlier clicks show a
 - Chapter 1: "$633,245 is overdue across 54 bills: the highest month-end in a year."
 - Chapter 2: "Finance can't open Zendesk. 134 tickets from customers who owe money are invisible to them, so they ask around on Slack."
 - Chapter 3 (pause here): "This was the surprise. $309,000, 49% of the overdue money, is disputed in tickets that name the exact invoice. Zendesk marks most of those tickets solved, but the bills were never fixed. A reminder on any of them chases someone waiting for a corrected bill."
-- Chapter 4: "So disputes go to Priya first, with a 5-day clock. Reminders go out only when nothing blocks them."
+- Chapter 4: "Five questions decide each bill. Priya's morning is 11 decisions, then the disputes, oldest first. $446,810 isn't chased today."
 
 ## 2:00 to 4:00 · Priya's morning
 
 **Screen:** click "Open today's list", or Today in the menu.
 
 **Say and do:**
-1. "Her morning starts here. 54 bills, and only 5 need a closer look." Open **Check first**. Open Corbin Media: "A billing ticket was marked solved; she checks it was really fixed before a reminder goes." Click **Looks right**.
-2. "The rest are grouped into four steps." Open **Send reminders**. Open one bill (Rosales Engineering): show the **reminder schedule** (day 7, first reminder), the **timeline**, and the **draft**: "Ledgerline's own template, without the old 45-day suspension threat." Point out: "Two Rosales bills go in one email, not two."
-3. Close it, click **Approve 16 reminders**: "Approving doesn't send. Nothing goes out on its own."
-4. Open **Hand off holds**: "12 disputed bills are hers to fix today, $241,320 past the 5-day target. Every other hold goes to its owner with a deadline: the account manager, or Marcus for payments."
-5. Open **Make calls**: "All 9 are failed cards past 45 days: call for a new card."
-6. Open **Morning message** in the menu: "Every working day, each person gets one short Slack message and a link. Marcus is asked which bill a $5,100 payment covers before anyone is chased."
+1. "Her morning is 11 decisions, and nothing is sent until she approves." Open **Check first**: "One customer at a time, with the record that matters beside it. Crane IT has a support ticket still pending, though it isn't about money, and the customer says it's resolved." Click **Approve this reminder**: "Decided bills join their step, and the next one moves in."
+2. "The other bills are four steps, in this order: paid, hold, send, call." Open **Already paid**: "5 bills look paid. Marcus matches each payment, so nobody who paid gets chased." Click **Hand 5 bills to Marcus**.
+3. Open **Hand off holds**: "Each of these 7 goes to its owner with a deadline: the account manager, or Marcus for a payment that could pay either of two Kingsway bills. If nobody acts, the bill comes back to her."
+4. Open **Send reminders**, then Rosales Engineering: show the **reminder schedule**, the **timeline** and the **draft**: "Ledgerline's own template, without the old 45-day suspension threat. Two Rosales bills go in one email." Close it and click **Approve 14 reminders**: "Approving doesn't send. Nothing goes out on its own."
+5. Open **Make calls**: "Every call today is a failed card past 45 days: call for a new card." Click **Add 7 calls to the list**.
+6. Open **Fix disputes: the day's work**: "Then the real work: 14 disputes, oldest first, 12 past the 5-day target. Each comes with a reply that names the issue. She copies it, sends it from her email, and clicks Reply sent."
+7. Open **Morning message** in the menu: "Every working day, each person gets one short Slack message and a link. Marcus is asked which bill a $5,100 payment covers, and account managers are asked for their OK on seats or price."
 
 ## 4:00 to 5:40 · How sure are we, and why the AI is safe
 
@@ -43,8 +44,8 @@ Before recording: open the site in a private window, so no earlier clicks show a
 - "A separate AI model reviewed all 54 bills without seeing the tool's answers, and I checked every contested bill by hand. First pass: 46 of 54, 85%."
 - Scroll to the miss list: "Every miss is here, with what changed. Eight came from the review's first pass, two I found myself before it, and one was my own mistake in the hand check: a payment that could pay either of two bills. That's the exact case that got the last tool switched off, so that bill now waits for Marcus."
 - "After the fixes it's 52 of 54, and we disagree on the last 2 on purpose. It's the same bills, so not a fresh test. The shadow week is."
-- **The COO's two tests:** "Nobody chased who had paid, nobody chased with a complaint open: both zero. Under the strictest reading, three customers with a pending ticket that isn't about money still get a reminder. That was my call, and it's for Maya to confirm."
-- **Why it's safe on billing** (read two or three lines): "A person approves everything. Top-50 accounts, disputes and calls always stay with a person. No customer data goes to an AI vendor until legal approves one. And I measured what AI ticket-reading adds on these bills: nothing. Rules already catch all 14 disputes. AI earns its place on new tickets with a missing or wrong tag."
+- **The COO's two tests:** "Nobody chased who had paid, nobody chased with a complaint open: both zero. By the strictest reading, 2 customers have a pending ticket that isn't about money. They wait in Check first until Maya confirms that rule."
+- **Why it's safe on billing** (read two or three lines): "A person approves everything. Top-50 accounts, disputes and calls always stay with a person. In daily use, no AI vendor sees customer data until legal approves one; in testing I used Claude for the review and Groq on masked tickets. And I measured what AI ticket-reading adds on these bills: it changed no answers, because rules already catch all 14 disputes, and it would move 9 bills in or out of Check first. AI earns its place on new tickets with a missing or wrong tag."
 
 ## 5:40 to 6:40 · What happens Monday
 
