@@ -137,8 +137,8 @@ export default function HowPage() {
                 <>
                   {" "}
                   Measured on these {up.bills} bills (with answers saved from a test run on Groq): AI changed{" "}
-                  {up.verdictsChanged.length === 0 ? "no decisions" : `${up.verdictsChanged.length} decisions`}; rules already catch all
-                  14 disputes.
+                  {up.verdictsChanged.length === 0 ? "no answers" : `${up.verdictsChanged.length} answers`}, because rules already catch
+                  all 14 disputes by their invoice number, and moved {up.checkFirstChanged} bills in or out of Check first.
                 </>
               )}
             </p>
@@ -147,7 +147,7 @@ export default function HowPage() {
             <p className="text-xs font-semibold text-muted-foreground uppercase">Why rules aren&apos;t enough</p>
             <p className="mt-1 leading-relaxed">
               {tk
-                ? `${tk.fromOverdueUntagged ?? tk.relevantUntagged} of the ${tk.fromOverdue} tickets from customers who owe money have no tag, and tags can be wrong (a timer bug was tagged How-to). On today's bills rules were enough; new tickets with a missing or wrong tag are where AI earns its place.`
+                ? `${tk.fromOverdueUntagged ?? tk.relevantUntagged} of the ${tk.fromOverdue} tickets from customers who owe money have no tag, and tags can be wrong (a timer bug was tagged How-to). Rules catch a dispute when it quotes the invoice number; AI is for the complaints that don't.`
                 : "Tags are often missing or wrong. Only reading the text catches those."}
             </p>
           </div>

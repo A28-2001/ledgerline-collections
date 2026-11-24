@@ -52,6 +52,7 @@ export interface Invoice {
   agreement?: { agree: boolean; votes: AgreementVote[] };
   hold?: { owner: string; ownerRole: string; deadline: string; action: string };
   draft?: { to: string; subject: string; body: string; tone: Tone; combinedWith?: string };
+  reply?: { to: string; subject: string; body: string }; // a first answer to a disputed bill (Priya's)
   reminderStage?: string; // e.g. "Second reminder"
   autoSend?: { eligible: boolean; why: string; permanent: boolean }; // Maya's trust ladder
 }

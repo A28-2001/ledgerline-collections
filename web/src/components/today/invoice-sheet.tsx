@@ -347,6 +347,28 @@ function InvoiceDetail({
             </Section>
           )}
 
+          {inv.reply && (
+            <Section title="Reply to the customer" icon={Mail}>
+              <div className="overflow-hidden rounded-lg border">
+                <dl className="space-y-1 border-b bg-muted/40 px-3 py-2.5 text-sm">
+                  <div className="flex gap-2">
+                    <dt className="w-14 shrink-0 text-muted-foreground">To</dt>
+                    <dd className="min-w-0 break-all">{inv.reply.to || "No contact on file"}</dd>
+                  </div>
+                  <div className="flex gap-2">
+                    <dt className="w-14 shrink-0 text-muted-foreground">Subject</dt>
+                    <dd className="min-w-0 font-medium break-words">{inv.reply.subject}</dd>
+                  </div>
+                </dl>
+                <p className="px-3 py-3 text-sm leading-relaxed whitespace-pre-wrap">{inv.reply.body}</p>
+                <div className="flex flex-wrap items-center gap-2 border-t px-3 py-2.5">
+                  <CopyButton text={`Subject: ${inv.reply.subject}\n\n${inv.reply.body}`} />
+                  <span className="text-xs text-muted-foreground">A first answer, not a payment request. Send it, then fix the bill.</span>
+                </div>
+              </div>
+            </Section>
+          )}
+
           {inv.draft && inv.draft.tone !== "none" && inv.draft.body ? (
             <DraftSection invoice={inv} />
           ) : verdict === "paid" || verdict === "hold" ? null : (

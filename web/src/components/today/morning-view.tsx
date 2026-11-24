@@ -301,7 +301,7 @@ export function MorningView({ data }: { data: Pick<Results, "invoices" | "summar
                 sub={
                   flaggedOpen.length === 0
                     ? `All ${pluralize(flagged.length, "bill")} checked`
-                    : `${pluralize(flaggedOpen.length, "bill")} the tool isn't sure about · ${pluralize(openGroups.length, "decision")}`
+                    : `${pluralize(flaggedOpen.length, "bill")} that need a person first · ${pluralize(openGroups.length, "decision")}`
                 }
                 open={expanded === "check"}
                 onToggle={() => {
@@ -313,7 +313,7 @@ export function MorningView({ data }: { data: Pick<Results, "invoices" | "summar
               {expanded === "check" && (
                 <div id="step-check" className="border-t px-4 pt-3 pb-4">
                   <p className="text-sm leading-relaxed text-muted-foreground">
-                    Read why the tool isn&apos;t sure. If its suggestion looks right, say so; if not, change it. Then these bills
+                    Read why each one needs a person. If the suggestion looks right, say so; if not, change it. Then these bills
                     join their step, already decided. Bills from one customer with the same reason are one decision.
                   </p>
                   <p className="mt-1.5 hidden text-xs text-muted-foreground sm:block">
@@ -505,8 +505,8 @@ export function MorningView({ data }: { data: Pick<Results, "invoices" | "summar
                 <h3 className="font-medium">Done: send to billing</h3>
                 <p className="mt-0.5 text-sm text-muted-foreground">
                   {allDone
-                    ? `${pluralize(decidedBy("send"), "reminder")} ready to send, ${pluralize(decidedBy("hold"), "hold")} handed to owners, ${pluralize(decidedBy("paid"), "bill")} closed as paid, ${pluralize(decidedBy("call"), "call")} on the call list.`
-                    : "When every decision is made, hand the list to billing and post the morning message. Nothing is sent automatically."}
+                    ? `${pluralize(decidedBy("send"), "reminder")} ready to send, ${pluralize(decidedBy("hold"), "hold")} handed to owners, ${pluralize(decidedBy("paid"), "bill")} with Marcus to match, ${pluralize(decidedBy("call"), "call")} on the call list. Keep the list: tomorrow's run reads it, so nothing is suggested twice.`
+                    : "When every decision is made, download the list for billing and post the morning message. Keep the list: tomorrow's run reads it, so nothing is suggested twice. Nothing is sent automatically."}
                 </p>
                 <div className="mt-3 flex flex-wrap gap-2">
                   <Button size="sm" variant={allDone ? "default" : "outline"} onClick={exportDecisions} disabled={!allDone && Object.keys(decisions).length === 0}>

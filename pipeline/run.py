@@ -69,12 +69,14 @@ def light_lines(invoices, cfg, as_of) -> list[str]:
     paid = [i for i in invoices if i["verdict"] == "paid"]
     marcus = str(cfg.get("people", {}).get("cash_owner", "the cash team")).split(" (")[0].split()[0]
     out = []
+    emails = [i for i in ready if (i.get("draft") or {}).get("body")]
     if ready:
-        out.append(f"{len(ready)} reminders to approve" + (f" ({len(send) - len(ready)} more after a quick check)" if len(send) > len(ready) else ""))
+        out.append(f"{len(emails)} reminder emails to approve" + (f" ({len(send) - len(ready)} more bills after a quick check)" if len(send) > len(ready) else ""))
     if mine:
         out.append(f"{len(mine)} disputed bills to fix: corrected invoice or a clear answer")
     if calls:
-        out.append(f"{len(calls)} calls to make")
+        people = len({i.get("customerId") or i["id"] for i in calls})
+        out.append(f"{people} calls to make" + (f" ({len(calls)} bills)" if people != len(calls) else ""))
     if paid:
         out.append(f"{len(paid)} bills look paid: {marcus} is matching them")
     return out
@@ -305,13 +307,19 @@ def main() -> None:
                         "intro": " ".join(intro)})
     # Dana: automatic write-offs coming (Maya: flag her at least five working days before)
     wo = [(r, i) for r in engine._rows for i in invoices if i["id"] == r.display_id and r.flags.get("writeoff_days_left") is not None]
-    if wo and dana:
+    wo_ids = {i["id"] for _, i in wo}
+    esc_days = int(cfg["policy"].get("escalate_after_days") or 0)
+    escalate = [i for i in invoices if esc_days and i["verdict"] == "call" and i["daysOverdue"] >= esc_days and i["id"] not in wo_ids]
+    if (wo or escalate) and dana:
         wo_lines = [f"{i['customerName']}: {money(i['amount'])}, written off in {r.flags['writeoff_days_left']} day{'' if r.flags['writeoff_days_left'] == 1 else 's'}"
                     for r, i in sorted(wo, key=lambda x: x[0].flags["writeoff_days_left"])]
+        wo_lines += [f"{i['customerName']}: {money(i['amount'])}, {i['daysOverdue']} days late: escalate" for i in escalate]
         routing.append({"to": dana, "role": "VP Finance", "channel": "Slack direct message", "cc": priya,
                         "lines": wo_lines[:3], "more": max(0, len(wo_lines) - 3),
                         "by": None,
-                        "intro": f"{len(wo)} card invoices will be written off automatically soon. Chase them or let them go?"})
+                        "intro": " ".join(x for x in [
+                            f"{len(wo)} card invoices will be written off automatically soon: chase them or let them go?" if wo else "",
+                            f"{len(escalate)} {'bill is' if len(escalate) == 1 else 'bills are'} past {esc_days} days: yours to escalate." if escalate else ""] if x)})
     for r in routing[1:]:
         r["link"] = app_url
     lc = cfg.get("leave_cover") or {}

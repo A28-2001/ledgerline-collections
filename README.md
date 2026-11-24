@@ -24,7 +24,7 @@ Always with a person, permanently: top-50 accounts, disputes, probably-paid bill
 
 ## Today's numbers (data as of 31 Oct 2026)
 
-54 overdue bills, $633,245. 19 reminders to approve, 21 holds, 9 calls, 5 probably paid. $309,000 (49%) is disputed in tickets that name the exact invoice.
+54 overdue bills, $633,245. 19 bills to remind (15 emails ready, 3 bills after a quick check), 21 holds, 8 calls (9 bills), 5 probably paid. $309,000 (49%) is disputed in tickets that name the exact invoice.
 
 Accuracy: a separate AI model reviewed all 54 bills without seeing the tool's answers, and a person checked the 11 contested calls. First pass 46 of 54 (85%); 53 of 54 after the fixes, on the same bills, so not a fresh test. Every miss is listed in the tool and in [`reports/review/review-log.json`](reports/review/review-log.json).
 

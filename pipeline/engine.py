@@ -821,6 +821,7 @@ class Engine:
                 "confidence": conf, "headline": headline, "reasons": row.reasons, "evidence": row.evidence,
                 "policyRef": policy_ref, "needsReview": bool(row.needs_review),
                 "draft": self._draft(row, verdict, tone, to, name), "reminderStage": stage if verdict == "send" else None,
+                "reply": self._dispute_reply(row, to, hold) if verdict == "hold" and cause == "wrong_bill" and hold else None,
             }
             if row.needs_review:
                 out["reviewReason"] = "; ".join(dict.fromkeys(row.needs_review))
@@ -930,6 +931,21 @@ class Engine:
                     out[key] = when
         return out
 
+    def _dispute_reply(self, row: Row, to: str, hold: dict) -> dict:
+        """A first answer to a disputed bill: we've seen it, it's being fixed, and when. Never asks for money."""
+        hi = f"Hi {self._first}," if getattr(self, "_first", "") else "Hi,"
+        sender = str(self.cfg.get("people", {}).get("finance_owner", "Finance team")).split(" (")[0]
+        sign = f"Thanks,\n{sender}\n{self.cfg.get('company_name', '')} Billing".rstrip()
+        by = nice(pd.Timestamp(hold["deadline"])) if hold.get("deadline") and pd.Timestamp(hold["deadline"]) > self.as_of \
+            else nice(add_business_days(self.as_of, 2))
+        late = bool(hold.get("deadline")) and pd.Timestamp(hold["deadline"]) <= self.as_of
+        body = (f"{hi}\n\nThank you for flagging invoice {row.display_id}{', and sorry it has taken this long' if late else ''}. We're reviewing it against your "
+                f"contract now, and you'll have a corrected invoice or a clear answer from me by {by}.\n\n"
+                f"There's no need to pay the current invoice in the meantime.\n\n{sign}")
+        for w in THREAT_WORDS:
+            assert w not in body.lower(), f"reply for {row.display_id} contains '{w}'"
+        return {"to": to, "subject": f"Invoice {row.display_id}: we're on it", "body": body}
+
     def _approver(self, cid, amount: float) -> str:
         """Maya: Priya corrects up to the limit herself; Dana approves above it or on any top-50 account."""
         limit = float(self.p.get("credit_self_approve_max", 0) or 0)
@@ -961,7 +977,7 @@ class Engine:
         why = []
         if tone != "standard":
             why.append("card follow-ups and softer notes stay with a person" if tone == "card_update" else "customer has an open ticket")
-        if any(t.get("is_open") for t in tickets.get(cid, [])):
+        if any(str(t.get("status") or "").split(" (")[0] not in self.v["ticket_closed_status"] for t in tickets.get(cid, [])):
             why.append("customer has an open ticket")
         if row.days >= int(a.get("max_days", 45)):
             why.append("past the second reminder: anything firmer stays with a person")

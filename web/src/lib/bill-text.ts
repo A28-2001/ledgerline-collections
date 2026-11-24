@@ -28,6 +28,17 @@ function openTicket(inv: Invoice): Evidence | undefined {
   return tickets.find((e) => cited.has(e.id)) ?? tickets[0];
 }
 
+// The ticket a hold rests on: the one its first reason cites, whatever its status. For a dispute Zendesk marks
+// solved, that solved ticket is the whole point, so it must not be skipped for some other open ticket.
+function holdTicket(inv: Invoice): Evidence | undefined {
+  const tickets = inv.evidence.filter((e) => e.kind === "ticket");
+  for (const r of inv.reasons) {
+    const t = r.evidenceIds.map((id) => tickets.find((e) => e.id === id)).find(Boolean);
+    if (t) return t;
+  }
+  return openTicket(inv);
+}
+
 function paymentProof(inv: Invoice, status: "succeeded" | "failed"): Evidence | undefined {
   return inv.evidence.find((e) => e.kind === "payment" && (e.status ?? "").toLowerCase() === status);
 }
@@ -62,7 +73,7 @@ export function rowDetail(inv: Invoice, verdict: Verdict): string {
         ? `${isMine(inv) ? "Yours" : inv.hold.owner} · ${inv.hold.deadline <= results.meta.asOf ? "act today" : `by ${shortDate(inv.hold.deadline)}`}`
         : "";
       const mismatch = inv.cause === "wrong_bill" ? contractMismatch(inv) : null;
-      const t = openTicket(inv);
+      const t = holdTicket(inv);
       const what = mismatch ? mismatch.charAt(0).toUpperCase() + mismatch.slice(1) : t ? `“${t.title}”` : "";
       return [who, what].filter(Boolean).join(" · ") || inv.headline;
     }
@@ -146,8 +157,13 @@ export function keyProof(inv: Invoice, verdict: Verdict): KeyProof | null {
     const mismatch = inv.cause === "wrong_bill" ? contractMismatch(inv) : null;
     const contract = inv.evidence.find((e) => e.kind === "contract");
     if (mismatch && contract) return fromEvidence("The contract", contract, `This bill: ${mismatch}.`);
-    const t = openTicket(inv);
-    return t ? fromEvidence(`The open ticket (${t.status || "open"})`, t) : null;
+    const t = holdTicket(inv);
+    if (!t) return null;
+    const solved = CLOSED.test((t.status ?? "").split(" (")[0]);
+    return fromEvidence(
+      inv.cause === "wrong_bill" && solved ? "The dispute (ticket marked solved, bill not fixed)" : `The ticket (${t.status || "open"})`,
+      t,
+    );
   }
   if (verdict === "send") {
     if (inv.draft?.tone === "card_update") {

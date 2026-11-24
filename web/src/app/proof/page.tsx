@@ -20,7 +20,7 @@ function MissItem({ e }: { e: Entry }) {
         <span
           className={
             e.status === "fixed"
-              ? "rounded-full border border-paid/45 px-2 text-[11px] text-paid-ink"
+              ? "rounded-full border border-foreground/30 px-2 text-[11px] text-foreground"
               : e.status === "deliberate"
                 ? "rounded-full border px-2 text-[11px] text-muted-foreground"
                 : "rounded-full border border-hold/60 px-2 text-[11px] text-hold-ink"
@@ -71,7 +71,7 @@ export default function ProofPage() {
     `A person approves everything that goes out: today ${sendCount} reminders, each one read or bulk-approved by Priya. Auto-send stays off until a month of her approvals is on record, then only for small, polite reminders.`,
     "Some bills never go out without a person, permanently: top-50 accounts, disputes, probably-paid bills, anything firmer than a friendly nudge, and every phone call.",
     "No customer data goes to an AI vendor until legal approves one (Amazon Bedrock, in Ledgerline's existing AWS account, is proposed). Every ticket excerpt finance sees is masked.",
-    `When AI does read tickets, two models from different families must agree, or a person decides.${up && up.cacheMisses === 0 ? ` Measured on these ${up.bills} bills, it changed ${up.verdictsChanged.length === 0 ? "no decisions" : `${up.verdictsChanged.length} decisions`}: rules alone already catch all 14 disputes.` : ""}`,
+    `When AI does read tickets, two models from different families must agree, or a person decides.${up && up.cacheMisses === 0 ? ` Measured on these ${up.bills} bills, it changed ${up.verdictsChanged.length === 0 ? "no answers" : `${up.verdictsChanged.length} answers`} (rules already catch all 14 disputes by their invoice number) and moved ${up.checkFirstChanged} bills in or out of Check first (${up.checkFirstWithAI} with AI, ${up.checkFirstRules} without).` : ""}`,
     "Emails come from Ledgerline's own templates, with the 45-day suspension threat removed and a check that no threat words get in. The AI redraft button can't add facts or ticket details; it's a demo that sends a draft from this fictional data room to Groq.",
     `Every name on bills, payments and tickets was linked to a customer, ${byId} by ID and ${byName} by exact name; a near-match would go to a person. The headline figures are worked out two ways, and ${crossOk} of ${cross.length} agree.`,
   ];
@@ -86,7 +86,7 @@ export default function ProofPage() {
             <CardTitle className="leading-snug">How often it&apos;s right, and every time it was wrong</CardTitle>
             <CardDescription>
               A separate AI model reviewed all 54 bills from fact files we built, without seeing the tool&apos;s answers. A person checked
-              all 11 contested calls; the 43 agreements weren&apos;t hand-checked.
+              all 11 contested calls; the other 43 bills weren&apos;t hand-checked.
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -162,7 +162,7 @@ export default function ProofPage() {
               <div key={v.label} className="rounded-lg border p-3">
                 <div className="flex items-baseline justify-between gap-2">
                   <p className="font-medium">{v.label}</p>
-                  <p className={v.ok ? "tabular text-2xl font-semibold text-paid-ink" : "tabular text-2xl font-semibold text-alert-ink"}>{v.valueA}</p>
+                  <p className={v.ok ? "tabular text-2xl font-semibold text-foreground" : "tabular text-2xl font-semibold text-alert-ink"}>{v.valueA}</p>
                 </div>
                 {v.strictValue !== undefined && v.strictValue > 0 && (
                   <p className="mt-1 text-xs font-medium text-hold-ink">
@@ -187,7 +187,7 @@ export default function ProofPage() {
           <ul className="space-y-2.5 text-sm">
             {guards.map((g) => (
               <li key={g} className="flex gap-2.5">
-                <CircleCheck className="mt-0.5 size-4 shrink-0 text-paid-ink" aria-hidden="true" />
+                <CircleCheck className="mt-0.5 size-4 shrink-0 text-foreground" aria-hidden="true" />
                 <span className="leading-relaxed">{g}</span>
               </li>
             ))}
@@ -311,7 +311,7 @@ export default function ProofPage() {
                           <span className="tabular inline-flex items-center gap-1.5">
                             {formatMoney(v.valueA)}
                             {v.ok ? (
-                              <CircleCheck className="size-4 text-paid-ink" aria-label="Both ways agree" />
+                              <CircleCheck className="size-4 text-foreground" aria-label="Both ways agree" />
                             ) : (
                               <CircleX className="size-4 text-alert-ink" aria-label="The two ways disagree" />
                             )}

@@ -26,6 +26,7 @@ export interface StoryData {
   verdicts: { key: "send" | "hold" | "paid" | "call"; label: string; count: number; amountText: string }[];
   review: { total: number; firstAgreed: number | null; nowAgreed: number | null; keptWhy: string | null };
   checks: { label: string; value: number }[];
+  heldMaybePaid: { count: number; amountText: string } | null;
   // One real disputed bill, the way Priya sees it.
   example: { customer: string; invoice: string; amountText: string; days: number; quote: string; status: string; href: string } | null;
 }
@@ -265,6 +266,12 @@ function AnswerPicture({ data }: { data: StoryData }) {
           </li>
         ))}
       </ul>
+      {data.heldMaybePaid && (
+        <p className="mt-4 text-xs leading-relaxed text-muted-foreground">
+          Hold includes {data.heldMaybePaid.count === 1 ? "1 bill" : `${data.heldMaybePaid.count} bills`} ({data.heldMaybePaid.amountText}) that a
+          payment may cover: Marcus confirms which bill it pays.
+        </p>
+      )}
     </Frame>
   );
 }

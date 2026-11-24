@@ -22,6 +22,8 @@ export default function StoryPage() {
     (i) => i.verdict === "hold" && i.cause === "wrong_bill" && i.hold && i.hold.deadline <= meta.asOf && i.hold.ownerRole.startsWith("Finance"),
   );
   const strict = proof.verifiedNumbers.find((v) => v.label.startsWith("Complaint open"))?.strictValue ?? 0;
+  const emails = invoices.filter((i) => i.verdict === "send" && !i.needsReview && i.draft?.body).length;
+  const maybePaid = invoices.filter((i) => i.verdict === "hold" && i.cause === "paid");
 
   const firstPass = proof.reviewLog?.summary.match(/(\d+) of \d+ agreed \((\d+)%\)/);
   const firstAgreed = firstPass ? Number(firstPass[1]) : null;
@@ -64,6 +66,9 @@ export default function StoryPage() {
       })(),
     },
     checks: checks.map((c) => ({ label: c.label.replace(/\s*\(.*\)$/, ""), value: c.valueA })),
+    heldMaybePaid: maybePaid.length
+      ? { count: maybePaid.length, amountText: formatMoney(maybePaid.reduce((s, i) => s + i.amount, 0)) }
+      : null,
     example: (() => {
       // The disputed bill that has waited longest, with a ticket marked solved: the clearest case of the finding.
       const pick = invoices
@@ -129,9 +134,11 @@ export default function StoryPage() {
       id: "answer",
       kicker: "The answer",
       number: mine.length ? fmt(mine.length) : `${count("send")} of ${invoices.length}`,
-      numberNote: mine.length ? "disputed bills Priya fixes first, all past the 5-day target" : "bills get a polite email today",
+      numberNote: mine.length
+        ? `of the ${disputed?.count ?? mine.length} disputed bills are past the 5-day target. Priya fixes them first.`
+        : "bills get a polite email today",
       text: [
-        `Five questions decide each bill. **Disputes go to Priya** to fix within 5 working days; ${count("send")} bills get a reminder she approves in one click.`,
+        `Five questions decide each bill. **Disputes go to Priya** to fix within 5 working days; ${emails} reminder emails go out once she approves them.`,
         "Everything else waits with an owner and a deadline.",
       ],
       source: `This run, all ${invoices.length} bills (Today and How it works pages)`,

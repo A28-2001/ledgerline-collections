@@ -140,10 +140,10 @@
   --verdict-paid: var(--paid);
   --verdict-call: var(--call);
   --cause-simply-late: #7d8b95;
-  --cause-unhappy: #e9b44c;
+  --cause-unhappy: #d9772e;
   --cause-wrong-bill: #9e2a4f;
   --cause-paid: #3a74b6;
-  --cause-card-failed: #b5653a;
+  --cause-card-failed: #8d7966;
 }
 
 .dark {
@@ -209,10 +209,10 @@
   --verdict-paid: var(--paid);
   --verdict-call: var(--call);
   --cause-simply-late: #8796a1;
-  --cause-unhappy: #edbe5e;
+  --cause-unhappy: #f0995a;
   --cause-wrong-bill: #d0638a;
   --cause-paid: #78a7dc;
-  --cause-card-failed: #dc8f62;
+  --cause-card-failed: #b3a08c;
 }
 
 @layer base {
