@@ -1,6 +1,6 @@
 {
  "meta": {
-  "generatedAt": "2026-11-24T06:29:48+00:00",
+  "generatedAt": "2026-11-24T06:33:17+00:00",
   "asOf": "2026-10-31",
   "dataSource": "real",
   "companyName": "Ledgerline",
@@ -3759,15 +3759,8 @@
    "verdict": "paid",
    "cause": "paid",
    "confidence": "low",
-   "headline": "They have a ticket pending in Zendesk since Jul 20, 2026 (103 days). Chasing payment while their question is unanswered is what gets the tool switched off; the account manager decides when to resume.",
+   "headline": "An unmatched bank payment from this customer equals this bill. It was probably paid but never matched.",
    "reasons": [
-    {
-     "text": "They have a ticket pending in Zendesk since Jul 20, 2026 (103 days). Chasing payment while their question is unanswered is what gets the tool switched off; the account manager decides when to resume.",
-     "evidenceIds": [
-      "ticket:T880184"
-     ],
-     "policyRef": "collections_policy.md: tell the account manager before finance contacts one of their accounts"
-    },
     {
      "text": "An unmatched bank payment from this customer equals this bill. It was probably paid but never matched.",
      "evidenceIds": [
@@ -3837,7 +3830,7 @@
      "title": "Contract: 25 seats \u00d7 $68.00, Dec 12, 2025 to Dec 11, 2026"
     }
    ],
-   "policyRef": "collections_policy.md: tell the account manager before finance contacts one of their accounts",
+   "policyRef": "collections_policy.md: bank transfers take three to five working days to show as paid",
    "needsReview": true,
    "draft": {
     "to": "marcus.tan@kingswayengineeringgro.example",
@@ -13721,7 +13714,7 @@
    }
   ],
   "failures": [],
-  "runtimeSeconds": 0.42
+  "runtimeSeconds": 0.43
  },
  "morningSummary": {
   "title": "Collections check, 2026-10-31",

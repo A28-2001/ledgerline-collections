@@ -39,7 +39,7 @@ INV-25811,Wexler Media,1224.0,27,hold,wrong_bill,False,The customer disputes thi
 INV-25897,Ambrose & Lowell Advisory,658.0,10,hold,unhappy,False,"Open product complaint (not about money): send, but in a softer tone, and tell the account manager."
 INV-25784,Jessop & Orwell Agency,62688.0,36,paid,paid,True,An unmatched bank payment from this customer equals this bill. It was probably paid but never matched.
 INV-25806,Brandt & Lowell CPAs,6324.0,28,paid,paid,False,An unmatched bank payment from this customer equals this bill. It was probably paid but never matched.
-INV-25469,Kingsway Engineering Group,5100.0,111,paid,paid,True,"They have a ticket pending in Zendesk since Jul 20, 2026 (103 days). Chasing payment while their question is unanswered is what gets the tool switched off; the account manager decides when to resume."
+INV-25469,Kingsway Engineering Group,5100.0,111,paid,paid,True,An unmatched bank payment from this customer equals this bill. It was probably paid but never matched.
 INV-25845,"Castellano, Crane & Co",3672.0,20,paid,paid,False,"An unmatched bank payment names this invoice in its memo (""INV-25845"") and equals the bill. It's paid; it just hasn't been matched yet."
 INV-25867,Yardley & Duarte Advisory,564.0,16,paid,paid,False,"An unmatched bank payment names this invoice in its memo (""inv25867 Yardley"") and equals the bill. It's paid; it just hasn't been matched yet."
 INV-25662,Upton & Bell Advisory,44064.0,66,call,simply_late,True,Call: 66 days overdue

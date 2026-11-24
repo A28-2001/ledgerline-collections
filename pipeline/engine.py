@@ -395,7 +395,8 @@ class Engine:
 
             # Maya's real test: nobody chased who had a complaint open. Zendesk tags are often wrong (a bug tagged How-to,
             # 23% untagged), so ANY open or pending ticket pauses the reminder and the account manager decides (process_maps FIN-1).
-            if not (row.flags.get("dispute_hold") or row.flags.get("complaint_hold") or row.flags.get("disputed_hold")):
+            if not (row.flags.get("dispute_hold") or row.flags.get("complaint_hold") or row.flags.get("disputed_hold")
+                    or row.flags.get("paid_unmatched") or row.flags.get("paid_linked")):
                 still_open = [t for t in tickets.get(cid, []) if t.get("relevant") and t.get("is_open")]
                 if still_open:
                     t = sorted(still_open, key=lambda t: t.get("created") or self.as_of)[0]

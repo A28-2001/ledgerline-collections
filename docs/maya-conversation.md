@@ -106,3 +106,13 @@ I'd switch yours off for the same kind of thing: chasing someone who's paid, or 
 - March: Dana owns the morning list while Priya is on leave; Marcus keeps the probably-paid list. (Maya to confirm Dana's twenty minutes a day.)
 - Corrections: Priya up to $2,500; Dana above that or on any top-50 account. A setting, not code.
 - All of Maya's numbers now sit on one Settings card, each with who can change it.
+
+## 10. Anything we haven't asked
+
+**Us:** Last one from me: is there anything I haven't asked that you'd want me to know before I finish?
+
+**Maya:** Just one. When you show me this, I want to see it run on real records from the data room and, more than anything, what it got wrong: the invoices where you'd disagree with its call, and why. Both earlier tools failed on cases nobody had checked, so the misses tell me more than the hits. What would it take to put this in front of Priya on Monday morning?
+
+**What it changes:**
+- The evidence centrepiece: review every one of the 54 real overdue bills, mark each call we'd disagree with and why, and put that list first on the proof page and in the video.
+- Answer her Monday question with a concrete, honest plan (shadow week first).
