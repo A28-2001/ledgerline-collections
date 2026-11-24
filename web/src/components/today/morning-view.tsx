@@ -238,8 +238,11 @@ export function MorningView({ data }: { data: Pick<Results, "invoices" | "summar
         <p className="text-sm text-muted-foreground">
           Data as of {formatDate(meta.asOf)}
           <span aria-hidden="true"> · </span>
-          <Link href="/story" className="underline decoration-border underline-offset-4 hover:text-foreground hover:decoration-foreground">
-            First time here? The 2-minute story
+          <Link
+            href="/story"
+            className="whitespace-nowrap underline decoration-border underline-offset-4 hover:text-foreground hover:decoration-foreground"
+          >
+            New here? The 2-minute story
           </Link>
         </p>
         <h1 className="mt-0.5 text-2xl font-semibold tracking-tight sm:text-3xl">Good morning</h1>

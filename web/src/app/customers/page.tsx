@@ -60,6 +60,13 @@ export default function CustomersPage() {
                       {invs.length} overdue {invs.length === 1 ? "bill" : "bills"}
                       {weakest < 1 && <span className="text-hold-ink"> · name only nearly matched: check</span>}
                     </span>
+                    {todo.length > 0 && (
+                      <span className="mt-1 flex flex-wrap gap-1 md:hidden">
+                        {todo.map((v) => (
+                          <VerdictBadge key={v} verdict={v} />
+                        ))}
+                      </span>
+                    )}
                   </TableCell>
                   <TableCell className="hidden text-muted-foreground sm:table-cell">{c.segment ?? "—"}</TableCell>
                   <TableCell className="tabular text-right font-medium">{formatMoney(overdue)}</TableCell>

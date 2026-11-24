@@ -254,7 +254,10 @@ function ReviewPicture({ data }: { data: StoryData }) {
     { label: "After the fixes", n: r.nowAgreed, note: "same bills, not fresh data" },
   ];
   return (
-    <Frame title="How often the tool agreed with a person" note={`All ${r.total} bills, checked by a reviewer who never saw the tool's answers`}>
+    <Frame
+      title="How often the tool agreed with the review"
+      note={`All ${r.total} bills, reviewed by a separate AI model that never saw the tool's answers; a person checked every disagreement`}
+    >
       <ul className="space-y-4">
         {bars.map((b) =>
           b.n === null ? null : (

@@ -19,7 +19,12 @@ export default function HowPage() {
   const sources = [
     { name: "QuickBooks", detail: `${fmt(invoices.length)} overdue bills (AR aging)` },
     { name: "Bank and Stripe", detail: `${unmatchedPayments} payments not yet matched` },
-    { name: "Zendesk", detail: `${fmt(rows("tickets.csv"))} tickets, excerpts masked` },
+    {
+      name: "Zendesk",
+      detail: tk
+        ? `${fmt(rows("tickets.csv"))} tickets, ${fmt(tk.fromOverdue)} from customers who owe money; excerpts masked`
+        : `${fmt(rows("tickets.csv"))} tickets, excerpts masked`,
+    },
     { name: "Contracts and contacts", detail: `${fmt(rows("contracts.csv"))} contract terms, ${fmt(rows("contacts.csv"))} contacts` },
   ];
 

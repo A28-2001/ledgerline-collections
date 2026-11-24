@@ -64,7 +64,7 @@ export function AgeChart({ rows: input }: { rows: ({ bucket: string; label: stri
     <ChartContainer config={verdictConfig} className="aspect-auto h-56 w-full">
       <BarChart data={rows} margin={{ left: 0, right: 8, top: 20, bottom: 0 }} barCategoryGap="22%">
         <CartesianGrid vertical={false} strokeDasharray="3 3" />
-        <XAxis dataKey="label" tickLine={false} axisLine={false} tickMargin={8} fontSize={12} />
+        <XAxis dataKey="label" tickLine={false} axisLine={false} tickMargin={8} fontSize={11} interval={0} />
         <YAxis tickFormatter={(v: number) => formatMoney(v, "USD", true)} tickLine={false} axisLine={false} width={48} fontSize={11} />
         <Tooltip
           cursor={{ fill: "var(--muted)", opacity: 0.5 }}

@@ -1,60 +1,32 @@
-"use client";
-
-import { Bar, BarChart, Cell, LabelList, Tooltip, XAxis, YAxis } from "recharts";
-import { ChartContainer, type ChartConfig } from "@/components/ui/chart";
 import { CAUSE_META, formatMoney, formatPercent } from "@/lib/data";
 import type { CauseSlice } from "@/lib/types";
 
+// Plain bars with the label above each one, so they use the full width on a phone too.
 export function CauseChart({ slices, total }: { slices: CauseSlice[]; total: number }) {
   const data = [...slices]
     .filter((s) => s.amount > 0)
     .sort((a, b) => b.amount - a.amount)
     .map((s) => ({ ...s, label: CAUSE_META[s.cause]?.label ?? s.label, fill: CAUSE_META[s.cause]?.color }));
-  const config: ChartConfig = { amount: { label: "Overdue" } };
 
   if (data.length === 0) return null;
+  const max = data[0].amount;
 
   return (
-    <ChartContainer config={config} className="aspect-auto w-full" style={{ height: Math.max(160, data.length * 52) }}>
-      <BarChart data={data} layout="vertical" margin={{ left: 0, right: 96, top: 4, bottom: 4 }} barCategoryGap={10}>
-        <XAxis type="number" hide domain={[0, "dataMax"]} />
-        <YAxis
-          type="category"
-          dataKey="label"
-          width={170}
-          tickLine={false}
-          axisLine={false}
-          tick={{ fontSize: 12 }}
-        />
-        <Tooltip
-          cursor={{ fill: "var(--muted)", opacity: 0.5 }}
-          content={({ active, payload }) => {
-            const p = active && payload?.length ? (payload[0].payload as (typeof data)[number]) : null;
-            if (!p) return null;
-            return (
-              <div className="rounded-lg border bg-popover px-3 py-2 text-xs shadow-md">
-                <div className="font-medium">{p.label}</div>
-                <div className="tabular mt-1 text-muted-foreground">
-                  {formatMoney(p.amount)} · {p.count} {p.count === 1 ? "bill" : "bills"} ·{" "}
-                  {formatPercent(total ? p.amount / total : 0)}
-                </div>
-              </div>
-            );
-          }}
-        />
-        <Bar dataKey="amount" radius={[4, 4, 4, 4]} isAnimationActive={false}>
-          {data.map((d) => (
-            <Cell key={d.cause} fill={d.fill} />
-          ))}
-          <LabelList
-            dataKey="amount"
-            position="right"
-            className="fill-foreground"
-            fontSize={12}
-            formatter={(v: unknown) => formatMoney(Number(v), "USD", true)}
-          />
-        </Bar>
-      </BarChart>
-    </ChartContainer>
+    <ul className="space-y-3.5" aria-label="Overdue money by reason">
+      {data.map((d) => (
+        <li key={d.cause}>
+          <div className="flex flex-wrap items-baseline justify-between gap-x-3 text-sm">
+            <span className="font-medium">{d.label}</span>
+            <span className="tabular text-muted-foreground">
+              <span className="font-medium text-foreground">{formatMoney(d.amount, "USD", true)}</span> · {d.count}{" "}
+              {d.count === 1 ? "bill" : "bills"} · {formatPercent(total ? d.amount / total : 0)}
+            </span>
+          </div>
+          <div className="mt-1.5 h-2.5 overflow-hidden rounded-full bg-muted" aria-hidden="true">
+            <div className="h-full rounded-full" style={{ width: `${Math.max(1.5, (d.amount / max) * 100)}%`, background: d.fill }} />
+          </div>
+        </li>
+      ))}
+    </ul>
   );
 }
