@@ -46,6 +46,19 @@ GRAVE_RX = re.compile(r"chargeback|charge ?back|contest(ing)? the charge|disput\
                       r"attorney general|better business bureau|\bBBB\b|ombudsman|regulator|small claims|legal action|lawyer|attorney|solicitor", re.I)
 RESOLVED_RX = re.compile(r"closing this out|you can close|please close|all sorted|sorted now|resolved now|it'?s (fixed|resolved|working) now|"
                          r"no longer an issue|no further action|that fixed it|all good now|problem solved", re.I)
+def grave_phrase(text: str) -> str:
+    """The threat in plain words, for the reason line: 'a chargeback', 'a complaint to consumer affairs'."""
+    t = text.lower()
+    found = []
+    if re.search(r"consumer affairs|attorney general|better business bureau|\bbbb\b|ombudsman|regulator", t):
+        found.append("a complaint to a regulator or consumer affairs office")
+    if re.search(r"charge ?back|contest(ing)? the charge|disput\w* (the )?charges? with (my|our) bank", t):
+        found.append("a card dispute (chargeback) with their bank")
+    if re.search(r"small claims|legal action|lawyer|solicitor|\battorney\b(?! general)", t):
+        found.append("legal action")
+    return " and ".join(found) or "a formal complaint"
+
+
 INVOICE_REF_RX = re.compile(r"\binv[-\s#]?(\d{4,7})\b", re.I)
 NEGATIVE_RX = re.compile(r"broken|fail|error|frustrat|not working|issue|problem|bug|slow|spins|lost|blocking", re.I)
 CAUSE_LABEL = {"unhappy": "Unhappy customer", "paid": "Already paid", "wrong_bill": "Customer says the bill is wrong",
@@ -193,6 +206,12 @@ class Engine:
                 votes = [{"judge": "rules", "answer": t["rules_label"]}] + j["votes"]
                 t["agreement"] = {"agree": j["agree"], "votes": votes}
                 t["label"] = j["answer"] if j["agree"] else "disagree"
+        # Plain counts for the story: how many tickets matter to collections, and how many have no tag to read.
+        mine = [t for ts in out.values() for t in ts if t["_match"].customer_id in overdue_customers]
+        rel = [t for t in mine if t.get("relevant")]
+        self.ticket_stats = {"all": int(len(tk)), "fromOverdue": len(mine), "relevant": len(rel),
+                             "relevantUntagged": sum(1 for t in rel if not str(t.get("category") or "").strip()
+                                                     or str(t.get("category")).lower() == "nan")}
         return out
 
     # ---------------------------------------------------------------- payments
@@ -215,6 +234,7 @@ class Engine:
                 m = self.matcher.match(r.get("payer"), "bank payments")
                 if m.ok:
                     unmatched_by_cust.setdefault(m.customer_id, []).append(r)
+        self.unmatched_count = int(sum(1 for r, f in zip(pay.to_dict("records"), failed) if not (r.get("invoice_id_key") or "") and not f))
         return linked_ok, linked_failed, unmatched_by_cust
 
     # ---------------------------------------------------------------- contracts
@@ -382,17 +402,21 @@ class Engine:
                                           "but nothing shows the money issue was settled (for example a refund we owe them). Confirm it before chasing.",
                                   "evidenceIds": [eid], "policyRef": "collections_policy.md: do not chase an invoice the customer has disputed"})
                     continue
-                if not open_ and after_issue and label == "billing_complaint":
+                solved_check = not open_ and after_issue and label == "billing_complaint"
+                if solved_check:
                     row.needs_review.append(f"a billing ticket from {nice(t['created'])} is marked {t.get('status')}: check it was really fixed")
                 # No-vendor mode (Maya, until legal approves an AI provider): a ticket TAGGED billing or account change
                 # since this bill was issued, that the local rules didn't read as a dispute, goes to a person.
                 if not (self.ai and self.ai.enabled) and after_issue and (t.get("category") or "") in self.v["ticket_billing_category"] \
                         and not row.flags.get("dispute_hold"):
-                    row.needs_review.append(f"ticket tagged {t.get('category')} on {nice(t['created'])}, after this bill was issued: a person reads it before anyone chases")
+                    gap = (row.issue - t["created"]).days if row.issue is not None and pd.notna(row.issue) else 0
+                    when = (f"{gap} day{'s' if gap != 1 else ''} before this bill was issued" if gap > 0 else "after this bill was issued")
+                    if not solved_check:  # one line per ticket: the solved-ticket check above already asks a person to read it
+                        row.needs_review.append(f"ticket tagged {t.get('category')} on {nice(t['created'])}, {when}: a person reads it before anyone chases")
                     row.flags["tag_check"] = True
                 if not open_:
                     if label == "billing_complaint":
-                        rs.append({"text": f"A billing ticket from {nice(t['created'])} is closed. Mentioned for context; it doesn't block the reminder.",
+                        rs.append({"text": f"Also on file: a billing ticket from {nice(t['created'])}, now closed.",
                                    "evidenceIds": [eid], "policyRef": None})
                     continue
                 if label == "disagree":
@@ -413,7 +437,7 @@ class Engine:
                                "evidenceIds": [eid], "policyRef": self.p["sensitive_ref"]})
                 elif label == "other_complaint" and (recent or open_):
                     row.flags["soft"] = True
-                    rs.append({"text": "Open product complaint (not about money): send, but in a softer tone, and tell the account manager.",
+                    rs.append({"text": "Open support ticket, not about money: send, but in a softer tone, and tell the account manager.",
                                "evidenceIds": [eid], "policyRef": None})
 
             # A chargeback, regulator or legal threat in the last four months stops chasing, whenever it was raised.
@@ -428,9 +452,9 @@ class Engine:
                     ev.append({"id": eid, "kind": "ticket", "file": self.cfg["files"]["tickets"]["file"], "recordId": str(t["id"]),
                                "date": iso(t.get("created")), "status": t.get("status") or "", "title": redact(t.get("subject") or "(no subject)"),
                                "detail": redact(body)[:400] + ("…" if len(body) > 400 else "")})
-                what = GRAVE_RX.search(f"{t.get('subject') or ''} {t.get('body') or ''}").group(0).lower()
+                what = grave_phrase(f"{t.get('subject') or ''} {t.get('body') or ''}")
                 row.flags["grave_hold"] = True
-                rs.insert(0, {"text": f"On {nice(t['created'])} they threatened or started a {what} (ticket marked {t.get('status') or 'open'}). "
+                rs.insert(0, {"text": f"On {nice(t['created'])} they threatened or started {what} (ticket marked {t.get('status') or 'open'}). "
                                       "Nothing shows it was settled, so finance doesn't chase until the account manager and Head of Support confirm it is.",
                               "evidenceIds": [eid], "policyRef": self.p["sensitive_ref"]})
 
@@ -513,10 +537,11 @@ class Engine:
                 left = self.p.get("card_writeoff_days", 0) - row.days
                 if self.p.get("card_writeoff_days") and left <= 30:
                     row.flags["writeoff_days_left"] = max(left, 0)
-                    rs.append({"text": f"This card invoice is written off automatically in {max(left, 0)} days unless someone acts. "
+                    days_word = "day" if max(left, 0) == 1 else "days"
+                    rs.append({"text": f"This card invoice is written off automatically in {max(left, 0)} {days_word} unless someone acts. "
                                        f"{str(self.cfg['people'].get('vp_finance', 'The VP Finance')).split(' (')[0]} decides whether to chase it or let it go.",
                                "evidenceIds": [eid], "policyRef": self.p["card_writeoff_ref"]})
-                    row.needs_review.append(f"automatic write-off in {max(left, 0)} days: decide today")
+                    row.needs_review.append(f"automatic write-off in {max(left, 0)} {days_word}: decide today")
             fails = [p for p in linked_failed.get(row.key, []) if not row.flags.get("paid_linked") and not row.flags.get("card_failed")]
             if fails:
                 f = fails[-1]
@@ -596,7 +621,7 @@ class Engine:
                     f"If you'd rather pay by bank transfer, just reply and we'll send the details.\n\n{sign}")
         elif tone == "soft":
             subj = f"Invoice {inv}: a quick note"
-            body = (f"{hi}\n\nI know your team has an open request with our support team, and they're on it. "
+            body = (f"{hi}\n\nI know your team has an open request with our support team. "
                     f"Separately, invoice {inv} for {amt} was due on {due}. When you get a moment, could you check where it is? "
                     f"If anything about the invoice looks wrong, just reply and we'll put it right.\n\n{sign}")
         elif row.days >= 21:
@@ -700,7 +725,7 @@ class Engine:
                 headline = next((r["text"] for r in row.reasons if "dispute" in r["text"] or "complaint" in r["text"].lower()
                                  or "wasn't sure" in r["text"] or "escalation" in r["text"].lower()), headline)
             if verdict == "send":
-                headline = {"card_update": "Card failed: send the update-card note", "soft": "Send a softer reminder (open product complaint)"}.get(
+                headline = {"card_update": "Card failed: send the update-card note", "soft": "Send a softer reminder (open support ticket, not about money)"}.get(
                     tone, f"{stage}: {row.days} days overdue, nothing blocking")
             elif verdict == "call" and (long_ or big):
                 headline = f"Call: {row.days} days overdue" + (f", {money(row.amount)}" if big else "")

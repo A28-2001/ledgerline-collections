@@ -14,12 +14,13 @@ export default function StoryPage() {
   const rows = (name: string) => meta.files.find((f) => f.name === name)?.rows ?? 0;
 
   const last = trend[trend.length - 1];
-  const april = trend.find((t) => t.month.endsWith("-04"));
+  const highest = trend.every((t) => t.overdueAmount <= last.overdueAmount);
+  const tk = summary.tickets;
   const disputed = summary.byCause.find((c) => c.cause === "wrong_bill");
   const count = (v: string) => invoices.filter((i) => i.verdict === v).length;
   const wait = invoices.filter((i) => i.verdict === "hold" && i.headline.startsWith("Too early")).length;
 
-  const firstPass = proof.reviewLog?.summary.match(/(\d+) agreed \((\d+)%\)/);
+  const firstPass = proof.reviewLog?.summary.match(/(\d+) of \d+ agreed \((\d+)%\)/);
   const firstAgreed = firstPass ? Number(firstPass[1]) : null;
   const acc = proof.accuracy;
   const entries = proof.reviewLog?.entries ?? [];
@@ -28,12 +29,12 @@ export default function StoryPage() {
 
   const data: StoryData = {
     totalText: formatMoney(summary.overdueAmount),
-    trend: trend.map((t) => ({ month: formatMonth(t.month), share: t.overdueShare })),
+    trend: trend.map((t) => ({ month: formatMonth(t.month), amount: t.overdueAmount })),
     sources: [
       { name: "QuickBooks", detail: `${fmt(invoices.length)} overdue bills`, locked: false },
-      { name: "Bank and Stripe", detail: `${fmt(rows("payments.csv"))} payments`, locked: false },
-      { name: "Zendesk", detail: `${fmt(rows("tickets.csv"))} tickets`, locked: true },
-      { name: "Contracts", detail: `${fmt(rows("contracts.csv"))} contract terms`, locked: false },
+      { name: "Bank and Stripe", detail: `${fmt(summary.unmatchedPayments ?? 0)} payments not yet matched to a bill`, locked: false },
+      { name: "Zendesk", detail: tk ? `${fmt(tk.fromOverdue)} tickets from customers who owe money` : `${fmt(rows("tickets.csv"))} tickets`, locked: true },
+      { name: "Contracts", detail: "What each customer agreed to pay", locked: false },
     ],
     causes: summary.byCause.map((c) => ({
       key: c.cause,
@@ -69,7 +70,9 @@ export default function StoryPage() {
       number: formatMoney(summary.overdueAmount),
       numberNote: `overdue, across ${summary.overdueCount} bills`,
       text: [
-        `That's ${pct(last.overdueShare)} of what customers owe${april ? `, up from ${pct(april.overdueShare)} in April` : ""}.`,
+        highest
+          ? `The highest month-end in the last ${trend.length} months: ${pct(last.overdueShare)} of what customers owe.`
+          : `That's ${pct(last.overdueShare)} of what customers owe.`,
         "Finance chases it by hand: about 16 hours a week across the team.",
       ],
       source: "QuickBooks AR aging; trend from invoices and payments; processes.md (FIN-1)",
@@ -77,8 +80,8 @@ export default function StoryPage() {
     {
       id: "wall",
       kicker: "The wall",
-      number: fmt(rows("tickets.csv")),
-      numberNote: "support tickets finance can't open",
+      number: fmt(tk?.fromOverdue ?? rows("tickets.csv")),
+      numberNote: tk ? "support tickets from customers who owe money, and finance can't open any" : "support tickets finance can't open",
       text: [
         "Finance has no access to Zendesk, where complaints live, so before chasing they ask around.",
         "Miss one, and a reminder lands on a customer who is waiting for a fix.",
@@ -105,8 +108,11 @@ export default function StoryPage() {
       numberNote: "bills get a polite email today",
       text: [
         "Five questions decide each bill, and Priya approves every email in one click.",
+        tk
+          ? `Rules read the ticket tags today. Once legal approves an AI vendor, AI also reads the text, because ${tk.relevantUntagged} of the ${tk.relevant} tickets that matter have no tag.`
+          : "",
         `The rest go to a person: ${count("hold")} holds${wait ? ` (${wait} just too early)` : ""}, ${count("call")} calls and ${count("paid")} probably paid.`,
-      ],
+      ].filter(Boolean),
       source: `This run, all ${invoices.length} bills (Today and How it works pages)`,
     },
     {
@@ -115,7 +121,7 @@ export default function StoryPage() {
       number: firstAgreed !== null && acc ? `${firstAgreed} of ${acc.sampleSize}` : "—",
       numberNote: "matched an independent review on the first pass",
       text: [
-        `The reviewer never saw the tool's answers. Each miss became a rule${acc ? `: ${acc.agreed} of ${acc.sampleSize} agree now` : ""}.`,
+        `The reviewer, a separate AI model, never saw the tool's answers, and a person checked every disagreement. Each rule error became a new rule${acc ? `: ${acc.agreed} of ${acc.sampleSize} agree now` : ""}.`,
         "That's on the same bills, not fresh data, so the shadow week is the real test.",
       ],
       source: "Review log (How sure are we page)",
@@ -126,7 +132,7 @@ export default function StoryPage() {
       number: fmt(checksTotal),
       numberNote: "reminders to anyone who had paid or had a complaint open",
       text: [
-        "The COO's two tests, both at 0 in this run.",
+        "The COO's two tests, both at 0 in this run. Earlier versions would have chased 4 customers with a complaint open; each became a rule.",
         "Monday starts a shadow week on exports: the tool runs beside Priya, and nothing is sent without a person.",
       ],
       source: "Checks on the How sure are we page; plan agreed with the COO",

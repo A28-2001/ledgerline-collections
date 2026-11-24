@@ -122,9 +122,9 @@
   --hold-ink: #8a5a00;
   --hold-soft: #fbf1dc;
   --hold-contrast: #3d2800;
-  --paid: #5e8c61;
-  --paid-ink: #3e6b42;
-  --paid-soft: #e6efe6;
+  --paid: #3a74b6;
+  --paid-ink: #2a5a92;
+  --paid-soft: #e5eef8;
   --paid-contrast: #ffffff;
   --call: #7b5ea7;
   --call-ink: #5b3f86;
@@ -142,8 +142,8 @@
   --cause-simply-late: #7d8b95;
   --cause-unhappy: #e9b44c;
   --cause-wrong-bill: #9e2a4f;
-  --cause-paid: #5e8c61;
-  --cause-card-failed: #4a6fa5;
+  --cause-paid: #3a74b6;
+  --cause-card-failed: #b5653a;
 }
 
 .dark {
@@ -191,9 +191,9 @@
   --hold-ink: #f2cd7e;
   --hold-soft: rgb(237 190 94 / 13%);
   --hold-contrast: #101820;
-  --paid: #8db58f;
-  --paid-ink: #a9cbaa;
-  --paid-soft: rgb(141 181 143 / 14%);
+  --paid: #78a7dc;
+  --paid-ink: #a3c4ea;
+  --paid-soft: rgb(120 167 220 / 14%);
   --paid-contrast: #101820;
   --call: #a48acb;
   --call-ink: #c3b0e2;
@@ -211,8 +211,8 @@
   --cause-simply-late: #8796a1;
   --cause-unhappy: #edbe5e;
   --cause-wrong-bill: #d0638a;
-  --cause-paid: #8db58f;
-  --cause-card-failed: #7f9fd1;
+  --cause-paid: #78a7dc;
+  --cause-card-failed: #dc8f62;
 }
 
 @layer base {

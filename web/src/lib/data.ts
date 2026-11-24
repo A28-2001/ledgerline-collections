@@ -144,7 +144,9 @@ export function formatDateTime(iso?: string | null): string {
 export function formatMonth(month: string): string {
   const d = parseIsoDate(`${month}-01`);
   if (!d) return month;
-  return new Intl.DateTimeFormat("en-US", { month: "short", year: "2-digit", timeZone: "UTC" }).format(d);
+  // "Dec ’25", not "Dec 25", which reads as a day of the month.
+  const mon = new Intl.DateTimeFormat("en-US", { month: "short", timeZone: "UTC" }).format(d);
+  return `${mon} ’${String(d.getUTCFullYear()).slice(2)}`;
 }
 
 // Whole days from a to b (both ISO dates). Positive when b is later.

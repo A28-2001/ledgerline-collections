@@ -53,7 +53,9 @@ export function rowDetail(inv: Invoice, verdict: Verdict): string {
       return p ? shortenDates(p.title).replace(/^\$[\d,.]+ received/i, "Received") : "A payment seems to cover it";
     }
     case "hold": {
-      const who = inv.hold ? `${inv.hold.owner} · by ${shortDate(inv.hold.deadline)}` : "";
+      const who = inv.hold
+        ? `${inv.hold.owner} · ${inv.hold.deadline <= results.meta.asOf ? "act today" : `by ${shortDate(inv.hold.deadline)}`}`
+        : "";
       const mismatch = inv.cause === "wrong_bill" ? contractMismatch(inv) : null;
       const t = openTicket(inv);
       const what = mismatch ? mismatch.charAt(0).toUpperCase() + mismatch.slice(1) : t ? `“${t.title}”` : "";
@@ -62,7 +64,7 @@ export function rowDetail(inv: Invoice, verdict: Verdict): string {
     case "send": {
       const tone = inv.draft?.tone;
       if (tone === "card_update") return "Card failed: update-card note";
-      if (tone === "soft") return "Softer tone: open product complaint";
+      if (tone === "soft") return "Softer tone: open support ticket, not about money";
       return inv.reminderStage ?? "Reminder";
     }
     case "call": {

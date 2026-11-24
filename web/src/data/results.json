@@ -1,6 +1,6 @@
 {
  "meta": {
-  "generatedAt": "2026-11-24T07:39:31+00:00",
+  "generatedAt": "2026-11-24T15:25:56+00:00",
   "asOf": "2026-10-31",
   "dataSource": "real",
   "companyName": "Ledgerline",
@@ -36,9 +36,8 @@
   ],
   "aiMode": "rules_only",
   "notes": [
-   "Honest accuracy: on first review the tool agreed with the independent reviewer on 46 of 54 bills (85%). The review exposed four rule errors (a regulator complaint and a chargeback raised before the bill, a reminder sent before day 7, and an email plus a call to one customer on the same day). They were fixed after seeing the review, so the current figure is not a fresh-data result; the shadow week measures that.",
-   "No-vendor mode (Maya, 23 Nov): no AI provider is approved yet, so tickets are read with tags, status and simple rules run locally; nothing leaves Ledgerline's systems. It now holds all 14 disputed bills, the same as the AI judges. Until 24 Nov it missed two (Banerjee Petrov, Upton & Bell): their tickets named the invoice but read as escalations, so the tool said 'call'. Fixed, and every call now shows the customer's tickets beside it.",
-   "Payment status not recorded: failed card check skipped."
+   "Honest accuracy: on its first pass the tool agreed with the independent reviewer on 46 of 54 bills (85%). Of the 8 differences, 7 were rule errors we fixed and 1 we kept on purpose. A later rule change caused one more (Studio Marsh), which the same review caught. The current figure is on the bills the rules were fixed against, so it is not a fresh-data result; the shadow week measures that.",
+   "No-vendor mode (Maya, 23 Nov): no AI provider is approved yet, so tickets are read with tags, status and simple rules run locally; no ticket text leaves Ledgerline's systems. It now holds all 14 disputed bills, the same as the AI judges. Until 24 Nov it missed two (Banerjee Petrov, Upton & Bell): their tickets named the invoice but read as escalations, so the tool said 'call'. Fixed, and every call now shows the customer's tickets beside it."
   ],
   "sources": [
    {
@@ -92,6 +91,13 @@
     "amount": 9384.0
    }
   },
+  "tickets": {
+   "all": 1041,
+   "fromOverdue": 134,
+   "relevant": 131,
+   "relevantUntagged": 27
+  },
+  "unmatchedPayments": 7,
   "byCause": [
    {
     "cause": "wrong_bill",
@@ -144,7 +150,7 @@
    "headline": "First reminder (7 days): 17 days overdue, nothing blocking",
    "reasons": [
     {
-     "text": "A billing ticket from Aug 11, 2026 is closed. Mentioned for context; it doesn't block the reminder.",
+     "text": "Also on file: a billing ticket from Aug 11, 2026, now closed.",
      "evidenceIds": [
       "ticket:T880365"
      ],
@@ -217,7 +223,7 @@
    "headline": "First reminder (7 days): 16 days overdue, nothing blocking",
    "reasons": [
     {
-     "text": "A billing ticket from Aug 4, 2026 is closed. Mentioned for context; it doesn't block the reminder.",
+     "text": "Also on file: a billing ticket from Aug 4, 2026, now closed.",
      "evidenceIds": [
       "ticket:T880307"
      ],
@@ -757,7 +763,7 @@
    "verdict": "send",
    "cause": "unhappy",
    "confidence": "low",
-   "headline": "Send a softer reminder (open product complaint)",
+   "headline": "Send a softer reminder (open support ticket, not about money)",
    "reasons": [
     {
      "text": "A $5,100 payment from them (received Oct 29, 2026) is unmatched. The tool assumed it pays invoice INV-25469, but it could just as well pay this one. Marcus confirms which before anyone sends a reminder.",
@@ -765,7 +771,7 @@
      "policyRef": "Maya (COO): chasing someone who's paid gets the tool switched off"
     },
     {
-     "text": "A billing ticket from Jul 9, 2026 is closed. Mentioned for context; it doesn't block the reminder.",
+     "text": "Also on file: a billing ticket from Jul 9, 2026, now closed.",
      "evidenceIds": [
       "ticket:T880078"
      ],
@@ -829,7 +835,7 @@
    "draft": {
     "to": "marcus.tan@kingswayengineeringgro.example",
     "subject": "Invoice INV-25852: a quick note",
-    "body": "Hi Marcus,\n\nI know your team has an open request with our support team, and they're on it. Separately, invoice INV-25852 for $5,100 was due on Oct 12, 2026. When you get a moment, could you check where it is? If anything about the invoice looks wrong, just reply and we'll put it right.\n\nThanks,\nPriya Nair\nLedgerline Billing",
+    "body": "Hi Marcus,\n\nI know your team has an open request with our support team. Separately, invoice INV-25852 for $5,100 was due on Oct 12, 2026. When you get a moment, could you check where it is? If anything about the invoice looks wrong, just reply and we'll put it right.\n\nThanks,\nPriya Nair\nLedgerline Billing",
     "tone": "soft"
    },
    "reminderStage": "First reminder (7 days)",
@@ -1139,14 +1145,14 @@
    "headline": "First reminder (7 days): 13 days overdue, nothing blocking",
    "reasons": [
     {
-     "text": "A billing ticket from Sep 16, 2026 is closed. Mentioned for context; it doesn't block the reminder.",
+     "text": "Also on file: a billing ticket from Sep 16, 2026, now closed.",
      "evidenceIds": [
       "ticket:T880691"
      ],
      "policyRef": null
     },
     {
-     "text": "A billing ticket from Aug 21, 2026 is closed. Mentioned for context; it doesn't block the reminder.",
+     "text": "Also on file: a billing ticket from Aug 21, 2026, now closed.",
      "evidenceIds": [
       "ticket:T880456"
      ],
@@ -1197,7 +1203,7 @@
     "tone": "standard"
    },
    "reminderStage": "First reminder (7 days)",
-   "reviewReason": "a billing ticket from Sep 16, 2026 is marked solved: check it was really fixed; ticket tagged billing on Sep 16, 2026, after this bill was issued: a person reads it before anyone chases",
+   "reviewReason": "a billing ticket from Sep 16, 2026 is marked solved: check it was really fixed",
    "autoSend": {
     "eligible": false,
     "why": "In Check first",
@@ -1217,10 +1223,10 @@
    "verdict": "send",
    "cause": "unhappy",
    "confidence": "high",
-   "headline": "Send a softer reminder (open product complaint)",
+   "headline": "Send a softer reminder (open support ticket, not about money)",
    "reasons": [
     {
-     "text": "A billing ticket from Jul 24, 2026 is closed. Mentioned for context; it doesn't block the reminder.",
+     "text": "Also on file: a billing ticket from Jul 24, 2026, now closed.",
      "evidenceIds": [
       "ticket:T880226"
      ],
@@ -1284,7 +1290,7 @@
    "draft": {
     "to": "samuel.birch@harborengineeringgroup.example",
     "subject": "Invoice INV-25898: a quick note",
-    "body": "Hi Samuel,\n\nI know your team has an open request with our support team, and they're on it. Separately, invoice INV-25898 for $1,833 was due on Oct 21, 2026. When you get a moment, could you check where it is? If anything about the invoice looks wrong, just reply and we'll put it right.\n\nThanks,\nPriya Nair\nLedgerline Billing",
+    "body": "Hi Samuel,\n\nI know your team has an open request with our support team. Separately, invoice INV-25898 for $1,833 was due on Oct 21, 2026. When you get a moment, could you check where it is? If anything about the invoice looks wrong, just reply and we'll put it right.\n\nThanks,\nPriya Nair\nLedgerline Billing",
     "tone": "soft"
    },
    "reminderStage": "First reminder (7 days)",
@@ -1310,7 +1316,7 @@
    "headline": "Card failed: send the update-card note",
    "reasons": [
     {
-     "text": "A billing ticket from Oct 21, 2026 is closed. Mentioned for context; it doesn't block the reminder.",
+     "text": "Also on file: a billing ticket from Oct 21, 2026, now closed.",
      "evidenceIds": [
       "ticket:T880960"
      ],
@@ -1407,7 +1413,7 @@
     "tone": "card_update"
    },
    "reminderStage": "Second reminder (21 days)",
-   "reviewReason": "a billing ticket from Oct 21, 2026 is marked solved: check it was really fixed; ticket tagged account change on Oct 21, 2026, after this bill was issued: a person reads it before anyone chases",
+   "reviewReason": "a billing ticket from Oct 21, 2026 is marked solved: check it was really fixed",
    "autoSend": {
     "eligible": false,
     "why": "Card follow-ups and softer notes stay with a person",
@@ -1430,7 +1436,7 @@
    "headline": "Card failed: send the update-card note",
    "reasons": [
     {
-     "text": "A billing ticket from Sep 7, 2026 is closed. Mentioned for context; it doesn't block the reminder.",
+     "text": "Also on file: a billing ticket from Sep 7, 2026, now closed.",
      "evidenceIds": [
       "ticket:T880581"
      ],
@@ -1524,7 +1530,7 @@
    "headline": "Card failed: send the update-card note",
    "reasons": [
     {
-     "text": "A billing ticket from Oct 13, 2026 is closed. Mentioned for context; it doesn't block the reminder.",
+     "text": "Also on file: a billing ticket from Oct 13, 2026, now closed.",
      "evidenceIds": [
       "ticket:T880896"
      ],
@@ -1591,7 +1597,7 @@
     "tone": "card_update"
    },
    "reminderStage": "Second reminder (21 days)",
-   "reviewReason": "a billing ticket from Oct 13, 2026 is marked solved: check it was really fixed; ticket tagged account change on Oct 13, 2026, after this bill was issued: a person reads it before anyone chases",
+   "reviewReason": "a billing ticket from Oct 13, 2026 is marked solved: check it was really fixed",
    "autoSend": {
     "eligible": false,
     "why": "Card follow-ups and softer notes stay with a person",
@@ -1780,7 +1786,7 @@
      "policyRef": "collections_policy.md: do not chase an invoice the customer has disputed"
     },
     {
-     "text": "A billing ticket from Aug 14, 2026 is closed. Mentioned for context; it doesn't block the reminder.",
+     "text": "Also on file: a billing ticket from Aug 14, 2026, now closed.",
      "evidenceIds": [
       "ticket:T880399"
      ],
@@ -1872,7 +1878,7 @@
      "policyRef": "collections_policy.md: don't chase a dispute or open escalation until the account manager says so"
     },
     {
-     "text": "A billing ticket from Jul 16, 2026 is closed. Mentioned for context; it doesn't block the reminder.",
+     "text": "Also on file: a billing ticket from Jul 16, 2026, now closed.",
      "evidenceIds": [
       "ticket:T880149"
      ],
@@ -2181,6 +2187,13 @@
       "ticket:T881016"
      ],
      "policyRef": "collections_policy.md: tell the account manager before finance contacts one of their accounts"
+    },
+    {
+     "text": "Open support ticket, not about money: send, but in a softer tone, and tell the account manager.",
+     "evidenceIds": [
+      "ticket:T881016"
+     ],
+     "policyRef": null
     }
    ],
    "evidence": [
@@ -2276,21 +2289,21 @@
      "policyRef": "collections_policy.md: do not chase an invoice the customer has disputed"
     },
     {
-     "text": "Open product complaint (not about money): send, but in a softer tone, and tell the account manager.",
+     "text": "Open support ticket, not about money: send, but in a softer tone, and tell the account manager.",
      "evidenceIds": [
       "ticket:T880996"
      ],
      "policyRef": null
     },
     {
-     "text": "A billing ticket from Sep 11, 2026 is closed. Mentioned for context; it doesn't block the reminder.",
+     "text": "Also on file: a billing ticket from Sep 11, 2026, now closed.",
      "evidenceIds": [
       "ticket:T880638"
      ],
      "policyRef": null
     },
     {
-     "text": "A billing ticket from Jul 16, 2026 is closed. Mentioned for context; it doesn't block the reminder.",
+     "text": "Also on file: a billing ticket from Jul 16, 2026, now closed.",
      "evidenceIds": [
       "ticket:T880136"
      ],
@@ -2426,7 +2439,7 @@
      "policyRef": "collections_policy.md: do not chase an invoice the customer has disputed"
     },
     {
-     "text": "A billing ticket from Jul 17, 2026 is closed. Mentioned for context; it doesn't block the reminder.",
+     "text": "Also on file: a billing ticket from Jul 17, 2026, now closed.",
      "evidenceIds": [
       "ticket:T880161"
      ],
@@ -2551,14 +2564,14 @@
      "policyRef": "collections_policy.md: do not chase an invoice the customer has disputed"
     },
     {
-     "text": "A billing ticket from Sep 9, 2026 is closed. Mentioned for context; it doesn't block the reminder.",
+     "text": "Also on file: a billing ticket from Sep 9, 2026, now closed.",
      "evidenceIds": [
       "ticket:T880602"
      ],
      "policyRef": null
     },
     {
-     "text": "A billing ticket from Jul 21, 2026 is closed. Mentioned for context; it doesn't block the reminder.",
+     "text": "Also on file: a billing ticket from Jul 21, 2026, now closed.",
      "evidenceIds": [
       "ticket:T880190"
      ],
@@ -2828,7 +2841,7 @@
      "policyRef": "collections_policy.md: reminders at 7, 21 and 45 days"
     },
     {
-     "text": "A billing ticket from Sep 2, 2026 is closed. Mentioned for context; it doesn't block the reminder.",
+     "text": "Also on file: a billing ticket from Sep 2, 2026, now closed.",
      "evidenceIds": [
       "ticket:T880542"
      ],
@@ -2993,7 +3006,7 @@
      "policyRef": "collections_policy.md: do not chase an invoice the customer has disputed"
     },
     {
-     "text": "A billing ticket from Aug 29, 2026 is closed. Mentioned for context; it doesn't block the reminder.",
+     "text": "Also on file: a billing ticket from Aug 29, 2026, now closed.",
      "evidenceIds": [
       "ticket:T880514"
      ],
@@ -3079,17 +3092,17 @@
    "verdict": "hold",
    "cause": "unhappy",
    "confidence": "high",
-   "headline": "On Aug 30, 2026 they threatened or started a consumer affairs (ticket marked solved). Nothing shows it was settled, so finance doesn't chase until the account manager and Head of Support confirm it is.",
+   "headline": "On Aug 30, 2026 they threatened or started a complaint to a regulator or consumer affairs office and a card dispute (chargeback) with their bank (ticket marked solved). Nothing shows it was settled, so finance doesn't chase until the account manager and Head of Support confirm it is.",
    "reasons": [
     {
-     "text": "On Aug 30, 2026 they threatened or started a consumer affairs (ticket marked solved). Nothing shows it was settled, so finance doesn't chase until the account manager and Head of Support confirm it is.",
+     "text": "On Aug 30, 2026 they threatened or started a complaint to a regulator or consumer affairs office and a card dispute (chargeback) with their bank (ticket marked solved). Nothing shows it was settled, so finance doesn't chase until the account manager and Head of Support confirm it is.",
      "evidenceIds": [
       "ticket:T880519"
      ],
      "policyRef": "sla_policy.md: legal action, regulator, chargeback or cancellation goes to the Head of Support"
     },
     {
-     "text": "A billing ticket from Aug 30, 2026 is closed. Mentioned for context; it doesn't block the reminder.",
+     "text": "Also on file: a billing ticket from Aug 30, 2026, now closed.",
      "evidenceIds": [
       "ticket:T880519"
      ],
@@ -3185,21 +3198,21 @@
      "policyRef": "collections_policy.md: do not chase an invoice the customer has disputed"
     },
     {
-     "text": "A billing ticket from Sep 10, 2026 is closed. Mentioned for context; it doesn't block the reminder.",
+     "text": "Also on file: a billing ticket from Sep 10, 2026, now closed.",
      "evidenceIds": [
       "ticket:T880625"
      ],
      "policyRef": null
     },
     {
-     "text": "A billing ticket from Jul 27, 2026 is closed. Mentioned for context; it doesn't block the reminder.",
+     "text": "Also on file: a billing ticket from Jul 27, 2026, now closed.",
      "evidenceIds": [
       "ticket:T880241"
      ],
      "policyRef": null
     },
     {
-     "text": "A billing ticket from Jul 9, 2026 is closed. Mentioned for context; it doesn't block the reminder.",
+     "text": "Also on file: a billing ticket from Jul 9, 2026, now closed.",
      "evidenceIds": [
       "ticket:T880079"
      ],
@@ -3383,7 +3396,7 @@
      "policyRef": "collections_policy.md: do not chase an invoice the customer has disputed"
     },
     {
-     "text": "A billing ticket from Aug 12, 2026 is closed. Mentioned for context; it doesn't block the reminder.",
+     "text": "Also on file: a billing ticket from Aug 12, 2026, now closed.",
      "evidenceIds": [
       "ticket:T880375"
      ],
@@ -3571,10 +3584,10 @@
    "verdict": "hold",
    "cause": "unhappy",
    "confidence": "high",
-   "headline": "On Jul 2, 2026 they threatened or started a disputing charges with my bank (ticket marked solved). Nothing shows it was settled, so finance doesn't chase until the account manager and Head of Support confirm it is.",
+   "headline": "On Jul 2, 2026 they threatened or started a card dispute (chargeback) with their bank (ticket marked solved). Nothing shows it was settled, so finance doesn't chase until the account manager and Head of Support confirm it is.",
    "reasons": [
     {
-     "text": "On Jul 2, 2026 they threatened or started a disputing charges with my bank (ticket marked solved). Nothing shows it was settled, so finance doesn't chase until the account manager and Head of Support confirm it is.",
+     "text": "On Jul 2, 2026 they threatened or started a card dispute (chargeback) with their bank (ticket marked solved). Nothing shows it was settled, so finance doesn't chase until the account manager and Head of Support confirm it is.",
      "evidenceIds": [
       "ticket:T880019"
      ],
@@ -3658,6 +3671,13 @@
       "ticket:T880474"
      ],
      "policyRef": "collections_policy.md: tell the account manager before finance contacts one of their accounts"
+    },
+    {
+     "text": "Open support ticket, not about money: send, but in a softer tone, and tell the account manager.",
+     "evidenceIds": [
+      "ticket:T880474"
+     ],
+     "policyRef": null
     }
    ],
    "evidence": [
@@ -3740,7 +3760,7 @@
      "policyRef": "processes.md FIN-2: matching lags three to five days"
     },
     {
-     "text": "A billing ticket from Oct 2, 2026 is closed. Mentioned for context; it doesn't block the reminder.",
+     "text": "Also on file: a billing ticket from Oct 2, 2026, now closed.",
      "evidenceIds": [
       "ticket:T880829"
      ],
@@ -3809,7 +3829,7 @@
     "body": "",
     "tone": "none"
    },
-   "reviewReason": "a billing ticket from Oct 2, 2026 is marked solved: check it was really fixed; ticket tagged account change on Oct 2, 2026, after this bill was issued: a person reads it before anyone chases",
+   "reviewReason": "a billing ticket from Oct 2, 2026 is marked solved: check it was really fixed",
    "autoSend": {
     "eligible": false,
     "why": "Probably-paid bills, or customers with an unmatched payment, stay with a person",
@@ -3937,7 +3957,7 @@
      "policyRef": "collections_policy.md: bank transfers take three to five working days to show as paid"
     },
     {
-     "text": "A billing ticket from Jul 9, 2026 is closed. Mentioned for context; it doesn't block the reminder.",
+     "text": "Also on file: a billing ticket from Jul 9, 2026, now closed.",
      "evidenceIds": [
       "ticket:T880078"
      ],
@@ -4006,7 +4026,7 @@
     "body": "",
     "tone": "none"
    },
-   "reviewReason": "2 overdue bills have this amount; we matched the payment to the oldest. A person confirms which bill it pays; a billing ticket from Jul 9, 2026 is marked solved: check it was really fixed; ticket tagged billing on Jul 9, 2026, after this bill was issued: a person reads it before anyone chases",
+   "reviewReason": "2 overdue bills have this amount; we matched the payment to the oldest. A person confirms which bill it pays; a billing ticket from Jul 9, 2026 is marked solved: check it was really fixed",
    "autoSend": {
     "eligible": false,
     "why": "Probably-paid bills, or customers with an unmatched payment, stay with a person",
@@ -4178,14 +4198,14 @@
      "policyRef": "Maya (COO): Priya sees any ticket from the customer next to a call"
     },
     {
-     "text": "A billing ticket from Sep 22, 2026 is closed. Mentioned for context; it doesn't block the reminder.",
+     "text": "Also on file: a billing ticket from Sep 22, 2026, now closed.",
      "evidenceIds": [
       "ticket:T880736"
      ],
      "policyRef": null
     },
     {
-     "text": "A billing ticket from Jul 14, 2026 is closed. Mentioned for context; it doesn't block the reminder.",
+     "text": "Also on file: a billing ticket from Jul 14, 2026, now closed.",
      "evidenceIds": [
       "ticket:T880119"
      ],
@@ -4266,7 +4286,7 @@
     "body": "",
     "tone": "none"
    },
-   "reviewReason": "a billing ticket from Sep 22, 2026 is marked solved: check it was really fixed; ticket tagged account change on Sep 22, 2026, after this bill was issued: a person reads it before anyone chases",
+   "reviewReason": "a billing ticket from Sep 22, 2026 is marked solved: check it was really fixed",
    "autoSend": {
     "eligible": false,
     "why": "Every phone call stays with a person",
@@ -4296,7 +4316,7 @@
      "policyRef": "Maya (COO): Priya sees any ticket from the customer next to a call"
     },
     {
-     "text": "A billing ticket from Sep 22, 2026 is closed. Mentioned for context; it doesn't block the reminder.",
+     "text": "Also on file: a billing ticket from Sep 22, 2026, now closed.",
      "evidenceIds": [
       "ticket:T880731"
      ],
@@ -4385,7 +4405,7 @@
      "policyRef": "process_maps.md FIN-1: phone the customer"
     },
     {
-     "text": "A billing ticket from Sep 22, 2026 is closed. Mentioned for context; it doesn't block the reminder.",
+     "text": "Also on file: a billing ticket from Sep 22, 2026, now closed.",
      "evidenceIds": [
       "ticket:T880731"
      ],
@@ -4471,7 +4491,7 @@
      "policyRef": "Maya (COO): Priya sees any ticket from the customer next to a call"
     },
     {
-     "text": "A billing ticket from Oct 3, 2026 is closed. Mentioned for context; it doesn't block the reminder.",
+     "text": "Also on file: a billing ticket from Oct 3, 2026, now closed.",
      "evidenceIds": [
       "ticket:T880830"
      ],
@@ -4562,7 +4582,7 @@
     "body": "",
     "tone": "none"
    },
-   "reviewReason": "a billing ticket from Oct 3, 2026 is marked solved: check it was really fixed; ticket tagged billing on Oct 3, 2026, after this bill was issued: a person reads it before anyone chases",
+   "reviewReason": "a billing ticket from Oct 3, 2026 is marked solved: check it was really fixed",
    "autoSend": {
     "eligible": false,
     "why": "Every phone call stays with a person",
@@ -4592,7 +4612,7 @@
      "policyRef": "Maya (COO): Priya sees any ticket from the customer next to a call"
     },
     {
-     "text": "A billing ticket from Oct 20, 2026 is closed. Mentioned for context; it doesn't block the reminder.",
+     "text": "Also on file: a billing ticket from Oct 20, 2026, now closed.",
      "evidenceIds": [
       "ticket:T880944"
      ],
@@ -4606,7 +4626,7 @@
      "policyRef": "billing_engine_rewrite_2026.md: Stripe retries failed cards three times over seven days, emailing each time"
     },
     {
-     "text": "This card invoice is written off automatically in 1 days unless someone acts. Dana Ruiz decides whether to chase it or let it go.",
+     "text": "This card invoice is written off automatically in 1 day unless someone acts. Dana Ruiz decides whether to chase it or let it go.",
      "evidenceIds": [
       "invoice:INV-25433"
      ],
@@ -4665,7 +4685,7 @@
     "body": "",
     "tone": "none"
    },
-   "reviewReason": "a billing ticket from Oct 20, 2026 is marked solved: check it was really fixed; ticket tagged account change on Oct 20, 2026, after this bill was issued: a person reads it before anyone chases; automatic write-off in 1 days: decide today",
+   "reviewReason": "a billing ticket from Oct 20, 2026 is marked solved: check it was really fixed; automatic write-off in 1 day: decide today",
    "autoSend": {
     "eligible": false,
     "why": "Every phone call stays with a person",
@@ -4696,7 +4716,7 @@
      "policyRef": "Maya (COO): Priya sees any ticket from the customer next to a call"
     },
     {
-     "text": "A billing ticket from Jul 16, 2026 is closed. Mentioned for context; it doesn't block the reminder.",
+     "text": "Also on file: a billing ticket from Jul 16, 2026, now closed.",
      "evidenceIds": [
       "ticket:T880147"
      ],
@@ -13736,7 +13756,7 @@
    "sampleSize": 54,
    "agreed": 53,
    "rate": 0.9815,
-   "labelledBy": "an independent review of all 54 bills by a reviewer who never saw the tool's answers, with every contested call confirmed by hand (24 Nov)"
+   "labelledBy": "an independent review of all 54 bills by a separate AI model that never saw the tool's answers, with every contested call confirmed by a person (24 Nov)"
   },
   "agreementRate": null,
   "verifiedNumbers": [
@@ -13746,7 +13766,9 @@
     "valueA": 633245.0,
     "methodB": "Open, past-due bills in the billing system",
     "valueB": 633245.0,
-    "ok": true
+    "ok": true,
+    "unit": "money",
+    "group": "cross"
    },
    {
     "label": "Causes add up",
@@ -13754,7 +13776,9 @@
     "valueA": 633245.0,
     "methodB": "Sum of the 'why overdue' slices",
     "valueB": 633245.0,
-    "ok": true
+    "ok": true,
+    "unit": "money",
+    "group": "cross"
    },
    {
     "label": "Shouldn't chase today",
@@ -13762,7 +13786,9 @@
     "valueA": 441710.0,
     "methodB": "Recounted from the raw evidence flags",
     "valueB": 441710.0,
-    "ok": true
+    "ok": true,
+    "unit": "money",
+    "group": "cross"
    },
    {
     "label": "Paid but chased (the Paidly case)",
@@ -13770,23 +13796,21 @@
     "valueA": 0,
     "methodB": "Allowed (Maya: chasing someone who has paid gets the tool switched off)",
     "valueB": 0,
-    "ok": true
+    "ok": true,
+    "unit": "count",
+    "group": "coo",
+    "note": "Earlier version: one blank-memo payment could pay either of two same-amount Kingsway bills, and the tool assumed the older one. Now both go to Check first."
    },
    {
     "label": "Complaint open but chased",
-    "methodA": "Reminders going to a customer with an open ticket, or a pending one about money or marked high priority",
+    "methodA": "Reminders or calls to a customer with an open ticket, or a pending one about money or marked high priority",
     "valueA": 0,
     "methodB": "Allowed (Maya: nobody chased who had a complaint open)",
     "valueB": 0,
-    "ok": true
-   },
-   {
-    "label": "Bills checked",
-    "methodA": "Rows in the overdue list",
-    "valueA": 54,
-    "methodB": "Bills with a verdict",
-    "valueB": 54,
-    "ok": true
+    "ok": true,
+    "unit": "count",
+    "group": "coo",
+    "note": "Earlier versions would have chased 4 customers with a complaint or dispute open: Eastman Engineering, Drummond Consulting, Banerjee Petrov and Upton & Bell. A rule change briefly put Studio Marsh at risk too. Each became a rule; these are the bills the rules were fixed on, so the shadow week re-tests it on new ones."
    }
   ],
   "failures": [
@@ -13794,12 +13818,12 @@
     "invoiceId": "INV-25873",
     "toolSaid": "hold",
     "truth": "send",
-    "why": "Correct answer: TOP-50 account 15 days late with no dispute; open T881016 is a normal-priority product bug about a client's send log, so a person should write a personal reminder after telling the account manager.. Tool's reason: They have a ticket open in Zendesk since Oct 28, 2026 (3 days). Chasing payment while their question is unanswered is what gets the tool switched off; the account manager decides when to resume."
+    "why": "Correct answer: TOP-50 account 15 days late with no dispute; open T881016 is a normal-priority product bug about a client's send log, so a person should write a personal reminder after telling the account manager. Tool's reason: They have a ticket open in Zendesk since Oct 28, 2026 (3 days). Chasing payment while their question is unanswered is what gets the tool switched off; the account manager decides when to resume."
    }
   ],
-  "runtimeSeconds": 0.44,
+  "runtimeSeconds": 0.46,
   "reviewLog": {
-   "summary": "First pass against an independent review of all 54 real bills (the reviewer never saw the tool's answers): 46 agreed (85%). Every contested call below was then checked and confirmed by hand. We fixed each rule error the misses exposed; after the fixes 53 of 54 agree (98%). That second figure is on the same bills the rules were fixed against, so it is not a fresh-data result: the shadow week measures that.",
+   "summary": "An independent reviewer (a separate AI model that never saw the tool's answers) checked all 54 bills from the raw records, and a person then confirmed every contested call. First pass: 46 of 54 agreed (85%). Of the 8 differences, 7 were rule errors we fixed and 1 we kept on purpose. The 2 misses we found ourselves were fixed before the review ran, so the very first version would have agreed on at most 44. After the fixes, 53 of 54 agree (98%), on the same bills the rules were fixed against, so that is not a fresh-data score: the shadow week measures that.",
    "entries": [
     {
      "invoice": "INV-25973",
@@ -13807,7 +13831,7 @@
      "amount": 3264,
      "toolSaid": "send",
      "shouldBe": "hold",
-     "foundBy": "Independent review",
+     "foundBy": "Independent review, first pass",
      "why": "Two months before this bill, the customer filed a complaint with the state consumer affairs office and threatened to contest the card charge over a 35% renewal increase. The tool only linked tickets raised after the bill.",
      "change": "A chargeback, regulator or legal threat in the last 180 days stops chasing, whenever it was raised, until the account manager and Head of Support confirm it is settled.",
      "status": "fixed"
@@ -13818,7 +13842,7 @@
      "amount": 658,
      "toolSaid": "call",
      "shouldBe": "hold",
-     "foundBy": "Independent review",
+     "foundBy": "Independent review, first pass",
      "why": "The customer opened chargebacks on two payments (2 July). The ticket was 121 days old and the first window was 120.",
      "change": "Same rule, with a 180-day window as a setting.",
      "status": "fixed"
@@ -13829,7 +13853,7 @@
      "amount": 2652,
      "toolSaid": "call",
      "shouldBe": "hold",
-     "foundBy": "Maya (COO)",
+     "foundBy": "Our own check, before the review (shown to Maya)",
      "why": "The ticket named this invoice and refused to pay for a cancelled module, but the rules read \"cancellation\" as an escalation, not a dispute, so the tool said call.",
      "change": "A ticket naming an unpaid bill is a dispute whatever else the rules call it; every call shows the customer's tickets beside it.",
      "status": "fixed"
@@ -13840,7 +13864,7 @@
      "amount": 44064,
      "toolSaid": "call",
      "shouldBe": "hold",
-     "foundBy": "Maya (COO)",
+     "foundBy": "Our own check, before the review (shown to Maya)",
      "why": "\"Late fee should not be there\": the word \"outage\" made it an escalation, so the dispute was missed. Saved only by the top-50 rule.",
      "change": "Same fix as Banerjee Petrov.",
      "status": "fixed"
@@ -13851,7 +13875,7 @@
      "amount": 4692,
      "toolSaid": "send",
      "shouldBe": "hold",
-     "foundBy": "Independent review",
+     "foundBy": "Independent review, first pass",
      "why": "Only 4 days late. The policy's first reminder goes at 7 days.",
      "change": "Bills under 7 days late wait; the first reminder comes back on day 7.",
      "status": "fixed"
@@ -13862,7 +13886,7 @@
      "amount": 1632,
      "toolSaid": "send",
      "shouldBe": "call",
-     "foundBy": "Independent review",
+     "foundBy": "Independent review, first pass",
      "why": "The same customer also gets a call about an 83-day bill: an email and a call on the same day.",
      "change": "One conversation per customer: other bills are covered on the same call.",
      "status": "fixed"
@@ -13873,8 +13897,8 @@
      "amount": 1410,
      "toolSaid": "send",
      "shouldBe": "hold",
-     "foundBy": "Independent review",
-     "why": "Two days earlier the customer asked where a duplicate-charge refund Ledgerline had approved was. We'd be chasing someone we owe money to; Zendesk marked it solved.",
+     "foundBy": "Independent review, after a rule change",
+     "why": "Two days earlier the customer asked where a duplicate-charge refund Ledgerline had approved was. Zendesk marked it solved. Its pending product ticket had kept it on hold; when we stopped pending tickets blocking, it would have switched to a reminder to someone we owe money. The review caught it before any version went out.",
      "change": "A money complaint from the last 30 days holds the bill even when Zendesk marks it solved.",
      "status": "fixed"
     },
@@ -13884,7 +13908,7 @@
      "amount": 3060,
      "toolSaid": "hold",
      "shouldBe": "send",
-     "foundBy": "Independent review",
+     "foundBy": "Independent review, first pass",
      "why": "The \"pending\" ticket's last message from the customer was \"Closing this out\"; the word \"wiped\" in the subject made it look serious.",
      "change": "When the customer says it's resolved, the ticket stops blocking.",
      "status": "fixed"
@@ -13895,7 +13919,7 @@
      "amount": 5100,
      "toolSaid": "hold",
      "shouldBe": "send",
-     "foundBy": "Independent review",
+     "foundBy": "Independent review, first pass",
      "why": "A normal-priority question \"pending\" since July: in Zendesk that means support is waiting on the customer.",
      "change": "Decided with the team: a pending ticket blocks only if it's about money, high priority, or still waiting on Ledgerline. Otherwise a softer reminder, and the account manager is told.",
      "status": "fixed"
@@ -13906,7 +13930,7 @@
      "amount": 1833,
      "toolSaid": "hold",
      "shouldBe": "send",
-     "foundBy": "Independent review",
+     "foundBy": "Independent review, first pass",
      "why": "A pending timer bug, mis-tagged How-to. Not about money.",
      "change": "Same decision as Kingsway.",
      "status": "fixed"
@@ -13917,7 +13941,7 @@
      "amount": 43680,
      "toolSaid": "hold",
      "shouldBe": "send",
-     "foundBy": "Independent review",
+     "foundBy": "Independent review, first pass",
      "why": "The reviewer would send: the open ticket is a product question, not a dispute. The tool holds because the ticket is open and waiting on Ledgerline (3 days).",
      "change": "Kept on purpose: an open ticket waiting on us still pauses the reminder, and it's a top-50 account, so a person reads it either way.",
      "status": "deliberate"
@@ -13939,7 +13963,7 @@
      "amount": 0,
      "toolSaid": "-",
      "shouldBe": "-",
-     "foundBy": "Data room read",
+     "foundBy": "Reading the data room",
      "why": "Customers also reply to billing@ in Gmail. Disputes sent there are invisible to the tool and aren't in the data room.",
      "change": "Next step: read the billing@ inbox (Google is already a vendor).",
      "status": "open"
@@ -13948,16 +13972,16 @@
   }
  },
  "morningSummary": {
-  "title": "Collections check, 2026-10-31",
+  "title": "Collections check, Oct 31, 2026",
   "bullets": [
    "20 reminders ready to send ($182,151). Approve all in one click.",
-   "20 on hold ($363,362): owners have until 2026-10-31.",
+   "20 on hold ($363,362): 12 past their target date, so the owner acts today; the rest by Nov 3, 2026 at the earliest.",
    "5 probably paid already ($78,348): confirm and close.",
    "9 need a phone call ($9,384).",
    "15 need a second look before anything goes out."
   ],
-  "text": "Good morning. $441,710 of $633,245 overdue (70%) sits with customers we shouldn't chase today: they've probably paid, they're unhappy, or the bill is wrong. Today: 20 reminders ready to send ($182,151). Approve all in one click. 20 on hold ($363,362): owners have until 2026-10-31. 5 probably paid already ($78,348): confirm and close. 9 need a phone call ($9,384). 15 need a second look before anything goes out.",
-  "cover": "While Priya Nair is on leave (March (dates to confirm)), Dana Ruiz owns this morning list and Marcus Bell keeps the probably-paid list. Cover is off today.",
+  "text": "Good morning. $441,710 of $633,245 overdue (70%) sits with customers we shouldn't chase today: they've probably paid, they're unhappy, or the bill is wrong. Today: 20 reminders ready to send ($182,151). Approve all in one click. 20 on hold ($363,362): 12 past their target date, so the owner acts today; the rest by Nov 3, 2026 at the earliest. 5 probably paid already ($78,348): confirm and close. 9 need a phone call ($9,384). 15 need a second look before anything goes out.",
+  "cover": "While Priya Nair is on leave (March, dates to confirm), Dana Ruiz owns this morning list and Marcus Bell keeps the probably-paid list. Cover is off today.",
   "routing": [
    {
     "to": "Priya Nair",
@@ -13966,7 +13990,7 @@
     "cc": "Dana Ruiz",
     "lines": [
      "20 reminders ready to send ($182,151). Approve all in one click.",
-     "20 on hold ($363,362): owners have until 2026-10-31.",
+     "20 on hold ($363,362): 12 past their target date, so the owner acts today; the rest by Nov 3, 2026 at the earliest.",
      "5 probably paid already ($78,348): confirm and close.",
      "9 need a phone call ($9,384).",
      "15 need a second look before anything goes out."
@@ -13994,11 +14018,11 @@
     "channel": "Slack direct message (one nudge a day)",
     "cc": null,
     "lines": [
-     "Brandt Ashby IT: invoice INV-25822, $26,112. The customer disputes this exact invoice in a support ticket and says they're holding payment until it's fixed",
-     "Castell Engineering: invoice INV-25764, $6,324. The customer disputes this exact invoice in a support ticket and says they're holding payment until it's fixed",
-     "Eastman Engineering: invoice INV-25973, $3,264. On Aug 30, 2026 they threatened or started a consumer affairs (ticket marked solved). Nothing shows it was set",
-     "Wexler Media: invoice INV-25811, $1,224. The customer disputes this exact invoice in a support ticket. The ticket is still open.",
-     "Drummond Consulting: invoice INV-25769, $658. On Jul 2, 2026 they threatened or started a disputing charges with my bank (ticket marked solved). Nothing sho"
+     "Brandt Ashby IT: invoice INV-25822, $26,112. The customer disputes this exact invoice in a support ticket and says they're holding payment until it's fixed.",
+     "Castell Engineering: invoice INV-25764, $6,324. The customer disputes this exact invoice in a support ticket and says they're holding payment until it's fixed.",
+     "Eastman Engineering: invoice INV-25973, $3,264. On Aug 30, 2026 they threatened or started a complaint to a regulator or consumer affairs office and a card dispute\u2026",
+     "Wexler Media: invoice INV-25811, $1,224. The customer disputes this exact invoice in a support ticket.",
+     "Drummond Consulting: invoice INV-25769, $658. On Jul 2, 2026 they threatened or started a card dispute (chargeback) with their bank (ticket marked solved)."
     ],
     "by": "Nov 5",
     "intro": "5 of your accounts have a reminder paused. Get each issue moving or tell Priya Nair the reminder can go; after 3 working days it comes back to Priya Nair."
@@ -14009,8 +14033,8 @@
     "channel": "Slack direct message (one nudge a day)",
     "cc": null,
     "lines": [
-     "Delacroix, Jessop & Co: invoice INV-25834, $41,568. The customer disputes this exact invoice in a support ticket and says they're holding payment until it's fixed",
-     "Ambrose & Lowell Advisory: invoice INV-25897, $658. They have a ticket pending in Zendesk since Aug 24, 2026 (68 days). Chasing payment while their question is un"
+     "Delacroix, Jessop & Co: invoice INV-25834, $41,568. The customer disputes this exact invoice in a support ticket and says they're holding payment until it's fixed.",
+     "Ambrose & Lowell Advisory: invoice INV-25897, $658. They have a ticket pending in Zendesk since Aug 24, 2026 (68 days)."
     ],
     "by": "Nov 5",
     "intro": "2 of your accounts have a reminder paused. Get each issue moving or tell Priya Nair the reminder can go; after 3 working days it comes back to Priya Nair."
@@ -14021,9 +14045,9 @@
     "channel": "Slack direct message (one nudge a day)",
     "cc": null,
     "lines": [
-     "Okafor & Nakamura LLP: invoice INV-25765, $46,848. The customer disputes this exact invoice in a support ticket and says they're holding payment until it's fixed",
-     "Eastman & Wexler CPAs: invoice INV-25873, $43,680. They have a ticket open in Zendesk since Oct 28, 2026 (3 days). Chasing payment while their question is unansw",
-     "Studio Marsh: invoice INV-25854, $1,410. A billing ticket from Oct 29, 2026, only 2 days ago, is marked solved in Zendesk, but nothing shows the money "
+     "Okafor & Nakamura LLP: invoice INV-25765, $46,848. The customer disputes this exact invoice in a support ticket and says they're holding payment until it's fixed.",
+     "Eastman & Wexler CPAs: invoice INV-25873, $43,680. They have a ticket open in Zendesk since Oct 28, 2026 (3 days).",
+     "Studio Marsh: invoice INV-25854, $1,410. A billing ticket from Oct 29, 2026, only 2 days ago, is marked solved in Zendesk, but nothing shows the money issue was\u2026"
     ],
     "by": "Nov 5",
     "intro": "3 of your accounts have a reminder paused. Get each issue moving or tell Priya Nair the reminder can go; after 3 working days it comes back to Priya Nair."
@@ -14034,8 +14058,8 @@
     "channel": "Slack direct message (one nudge a day)",
     "cc": null,
     "lines": [
-     "Riverside Partners: invoice INV-25787, $60,576. The customer disputes this exact invoice in a support ticket and says they're holding payment until it's fixed",
-     "Wexler & Hume Advisory: invoice INV-25712, $4,080. The customer disputes this exact invoice in a support ticket. The ticket is marked solved in Zendesk, but the "
+     "Riverside Partners: invoice INV-25787, $60,576. The customer disputes this exact invoice in a support ticket and says they're holding payment until it's fixed.",
+     "Wexler & Hume Advisory: invoice INV-25712, $4,080. The customer disputes this exact invoice in a support ticket."
     ],
     "by": "Nov 5",
     "intro": "2 of your accounts have a reminder paused. Get each issue moving or tell Priya Nair the reminder can go; after 3 working days it comes back to Priya Nair."
@@ -14046,7 +14070,7 @@
     "channel": "Slack direct message",
     "cc": "Priya Nair",
     "lines": [
-     "Northgate Creative: invoice INV-25433, $799, written off automatically in 1 days",
+     "Northgate Creative: invoice INV-25433, $799, written off automatically in 1 day",
      "Hollis Nair Engineers: invoice INV-25470, $517, written off automatically in 9 days"
     ],
     "by": null,

@@ -101,6 +101,8 @@ export interface VerifiedNumber {
   valueB: number;
   ok: boolean; // the two methods agree (within tolerance)
   note?: string;
+  unit?: "money" | "count";
+  group?: "cross" | "coo"; // a two-way cross-check, or one of the COO's two tests
 }
 
 export interface Failure {
@@ -128,6 +130,9 @@ export interface Results {
     byCause: CauseSlice[];
     shouldNotChaseAmount: number; // paid + hold
     headline: string;
+    // all tickets / from customers who owe money / the ones that matter to collections / of those, with no tag
+    tickets?: { all: number; fromOverdue: number; relevant: number; relevantUntagged: number } | null;
+    unmatchedPayments?: number | null;
   };
   invoices: Invoice[];
   customers: Record<string, Customer>;

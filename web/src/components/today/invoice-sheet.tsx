@@ -324,12 +324,18 @@ function InvoiceDetail({
                     <span className="font-normal text-muted-foreground">· {inv.hold.ownerRole}</span>
                   </span>
                   <span className="tabular text-xs font-medium">
-                    Due {formatDate(inv.hold.deadline)}
-                    {holdDays !== null && (
-                      <span className="text-muted-foreground">
-                        {" "}
-                        · {holdDays} {Math.abs(holdDays) === 1 ? "day" : "days"} to act
-                      </span>
+                    {holdDays !== null && holdDays <= 0 ? (
+                      <span className="text-hold-ink">Target date passed: act today</span>
+                    ) : (
+                      <>
+                        Due {formatDate(inv.hold.deadline)}
+                        {holdDays !== null && (
+                          <span className="text-muted-foreground">
+                            {" "}
+                            · {holdDays} {holdDays === 1 ? "day" : "days"} to act
+                          </span>
+                        )}
+                      </>
                     )}
                   </span>
                 </div>
@@ -570,6 +576,11 @@ function DraftSection({ invoice: inv }: { invoice: Invoice }) {
             {loading ? <Loader2 className="animate-spin" /> : <Sparkles />}
             Redraft with AI
           </Button>
+          <p className="text-[11px] leading-relaxed text-muted-foreground sm:col-span-3">
+            Demo only: this sends the draft, with the customer&apos;s name, invoice number, amount and due date, to Groq, on made-up data. At Ledgerline it stays off
+            until legal approves an AI vendor (proposed: Amazon Bedrock, in the AWS account it already has). The template draft above
+            needs no AI.
+          </p>
         </div>
       )}
     </Section>

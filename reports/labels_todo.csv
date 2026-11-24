@@ -12,12 +12,12 @@ INV-25764,Castell Engineering,hold,,,"The customer disputes this exact invoice i
 INV-25923,Abbott Design Partnership,hold,,,"Too early: 4 days late, and the policy's first reminder goes at 7 days (Nov 3, 2026). Nothing goes out today."
 INV-25712,Wexler & Hume Advisory,hold,,,"The customer disputes this exact invoice in a support ticket. The ticket is marked solved in Zendesk, but the bill was never corrected or reissued."
 INV-25718,Mercer & Banerjee LLP,hold,,,"The customer disputes this exact invoice in a support ticket and says they're holding payment until it's fixed. The ticket is marked solved in Zendesk, but the bill was never corrected or reissued."
-INV-25973,Eastman Engineering,hold,,,"On Aug 30, 2026 they threatened or started a consumer affairs (ticket marked solved). Nothing shows it was settled, so finance doesn't chase until the account manager and Head of Support confirm it is."
+INV-25973,Eastman Engineering,hold,,,"On Aug 30, 2026 they threatened or started a complaint to a regulator or consumer affairs office and a card dispute (chargeback) with their bank (ticket marked solved). Nothing shows it was settled, so finance doesn't chase until the account manager and Head of Support confirm it is."
 INV-25711,Oyelaran Devlin Engineers,hold,,,"The customer disputes this exact invoice in a support ticket. The ticket is marked solved in Zendesk, but the bill was never corrected or reissued."
 INV-25539,Banerjee Petrov Engineers,hold,,,"The customer disputes this exact invoice in a support ticket and says they're holding payment until it's fixed. The ticket is marked solved in Zendesk, but the bill was never corrected or reissued."
 INV-25854,Studio Marsh,hold,,,"A billing ticket from Oct 29, 2026, only 2 days ago, is marked solved in Zendesk, but nothing shows the money issue was settled (for example a refund we owe them). Confirm it before chasing."
 INV-25811,Wexler Media,hold,,,The customer disputes this exact invoice in a support ticket. The ticket is still open.
-INV-25769,Drummond Consulting,hold,,,"On Jul 2, 2026 they threatened or started a disputing charges with my bank (ticket marked solved). Nothing shows it was settled, so finance doesn't chase until the account manager and Head of Support confirm it is."
+INV-25769,Drummond Consulting,hold,,,"On Jul 2, 2026 they threatened or started a card dispute (chargeback) with their bank (ticket marked solved). Nothing shows it was settled, so finance doesn't chase until the account manager and Head of Support confirm it is."
 INV-25897,Ambrose & Lowell Advisory,hold,,,"They have a ticket pending in Zendesk since Aug 24, 2026 (68 days). Chasing payment while their question is unanswered is what gets the tool switched off; the account manager decides when to resume."
 INV-25862,Thornfield Consulting Group,send,,,"First reminder (7 days): 17 days overdue, nothing blocking"
 INV-25869,Hollis & Stanhope Advisory,send,,,"First reminder (7 days): 16 days overdue, nothing blocking"
@@ -27,5 +27,5 @@ INV-25883,Sinclair & Vance LLP,send,,,"First reminder (7 days): 13 days overdue,
 INV-25906,Rosales Engineering,send,,,"First reminder (7 days): 7 days overdue, nothing blocking"
 INV-25859,Voss & Kowalczyk Agency,send,,,"First reminder (7 days): 18 days overdue, nothing blocking"
 INV-25858,Glover Strategy,send,,,"First reminder (7 days): 18 days overdue, nothing blocking"
-INV-25852,Kingsway Engineering Group,send,,,Send a softer reminder (open product complaint)
+INV-25852,Kingsway Engineering Group,send,,,"Send a softer reminder (open support ticket, not about money)"
 INV-25863,Banerjee Design Partnership,send,,,"First reminder (7 days): 17 days overdue, nothing blocking"

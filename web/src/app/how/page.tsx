@@ -1,4 +1,4 @@
-import { ArrowDown, ArrowRight, Database, ShieldCheck } from "lucide-react";
+import { ArrowDown, ArrowRight, Database, ShieldCheck, Sparkles } from "lucide-react";
 import type { Metadata } from "next";
 import { PageHeader } from "@/components/shared/page-header";
 import { formatDate, results } from "@/lib/data";
@@ -9,11 +9,12 @@ export const metadata: Metadata = { title: "How it works" };
 const fmt = (n: number) => n.toLocaleString("en-US");
 
 export default function HowPage() {
-  const { invoices, meta } = results;
+  const { invoices, meta, summary } = results;
+  const tk = summary.tickets;
   const count = (v: string) => invoices.filter((i) => i.verdict === v).length;
   const wait = invoices.filter((i) => i.verdict === "hold" && i.headline.startsWith("Too early")).length;
   const rows = (name: string) => meta.files.find((f) => f.name === name)?.rows ?? 0;
-  const unmatchedPayments = 7;
+  const unmatchedPayments = summary.unmatchedPayments ?? 0;
 
   const sources = [
     { name: "QuickBooks", detail: `${fmt(invoices.length)} overdue bills (AR aging)` },
@@ -103,6 +104,41 @@ export default function HowPage() {
           Top-50 accounts, disputed or probably-paid bills, anything firmer than a friendly nudge, and every phone call. Nothing is sent
           without a person. These lines come from the COO: chasing someone who has paid, someone with an open complaint, a top-50 account or
           anything that reads like a threat would get the tool switched off.
+        </p>
+      </section>
+
+      <section className="mt-4 rounded-lg border bg-card p-4" aria-label="What AI does">
+        <p className="flex items-center gap-2 text-sm font-semibold">
+          <Sparkles className="size-4 text-muted-foreground" aria-hidden="true" />
+          What AI does, and what it doesn&apos;t
+        </p>
+        <div className="mt-3 grid gap-4 text-sm sm:grid-cols-3">
+          <div>
+            <p className="text-xs font-semibold text-muted-foreground uppercase">At Ledgerline today</p>
+            <p className="mt-1 leading-relaxed">
+              No AI on customer data. Rules read ticket tags, status and invoice numbers inside Ledgerline. A billing ticket the rules
+              can&apos;t read goes to a person first.
+            </p>
+          </div>
+          <div>
+            <p className="text-xs font-semibold text-muted-foreground uppercase">Once legal approves a vendor</p>
+            <p className="mt-1 leading-relaxed">
+              Two AI models from different families read the masked ticket text on their own; if they disagree, a person decides. Tested
+              on this data, they held all 14 disputed bills. Proposed vendor: Amazon Bedrock, in Ledgerline&apos;s existing AWS account.
+            </p>
+          </div>
+          <div>
+            <p className="text-xs font-semibold text-muted-foreground uppercase">Why rules aren&apos;t enough</p>
+            <p className="mt-1 leading-relaxed">
+              {tk
+                ? `${tk.relevantUntagged} of the ${tk.relevant} tickets that matter have no tag, and tags can be wrong (a timer bug was tagged How-to). Only reading the text catches those.`
+                : "Tags are often missing or wrong. Only reading the text catches those."}
+            </p>
+          </div>
+        </div>
+        <p className="mt-3 text-xs leading-relaxed text-muted-foreground">
+          Never AI: the decision to send. Priya approves every message, and drafts come from Ledgerline&apos;s own templates. The
+          &ldquo;Redraft with AI&rdquo; button is a demo on made-up data.
         </p>
       </section>
 

@@ -20,7 +20,7 @@ export interface Chapter {
 
 export interface StoryData {
   totalText: string;
-  trend: { month: string; share: number }[];
+  trend: { month: string; amount: number }[];
   sources: { name: string; detail: string; locked: boolean }[];
   causes: { key: string; label: string; color: string; amountText: string; count: number; share: number }[];
   verdicts: { key: "send" | "hold" | "paid" | "call"; label: string; count: number; amountText: string }[];
@@ -116,46 +116,38 @@ function TrendPicture({ data }: { data: StoryData }) {
   const W = 400;
   const H = 180;
   const pad = { l: 8, r: 40, t: 16, b: 26 };
-  const max = Math.max(0.6, ...pts.map((p) => p.share));
+  const usdK = (n: number) => `$${Math.round(n / 1000)}K`;
+  const max = Math.max(700000, ...pts.map((p) => p.amount));
   const x = (i: number) => pad.l + (i * (W - pad.l - pad.r)) / Math.max(1, pts.length - 1);
   const y = (v: number) => pad.t + (1 - v / max) * (H - pad.t - pad.b);
-  const line = pts.map((p, i) => `${i ? "L" : "M"}${x(i).toFixed(1)},${y(p.share).toFixed(1)}`).join(" ");
+  const line = pts.map((p, i) => `${i ? "L" : "M"}${x(i).toFixed(1)},${y(p.amount).toFixed(1)}`).join(" ");
   const area = `${line} L${x(pts.length - 1).toFixed(1)},${H - pad.b} L${x(0).toFixed(1)},${H - pad.b} Z`;
   const lastI = pts.length - 1;
-  const aprilI = pts.findIndex((p) => p.month.startsWith("Apr"));
-  const summary = pts.map((p) => `${p.month} ${pct(p.share)}`).join(", ");
+  const summary = pts.map((p) => `${p.month} ${usdK(p.amount)}`).join(", ");
   return (
-    <Frame title="Overdue, as a share of what customers owe" note="Month-end, last 12 months">
-      <svg viewBox={`0 0 ${W} ${H}`} className="h-auto w-full" role="img" aria-label={`Overdue share by month: ${summary}`}>
+    <Frame title="Overdue money at each month-end" note="Last 12 months">
+      <svg viewBox={`0 0 ${W} ${H}`} className="h-auto w-full" role="img" aria-label={`Overdue money by month-end: ${summary}`}>
         <defs>
           <linearGradient id="story-area" x1="0" x2="0" y1="0" y2="1">
             <stop offset="0%" stopColor="var(--send)" stopOpacity="0.28" />
             <stop offset="100%" stopColor="var(--send)" stopOpacity="0.02" />
           </linearGradient>
         </defs>
-        {[0.2, 0.4].map((g) => (
+        {[200000, 400000, 600000].map((g) => (
           <g key={g}>
             <line x1={pad.l} x2={W - pad.r} y1={y(g)} y2={y(g)} stroke="var(--border)" strokeDasharray="3 4" />
             <text x={W - pad.r + 6} y={y(g) + 4} fontSize="11" fill="var(--muted-foreground)">
-              {pct(g)}
+              {usdK(g)}
             </text>
           </g>
         ))}
         <path d={area} fill="url(#story-area)" />
         <path d={line} fill="none" stroke="var(--send)" strokeWidth="2.5" strokeLinejoin="round" strokeLinecap="round" />
-        {aprilI >= 0 && (
-          <g>
-            <circle cx={x(aprilI)} cy={y(pts[aprilI].share)} r="4" fill="var(--card)" stroke="var(--send)" strokeWidth="2" />
-            <text x={x(aprilI)} y={y(pts[aprilI].share) + 18} fontSize="12" textAnchor="middle" fill="var(--muted-foreground)">
-              {pct(pts[aprilI].share)}
-            </text>
-          </g>
-        )}
-        <circle cx={x(lastI)} cy={y(pts[lastI].share)} r="5" fill="var(--send)" stroke="var(--card)" strokeWidth="2" />
-        <text x={x(lastI) - 8} y={y(pts[lastI].share) - 10} fontSize="13" fontWeight="600" textAnchor="end" fill="var(--foreground)">
-          {pct(pts[lastI].share)}
+        <circle cx={x(lastI)} cy={y(pts[lastI].amount)} r="5" fill="var(--send)" stroke="var(--card)" strokeWidth="2" />
+        <text x={x(lastI) - 8} y={y(pts[lastI].amount) - 10} fontSize="13" fontWeight="600" textAnchor="end" fill="var(--foreground)">
+          {usdK(pts[lastI].amount)}
         </text>
-        {[0, aprilI, lastI]
+        {[0, lastI]
           .filter((i, k, a) => i >= 0 && a.indexOf(i) === k)
           .map((i) => (
             <text key={i} x={x(i)} y={H - 6} fontSize="11" textAnchor={i === 0 ? "start" : i === lastI ? "end" : "middle"} fill="var(--muted-foreground)">

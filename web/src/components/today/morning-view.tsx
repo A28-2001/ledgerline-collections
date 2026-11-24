@@ -235,7 +235,13 @@ export function MorningView({ data }: { data: Pick<Results, "invoices" | "summar
     <>
       {/* 1. Header: one short line, no repeated numbers */}
       <header>
-        <p className="text-sm text-muted-foreground">Data as of {formatDate(meta.asOf)}</p>
+        <p className="text-sm text-muted-foreground">
+          Data as of {formatDate(meta.asOf)}
+          <span aria-hidden="true"> · </span>
+          <Link href="/story" className="underline decoration-border underline-offset-4 hover:text-foreground hover:decoration-foreground">
+            First time here? The 2-minute story
+          </Link>
+        </p>
         <h1 className="mt-0.5 text-2xl font-semibold tracking-tight sm:text-3xl">Good morning</h1>
         <p className="tabular mt-1.5 text-sm text-muted-foreground sm:text-base">
           {pluralize(invoices.length, "overdue bill")} · {pluralize(totalDecisions, "decision")} today · nothing is sent until you

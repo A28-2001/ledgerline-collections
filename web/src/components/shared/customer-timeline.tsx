@@ -46,7 +46,7 @@ function Row({ e, compact, showYear, last }: { e: TimelineEvent; compact: boolea
               "relative mt-2 shrink-0 rounded-full",
               today ? "size-3 ring-4 ring-card" : "size-2.5",
               DOT[e.tone],
-              e.citedAs && "ring-2 ring-gold ring-offset-2 ring-offset-card",
+              e.citedAs && "ring-2 ring-foreground ring-offset-2 ring-offset-card",
             )}
           />
         </span>
@@ -119,8 +119,8 @@ export function CustomerTimeline({
       <Rows events={recent} compact={compact} endsHere />
       {events.some((e) => e.citedAs) && (
         <p className="mt-2 ml-[5.25rem] flex items-center gap-1.5 text-[11px] text-muted-foreground">
-          <span className="inline-block size-2 rounded-full ring-2 ring-gold ring-offset-1 ring-offset-card" aria-hidden="true" />
-          Gold ring: the record behind the suggestion
+          <span className="inline-block size-2 rounded-full ring-2 ring-foreground ring-offset-1 ring-offset-card" aria-hidden="true" />
+          Ringed: the record behind the suggestion
         </p>
       )}
     </div>

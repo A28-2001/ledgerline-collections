@@ -24,7 +24,7 @@ import pandas as pd
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from ai import AI  # noqa: E402
-from engine import CAUSE_LABEL, Engine, money  # noqa: E402
+from engine import CAUSE_LABEL, Engine, money, nice  # noqa: E402
 from load import ROOT, as_of_date, load, load_config, norm_id  # noqa: E402
 
 VERDICTS = ["send", "hold", "paid", "call"]
@@ -56,6 +56,28 @@ def trend(engine: Engine) -> list[dict]:
         out.append({"month": month, "overdueAmount": round(float(od_amt), 2),
                     "overdueShare": round(float(od_amt / open_amt), 4) if open_amt else 0.0, "billingTickets": bt})
     return out
+
+
+def short(text: str, limit: int = 120) -> str:
+    """The first sentence, or the text cut at a word with an ellipsis."""
+    first_sentence = text.split(". ")[0].rstrip(".") + "."
+    if len(first_sentence) <= limit:
+        return first_sentence
+    return text[:limit].rsplit(" ", 1)[0].rstrip(",;:") + "…"
+
+
+def hold_line(holds, by_verdict, engine):
+    """One line for the morning message: how many holds are past their target, and the next date for the rest."""
+    as_of = engine.as_of.strftime("%Y-%m-%d")
+    late = [i for i in holds if i["hold"]["deadline"] <= as_of]
+    later = sorted(i["hold"]["deadline"] for i in holds if i["hold"]["deadline"] > as_of)
+    head = f"{by_verdict['hold']['count']} on hold ({money(by_verdict['hold']['amount'])})"
+    parts = []
+    if late:
+        parts.append(f"{len(late)} past their target date, so the owner acts today")
+    if later:
+        parts.append(f"the rest by {nice(later[0])} at the earliest")
+    return f"{head}: " + "; ".join(parts) + "."
 
 
 def verified_numbers(engine: Engine, invoices: list[dict], by_cause: list[dict]) -> list[dict]:
@@ -99,16 +121,22 @@ def verified_numbers(engine: Engine, invoices: list[dict], by_cause: list[dict])
               and getattr(r, "verdict", None) == "send" and not r.needs_review]
     out.append({"label": "Paid but chased (the Paidly case)", "methodA": "Bills with a matching or recent unmatched payment that would get a reminder",
                 "valueA": len(chased), "methodB": "Allowed (Maya: chasing someone who has paid gets the tool switched off)", "valueB": 0,
-                "ok": len(chased) == 0})
+                "ok": len(chased) == 0, "unit": "count", "group": "coo",
+                "note": "Earlier version: one blank-memo payment could pay either of two same-amount Kingsway bills, and the tool "
+                        "assumed the older one. Now both go to Check first."})
     # 5. Maya's real test, second half: nobody chased who had a complaint open
-    tk_open = [r for r in engine._rows if getattr(r, "verdict", None) == "send" and not r.needs_review
+    tk_open = [r for r in engine._rows if getattr(r, "verdict", None) in ("send", "call") and not r.needs_review
                and any(e["kind"] == "ticket" and str(e.get("status") or "") in engine.v["ticket_open_status"] for e in r.evidence)
                and not r.flags.get("soft")]
-    out.append({"label": "Complaint open but chased", "methodA": "Reminders going to a customer with an open ticket, or a pending one about money or marked high priority",
-                "valueA": len(tk_open), "methodB": "Allowed (Maya: nobody chased who had a complaint open)", "valueB": 0, "ok": len(tk_open) == 0})
-    # 6. Count
-    out.append({"label": "Bills checked", "methodA": "Rows in the overdue list", "valueA": len(engine._rows),
-                "methodB": "Bills with a verdict", "valueB": len(invoices), "ok": len(engine._rows) == len(invoices)})
+    out.append({"label": "Complaint open but chased", "methodA": "Reminders or calls to a customer with an open ticket, or a pending one about money or marked high priority",
+                "valueA": len(tk_open), "methodB": "Allowed (Maya: nobody chased who had a complaint open)", "valueB": 0, "ok": len(tk_open) == 0,
+                "unit": "count", "group": "coo",
+                "note": "Earlier versions would have chased 4 customers with a complaint or dispute open: Eastman Engineering, Drummond Consulting, "
+                        "Banerjee Petrov and Upton & Bell. A rule change briefly put Studio Marsh at risk too. Each became a rule; "
+                        "these are the bills the rules were fixed on, so the shadow week re-tests it on new ones."})
+    for v in out:
+        v.setdefault("unit", "money")
+        v.setdefault("group", "cross")
     return out
 
 
@@ -129,7 +157,7 @@ def accuracy(invoices: list[dict], labels_path: Path, labelled_by: str):
             agreed += 1
         else:
             failures.append({"invoiceId": i["id"], "toolSaid": i["verdict"], "truth": t,
-                             "why": f"Correct answer: {note or t}. Tool's reason: {i['headline']}"})
+                             "why": f"Correct answer: {(note or t).rstrip('. ')}. Tool's reason: {i['headline']}"})
     if not n:
         return None, []
     return {"sampleSize": n, "agreed": agreed, "rate": round(agreed / n, 4), "labelledBy": labelled_by}, failures
@@ -178,7 +206,7 @@ def main() -> None:
 
     labels_path = (ROOT / "data" / "labels.csv") if args.data != "sample" else folder / "labels.csv"
     acc, failures = accuracy(invoices, labels_path, "planted answers in the sample data" if args.data == "sample" else
-                                      "an independent review of all 54 bills by a reviewer who never saw the tool's answers, with every contested call confirmed by hand (24 Nov)")
+                                      "an independent review of all 54 bills by a separate AI model that never saw the tool's answers, with every contested call confirmed by a person (24 Nov)")
     ms = engine.matcher.stats()
     vn = verified_numbers(engine, invoices, by_cause)
     review = [i for i in invoices if i["needsReview"]]
@@ -186,12 +214,12 @@ def main() -> None:
     first_deadline = min((i["hold"]["deadline"] for i in holds), default=None)
     bullets = [
         f"{by_verdict['send']['count']} reminders ready to send ({money(by_verdict['send']['amount'])}). Approve all in one click.",
-        f"{by_verdict['hold']['count']} on hold ({money(by_verdict['hold']['amount'])}): owners have until {first_deadline}." if holds else "Nothing on hold.",
+        hold_line(holds, by_verdict, engine) if holds else "Nothing on hold.",
         f"{by_verdict['paid']['count']} probably paid already ({money(by_verdict['paid']['amount'])}): confirm and close.",
         f"{by_verdict['call']['count']} need a phone call ({money(by_verdict['call']['amount'])}).",
         f"{len(review)} need a second look before anything goes out." if review else "No cases need a second look.",
     ]
-    morning = {"title": f"Collections check, {as_of.date().isoformat()}", "bullets": bullets,
+    morning = {"title": f"Collections check, {nice(as_of)}", "bullets": bullets,
                "text": f"Good morning. {headline} Today: " + " ".join(bullets)}
     # Who gets what (Maya, 24 Nov): Slack direct messages, one a day per person, never a channel post.
     ppl = cfg.get("people", {})
@@ -215,7 +243,7 @@ def main() -> None:
             by_am.setdefault(am, []).append(i)
     for am, bills in sorted(by_am.items()):
         routing.append({"to": am, "role": "Account manager", "channel": "Slack direct message (one nudge a day)", "cc": None,
-                        "lines": [f"{i['customerName']}: invoice {i['id']}, {money(i['amount'])}. {i['headline'][:110]}" for i in bills],
+                        "lines": [f"{i['customerName']}: invoice {i['id']}, {money(i['amount'])}. {short(i['headline'])}" for i in bills],
                         "by": pd.Timestamp(np.busday_offset(as_of.date(), int(cfg["policy"].get("am_pause_days", 3)), roll="forward")).strftime("%b %-d"),
                         "intro": f"{len(bills)} of your accounts have a reminder paused. Get each issue moving or tell {priya} the reminder can go; "
                                  f"after {cfg['policy'].get('am_pause_days', 3)} working days it comes back to {priya}."})
@@ -223,13 +251,13 @@ def main() -> None:
     wo = [(r, i) for r in engine._rows for i in invoices if i["id"] == r.display_id and r.flags.get("writeoff_days_left") is not None]
     if wo and dana:
         routing.append({"to": dana, "role": "VP Finance", "channel": "Slack direct message", "cc": priya,
-                        "lines": [f"{i['customerName']}: invoice {i['id']}, {money(i['amount'])}, written off automatically in {r.flags['writeoff_days_left']} days"
+                        "lines": [f"{i['customerName']}: invoice {i['id']}, {money(i['amount'])}, written off automatically in {r.flags['writeoff_days_left']} day{'' if r.flags['writeoff_days_left'] == 1 else 's'}"
                                   for r, i in sorted(wo, key=lambda x: x[0].flags["writeoff_days_left"])],
                         "by": None,
                         "intro": f"{len(wo)} card invoices will be written off automatically soon. Chase them or let them go?"})
     lc = cfg.get("leave_cover") or {}
     if lc:
-        morning["cover"] = (f"While {lc.get('person')} is on leave ({lc.get('when')}), {first(lc.get('cover', ''))} owns this morning list and "
+        morning["cover"] = (f"While {lc.get('person')} is on leave ({str(lc.get('when')).replace(' (', ', ').rstrip(')')}), {first(lc.get('cover', ''))} owns this morning list and "
                             f"{first(lc.get('paid_cover', ''))} keeps the probably-paid list. " + ("Cover is ON today." if lc.get("on_leave") else "Cover is off today."))
         if lc.get("on_leave") and routing:
             routing[0]["to"], routing[0]["cc"] = first(lc.get("cover")), None
@@ -238,21 +266,21 @@ def main() -> None:
     notes = list(dict.fromkeys(data.notes))
     if str(cfg["ai"].get("ticket_text")).lower() in ("off", "false", "no"):
         notes.append("No-vendor mode (Maya, 23 Nov): no AI provider is approved yet, so tickets are read with tags, status and simple rules "
-                     "run locally; nothing leaves Ledgerline's systems. It now holds all 14 disputed bills, the same as the AI judges. Until 24 Nov it "
+                     "run locally; no ticket text leaves Ledgerline's systems. It now holds all 14 disputed bills, the same as the AI judges. Until 24 Nov it "
                      "missed two (Banerjee Petrov, Upton & Bell): their tickets named the invoice but read as escalations, so the tool said 'call'. Fixed, and "
                      "every call now shows the customer's tickets beside it.")
     elif not ai.enabled:
         why = ai.error or "no key"
         notes.append(f"AI judges were off for this run ({why}): ticket reading used rules only, and borderline names went to a person.")
-    if not data.has("payments", "status"):
+    if not data.has("payments", "status") and not data.has("invoices", "status"):
         notes.append("Payment status not recorded: failed card check skipped.")
     if args.data == "sample":
         notes.insert(0, "Sample data: made-up company and numbers, used to build and test the tool.")
     elif acc:
-        notes.insert(0, "Honest accuracy: on first review the tool agreed with the independent reviewer on 46 of 54 bills (85%). "
-                        "The review exposed four rule errors (a regulator complaint and a chargeback raised before the bill, a reminder sent before day 7, "
-                        "and an email plus a call to one customer on the same day). They were fixed after seeing the review, so the current figure is "
-                        "not a fresh-data result; the shadow week measures that.")
+        notes.insert(0, "Honest accuracy: on its first pass the tool agreed with the independent reviewer on 46 of 54 bills (85%). "
+                        "Of the 8 differences, 7 were rule errors we fixed and 1 we kept on purpose. A later rule change caused one more "
+                        "(Studio Marsh), which the same review caught. The current figure is on the bills the rules were fixed against, "
+                        "so it is not a fresh-data result; the shadow week measures that.")
 
     results = {
         "meta": {"generatedAt": datetime.now(timezone.utc).isoformat(timespec="seconds"), "asOf": as_of.date().isoformat(),
@@ -260,6 +288,8 @@ def main() -> None:
                  "files": [{"name": k, "rows": v} for k, v in data.rows.items()], "aiMode": ai.mode, "notes": notes,
                  "sources": cfg.get("sources", [])},
         "summary": {"overdueAmount": round(total, 2), "overdueCount": len(invoices), "byVerdict": by_verdict,
+                    "tickets": getattr(engine, "ticket_stats", None),
+                    "unmatchedPayments": getattr(engine, "unmatched_count", None),
                     "byCause": by_cause, "shouldNotChaseAmount": round(no_chase, 2), "headline": headline},
         "invoices": invoices,
         "customers": res["customers"],

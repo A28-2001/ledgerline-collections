@@ -18,9 +18,9 @@ export default function CustomersPage() {
       const invs = c.invoiceIds.map((id) => invoicesById.get(id)).filter((i) => i !== undefined);
       const overdue = invs.reduce((sum, i) => sum + i.amount, 0);
       const verdicts = new Set(invs.map((i) => i.verdict));
-      const top = PRIORITY.find((v) => verdicts.has(v));
+      const todo = PRIORITY.filter((v) => verdicts.has(v));
       const weakest = c.aliases.reduce((min, a) => Math.min(min, a.score), 1);
-      return { c, invs, overdue, top, weakest };
+      return { c, invs, overdue, todo, weakest };
     })
     .sort((a, b) => b.overdue - a.overdue || a.c.name.localeCompare(b.c.name));
   const unmatched = results.invoices.filter((i) => !i.customerId);
@@ -29,7 +29,7 @@ export default function CustomersPage() {
     <>
       <PageHeader
         title="Customers"
-        description="Each customer joined across billing, the accounting export, payments, tickets and contracts. The weakest name match is shown so you can spot shaky joins."
+        description="Each customer joined across billing, the accounting export, payments, tickets and contracts. A customer whose name only nearly matched is flagged for a person to check."
       />
       <div className="overflow-hidden rounded-xl border bg-card">
         {rows.length === 0 ? (
@@ -43,12 +43,11 @@ export default function CustomersPage() {
                 <TableHead className="pl-4">Customer</TableHead>
                 <TableHead className="hidden sm:table-cell">Segment</TableHead>
                 <TableHead className="text-right">Overdue</TableHead>
-                <TableHead className="hidden md:table-cell">What to do</TableHead>
-                <TableHead className="hidden pr-4 text-right md:table-cell">Weakest match</TableHead>
+                <TableHead className="hidden pr-4 md:table-cell">What to do</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
-              {rows.map(({ c, invs, overdue, top, weakest }) => (
+              {rows.map(({ c, invs, overdue, todo, weakest }) => (
                 <TableRow key={c.id}>
                   <TableCell className="max-w-64 pl-4">
                     <Link
@@ -59,13 +58,21 @@ export default function CustomersPage() {
                     </Link>
                     <span className="text-xs text-muted-foreground">
                       {invs.length} overdue {invs.length === 1 ? "bill" : "bills"}
+                      {weakest < 1 && <span className="text-hold-ink"> · name only nearly matched: check</span>}
                     </span>
                   </TableCell>
                   <TableCell className="hidden text-muted-foreground sm:table-cell">{c.segment ?? "—"}</TableCell>
                   <TableCell className="tabular text-right font-medium">{formatMoney(overdue)}</TableCell>
-                  <TableCell className="hidden md:table-cell">{top ? <VerdictBadge verdict={top} /> : "—"}</TableCell>
-                  <TableCell className="tabular hidden pr-4 text-right text-muted-foreground md:table-cell">
-                    {weakest.toFixed(2)}
+                  <TableCell className="hidden pr-4 md:table-cell">
+                    {todo.length ? (
+                      <span className="flex flex-wrap gap-1">
+                        {todo.map((v) => (
+                          <VerdictBadge key={v} verdict={v} />
+                        ))}
+                      </span>
+                    ) : (
+                      "—"
+                    )}
                   </TableCell>
                 </TableRow>
               ))}
