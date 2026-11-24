@@ -1,6 +1,6 @@
 "use client";
 
-import { BarChart3, Building2, Inbox, Menu, MessageSquareText, ShieldCheck, TriangleAlert } from "lucide-react";
+import { BarChart3, Building2, Inbox, Menu, MessageSquareText, ShieldCheck, TriangleAlert, Workflow } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState, type ReactNode } from "react";
@@ -16,6 +16,7 @@ const NAV = [
   { href: "/customers", label: "Customers", icon: Building2 },
   { href: "/proof", label: "How sure are we", icon: ShieldCheck },
   { href: "/summary", label: "Morning message", icon: MessageSquareText },
+  { href: "/how", label: "How it works", icon: Workflow },
 ] as const;
 
 function isActive(pathname: string, href: string) {

@@ -41,40 +41,85 @@ export default function ProofPage() {
             <CardDescription>{proof.reviewLog.summary}</CardDescription>
           </CardHeader>
           <CardContent>
-            <ol className="space-y-3">
-              {proof.reviewLog.entries.map((e, idx) => (
-                <li key={`${e.invoice}-${idx}`} className="rounded-lg border p-3 text-sm">
-                  <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
-                    <span className="font-medium">{e.customer}</span>
-                    {e.invoice !== "-" && <span className="font-mono text-xs text-muted-foreground">{e.invoice}</span>}
-                    {e.amount > 0 && <span className="tabular text-xs text-muted-foreground">{formatMoney(e.amount)}</span>}
-                    <span
-                      className={
-                        e.status === "fixed"
-                          ? "rounded-full border border-emerald-600/40 px-2 text-[11px] text-emerald-700 dark:text-emerald-400"
-                          : e.status === "deliberate"
-                            ? "rounded-full border px-2 text-[11px] text-muted-foreground"
-                            : "rounded-full border border-amber-600/40 px-2 text-[11px] text-amber-700 dark:text-amber-400"
-                      }
-                    >
-                      {e.status === "fixed" ? "Fixed" : e.status === "deliberate" ? "Kept on purpose" : "Still open"}
-                    </span>
-                    <span className="text-[11px] text-muted-foreground">Found by {e.foundBy}</span>
+            {(() => {
+              const log = proof.reviewLog!;
+              const fixed = log.entries.filter((x) => x.status === "fixed").length;
+              const kept = log.entries.filter((x) => x.status === "deliberate").length;
+              const open = log.entries.filter((x) => x.status === "open").length;
+              const item = (e: (typeof log.entries)[number], idx: number) => (
+                    <li key={`${e.invoice}-${idx}`} className="rounded-lg border p-3 text-sm">
+                      <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
+                        <span className="font-medium">{e.customer}</span>
+                        {e.invoice !== "-" && <span className="font-mono text-xs text-muted-foreground">{e.invoice}</span>}
+                        {e.amount > 0 && <span className="tabular text-xs text-muted-foreground">{formatMoney(e.amount)}</span>}
+                        <span
+                          className={
+                            e.status === "fixed"
+                              ? "rounded-full border border-emerald-600/40 px-2 text-[11px] text-emerald-700 dark:text-emerald-400"
+                              : e.status === "deliberate"
+                                ? "rounded-full border px-2 text-[11px] text-muted-foreground"
+                                : "rounded-full border border-amber-600/40 px-2 text-[11px] text-amber-700 dark:text-amber-400"
+                          }
+                        >
+                          {e.status === "fixed" ? "Fixed" : e.status === "deliberate" ? "Kept on purpose" : "Still open"}
+                        </span>
+                        <span className="text-[11px] text-muted-foreground">Found by {e.foundBy}</span>
+                      </div>
+                      {e.toolSaid !== "-" && (
+                        <p className="mt-1 text-xs text-muted-foreground">
+                          Tool said <span className="font-medium text-foreground">{e.toolSaid}</span> · should be{" "}
+                          <span className="font-medium text-foreground">{e.shouldBe}</span>
+                        </p>
+                      )}
+                      <p className="mt-1.5 leading-relaxed">{e.why}</p>
+                      <p className="mt-1 text-xs leading-relaxed text-muted-foreground">Change: {e.change}</p>
+                    </li>
+              );
+              return (
+                <>
+                  <div className="mb-4 grid grid-cols-2 gap-2 sm:grid-cols-4">
+                    <div className="rounded-lg border p-3">
+                      <p className="text-xs text-muted-foreground">First pass</p>
+                      <p className="tabular text-xl font-semibold">85%</p>
+                      <p className="text-[11px] text-muted-foreground">46 of 54 agreed</p>
+                    </div>
+                    <div className="rounded-lg border p-3">
+                      <p className="text-xs text-muted-foreground">After the fixes</p>
+                      <p className="tabular text-xl font-semibold">{proof.accuracy ? `${Math.round(proof.accuracy.rate * 100)}%` : "-"}</p>
+                      <p className="text-[11px] text-muted-foreground">
+                        {proof.accuracy ? `${proof.accuracy.agreed} of ${proof.accuracy.sampleSize}, same bills` : "not measured"}
+                      </p>
+                    </div>
+                    <div className="rounded-lg border p-3">
+                      <p className="text-xs text-muted-foreground">Misses fixed</p>
+                      <p className="tabular text-xl font-semibold">{fixed}</p>
+                      <p className="text-[11px] text-muted-foreground">each one led to a rule</p>
+                    </div>
+                    <div className="rounded-lg border p-3">
+                      <p className="text-xs text-muted-foreground">Kept on purpose / open</p>
+                      <p className="tabular text-xl font-semibold">
+                        {kept} / {open}
+                      </p>
+                      <p className="text-[11px] text-muted-foreground">shown below, not hidden</p>
+                    </div>
                   </div>
-                  {e.toolSaid !== "-" && (
-                    <p className="mt-1 text-xs text-muted-foreground">
-                      Tool said <span className="font-medium text-foreground">{e.toolSaid}</span> · should be{" "}
-                      <span className="font-medium text-foreground">{e.shouldBe}</span>
-                    </p>
+                  <ol className="space-y-3">{log.entries.slice(0, 4).map((e, idx) => item(e, idx))}</ol>
+                  {log.entries.length > 4 && (
+                    <details className="group mt-3">
+                      <summary className="cursor-pointer text-sm font-medium text-muted-foreground hover:text-foreground">
+                        <span className="group-open:hidden">Show the other {log.entries.length - 4}</span>
+                        <span className="hidden group-open:inline">Hide them</span>
+                      </summary>
+                      <ol className="mt-3 space-y-3">{log.entries.slice(4).map((e, idx) => item(e, idx + 4))}</ol>
+                    </details>
                   )}
-                  <p className="mt-1.5 leading-relaxed">{e.why}</p>
-                  <p className="mt-1 text-xs leading-relaxed text-muted-foreground">Change: {e.change}</p>
-                </li>
-              ))}
-            </ol>
+                </>
+              );
+            })()}
           </CardContent>
         </Card>
       )}
+
 
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
         <Card>
@@ -156,6 +201,67 @@ export default function ProofPage() {
         </Card>
       </div>
 
+      <Card className="mt-6">
+        <CardHeader>
+          <CardTitle className="leading-snug">
+            {proof.verifiedNumbers.length
+              ? `${verifiedOk} of ${proof.verifiedNumbers.length} figures agree when worked out two ways`
+              : "No two-way checks recorded"}
+          </CardTitle>
+          <CardDescription>Each figure is worked out two independent ways. Where they disagree, the gap is shown and explained.</CardDescription>
+        </CardHeader>
+        <CardContent className="px-0">
+          {proof.verifiedNumbers.length === 0 ? (
+            <div className="px-6">
+              <EmptyState title="No checks recorded" />
+            </div>
+          ) : (
+            <Table>
+              <TableHeader>
+                <TableRow className="hover:bg-transparent">
+                  <TableHead className="pl-6">Figure</TableHead>
+                  <TableHead className="hidden md:table-cell">Way 1</TableHead>
+                  <TableHead className="text-right">Result</TableHead>
+                  <TableHead className="hidden md:table-cell">Way 2</TableHead>
+                  <TableHead className="text-right">Result</TableHead>
+                  <TableHead className="pr-6 text-right">Agree?</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {proof.verifiedNumbers.map((v) => {
+                  const isCount = v.label.toLowerCase().includes("bills checked");
+                  const fmt = (n: number) => (isCount ? n.toLocaleString("en-US") : formatMoney(n));
+                  return (
+                    <TableRow key={v.label}>
+                      <TableCell className="pl-6 align-top whitespace-normal">
+                        <span className="font-medium">{v.label}</span>
+                        {!v.ok && (
+                          <p className="tabular mt-0.5 text-xs font-medium text-rose-700 dark:text-rose-300">
+                            Gap: {fmt(Math.abs(v.valueA - v.valueB))}
+                          </p>
+                        )}
+                        {v.note && <p className="mt-0.5 text-xs text-muted-foreground">{v.note}</p>}
+                      </TableCell>
+                      <TableCell className="hidden align-top whitespace-normal text-muted-foreground md:table-cell">{v.methodA}</TableCell>
+                      <TableCell className="tabular text-right align-top">{fmt(v.valueA)}</TableCell>
+                      <TableCell className="hidden align-top whitespace-normal text-muted-foreground md:table-cell">{v.methodB}</TableCell>
+                      <TableCell className="tabular text-right align-top">{fmt(v.valueB)}</TableCell>
+                      <TableCell className="pr-6 text-right align-top">
+                        {v.ok ? (
+                          <CircleCheck className="ml-auto size-4 text-emerald-600 dark:text-emerald-400" aria-label="Agrees" />
+                        ) : (
+                          <CircleX className="ml-auto size-4 text-rose-600 dark:text-rose-400" aria-label="Disagrees" />
+                        )}
+                      </TableCell>
+                    </TableRow>
+                  );
+                })}
+              </TableBody>
+            </Table>
+          )}
+        </CardContent>
+      </Card>
+
       {results.monthOne && (
         <Card className="mt-6">
           <CardHeader>
@@ -177,6 +283,15 @@ export default function ProofPage() {
           </CardContent>
         </Card>
       )}
+
+
+      <details className="group mt-8 rounded-xl border bg-card/50 p-4 sm:p-5">
+        <summary className="cursor-pointer list-none text-sm font-semibold">
+          How it runs safely: auto-send rules, settings, data sources and run notes
+          <span className="ml-2 text-xs font-normal text-muted-foreground group-open:hidden">Show</span>
+        </summary>
+        <div className="-mt-2">
+      {results.autoSend && <TrustLadder data={results.autoSend} invoices={invoices} />}
 
       {results.settings && results.settings.length > 0 && (
         <Card className="mt-6">
@@ -246,69 +361,6 @@ export default function ProofPage() {
         </Card>
       )}
 
-      {results.autoSend && <TrustLadder data={results.autoSend} invoices={invoices} />}
-
-      <Card className="mt-6">
-        <CardHeader>
-          <CardTitle className="leading-snug">
-            {proof.verifiedNumbers.length
-              ? `${verifiedOk} of ${proof.verifiedNumbers.length} figures agree when worked out two ways`
-              : "No two-way checks recorded"}
-          </CardTitle>
-          <CardDescription>Each figure is worked out two independent ways. Where they disagree, the gap is shown and explained.</CardDescription>
-        </CardHeader>
-        <CardContent className="px-0">
-          {proof.verifiedNumbers.length === 0 ? (
-            <div className="px-6">
-              <EmptyState title="No checks recorded" />
-            </div>
-          ) : (
-            <Table>
-              <TableHeader>
-                <TableRow className="hover:bg-transparent">
-                  <TableHead className="pl-6">Figure</TableHead>
-                  <TableHead className="hidden md:table-cell">Way 1</TableHead>
-                  <TableHead className="text-right">Result</TableHead>
-                  <TableHead className="hidden md:table-cell">Way 2</TableHead>
-                  <TableHead className="text-right">Result</TableHead>
-                  <TableHead className="pr-6 text-right">Agree?</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {proof.verifiedNumbers.map((v) => {
-                  const isCount = v.label.toLowerCase().includes("bills checked");
-                  const fmt = (n: number) => (isCount ? n.toLocaleString("en-US") : formatMoney(n));
-                  return (
-                    <TableRow key={v.label}>
-                      <TableCell className="pl-6 align-top whitespace-normal">
-                        <span className="font-medium">{v.label}</span>
-                        {!v.ok && (
-                          <p className="tabular mt-0.5 text-xs font-medium text-rose-700 dark:text-rose-300">
-                            Gap: {fmt(Math.abs(v.valueA - v.valueB))}
-                          </p>
-                        )}
-                        {v.note && <p className="mt-0.5 text-xs text-muted-foreground">{v.note}</p>}
-                      </TableCell>
-                      <TableCell className="hidden align-top whitespace-normal text-muted-foreground md:table-cell">{v.methodA}</TableCell>
-                      <TableCell className="tabular text-right align-top">{fmt(v.valueA)}</TableCell>
-                      <TableCell className="hidden align-top whitespace-normal text-muted-foreground md:table-cell">{v.methodB}</TableCell>
-                      <TableCell className="tabular text-right align-top">{fmt(v.valueB)}</TableCell>
-                      <TableCell className="pr-6 text-right align-top">
-                        {v.ok ? (
-                          <CircleCheck className="ml-auto size-4 text-emerald-600 dark:text-emerald-400" aria-label="Agrees" />
-                        ) : (
-                          <CircleX className="ml-auto size-4 text-rose-600 dark:text-rose-400" aria-label="Disagrees" />
-                        )}
-                      </TableCell>
-                    </TableRow>
-                  );
-                })}
-              </TableBody>
-            </Table>
-          )}
-        </CardContent>
-      </Card>
-
       <Card className="mt-6">
         <CardHeader>
           <CardTitle className="leading-snug">
@@ -376,6 +428,8 @@ export default function ProofPage() {
           )}
         </CardContent>
       </Card>
+        </div>
+      </details>
     </>
   );
 }

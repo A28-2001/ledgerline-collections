@@ -60,9 +60,9 @@ export const CAUSE_META: Record<Cause, { label: string; color: string; descripti
     description: "An open complaint or escalation. Fix that first.",
   },
   wrong_bill: {
-    label: "Bill doesn't match contract",
+    label: "Customer disputes the bill",
     color: "var(--cause-wrong-bill)",
-    description: "The bill disagrees with the contract. Fix the bill first.",
+    description: "The customer says this bill is wrong, often in a ticket Zendesk marks solved. Correct it or answer them before asking for money.",
   },
   paid: {
     label: "Probably already paid",
@@ -175,7 +175,7 @@ export const GLOSSARY: { term: string; meaning: string }[] = [
   { term: "Check first", meaning: "The tool isn't sure: the AI wasn't sure what a ticket means, a payment could belong to more than one bill, or the customer match is weak. A person decides these before anything else." },
   { term: "AI double-check", meaning: "Two different AI models read each ticket on their own. If they disagree, the AI wasn't sure, and nobody is chased until a person reads it." },
   { term: "Proof", meaning: "The records behind a suggestion: the ticket, payment or contract, with the file and row it came from." },
-  { term: "Don't chase today", meaning: "Money we would have chased by mistake: bills that look paid, customers with an open billing complaint or escalation, and bills that don't match the contract." },
+  { term: "Don't chase today", meaning: "Money we would have chased by mistake: bills that look paid, customers with an open complaint or a chargeback threat, and bills the customer disputes." },
   { term: "Chase today", meaning: "Bills with nothing blocking them: reminders to send and customers to call." },
   { term: "Decision", meaning: "One click by a person: each bill to check first, plus one click to approve each step. The tool never acts on its own." },
 ];
