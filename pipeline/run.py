@@ -236,8 +236,9 @@ def main() -> None:
     notes = list(dict.fromkeys(data.notes))
     if str(cfg["ai"].get("ticket_text")).lower() in ("off", "false", "no"):
         notes.append("No-vendor mode (Maya, 23 Nov): no AI provider is approved yet, so tickets are read with tags, status and simple rules "
-                     "run locally; nothing leaves Ledgerline's systems. On the same data the AI judges (redacted text) held all 14 disputed bills; "
-                     "this mode holds 12, sends 1 to a person and the last is a 92-day phone call anyway. No disputed bill gets an unchecked reminder.")
+                     "run locally; nothing leaves Ledgerline's systems. It now holds all 14 disputed bills, the same as the AI judges. Until 24 Nov it "
+                     "missed two (Banerjee Petrov, Upton & Bell): their tickets named the invoice but read as escalations, so the tool said 'call'. Fixed, and "
+                     "every call now shows the customer's tickets beside it.")
     elif not ai.enabled:
         why = ai.error or "no key"
         notes.append(f"AI judges were off for this run ({why}): ticket reading used rules only, and borderline names went to a person.")

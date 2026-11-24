@@ -65,8 +65,12 @@ export function rowDetail(inv: Invoice, verdict: Verdict): string {
       if (tone === "soft") return "Softer tone: open product complaint";
       return inv.reminderStage ?? "Reminder";
     }
-    case "call":
-      return callWhy(inv);
+    case "call": {
+      // Maya: any ticket from the customer sits next to the call, named invoice or not.
+      const tickets = inv.evidence.filter((e) => e.kind === "ticket");
+      const latest = [...tickets].sort((a, b) => (b.date ?? "").localeCompare(a.date ?? ""))[0];
+      return latest ? `${callWhy(inv)} · Read first: \u201c${latest.title}\u201d` : callWhy(inv);
+    }
   }
 }
 

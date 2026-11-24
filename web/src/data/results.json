@@ -1,6 +1,6 @@
 {
  "meta": {
-  "generatedAt": "2026-11-24T06:33:17+00:00",
+  "generatedAt": "2026-11-24T06:35:55+00:00",
   "asOf": "2026-10-31",
   "dataSource": "real",
   "companyName": "Ledgerline",
@@ -36,7 +36,7 @@
   ],
   "aiMode": "rules_only",
   "notes": [
-   "No-vendor mode (Maya, 23 Nov): no AI provider is approved yet, so tickets are read with tags, status and simple rules run locally; nothing leaves Ledgerline's systems. On the same data the AI judges (redacted text) held all 14 disputed bills; this mode holds 12, sends 1 to a person and the last is a 92-day phone call anyway. No disputed bill gets an unchecked reminder.",
+   "No-vendor mode (Maya, 23 Nov): no AI provider is approved yet, so tickets are read with tags, status and simple rules run locally; nothing leaves Ledgerline's systems. It now holds all 14 disputed bills, the same as the AI judges. Until 24 Nov it missed two (Banerjee Petrov, Upton & Bell): their tickets named the invoice but read as escalations, so the tool said 'call'. Fixed, and every call now shows the customer's tickets beside it.",
    "Payment status not recorded: failed card check skipped."
   ],
   "sources": [
@@ -79,30 +79,30 @@
     "amount": 181746.0
    },
    "hold": {
-    "count": 18,
-    "amount": 318025.0
+    "count": 20,
+    "amount": 364741.0
    },
    "paid": {
     "count": 5,
     "amount": 78348.0
    },
    "call": {
-    "count": 11,
-    "amount": 55126.0
+    "count": 9,
+    "amount": 8410.0
    }
   },
   "byCause": [
    {
     "cause": "wrong_bill",
     "label": "Customer says the bill is wrong",
-    "amount": 262284.0,
-    "count": 12
+    "amount": 309000.0,
+    "count": 14
    },
    {
     "cause": "simply_late",
     "label": "Simply late",
-    "amount": 220417.0,
-    "count": 15
+    "amount": 173701.0,
+    "count": 13
    },
    {
     "cause": "paid",
@@ -123,8 +123,8 @@
     "count": 16
    }
   ],
-  "shouldNotChaseAmount": 396373.0,
-  "headline": "$396,373 of $633,245 overdue (63%) sits with customers we shouldn't chase today: they've probably paid, they're unhappy, or the bill is wrong."
+  "shouldNotChaseAmount": 443089.0,
+  "headline": "$443,089 of $633,245 overdue (70%) sits with customers we shouldn't chase today: they've probably paid, they're unhappy, or the bill is wrong."
  },
  "invoices": [
   {
@@ -2042,6 +2042,94 @@
    }
   },
   {
+   "id": "INV-25662",
+   "customerId": "C1254",
+   "customerName": "Upton & Bell Advisory",
+   "amount": 44064.0,
+   "currency": "USD",
+   "issueDate": "2026-07-27",
+   "dueDate": "2026-08-26",
+   "daysOverdue": 66,
+   "agingBucket": "61-90",
+   "verdict": "hold",
+   "cause": "wrong_bill",
+   "confidence": "high",
+   "headline": "The customer disputes this exact invoice in a support ticket and says they're holding payment until it's fixed. The ticket is marked solved in Zendesk, but the bill was never corrected or reissued.",
+   "reasons": [
+    {
+     "text": "The customer disputes this exact invoice in a support ticket and says they're holding payment until it's fixed. The ticket is marked solved in Zendesk, but the bill was never corrected or reissued.",
+     "evidenceIds": [
+      "ticket:T880582"
+     ],
+     "policyRef": "collections_policy.md: do not chase an invoice the customer has disputed"
+    },
+    {
+     "text": "Raised Sep 7, 2026: 40 working days without a fix, 35 past the 5-day target.",
+     "evidenceIds": [],
+     "policyRef": "Maya (COO): corrected invoice or clear answer within 5 working days"
+    }
+   ],
+   "evidence": [
+    {
+     "id": "ticket:T880949",
+     "kind": "ticket",
+     "file": "tickets.csv",
+     "recordId": "T880949",
+     "date": "2026-10-20",
+     "status": "solved",
+     "title": "Not working?",
+     "detail": "Changed my language to German in profile settings, it switches for a moment then goes back to English on the next page load."
+    },
+    {
+     "id": "ticket:T880587",
+     "kind": "ticket",
+     "file": "tickets.csv",
+     "recordId": "T880587",
+     "date": "2026-09-08",
+     "status": "solved",
+     "title": "Before we renew",
+     "detail": "Hello,\n\nWe use Net 30 on our standard template but the portal is telling clients they have 29 days. Did something change in how terms are worked out?"
+    },
+    {
+     "id": "ticket:T880582",
+     "kind": "ticket",
+     "file": "tickets.csv",
+     "recordId": "T880582",
+     "date": "2026-09-07",
+     "status": "solved",
+     "title": "Late fee should not be there",
+     "detail": "The card charge failed last month because of an outage on your payment side, not ours. Your support agent told us at the time the late fee would be waived. It's on INV-25662 anyway. I'm not authorising payment while that fee is included.\n\nNoah"
+    },
+    {
+     "id": "contract:C1254:2026-07-27",
+     "kind": "contract",
+     "file": "contracts.csv",
+     "recordId": "C1254:2026-07-27",
+     "date": "2026-07-27",
+     "title": "Contract: 54 seats \u00d7 $68.00, Jul 27, 2026 to Jul 26, 2027"
+    }
+   ],
+   "policyRef": "collections_policy.md: do not chase an invoice the customer has disputed",
+   "needsReview": false,
+   "draft": {
+    "to": "noah.mbeki@uptonbelladvisory.example",
+    "subject": "",
+    "body": "",
+    "tone": "none"
+   },
+   "hold": {
+    "owner": "Priya Nair",
+    "ownerRole": "Finance (AR)",
+    "deadline": "2026-10-31",
+    "action": "Send a corrected invoice or a clear answer to the customer. Target: 5 working days from when they raised it. Top-50 account, so Dana Ruiz approves any correction."
+   },
+   "autoSend": {
+    "eligible": false,
+    "why": "Disputed or held bills stay with a person",
+    "permanent": true
+   }
+  },
+  {
    "id": "INV-25873",
    "customerId": "C1282",
    "customerName": "Eastman & Wexler CPAs",
@@ -2630,10 +2718,10 @@
    "verdict": "hold",
    "cause": "wrong_bill",
    "confidence": "high",
-   "headline": "The customer disputes this exact invoice in a support ticket. The ticket is marked solved in Zendesk, but the bill was never corrected or reissued.",
+   "headline": "The customer disputes this exact invoice in a support ticket and says they're holding payment until it's fixed. The ticket is marked solved in Zendesk, but the bill was never corrected or reissued.",
    "reasons": [
     {
-     "text": "The customer disputes this exact invoice in a support ticket. The ticket is marked solved in Zendesk, but the bill was never corrected or reissued.",
+     "text": "The customer disputes this exact invoice in a support ticket and says they're holding payment until it's fixed. The ticket is marked solved in Zendesk, but the bill was never corrected or reissued.",
      "evidenceIds": [
       "ticket:T880849"
      ],
@@ -3168,6 +3256,74 @@
     "tone": "none"
    },
    "reviewReason": "a billing ticket from Sep 10, 2026 is marked solved: check it was really fixed",
+   "hold": {
+    "owner": "Priya Nair",
+    "ownerRole": "Finance (AR)",
+    "deadline": "2026-10-31",
+    "action": "Send a corrected invoice or a clear answer to the customer. Target: 5 working days from when they raised it. Priya Nair can correct up to $2,500 herself; Dana Ruiz approves anything bigger."
+   },
+   "autoSend": {
+    "eligible": false,
+    "why": "Disputed or held bills stay with a person",
+    "permanent": true
+   }
+  },
+  {
+   "id": "INV-25539",
+   "customerId": "C1439",
+   "customerName": "Banerjee Petrov Engineers",
+   "amount": 2652.0,
+   "currency": "USD",
+   "issueDate": "2026-07-01",
+   "dueDate": "2026-07-31",
+   "daysOverdue": 92,
+   "agingBucket": "90+",
+   "verdict": "hold",
+   "cause": "wrong_bill",
+   "confidence": "high",
+   "headline": "The customer disputes this exact invoice in a support ticket and says they're holding payment until it's fixed. The ticket is marked solved in Zendesk, but the bill was never corrected or reissued.",
+   "reasons": [
+    {
+     "text": "The customer disputes this exact invoice in a support ticket and says they're holding payment until it's fixed. The ticket is marked solved in Zendesk, but the bill was never corrected or reissued.",
+     "evidenceIds": [
+      "ticket:T880432"
+     ],
+     "policyRef": "collections_policy.md: do not chase an invoice the customer has disputed"
+    },
+    {
+     "text": "Raised Aug 19, 2026: 53 working days without a fix, 48 past the 5-day target.",
+     "evidenceIds": [],
+     "policyRef": "Maya (COO): corrected invoice or clear answer within 5 working days"
+    }
+   ],
+   "evidence": [
+    {
+     "id": "ticket:T880432",
+     "kind": "ticket",
+     "file": "tickets.csv",
+     "recordId": "T880432",
+     "date": "2026-08-19",
+     "status": "solved",
+     "title": "Client portal cancellation ignored",
+     "detail": "We switched off the client portal in August because, frankly, our clients weren't logging into it. Your team confirmed the cancellation by email. INV-25539 not only still charges the monthly portal fee, it seems to have the setup line on it again?? Two partners signed off on dropping this module and neither of them is going to sign off on paying for it. Please correct and resend."
+    },
+    {
+     "id": "contract:C1439:2026-04-01",
+     "kind": "contract",
+     "file": "contracts.csv",
+     "recordId": "C1439:2026-04-01",
+     "date": "2026-04-01",
+     "title": "Contract: 13 seats \u00d7 $68.00, Apr 1, 2026 to Mar 31, 2027"
+    }
+   ],
+   "policyRef": "collections_policy.md: do not chase an invoice the customer has disputed",
+   "needsReview": false,
+   "draft": {
+    "to": "marcus.glover@banerjeepetrovengineer.example",
+    "subject": "",
+    "body": "",
+    "tone": "none"
+   },
    "hold": {
     "owner": "Priya Nair",
     "ownerRole": "Finance (AR)",
@@ -3988,157 +4144,6 @@
    }
   },
   {
-   "id": "INV-25662",
-   "customerId": "C1254",
-   "customerName": "Upton & Bell Advisory",
-   "amount": 44064.0,
-   "currency": "USD",
-   "issueDate": "2026-07-27",
-   "dueDate": "2026-08-26",
-   "daysOverdue": 66,
-   "agingBucket": "61-90",
-   "verdict": "call",
-   "cause": "simply_late",
-   "confidence": "low",
-   "headline": "Call: 66 days overdue",
-   "reasons": [
-    {
-     "text": "66 days overdue: a person should call rather than email.",
-     "evidenceIds": [],
-     "policyRef": "process_maps.md FIN-1: not paid after the reminders, phone and offer a payment plan"
-    },
-    {
-     "text": "One of the 50 largest accounts: nothing goes out until a person has read it.",
-     "evidenceIds": [],
-     "policyRef": "collections_policy.md: nothing goes to one of the 50 largest accounts without a person reading it first"
-    },
-    {
-     "text": "Tell Hannah Drummond (account manager) before this goes out.",
-     "evidenceIds": [],
-     "policyRef": "collections_policy.md: tell the account manager before finance contacts one of their accounts"
-    }
-   ],
-   "evidence": [
-    {
-     "id": "ticket:T880949",
-     "kind": "ticket",
-     "file": "tickets.csv",
-     "recordId": "T880949",
-     "date": "2026-10-20",
-     "status": "solved",
-     "title": "Not working?",
-     "detail": "Changed my language to German in profile settings, it switches for a moment then goes back to English on the next page load."
-    },
-    {
-     "id": "ticket:T880587",
-     "kind": "ticket",
-     "file": "tickets.csv",
-     "recordId": "T880587",
-     "date": "2026-09-08",
-     "status": "solved",
-     "title": "Before we renew",
-     "detail": "Hello,\n\nWe use Net 30 on our standard template but the portal is telling clients they have 29 days. Did something change in how terms are worked out?"
-    },
-    {
-     "id": "ticket:T880582",
-     "kind": "ticket",
-     "file": "tickets.csv",
-     "recordId": "T880582",
-     "date": "2026-09-07",
-     "status": "solved",
-     "title": "Late fee should not be there",
-     "detail": "The card charge failed last month because of an outage on your payment side, not ours. Your support agent told us at the time the late fee would be waived. It's on INV-25662 anyway. I'm not authorising payment while that fee is included.\n\nNoah"
-    },
-    {
-     "id": "contract:C1254:2026-07-27",
-     "kind": "contract",
-     "file": "contracts.csv",
-     "recordId": "C1254:2026-07-27",
-     "date": "2026-07-27",
-     "title": "Contract: 54 seats \u00d7 $68.00, Jul 27, 2026 to Jul 26, 2027"
-    }
-   ],
-   "policyRef": "process_maps.md FIN-1: not paid after the reminders, phone and offer a payment plan",
-   "needsReview": true,
-   "draft": {
-    "to": "noah.mbeki@uptonbelladvisory.example",
-    "subject": "",
-    "body": "",
-    "tone": "none"
-   },
-   "reviewReason": "ticket tagged billing on Sep 7, 2026, after this bill was issued: a person reads it before anyone chases; one of the 50 largest accounts: a person reads or writes this one personally",
-   "autoSend": {
-    "eligible": false,
-    "why": "Every phone call stays with a person",
-    "permanent": true
-   }
-  },
-  {
-   "id": "INV-25539",
-   "customerId": "C1439",
-   "customerName": "Banerjee Petrov Engineers",
-   "amount": 2652.0,
-   "currency": "USD",
-   "issueDate": "2026-07-01",
-   "dueDate": "2026-07-31",
-   "daysOverdue": 92,
-   "agingBucket": "90+",
-   "verdict": "call",
-   "cause": "simply_late",
-   "confidence": "high",
-   "headline": "Call: 92 days overdue",
-   "reasons": [
-    {
-     "text": "92 days overdue: a person should call rather than email.",
-     "evidenceIds": [],
-     "policyRef": "process_maps.md FIN-1: not paid after the reminders, phone and offer a payment plan"
-    },
-    {
-     "text": "Over 90 days: escalate to Dana Ruiz (VP Finance).",
-     "evidenceIds": [],
-     "policyRef": "process_maps.md FIN-1: still unpaid at 90 days, escalate to the VP Finance"
-    },
-    {
-     "text": "Tell Nadia Sinclair (account manager) before this goes out.",
-     "evidenceIds": [],
-     "policyRef": "collections_policy.md: tell the account manager before finance contacts one of their accounts"
-    }
-   ],
-   "evidence": [
-    {
-     "id": "ticket:T880432",
-     "kind": "ticket",
-     "file": "tickets.csv",
-     "recordId": "T880432",
-     "date": "2026-08-19",
-     "status": "solved",
-     "title": "Client portal cancellation ignored",
-     "detail": "We switched off the client portal in August because, frankly, our clients weren't logging into it. Your team confirmed the cancellation by email. INV-25539 not only still charges the monthly portal fee, it seems to have the setup line on it again?? Two partners signed off on dropping this module and neither of them is going to sign off on paying for it. Please correct and resend."
-    },
-    {
-     "id": "contract:C1439:2026-04-01",
-     "kind": "contract",
-     "file": "contracts.csv",
-     "recordId": "C1439:2026-04-01",
-     "date": "2026-04-01",
-     "title": "Contract: 13 seats \u00d7 $68.00, Apr 1, 2026 to Mar 31, 2027"
-    }
-   ],
-   "policyRef": "process_maps.md FIN-1: not paid after the reminders, phone and offer a payment plan",
-   "needsReview": false,
-   "draft": {
-    "to": "marcus.glover@banerjeepetrovengineer.example",
-    "subject": "",
-    "body": "",
-    "tone": "none"
-   },
-   "autoSend": {
-    "eligible": false,
-    "why": "Every phone call stays with a person",
-    "permanent": true
-   }
-  },
-  {
    "id": "INV-25803",
    "customerId": "C1375",
    "customerName": "Glover Engineering",
@@ -4153,6 +4158,13 @@
    "confidence": "low",
    "headline": "Call: 59 days overdue",
    "reasons": [
+    {
+     "text": "Read before you call: they raised \u201cRe: Re: Re: Fwd:\u201d on Sep 22, 2026 (solved in Zendesk).",
+     "evidenceIds": [
+      "ticket:T880736"
+     ],
+     "policyRef": "Maya (COO): Priya sees any ticket from the customer next to a call"
+    },
     {
      "text": "A billing ticket from Sep 22, 2026 is closed. Mentioned for context; it doesn't block the reminder.",
      "evidenceIds": [
@@ -4234,7 +4246,7 @@
      "title": "Card payment for $1,836 failed"
     }
    ],
-   "policyRef": "billing_engine_rewrite_2026.md: Stripe retries failed cards three times over seven days, emailing each time",
+   "policyRef": "Maya (COO): Priya sees any ticket from the customer next to a call",
    "needsReview": true,
    "draft": {
     "to": "kofi.glover@gloverengineering.example",
@@ -4264,6 +4276,13 @@
    "confidence": "low",
    "headline": "Call: 83 days overdue",
    "reasons": [
+    {
+     "text": "Read before you call: they raised \u201cQuestion re: our subscription\u201d on Sep 22, 2026 (solved in Zendesk).",
+     "evidenceIds": [
+      "ticket:T880731"
+     ],
+     "policyRef": "Maya (COO): Priya sees any ticket from the customer next to a call"
+    },
     {
      "text": "A billing ticket from Sep 22, 2026 is closed. Mentioned for context; it doesn't block the reminder.",
      "evidenceIds": [
@@ -4318,7 +4337,7 @@
      "title": "Card payment for $1,632 failed"
     }
    ],
-   "policyRef": "billing_engine_rewrite_2026.md: Stripe retries failed cards three times over seven days, emailing each time",
+   "policyRef": "Maya (COO): Priya sees any ticket from the customer next to a call",
    "needsReview": true,
    "draft": {
     "to": "emma.stanhope@quillmottco.example",
@@ -4348,6 +4367,14 @@
    "confidence": "low",
    "headline": "Call: 64 days overdue",
    "reasons": [
+    {
+     "text": "Read before you call: they raised \u201cBefore we renew\u201d on Oct 3, 2026 (solved in Zendesk), plus 1 more ticket since this bill was issued.",
+     "evidenceIds": [
+      "ticket:T880830",
+      "ticket:T880633"
+     ],
+     "policyRef": "Maya (COO): Priya sees any ticket from the customer next to a call"
+    },
     {
      "text": "A billing ticket from Oct 3, 2026 is closed. Mentioned for context; it doesn't block the reminder.",
      "evidenceIds": [
@@ -4432,7 +4459,7 @@
      "title": "Card payment for $1,088 failed"
     }
    ],
-   "policyRef": "billing_engine_rewrite_2026.md: Stripe retries failed cards three times over seven days, emailing each time",
+   "policyRef": "Maya (COO): Priya sees any ticket from the customer next to a call",
    "needsReview": true,
    "draft": {
     "to": "nadia.marsh@ashgrovepartners.example",
@@ -4462,6 +4489,13 @@
    "confidence": "low",
    "headline": "Call: 149 days overdue",
    "reasons": [
+    {
+     "text": "Read before you call: they raised \u201cStill waiting on a reply\u201d on Oct 20, 2026 (solved in Zendesk).",
+     "evidenceIds": [
+      "ticket:T880944"
+     ],
+     "policyRef": "Maya (COO): Priya sees any ticket from the customer next to a call"
+    },
     {
      "text": "A billing ticket from Oct 20, 2026 is closed. Mentioned for context; it doesn't block the reminder.",
      "evidenceIds": [
@@ -4528,7 +4562,7 @@
      "title": "Card payment for $799 failed"
     }
    ],
-   "policyRef": "billing_engine_rewrite_2026.md: Stripe retries failed cards three times over seven days, emailing each time",
+   "policyRef": "Maya (COO): Priya sees any ticket from the customer next to a call",
    "needsReview": true,
    "draft": {
     "to": "clara.underhill@northgatecreative.example",
@@ -4558,6 +4592,14 @@
    "confidence": "high",
    "headline": "Call: 54 days overdue",
    "reasons": [
+    {
+     "text": "Read before you call: they raised \u201cHello?\u201d on Oct 27, 2026 (solved in Zendesk), plus 1 more ticket since this bill was issued.",
+     "evidenceIds": [
+      "ticket:T881002",
+      "ticket:T880963"
+     ],
+     "policyRef": "Maya (COO): Priya sees any ticket from the customer next to a call"
+    },
     {
      "text": "A billing ticket from Jul 16, 2026 is closed. Mentioned for context; it doesn't block the reminder.",
      "evidenceIds": [
@@ -4632,7 +4674,7 @@
      "title": "Card payment for $705 failed"
     }
    ],
-   "policyRef": "billing_engine_rewrite_2026.md: Stripe retries failed cards three times over seven days, emailing each time",
+   "policyRef": "Maya (COO): Priya sees any ticket from the customer next to a call",
    "needsReview": false,
    "draft": {
     "to": "emma.holloway@kowalczykstanhopearchi.example",
@@ -13683,9 +13725,9 @@
    {
     "label": "Shouldn't chase today",
     "methodA": "Sum of Hold + Probably paid verdicts",
-    "valueA": 396373.0,
+    "valueA": 443089.0,
     "methodB": "Recounted from the raw evidence flags",
-    "valueB": 396373.0,
+    "valueB": 443089.0,
     "ok": true
    },
    {
@@ -13714,18 +13756,18 @@
    }
   ],
   "failures": [],
-  "runtimeSeconds": 0.43
+  "runtimeSeconds": 0.42
  },
  "morningSummary": {
   "title": "Collections check, 2026-10-31",
   "bullets": [
    "20 reminders ready to send ($181,746). Approve all in one click.",
-   "18 on hold ($318,025): owners have until 2026-10-31.",
+   "20 on hold ($364,741): owners have until 2026-10-31.",
    "5 probably paid already ($78,348): confirm and close.",
-   "11 need a phone call ($55,126).",
-   "17 need a second look before anything goes out."
+   "9 need a phone call ($8,410).",
+   "16 need a second look before anything goes out."
   ],
-  "text": "Good morning. $396,373 of $633,245 overdue (63%) sits with customers we shouldn't chase today: they've probably paid, they're unhappy, or the bill is wrong. Today: 20 reminders ready to send ($181,746). Approve all in one click. 18 on hold ($318,025): owners have until 2026-10-31. 5 probably paid already ($78,348): confirm and close. 11 need a phone call ($55,126). 17 need a second look before anything goes out.",
+  "text": "Good morning. $443,089 of $633,245 overdue (70%) sits with customers we shouldn't chase today: they've probably paid, they're unhappy, or the bill is wrong. Today: 20 reminders ready to send ($181,746). Approve all in one click. 20 on hold ($364,741): owners have until 2026-10-31. 5 probably paid already ($78,348): confirm and close. 9 need a phone call ($8,410). 16 need a second look before anything goes out.",
   "cover": "While Priya Nair is on leave (March (dates to confirm)), Dana Ruiz owns this morning list and Marcus Bell keeps the probably-paid list. Cover is off today.",
   "routing": [
    {
@@ -13735,10 +13777,10 @@
     "cc": "Dana Ruiz",
     "lines": [
      "20 reminders ready to send ($181,746). Approve all in one click.",
-     "18 on hold ($318,025): owners have until 2026-10-31.",
+     "20 on hold ($364,741): owners have until 2026-10-31.",
      "5 probably paid already ($78,348): confirm and close.",
-     "11 need a phone call ($55,126).",
-     "17 need a second look before anything goes out."
+     "9 need a phone call ($8,410).",
+     "16 need a second look before anything goes out."
     ],
     "by": null
    },
@@ -13764,7 +13806,7 @@
     "cc": null,
     "lines": [
      "Brandt Ashby IT: invoice INV-25822, $26,112. The customer disputes this exact invoice in a support ticket and says they're holding payment until it's fixed",
-     "Castell Engineering: invoice INV-25764, $6,324. The customer disputes this exact invoice in a support ticket. The ticket is marked solved in Zendesk, but the ",
+     "Castell Engineering: invoice INV-25764, $6,324. The customer disputes this exact invoice in a support ticket and says they're holding payment until it's fixed",
      "Wexler Media: invoice INV-25811, $1,224. The customer disputes this exact invoice in a support ticket. The ticket is still open."
     ],
     "by": "Nov 5",

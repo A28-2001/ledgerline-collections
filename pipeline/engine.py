@@ -33,7 +33,8 @@ SERIOUS_RX = re.compile(r"legal action|lawyer|attorney|regulator|chargeback|canc
                         r"switch(ing)? to|escalat|legal|lawyer", re.I)
 HOLDING_RX = re.compile(  # the customer says they're not paying until something is fixed
     r"hold(ing)? off pay|won.?t pay|will not pay|not (be )?pay(ing)?|paused (the )?payment|on hold until|settle once|pay once|"
-    r"until (a |the )?(corrected|revised|new) (invoice|version)|cancel and reissue|corrected (invoice|version)|pending a corrected",
+    r"until (a |the )?(corrected|revised|new) (invoice|version)|cancel and reissue|corrected (invoice|version)|pending a corrected|"
+    r"not authoris|not authoriz|(isn.t|not) going to (sign off on )?pay|correct and resend|please correct|won.?t be paying",
     re.I)
 # Maya: "anything that reads like a threat" without a person checking gets the tool switched off.
 THREAT_WORDS = ["suspend", "suspension", "collections agency", "collection agency", "legal action", "final notice",
@@ -343,7 +344,7 @@ class Engine:
                     row.votes = t["agreement"]["votes"]
                 names_bill = row.key and row.key in t.get("invoice_refs", set())
                 after_issue = row.issue is None or pd.isna(row.issue) or t["created"] >= row.issue - pd.Timedelta(days=3)
-                if names_bill and after_issue and (t.get("holding") or label in ("billing_complaint", "disagree")):
+                if names_bill and after_issue and (t.get("holding") or label in ("billing_complaint", "serious_escalation", "disagree")):
                     row.flags["dispute_hold"] = True
                     row.flags["dispute_since"] = t["created"]
                     row.flags["dispute_pricing"] = bool(PRICING_RX.search(f"{t.get('subject') or ''} {t.get('body') or ''}"))
@@ -573,6 +574,13 @@ class Engine:
                 verdict, cause = "hold", "wrong_bill"
             elif long_ or big or f.get("missing_in_billing") or not row.match.ok:
                 verdict = "call"
+                since_issue = [e for e in row.evidence if e["kind"] == "ticket" and e.get("date")
+                               and (row.issue is None or pd.isna(row.issue) or pd.Timestamp(e["date"]) >= row.issue)]
+                if since_issue:
+                    t0 = sorted(since_issue, key=lambda e: e["date"], reverse=True)[0]
+                    row.reasons.insert(0, {"text": f"Read before you call: they raised \u201c{t0['title']}\u201d on {nice(t0['date'])} ({t0.get('status') or 'open'} in Zendesk)"
+                                                   + (f", plus {len(since_issue) - 1} more ticket{'s' if len(since_issue) > 2 else ''} since this bill was issued." if len(since_issue) > 1 else "."),
+                                           "evidenceIds": [e["id"] for e in since_issue], "policyRef": "Maya (COO): Priya sees any ticket from the customer next to a call"})
                 cause = "unhappy" if f.get("soft") else "card_failed" if f.get("card_failed") else "simply_late"
                 why = []
                 if long_:
