@@ -69,6 +69,7 @@ export function rowDetail(inv: Invoice, verdict: Verdict): string {
       return p ? shortenDates(p.title).replace(/^\$[\d,.]+ received/i, "Received") : "A payment seems to cover it";
     }
     case "hold": {
+      if (/^too early/i.test(inv.headline)) return `Too early · back on ${shortDate(inv.hold?.deadline)}`;
       const who = inv.hold
         ? `${isMine(inv) ? "Yours" : inv.hold.owner} · ${inv.hold.deadline <= results.meta.asOf ? "act today" : `by ${shortDate(inv.hold.deadline)}`}`
         : "";

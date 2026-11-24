@@ -185,7 +185,7 @@ export function MorningView({ data }: { data: Pick<Results, "invoices" | "summar
   const current: StepKey =
     flaggedOpen.length > 0
       ? "check"
-      : (steps.find((s) => s.undecided.length > 0)?.def.verdict ?? (disputesOpen.length > 0 ? "dispute" : "finish"));
+      : (steps.find((s) => s.undecided.length > 0)?.def.verdict ?? "finish");
   const expanded: StepKey = openStep === "auto" || openStep === null ? current : openStep;
   const selected = selectedId ? (invoices.find((i) => i.id === selectedId) ?? null) : null;
   const allDone = decisionsLeft === 0;
@@ -202,7 +202,10 @@ export function MorningView({ data }: { data: Pick<Results, "invoices" | "summar
   }
 
   function runBulk(step: (typeof steps)[number]) {
-    approve(step.undecided.map((i) => ({ id: i.id, verdict: step.def.verdict })));
+    approve(
+      step.undecided.map((i) => ({ id: i.id, verdict: step.def.verdict })),
+      { bulk: true },
+    );
     setConfirmStep(null);
     setOpenStep("auto");
     toast.success(shadow ? `Agreed with ${step.undecided.length}` : step.def.done(step.undecided.length), { description: "Step done." });
@@ -214,12 +217,13 @@ export function MorningView({ data }: { data: Pick<Results, "invoices" | "summar
       toast.info("Nothing decided yet", { description: "Finish a step first." });
       return;
     }
-    const header = ["invoice_id", "customer", "amount", "days_overdue", "tool_said", "final", "decision", "reason", "decided_at", "to", "subject", "body", "owner", "deadline"];
+    const header = ["invoice_id", "customer", "amount", "days_overdue", "tool_said", "final", "decision", "how", "reason", "decided_at", "to", "subject", "body", "owner", "deadline"];
     const lines = decided.map((i) => {
       const d = decisions[i.id];
       // Subject and body travel with each approved reminder, so sending is a paste, not a hunt.
       const sendIt = d.verdict === "send";
-      return [i.id, i.customerName, i.amount, i.daysOverdue, i.verdict, d.verdict, d.status, d.reason ?? "", d.at, i.draft?.to ?? "",
+      const how = d.status === "overridden" ? "changed" : d.bulk ? "all at once" : "one by one";
+      return [i.id, i.customerName, i.amount, i.daysOverdue, i.verdict, d.verdict, d.status, how, d.reason ?? "", d.at, i.draft?.to ?? "",
         sendIt ? (i.draft?.subject ?? "") : "", sendIt ? (i.draft?.body ?? "") : "", i.hold?.owner ?? "", i.hold?.deadline ?? ""]
         .map(csvCell)
         .join(",");
@@ -266,10 +270,10 @@ export function MorningView({ data }: { data: Pick<Results, "invoices" | "summar
       amount: sumAmount(st.items),
       done: st.done && st.items.length > 0,
     })),
-    ...(myDisputes.length > 0
-      ? [{ key: "dispute" as StepKey, label: "Fix disputes", icon: FileWarning, color: "var(--cause-wrong-bill)", left: disputesOpen.length, total: myDisputes.length, amount: sumAmount(myDisputes), done: disputesOpen.length === 0 }]
-      : []),
     { key: "finish", label: "Done", icon: Send, color: "var(--foreground)", left: decisionsLeft, total: totalDecisions, amount: 0, done: allDone },
+    ...(myDisputes.length > 0
+      ? [{ key: "dispute" as StepKey, label: "Then: the day's disputes", icon: FileWarning, color: "var(--cause-wrong-bill)", left: disputesOpen.length, total: myDisputes.length, amount: sumAmount(myDisputes), done: disputesOpen.length === 0 }]
+      : []),
   ];
   const active: StepKey = tiles.some((t) => t.key === expanded) ? expanded : current;
   const activeStep = steps.find((st) => st.def.verdict === active);
@@ -377,7 +381,7 @@ export function MorningView({ data }: { data: Pick<Results, "invoices" | "summar
                         title={activeStep.def.title}
                         sub={
                           shadow && activeKey === "send"
-                            ? "Nothing blocks these. Read a draft or two, then agree with the rest. Nothing goes out this week."
+                            ? "Nothing blocks these. Compare each with your own call; agreeing with all at once is marked as such in the list. Nothing goes out this week."
                             : activeStep.def.explain
                         }
                         amount={activeStep.items.length ? formatMoney(sumAmount(activeStep.items)) : undefined}
@@ -480,6 +484,12 @@ export function MorningView({ data }: { data: Pick<Results, "invoices" | "summar
                   <Download />
                   Download the decision list (CSV)
                 </Button>
+                {disputesOpen.length > 0 && (
+                  <Button size="sm" variant="outline" onClick={() => setOpenStep("dispute")}>
+                    Then the day&apos;s work: {pluralize(disputesOpen.length, "dispute")}
+                    <ArrowRight />
+                  </Button>
+                )}
               </div>
             </div>
           </div>
@@ -591,7 +601,7 @@ export function MorningView({ data }: { data: Pick<Results, "invoices" | "summar
                     <DialogTitle>{shadow ? `Agree with all ${s.undecided.length}?` : confirmStep.confirmTitle(s.undecided.length)}</DialogTitle>
                     <DialogDescription>
                       {shadow
-                        ? "This is the shadow week: agreeing records that you'd do the same. Nothing goes out from the tool."
+                        ? "This is the shadow week: agreeing records that you'd do the same, marked 'all at once' in the list. Nothing goes out from the tool."
                         : confirmStep.confirmText}
                     </DialogDescription>
                   </DialogHeader>

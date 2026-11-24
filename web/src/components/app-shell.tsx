@@ -87,6 +87,7 @@ export function AppShell({
   asOf,
   generatedAt,
   historyGap,
+  shadowWeek = false,
 }: {
   children: ReactNode;
   companyName: string;
@@ -94,6 +95,7 @@ export function AppShell({
   asOf: string;
   generatedAt: string;
   historyGap?: string | null;
+  shadowWeek?: boolean;
 }) {
   const [open, setOpen] = useState(false);
 
@@ -167,7 +169,7 @@ export function AppShell({
             <span>
               Run generated {generatedAt} · data as of {asOf}
             </span>
-            <span>Nothing is sent without a person approving it.</span>
+            <span>{shadowWeek ? "Shadow week: nothing goes out from the tool." : "Nothing is sent without a person approving it."}</span>
           </div>
         </footer>
       </div>

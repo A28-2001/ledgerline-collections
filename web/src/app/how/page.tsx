@@ -40,7 +40,10 @@ export default function HowPage() {
     { q: "45+ days late, or already calling them?", hint: "The 45-day email threatens suspension, so a person phones instead. One conversation per customer",
       answer: "Call", n: count("call"), who: `Priya calls, with the customer's tickets in front of her${allCards ? ". Today they're all failed cards: ask for a new card" : ""}`, tone: "call" },
     { q: "None of the above", hint: "Nothing blocks a reminder", answer: "Send a reminder", n: count("send"),
-      who: "Priya approves them in one click. Approving doesn't send; nothing goes out on its own", tone: "send" },
+      who: meta.shadowWeek
+        ? "This week Priya compares each with her own call; nothing goes out. After the week she approves them, and each opens in her own mailbox"
+        : "Priya approves them in one click. Approving doesn't send; nothing goes out on its own",
+      tone: "send" },
   ];
 
   const toneClass: Record<string, string> = {
@@ -131,8 +134,7 @@ export default function HowPage() {
             <ScanSearch className="size-5 text-brand" aria-hidden="true" />
             <p className="mt-2 font-semibold">AI as the auditor</p>
             <p className="mt-1 text-xs leading-relaxed text-muted-foreground">
-              A separate model checked all 54 bills blind. First pass: 8 disagreements, which became 5 fixes, 2 rules Maya confirmed and 1 kept on
-              purpose. Proposed: run it weekly.
+              A separate model checked all 54 bills blind. First pass: 8 disagreements; 6 now agree after fixes, and 2 differ on purpose. Proposed: run it weekly.
             </p>
           </div>
           <div className="rounded-lg border bg-background p-3.5">
@@ -143,7 +145,7 @@ export default function HowPage() {
               {up && up.cacheMisses === 0 && (
                 <>
                   {" "}
-                  On these {up.bills} bills it changed {up.verdictsChanged.length === 0 ? "no answers" : `${up.verdictsChanged.length} answers`}; Check first would hold {up.checkFirstWithAI} bills instead of {up.checkFirstRules}.
+                  On these {up.bills} bills it changed {up.verdictsChanged.length === 0 ? "none of the four answers" : `${up.verdictsChanged.length} answers`}; it would only send {up.checkFirstWithAI} bills to Check first instead of {up.checkFirstRules}.
                 </>
               )}
             </p>

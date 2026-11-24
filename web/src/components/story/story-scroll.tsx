@@ -480,7 +480,7 @@ export function StoryScroll({ chapters, data, asOf }: { chapters: Chapter[]; dat
       <section aria-label="Where to go next" className="mt-6 rounded-2xl border bg-card p-6 lg:mt-0">
         <p className="text-sm font-semibold">That&rsquo;s the story. The work happens on Today.</p>
         <p className="mt-1 max-w-2xl text-sm text-muted-foreground">
-          Priya works through one list each morning and decides what goes out. Every suggestion shows its reason, its records and the policy
+          Priya works through one list each morning, one customer at a time. Every suggestion shows its reason, its records and the policy
           line.
         </p>
         <div className="mt-4 flex flex-wrap gap-2">

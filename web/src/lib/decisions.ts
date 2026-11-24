@@ -11,6 +11,7 @@ export type Decision = {
   verdict: Verdict; // the verdict the person approved (their own when overridden)
   reason?: string; // required when overridden
   at: string; // ISO time of the decision
+  bulk?: boolean; // agreed with a whole step at once (the shadow week reports these apart)
 };
 export type Decisions = Record<string, Decision>;
 
@@ -50,10 +51,10 @@ function subscribe(listener: () => void) {
 export function useDecisions() {
   const decisions = useSyncExternalStore(subscribe, read, () => EMPTY);
 
-  const approve = useCallback((items: { id: string; verdict: Verdict }[]) => {
+  const approve = useCallback((items: { id: string; verdict: Verdict }[], opts?: { bulk?: boolean }) => {
     const now = new Date().toISOString();
     const next = { ...read() };
-    for (const { id, verdict } of items) next[id] = { status: "approved", verdict, at: now };
+    for (const { id, verdict } of items) next[id] = { status: "approved", verdict, at: now, ...(opts?.bulk ? { bulk: true } : {}) };
     write(next);
   }, []);
 

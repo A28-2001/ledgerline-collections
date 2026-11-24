@@ -28,7 +28,7 @@ Crane IT Partners appears on its own as the first card on Today (Maya's pending-
 - 3:20 The money bar, then the **step tiles** (every step's count and money in view; the selected one opens below). **Check first**, Crane IT, and the line under the amount: where the bill stands on the policy. "$446,810 isn't chased today. One customer at a time: the reason, the ticket beside it, Maya's rule. This week the button says Agree, because nothing goes out from the tool."
 - 4:05 Click the **Probably paid** tile, then **Hand off holds**; pick Kingsway in the list: "One $5,100 payment, two $5,100 bills. The older one goes to Marcus; this one waits until he confirms, by Nov 4. That's the COO's Paidly fear, handled."
 - 4:50 **Send reminders** tile: open one draft, then Agree with all 14. **Make calls** tile: one line. "Ledgerline's own template, without the old suspension threat. Rosales gets one email for two bills. Every call today is a failed card past 45 days."
-- 5:25 **Fix disputes** tile: Banerjee Petrov is first, the oldest. Then the **Done** tile. "The day's work: 14 disputes, oldest first, each with a reply that names the issue. This week Priya compares; the download saves the day's comparison."
+- 5:25 The **Done** tile ends the morning's 11 decisions. Then **the day's disputes**: Banerjee Petrov is first, the oldest. "The day's work: 14 disputes, oldest first, each with a reply that names the issue. This week Priya compares; the download saves the day's comparison."
 
 ## 6:05 to 8:05 · The other pages
 

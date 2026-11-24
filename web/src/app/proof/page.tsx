@@ -115,7 +115,7 @@ export default function ProofPage() {
       lead: "AI is measured before it's allowed",
       rest:
         up && up.cacheMisses === 0
-          ? `On these bills it changed ${up.verdictsChanged.length === 0 ? "no answers" : `${up.verdictsChanged.length} answers`}; Check first would hold ${up.checkFirstWithAI} bills instead of ${up.checkFirstRules}. Once allowed, two models must agree or a person decides.`
+          ? `On these bills it changed ${up.verdictsChanged.length === 0 ? "none of the four answers" : `${up.verdictsChanged.length} answers`}; it would only send ${up.checkFirstWithAI} bills to Check first instead of ${up.checkFirstRules}. Once allowed, two models must agree or a person decides.`
           : "Once allowed, two models must agree or a person decides.",
     },
     { icon: MessageSquareText, lead: "No threats, no invented facts", rest: "Emails come from Ledgerline's own templates, checked for threat words." },
