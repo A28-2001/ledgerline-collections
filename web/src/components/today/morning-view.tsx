@@ -371,7 +371,11 @@ export function MorningView({ data }: { data: Pick<Results, "invoices" | "summar
                       </p>
                     ) : (
                       <FocusQueue
-                        items={s.undecided.map((inv) => ({ key: inv.id, bills: [inv], why: rowDetail(inv, key) }))}
+                        items={s.undecided.map((inv) => ({
+                          key: inv.id,
+                          bills: [inv],
+                          why: key === "paid" ? "A payment fits this bill, but nobody has matched it to the bill yet." : rowDetail(inv, key),
+                        }))}
                         verdictOf={() => key}
                         primaryLabel={(it) => stepPrimary(key, it.bills[0])}
                         onPrimary={(it) => decideOne(it.bills[0], key)}
