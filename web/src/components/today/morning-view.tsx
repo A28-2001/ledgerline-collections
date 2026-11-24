@@ -207,10 +207,13 @@ export function MorningView({ data }: { data: Pick<Results, "invoices" | "summar
       toast.info("Nothing decided yet", { description: "Finish a step first." });
       return;
     }
-    const header = ["invoice_id", "customer", "amount", "days_overdue", "tool_said", "final", "decision", "reason", "decided_at", "to", "subject", "owner", "deadline"];
+    const header = ["invoice_id", "customer", "amount", "days_overdue", "tool_said", "final", "decision", "reason", "decided_at", "to", "subject", "body", "owner", "deadline"];
     const lines = decided.map((i) => {
       const d = decisions[i.id];
-      return [i.id, i.customerName, i.amount, i.daysOverdue, i.verdict, d.verdict, d.status, d.reason ?? "", d.at, i.draft?.to ?? "", i.draft?.subject ?? "", i.hold?.owner ?? "", i.hold?.deadline ?? ""]
+      // Subject and body travel with each approved reminder, so sending is a paste, not a hunt.
+      const sendIt = d.verdict === "send";
+      return [i.id, i.customerName, i.amount, i.daysOverdue, i.verdict, d.verdict, d.status, d.reason ?? "", d.at, i.draft?.to ?? "",
+        sendIt ? (i.draft?.subject ?? "") : "", sendIt ? (i.draft?.body ?? "") : "", i.hold?.owner ?? "", i.hold?.deadline ?? ""]
         .map(csvCell)
         .join(",");
     });

@@ -19,6 +19,10 @@ export default function StoryPage() {
   const disputed = summary.byCause.find((c) => c.cause === "wrong_bill");
   const count = (v: string) => invoices.filter((i) => i.verdict === v).length;
   const wait = invoices.filter((i) => i.verdict === "hold" && i.headline.startsWith("Too early")).length;
+  const mine = invoices.filter(
+    (i) => i.verdict === "hold" && i.cause === "wrong_bill" && i.hold && i.hold.deadline <= meta.asOf && i.hold.ownerRole.startsWith("Finance"),
+  );
+  const strict = proof.verifiedNumbers.find((v) => v.label.startsWith("Complaint open"))?.strictValue ?? 0;
 
   const firstPass = proof.reviewLog?.summary.match(/(\d+) of \d+ agreed \((\d+)%\)/);
   const firstAgreed = firstPass ? Number(firstPass[1]) : null;
@@ -104,14 +108,14 @@ export default function StoryPage() {
     {
       id: "answer",
       kicker: "The answer",
-      number: `${count("send")} of ${invoices.length}`,
-      numberNote: "bills get a polite email today",
+      number: mine.length ? fmt(mine.length) : `${count("send")} of ${invoices.length}`,
+      numberNote: mine.length ? "disputed bills Priya fixes first, all past the 5-day target" : "bills get a polite email today",
       text: [
-        "Five questions decide each bill, and Priya approves every email in one click.",
+        `Five questions decide each bill. A disputed bill goes to Priya: a corrected invoice or a clear answer within 5 working days, then the money. ${count("send")} other bills get a polite reminder she approves in one click.`,
         tk
           ? `Rules read the ticket tags today. Once legal approves an AI vendor, AI also reads the text, because ${tk.fromOverdueUntagged ?? tk.relevantUntagged} of the ${tk.fromOverdue} tickets from customers who owe money have no tag.`
           : "",
-        `The rest go to a person: ${count("hold")} holds${wait ? ` (${wait} just too early)` : ""}, ${count("call")} calls and ${count("paid")} probably paid.`,
+        `Everything else waits with an owner and a deadline: ${count("hold")} holds${wait ? ` (${wait} just too early)` : ""}, ${count("call")} calls and ${count("paid")} probably paid.`,
       ].filter(Boolean),
       source: `This run, all ${invoices.length} bills (Today and How it works pages)`,
     },
@@ -132,7 +136,7 @@ export default function StoryPage() {
       number: fmt(checksTotal),
       numberNote: "reminders to anyone who had paid or had a complaint open",
       text: [
-        "The COO's two tests, both at 0 in this run. Earlier versions would have chased 4 customers with a complaint open; each became a rule.",
+        `The COO's two tests, both at 0 under our rules.${strict ? ` Under the strictest reading, ${strict} customers still get a reminder because their pending ticket isn't about money: for Maya to confirm.` : ""} Earlier versions would have chased 3 customers with a complaint open; each became a rule.`,
         "Monday starts a shadow week on exports: the tool runs beside Priya, and nothing is sent without a person.",
       ],
       source: "Checks on the How sure are we page; plan agreed with the COO",

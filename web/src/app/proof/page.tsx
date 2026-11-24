@@ -43,8 +43,9 @@ export default function ProofPage() {
           <CardHeader>
             <CardTitle className="leading-snug">How often it&apos;s right, and every time it was wrong</CardTitle>
             <CardDescription>
-              A separate AI model, which never saw the tool&apos;s answers, reviewed all 54 bills from the raw records. A person then confirmed
-              every call where the two disagreed.
+              A separate AI model, which never saw the tool&apos;s answers, reviewed all 54 bills from fact files we built from the raw records
+              (each bill with its tickets, payments and contract, plus a few flags such as top-50). A person checked the 11 contested calls,
+              not the 43 where both agreed.
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -191,7 +192,36 @@ export default function ProofPage() {
         </Card>
       )}
 
-      <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
+      {results.monthOne && (
+        <Card className="mt-6">
+          <CardHeader>
+            <CardTitle className="leading-snug">How we&apos;ll know it works, a month from now</CardTitle>
+            <CardDescription>{results.monthOne.source}</CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-3 text-sm">
+            <ol className="grid gap-3 sm:grid-cols-3">
+              {results.monthOne.measures.map((m, idx) => (
+                <li key={m.label} className="rounded-lg border p-3">
+                  <p className="text-xs text-muted-foreground">{idx === 0 ? "The one number" : "The real test"}</p>
+                  <p className="mt-0.5 font-medium">{m.label}</p>
+                  <p className="tabular mt-1 text-base font-semibold">{m.todayText}</p>
+                  <p className="mt-1 text-xs text-muted-foreground">{m.target}</p>
+                </li>
+              ))}
+            </ol>
+            <p className="text-xs leading-relaxed text-muted-foreground">{results.monthOne.timeSaved}</p>
+          </CardContent>
+        </Card>
+      )}
+
+
+      <details className="group mt-8 rounded-xl border bg-card/50 p-4 sm:p-5">
+        <summary className="cursor-pointer list-none text-sm font-semibold">
+          More detail: name matching, cross-checks, auto-send rules, settings, data sources and run notes
+          <span className="ml-2 text-xs font-normal text-muted-foreground group-open:hidden">Show</span>
+        </summary>
+        <div className="-mt-2">
+      <div className="mt-6 grid grid-cols-1 gap-6 lg:grid-cols-2">
         <Card>
           <CardHeader>
             <CardTitle className="leading-snug">
@@ -239,7 +269,7 @@ export default function ProofPage() {
                 </p>
               </>
             ) : (
-              <EmptyState title="No-vendor mode" description="No AI provider is approved yet (COO, 23 Nov), so tickets were read with tags, status and local rules, and no ticket text left the company. The AI double-check switches on once legal approves a provider. The redraft button on each email is a demo on made-up data." />
+              <EmptyState title="No-vendor mode" description="No AI provider is approved yet (COO, 23 Nov), so tickets were read with tags, status and local rules, and no ticket text left the company. The AI double-check switches on once legal approves a provider. The redraft button on each email is a demo that sends a draft from this fictional data room to Groq." />
             )}
           </CardContent>
         </Card>
@@ -304,35 +334,6 @@ export default function ProofPage() {
         </CardContent>
       </Card>
 
-      {results.monthOne && (
-        <Card className="mt-6">
-          <CardHeader>
-            <CardTitle className="leading-snug">How we&apos;ll know it works, a month from now</CardTitle>
-            <CardDescription>{results.monthOne.source}</CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-3 text-sm">
-            <ol className="grid gap-3 sm:grid-cols-3">
-              {results.monthOne.measures.map((m, idx) => (
-                <li key={m.label} className="rounded-lg border p-3">
-                  <p className="text-xs text-muted-foreground">{idx === 0 ? "The one number" : "The real test"}</p>
-                  <p className="mt-0.5 font-medium">{m.label}</p>
-                  <p className="tabular mt-1 text-base font-semibold">{m.todayText}</p>
-                  <p className="mt-1 text-xs text-muted-foreground">{m.target}</p>
-                </li>
-              ))}
-            </ol>
-            <p className="text-xs leading-relaxed text-muted-foreground">{results.monthOne.timeSaved}</p>
-          </CardContent>
-        </Card>
-      )}
-
-
-      <details className="group mt-8 rounded-xl border bg-card/50 p-4 sm:p-5">
-        <summary className="cursor-pointer list-none text-sm font-semibold">
-          How it runs safely: auto-send rules, settings, data sources and run notes
-          <span className="ml-2 text-xs font-normal text-muted-foreground group-open:hidden">Show</span>
-        </summary>
-        <div className="-mt-2">
       {results.autoSend && <TrustLadder data={results.autoSend} invoices={invoices} />}
 
       {results.settings && results.settings.length > 0 && (

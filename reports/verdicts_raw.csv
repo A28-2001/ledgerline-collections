@@ -7,7 +7,6 @@ INV-25883,Sinclair & Vance LLP,16320.0,13,send,simply_late,False,"First reminder
 INV-25906,Rosales Engineering,16320.0,7,send,simply_late,False,"First reminder (7 days): 7 days overdue, nothing blocking"
 INV-25859,Voss & Kowalczyk Agency,13056.0,18,send,simply_late,False,"First reminder (7 days): 18 days overdue, nothing blocking"
 INV-25858,Glover Strategy,9600.0,18,send,simply_late,False,"First reminder (7 days): 18 days overdue, nothing blocking"
-INV-25852,Kingsway Engineering Group,5100.0,19,send,unhappy,True,"Send a softer reminder (open support ticket, not about money)"
 INV-25863,Banerjee Design Partnership,5100.0,17,send,simply_late,False,"First reminder (7 days): 17 days overdue, nothing blocking"
 INV-25890,Oyelaran Strategy,4692.0,12,send,simply_late,False,"First reminder (7 days): 12 days overdue, nothing blocking"
 INV-25902,Crane IT Partners,3060.0,7,send,simply_late,False,"First reminder (7 days): 7 days overdue, nothing blocking"
@@ -24,32 +23,33 @@ INV-25730,Westbrook Engineering Group,47904.0,48,hold,wrong_bill,False,The custo
 INV-25765,Okafor & Nakamura LLP,46848.0,39,hold,wrong_bill,False,"The customer disputes this exact invoice in a support ticket and says they're holding payment until it's fixed. The ticket is marked solved in Zendesk, but the bill was never corrected or reissued."
 INV-25662,Upton & Bell Advisory,44064.0,66,hold,wrong_bill,False,"The customer disputes this exact invoice in a support ticket and says they're holding payment until it's fixed. The ticket is marked solved in Zendesk, but the bill was never corrected or reissued."
 INV-25873,Eastman & Wexler CPAs,43680.0,15,hold,unhappy,False,"They have a ticket open in Zendesk since Oct 28, 2026 (3 days). Chasing payment while their question is unanswered is what gets the tool switched off; the account manager decides when to resume."
-INV-25834,"Delacroix, Jessop & Co",41568.0,22,hold,wrong_bill,True,"The customer disputes this exact invoice in a support ticket and says they're holding payment until it's fixed. The ticket is marked solved in Zendesk, but the bill was never corrected or reissued."
+INV-25834,"Delacroix, Jessop & Co",41568.0,22,hold,wrong_bill,False,"The customer disputes this exact invoice in a support ticket and says they're holding payment until it's fixed. The ticket is marked solved in Zendesk, but the bill was never corrected or reissued."
 INV-25822,Brandt Ashby IT,26112.0,24,hold,wrong_bill,False,The customer disputes this exact invoice in a support ticket and says they're holding payment until it's fixed. The ticket is still open.
-INV-25757,Ellery Consulting,13056.0,41,hold,wrong_bill,True,"The customer disputes this exact invoice in a support ticket and says they're holding payment until it's fixed. The ticket is marked solved in Zendesk, but the bill was never corrected or reissued."
+INV-25757,Ellery Consulting,13056.0,41,hold,wrong_bill,False,"The customer disputes this exact invoice in a support ticket and says they're holding payment until it's fixed. The ticket is marked solved in Zendesk, but the bill was never corrected or reissued."
 INV-25750,Thackeray Accounting,7896.0,44,hold,wrong_bill,False,"The customer disputes this exact invoice in a support ticket and says they're holding payment until it's fixed. The ticket is marked solved in Zendesk, but the bill was never corrected or reissued."
 INV-25764,Castell Engineering,6324.0,39,hold,wrong_bill,False,"The customer disputes this exact invoice in a support ticket and says they're holding payment until it's fixed. The ticket is marked solved in Zendesk, but the bill was never corrected or reissued."
+INV-25852,Kingsway Engineering Group,5100.0,19,hold,paid,False,"A $5,100 payment from them (received Oct 29, 2026) is unmatched. It could pay invoice INV-25469 or this one. No reminder until Marcus confirms which."
 INV-25923,Abbott Design Partnership,4692.0,4,hold,simply_late,False,"Too early: 4 days late, and the policy's first reminder goes at 7 days (Nov 3, 2026). Nothing goes out today."
 INV-25712,Wexler & Hume Advisory,4080.0,52,hold,wrong_bill,False,"The customer disputes this exact invoice in a support ticket. The ticket is marked solved in Zendesk, but the bill was never corrected or reissued."
-INV-25718,Mercer & Banerjee LLP,3876.0,50,hold,wrong_bill,True,"The customer disputes this exact invoice in a support ticket and says they're holding payment until it's fixed. The ticket is marked solved in Zendesk, but the bill was never corrected or reissued."
+INV-25718,Mercer & Banerjee LLP,3876.0,50,hold,wrong_bill,False,"The customer disputes this exact invoice in a support ticket and says they're holding payment until it's fixed. The ticket is marked solved in Zendesk, but the bill was never corrected or reissued."
 INV-25973,Eastman Engineering,3264.0,23,hold,unhappy,False,"On Aug 30, 2026 they threatened or started a complaint to a regulator or consumer affairs office and a card dispute (chargeback) with their bank (ticket marked solved). Nothing shows it was settled, so finance doesn't chase until the account manager and Head of Support confirm it is."
-INV-25711,Oyelaran Devlin Engineers,2820.0,52,hold,wrong_bill,True,"The customer disputes this exact invoice in a support ticket. The ticket is marked solved in Zendesk, but the bill was never corrected or reissued."
+INV-25711,Oyelaran Devlin Engineers,2820.0,52,hold,wrong_bill,False,"The customer disputes this exact invoice in a support ticket. The ticket is marked solved in Zendesk, but the bill was never corrected or reissued."
 INV-25539,Banerjee Petrov Engineers,2652.0,92,hold,wrong_bill,False,"The customer disputes this exact invoice in a support ticket and says they're holding payment until it's fixed. The ticket is marked solved in Zendesk, but the bill was never corrected or reissued."
 INV-25854,Studio Marsh,1410.0,18,hold,unhappy,False,"A billing ticket from Oct 29, 2026, only 2 days ago, is marked solved in Zendesk, but nothing shows the money issue was settled (for example a refund we owe them). Confirm it before chasing."
 INV-25811,Wexler Media,1224.0,27,hold,wrong_bill,False,The customer disputes this exact invoice in a support ticket. The ticket is still open.
 INV-25769,Drummond Consulting,658.0,68,hold,unhappy,False,"On Jul 2, 2026 they threatened or started a card dispute (chargeback) with their bank (ticket marked solved). Nothing shows it was settled, so finance doesn't chase until the account manager and Head of Support confirm it is."
 INV-25897,Ambrose & Lowell Advisory,658.0,10,hold,unhappy,False,"They have a ticket pending in Zendesk since Aug 24, 2026 (68 days). Chasing payment while their question is unanswered is what gets the tool switched off; the account manager decides when to resume."
-INV-25784,Jessop & Orwell Agency,62688.0,36,paid,paid,True,An unmatched bank payment from this customer equals this bill. It was probably paid but never matched.
+INV-25784,Jessop & Orwell Agency,62688.0,36,paid,paid,False,An unmatched bank payment from this customer equals this bill. It was probably paid but never matched.
 INV-25806,Brandt & Lowell CPAs,6324.0,28,paid,paid,False,An unmatched bank payment from this customer equals this bill. It was probably paid but never matched.
-INV-25469,Kingsway Engineering Group,5100.0,111,paid,paid,True,An unmatched bank payment from this customer equals this bill. It was probably paid but never matched.
+INV-25469,Kingsway Engineering Group,5100.0,111,paid,paid,False,An unmatched bank payment from this customer equals this bill. It was probably paid but never matched.
 INV-25845,"Castellano, Crane & Co",3672.0,20,paid,paid,False,"An unmatched bank payment names this invoice in its memo (""INV-25845"") and equals the bill. It's paid; it just hasn't been matched yet."
 INV-25867,Yardley & Duarte Advisory,564.0,16,paid,paid,False,"An unmatched bank payment names this invoice in its memo (""inv25867 Yardley"") and equals the bill. It's paid; it just hasn't been matched yet."
-INV-25803,Glover Engineering,1836.0,59,call,card_failed,True,Call: 59 days overdue
-INV-25708,"Quill, Mott & Co",1632.0,83,call,card_failed,True,Call: 83 days overdue
+INV-25803,Glover Engineering,1836.0,59,call,card_failed,False,Card failed and the retries are over: call for a new card (59 days late)
+INV-25708,"Quill, Mott & Co",1632.0,83,call,card_failed,False,Card failed and the retries are over: call for a new card (83 days late)
 INV-25975,"Quill, Mott & Co",1632.0,22,call,card_failed,False,Cover it on the same call as invoice INV-25708
-INV-25793,Ashgrove Partners,1088.0,64,call,card_failed,True,Call: 64 days overdue
-INV-25433,Northgate Creative,799.0,149,call,card_failed,True,Call: 149 days overdue
-INV-25825,Kowalczyk + Stanhope Architects,705.0,54,call,card_failed,False,Call: 54 days overdue
-INV-25709,Moreau & Crane Agency,658.0,83,call,card_failed,False,Call: 83 days overdue
-INV-25470,Hollis Nair Engineers,517.0,141,call,card_failed,True,Call: 141 days overdue
-INV-25622,Studio Nakamura,517.0,105,call,card_failed,False,Call: 105 days overdue
+INV-25793,Ashgrove Partners,1088.0,64,call,card_failed,False,Card failed and the retries are over: call for a new card (64 days late)
+INV-25433,Northgate Creative,799.0,149,call,card_failed,True,Card failed and the retries are over: call for a new card (149 days late)
+INV-25825,Kowalczyk + Stanhope Architects,705.0,54,call,card_failed,False,Card failed and the retries are over: call for a new card (54 days late)
+INV-25709,Moreau & Crane Agency,658.0,83,call,card_failed,False,Card failed and the retries are over: call for a new card (83 days late)
+INV-25470,Hollis Nair Engineers,517.0,141,call,card_failed,True,Card failed and the retries are over: call for a new card (141 days late)
+INV-25622,Studio Nakamura,517.0,105,call,card_failed,False,Card failed and the retries are over: call for a new card (105 days late)

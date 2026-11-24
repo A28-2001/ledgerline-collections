@@ -1,6 +1,6 @@
 {
  "meta": {
-  "generatedAt": "2026-11-24T16:00:38+00:00",
+  "generatedAt": "2026-11-24T16:08:43+00:00",
   "asOf": "2026-10-31",
   "dataSource": "real",
   "companyName": "Ledgerline",
@@ -75,12 +75,12 @@
   "overdueCount": 54,
   "byVerdict": {
    "send": {
-    "count": 20,
-    "amount": 182151.0
+    "count": 19,
+    "amount": 177051.0
    },
    "hold": {
-    "count": 20,
-    "amount": 363362.0
+    "count": 21,
+    "amount": 368462.0
    },
    "paid": {
     "count": 5,
@@ -115,14 +115,14 @@
    {
     "cause": "paid",
     "label": "Already paid",
-    "amount": 78348.0,
-    "count": 5
+    "amount": 83448.0,
+    "count": 6
    },
    {
     "cause": "unhappy",
-    "label": "Unhappy customer",
-    "amount": 56603.0,
-    "count": 7
+    "label": "Open complaint or ticket",
+    "amount": 51503.0,
+    "count": 6
    },
    {
     "cause": "card_failed",
@@ -131,8 +131,8 @@
     "count": 14
    }
   ],
-  "shouldNotChaseAmount": 441710.0,
-  "headline": "$441,710 of $633,245 overdue (70%) sits with customers we shouldn't chase today: they've probably paid, they're unhappy, or the bill is wrong."
+  "shouldNotChaseAmount": 446810.0,
+  "headline": "$446,810 of $633,245 overdue (71%) sits with customers we shouldn't chase today: they've probably paid, they're unhappy, or the bill is wrong."
  },
  "invoices": [
   {
@@ -190,7 +190,7 @@
      "file": "contracts.csv",
      "recordId": "C1361:2026-09-14",
      "date": "2026-09-14",
-     "title": "Contract: 26 seats \u00d7 $88.00, Sep 14, 2026 to Sep 13, 2027"
+     "title": "Contract: 26 seats at $88.00 a month, plus a $12,000 platform fee a year, Sep 14, 2026 to Sep 13, 2027"
     }
    ],
    "policyRef": "collections_policy.md: tell the account manager before finance contacts one of their accounts",
@@ -283,7 +283,7 @@
      "file": "contracts.csv",
      "recordId": "C1457:2026-09-15",
      "date": "2026-09-15",
-     "title": "Contract: 28 seats \u00d7 $68.00, Sep 15, 2026 to Sep 14, 2027"
+     "title": "Contract: 28 seats at $68.00 a month, Sep 15, 2026 to Sep 14, 2027"
     }
    ],
    "policyRef": "collections_policy.md: tell the account manager before finance contacts one of their accounts",
@@ -358,7 +358,7 @@
      "file": "contracts.csv",
      "recordId": "C1455:2026-09-11",
      "date": "2026-09-11",
-     "title": "Contract: 24 seats \u00d7 $68.00, Sep 11, 2026 to Sep 10, 2027"
+     "title": "Contract: 24 seats at $68.00 a month, Sep 11, 2026 to Sep 10, 2027"
     }
    ],
    "policyRef": "collections_policy.md: reminders at 7, 21 and 45 days",
@@ -466,7 +466,7 @@
      "file": "contracts.csv",
      "recordId": "C1077:2026-09-19",
      "date": "2026-09-19",
-     "title": "Contract: 21 seats \u00d7 $68.00, Sep 19, 2026 to Sep 18, 2027"
+     "title": "Contract: 21 seats at $68.00 a month, Sep 19, 2026 to Sep 18, 2027"
     }
    ],
    "policyRef": "collections_policy.md: reminders at 7, 21 and 45 days",
@@ -541,7 +541,7 @@
      "file": "contracts.csv",
      "recordId": "C1284:2026-09-18",
      "date": "2026-09-18",
-     "title": "Contract: 20 seats \u00d7 $68.00, Sep 18, 2026 to Sep 17, 2027"
+     "title": "Contract: 20 seats at $68.00 a month, Sep 18, 2026 to Sep 17, 2027"
     }
    ],
    "policyRef": "collections_policy.md: reminders at 7, 21 and 45 days",
@@ -599,7 +599,7 @@
      "file": "contracts.csv",
      "recordId": "C1504:2026-09-24",
      "date": "2026-09-24",
-     "title": "Contract: 20 seats \u00d7 $68.00, Sep 24, 2026 to Sep 23, 2027"
+     "title": "Contract: 20 seats at $68.00 a month, Sep 24, 2026 to Sep 23, 2027"
     }
    ],
    "policyRef": "collections_policy.md: reminders at 7, 21 and 45 days",
@@ -674,7 +674,7 @@
      "file": "contracts.csv",
      "recordId": "C1411:2026-09-13",
      "date": "2026-09-13",
-     "title": "Contract: 16 seats \u00d7 $68.00, Sep 13, 2026 to Sep 12, 2027"
+     "title": "Contract: 16 seats at $68.00 a month, Sep 13, 2026 to Sep 12, 2027"
     }
    ],
    "policyRef": "collections_policy.md: reminders at 7, 21 and 45 days",
@@ -738,7 +738,7 @@
      "file": "contracts.csv",
      "recordId": "C1316:2025-12-13",
      "date": "2025-12-13",
-     "title": "Contract: 25 seats \u00d7 $88.00, Dec 13, 2025 to Dec 12, 2026"
+     "title": "Contract: 25 seats at $88.00 a month, plus a $12,000 platform fee a year, Dec 13, 2025 to Dec 12, 2026"
     }
    ],
    "policyRef": "collections_policy.md: reminders at 7, 21 and 45 days",
@@ -753,102 +753,6 @@
    "autoSend": {
     "eligible": true,
     "why": "Polite first or second reminder; outside the top 50; no open ticket; no unmatched payment",
-    "permanent": false
-   }
-  },
-  {
-   "id": "INV-25852",
-   "customerId": "C1469",
-   "customerName": "Kingsway Engineering Group",
-   "amount": 5100.0,
-   "currency": "USD",
-   "issueDate": "2026-09-12",
-   "dueDate": "2026-10-12",
-   "daysOverdue": 19,
-   "agingBucket": "1-30",
-   "verdict": "send",
-   "cause": "unhappy",
-   "confidence": "low",
-   "headline": "Send a softer reminder (open support ticket, not about money)",
-   "reasons": [
-    {
-     "text": "A $5,100 payment from them (received Oct 29, 2026) is unmatched. The tool assumed it pays invoice INV-25469, but it could just as well pay this one. Marcus confirms which before anyone sends a reminder.",
-     "evidenceIds": [],
-     "policyRef": "Maya (COO): chasing someone who's paid gets the tool switched off"
-    },
-    {
-     "text": "Also on file: a billing ticket from Jul 9, 2026, now closed.",
-     "evidenceIds": [
-      "ticket:T880078"
-     ],
-     "policyRef": null
-    },
-    {
-     "text": "Their ticket \u201cCan you check something for me\u201d is pending in Zendesk since Jul 20, 2026: support is waiting on them, and it isn't about money. It doesn't block the reminder, but the tone is softer and the account manager is told.",
-     "evidenceIds": [
-      "ticket:T880184"
-     ],
-     "policyRef": "collections_policy.md: tell the account manager before finance contacts one of their accounts"
-    },
-    {
-     "text": "Tell Nadia Sinclair (account manager) before this goes out.",
-     "evidenceIds": [],
-     "policyRef": "collections_policy.md: tell the account manager before finance contacts one of their accounts"
-    }
-   ],
-   "evidence": [
-    {
-     "id": "ticket:T880284",
-     "kind": "ticket",
-     "file": "tickets.csv",
-     "recordId": "T880284",
-     "date": "2026-07-31",
-     "status": "solved",
-     "title": "Query regarding our setup",
-     "detail": "Does the CRM integration bring in the company owner field? We use it to assign the account lead."
-    },
-    {
-     "id": "ticket:T880184",
-     "kind": "ticket",
-     "file": "tickets.csv",
-     "recordId": "T880184",
-     "date": "2026-07-20",
-     "status": "pending",
-     "title": "Can you check something for me",
-     "detail": "Hi there - The amount the client sees in the portal is 1,950.00 AUD but the PDF they downloaded says 1,949.99. Which one is right? They want to pay today.\n\nSigne"
-    },
-    {
-     "id": "ticket:T880078",
-     "kind": "ticket",
-     "file": "tickets.csv",
-     "recordId": "T880078",
-     "date": "2026-07-09",
-     "status": "solved",
-     "title": "Not working?",
-     "detail": "If I void an invoice, is that number gone for good or does it get reused?\n\nOscar"
-    },
-    {
-     "id": "contract:C1469:2025-12-12",
-     "kind": "contract",
-     "file": "contracts.csv",
-     "recordId": "C1469:2025-12-12",
-     "date": "2025-12-12",
-     "title": "Contract: 25 seats \u00d7 $68.00, Dec 12, 2025 to Dec 11, 2026"
-    }
-   ],
-   "policyRef": "Maya (COO): chasing someone who's paid gets the tool switched off",
-   "needsReview": true,
-   "draft": {
-    "to": "marcus.tan@kingswayengineeringgro.example",
-    "subject": "Invoice INV-25852: a quick note",
-    "body": "Hi Marcus,\n\nI know your team has an open request with our support team. Separately, invoice INV-25852 for $5,100 was due on Oct 12, 2026. When you get a moment, could you check where it is? If anything about the invoice looks wrong, just reply and we'll put it right.\n\nThanks,\nPriya Nair\nLedgerline Billing",
-    "tone": "soft"
-   },
-   "reminderStage": "First reminder (7 days)",
-   "reviewReason": "a $5,100 payment from them is unmatched and could cover this bill instead: confirm before any reminder",
-   "autoSend": {
-    "eligible": false,
-    "why": "Customer has an open ticket",
     "permanent": false
    }
   },
@@ -931,7 +835,7 @@
      "file": "contracts.csv",
      "recordId": "C1412:2026-09-14",
      "date": "2026-09-14",
-     "title": "Contract: 25 seats \u00d7 $68.00, Sep 14, 2026 to Sep 13, 2027"
+     "title": "Contract: 25 seats at $68.00 a month, Sep 14, 2026 to Sep 13, 2027"
     }
    ],
    "policyRef": "collections_policy.md: reminders at 7, 21 and 45 days",
@@ -989,7 +893,7 @@
      "file": "contracts.csv",
      "recordId": "C1446:2026-06-19",
      "date": "2026-06-19",
-     "title": "Contract: 23 seats \u00d7 $68.00, Jun 19, 2026 to Jun 18, 2027"
+     "title": "Contract: 23 seats at $68.00 a month, Jun 19, 2026 to Jun 18, 2027"
     }
    ],
    "policyRef": "collections_policy.md: reminders at 7, 21 and 45 days",
@@ -1064,7 +968,7 @@
      "file": "contracts.csv",
      "recordId": "C1063:2026-06-24",
      "date": "2026-06-24",
-     "title": "Contract: 15 seats \u00d7 $68.00, Jun 24, 2026 to Jun 23, 2027"
+     "title": "Contract: 15 seats at $68.00 a month, Jun 24, 2026 to Jun 23, 2027"
     }
    ],
    "policyRef": "collections_policy.md: reminders at 7, 21 and 45 days",
@@ -1122,7 +1026,7 @@
      "file": "contracts.csv",
      "recordId": "C1504:2026-09-24",
      "date": "2026-09-24",
-     "title": "Contract: 20 seats \u00d7 $68.00, Sep 24, 2026 to Sep 23, 2027"
+     "title": "Contract: 20 seats at $68.00 a month, Sep 24, 2026 to Sep 23, 2027"
     }
    ],
    "policyRef": "collections_policy.md: reminders at 7, 21 and 45 days",
@@ -1203,7 +1107,7 @@
      "file": "contracts.csv",
      "recordId": "C1217:2026-03-18",
      "date": "2026-03-18",
-     "title": "Contract: 17 seats \u00d7 $47.00, Mar 18, 2026 to Mar 17, 2027"
+     "title": "Contract: 17 seats at $47.00 a month, Mar 18, 2026 to Mar 17, 2027"
     }
    ],
    "policyRef": "collections_policy.md: tell the account manager before finance contacts one of their accounts",
@@ -1294,7 +1198,7 @@
      "file": "contracts.csv",
      "recordId": "C1437:2026-03-21",
      "date": "2026-03-21",
-     "title": "Contract: 13 seats \u00d7 $47.00, Mar 21, 2026 to Mar 20, 2027"
+     "title": "Contract: 13 seats at $47.00 a month, Mar 21, 2026 to Mar 20, 2027"
     }
    ],
    "policyRef": "collections_policy.md: tell the account manager before finance contacts one of their accounts",
@@ -1404,7 +1308,7 @@
      "file": "contracts.csv",
      "recordId": "C1379:2026-02-01",
      "date": "2026-02-01",
-     "title": "Contract: 18 seats \u00d7 $47.00, Feb 1, 2026 to Jan 31, 2027"
+     "title": "Contract: 18 seats at $47.00 a month, Feb 1, 2026 to Jan 31, 2027"
     },
     {
      "id": "invoice:INV-25926",
@@ -1499,7 +1403,7 @@
      "file": "contracts.csv",
      "recordId": "C1353:2026-07-25",
      "date": "2026-07-25",
-     "title": "Contract: 17 seats \u00d7 $47.00, Jul 25, 2026 to Jul 24, 2027"
+     "title": "Contract: 17 seats at $47.00 a month, Jul 25, 2026 to Jul 24, 2027"
     },
     {
      "id": "invoice:INV-25912",
@@ -1588,7 +1492,7 @@
      "file": "contracts.csv",
      "recordId": "C1454:2026-09-01",
      "date": "2026-09-01",
-     "title": "Contract: 13 seats \u00d7 $47.00, Sep 1, 2026 to Aug 31, 2027"
+     "title": "Contract: 13 seats at $47.00 a month, Sep 1, 2026 to Aug 31, 2027"
     },
     {
      "id": "invoice:INV-25928",
@@ -1676,7 +1580,7 @@
      "file": "contracts.csv",
      "recordId": "C1110:2026-04-08",
      "date": "2026-04-08",
-     "title": "Contract: 13 seats \u00d7 $47.00, Apr 8, 2026 to Apr 7, 2027"
+     "title": "Contract: 13 seats at $47.00 a month, Apr 8, 2026 to Apr 7, 2027"
     },
     {
      "id": "invoice:INV-25969",
@@ -1748,7 +1652,7 @@
      "file": "contracts.csv",
      "recordId": "C1319:2025-12-16",
      "date": "2025-12-16",
-     "title": "Contract: 6 seats \u00d7 $47.00, Dec 16, 2025 to Dec 15, 2026"
+     "title": "Contract: 6 seats at $47.00 a month, Dec 16, 2025 to Dec 15, 2026"
     },
     {
      "id": "invoice:INV-26005",
@@ -1837,7 +1741,7 @@
      "file": "contracts.csv",
      "recordId": "C1073:2026-08-27",
      "date": "2026-08-27",
-     "title": "Contract: 46 seats \u00d7 $88.00, Aug 27, 2026 to Aug 26, 2027"
+     "title": "Contract: 46 seats at $88.00 a month, plus a $12,000 platform fee a year, Aug 27, 2026 to Aug 26, 2027"
     }
    ],
    "policyRef": "collections_policy.md: do not chase an invoice the customer has disputed",
@@ -1969,7 +1873,7 @@
      "file": "contracts.csv",
      "recordId": "C1264:2026-08-14",
      "date": "2026-08-14",
-     "title": "Contract: 34 seats \u00d7 $88.00, Aug 14, 2026 to Aug 13, 2027"
+     "title": "Contract: 34 seats at $88.00 a month, plus a $12,000 platform fee a year, Aug 14, 2026 to Aug 13, 2027"
     }
    ],
    "policyRef": "collections_policy.md: do not chase an invoice the customer has disputed",
@@ -2067,7 +1971,7 @@
      "file": "contracts.csv",
      "recordId": "C1154:2026-08-23",
      "date": "2026-08-23",
-     "title": "Contract: 33 seats \u00d7 $88.00, Aug 23, 2026 to Aug 22, 2027"
+     "title": "Contract: 33 seats at $88.00 a month, plus a $12,000 platform fee a year, Aug 23, 2026 to Aug 22, 2027"
     }
    ],
    "policyRef": "collections_policy.md: do not chase an invoice the customer has disputed",
@@ -2155,7 +2059,7 @@
      "file": "contracts.csv",
      "recordId": "C1254:2026-07-27",
      "date": "2026-07-27",
-     "title": "Contract: 54 seats \u00d7 $68.00, Jul 27, 2026 to Jul 26, 2027"
+     "title": "Contract: 54 seats at $68.00 a month, Jul 27, 2026 to Jul 26, 2027"
     }
    ],
    "policyRef": "collections_policy.md: do not chase an invoice the customer has disputed",
@@ -2255,7 +2159,7 @@
      "file": "contracts.csv",
      "recordId": "C1282:2026-09-16",
      "date": "2026-09-16",
-     "title": "Contract: 30 seats \u00d7 $88.00, Sep 16, 2026 to Sep 15, 2027"
+     "title": "Contract: 30 seats at $88.00 a month, plus a $12,000 platform fee a year, Sep 16, 2026 to Sep 15, 2027"
     }
    ],
    "policyRef": "collections_policy.md: tell the account manager before finance contacts one of their accounts",
@@ -2290,7 +2194,7 @@
    "agingBucket": "1-30",
    "verdict": "hold",
    "cause": "wrong_bill",
-   "confidence": "low",
+   "confidence": "high",
    "headline": "The customer disputes this exact invoice in a support ticket and says they're holding payment until it's fixed. The ticket is marked solved in Zendesk, but the bill was never corrected or reissued.",
    "reasons": [
     {
@@ -2404,18 +2308,17 @@
      "file": "contracts.csv",
      "recordId": "C1161:2026-09-09",
      "date": "2026-09-09",
-     "title": "Contract: 28 seats \u00d7 $88.00, Sep 9, 2026 to Sep 8, 2027"
+     "title": "Contract: 28 seats at $88.00 a month, plus a $12,000 platform fee a year, Sep 9, 2026 to Sep 8, 2027"
     }
    ],
    "policyRef": "collections_policy.md: do not chase an invoice the customer has disputed",
-   "needsReview": true,
+   "needsReview": false,
    "draft": {
     "to": "ethan.whitfield@delacroixjessopco.example",
     "subject": "",
     "body": "",
     "tone": "none"
    },
-   "reviewReason": "a billing ticket from Sep 11, 2026 is marked solved: check it was really fixed",
    "hold": {
     "owner": "Priya Nair",
     "ownerRole": "Finance (AR), with Maria Yardley for the customer's agreement",
@@ -2530,7 +2433,7 @@
      "file": "contracts.csv",
      "recordId": "C1075:2026-09-07",
      "date": "2026-09-07",
-     "title": "Contract: 32 seats \u00d7 $68.00, Sep 7, 2026 to Sep 6, 2027"
+     "title": "Contract: 32 seats at $68.00 a month, Sep 7, 2026 to Sep 6, 2027"
     }
    ],
    "policyRef": "collections_policy.md: do not chase an invoice the customer has disputed",
@@ -2565,7 +2468,7 @@
    "agingBucket": "31-60",
    "verdict": "hold",
    "cause": "wrong_bill",
-   "confidence": "low",
+   "confidence": "high",
    "headline": "The customer disputes this exact invoice in a support ticket and says they're holding payment until it's fixed. The ticket is marked solved in Zendesk, but the bill was never corrected or reissued.",
    "reasons": [
     {
@@ -2652,18 +2555,17 @@
      "file": "contracts.csv",
      "recordId": "C1152:2026-08-21",
      "date": "2026-08-21",
-     "title": "Contract: 16 seats \u00d7 $68.00, Aug 21, 2026 to Aug 20, 2027"
+     "title": "Contract: 16 seats at $68.00 a month, Aug 21, 2026 to Aug 20, 2027"
     }
    ],
    "policyRef": "collections_policy.md: do not chase an invoice the customer has disputed",
-   "needsReview": true,
+   "needsReview": false,
    "draft": {
     "to": "emma.orwell@elleryconsulting.example",
     "subject": "",
     "body": "",
     "tone": "none"
    },
-   "reviewReason": "a billing ticket from Sep 9, 2026 is marked solved: check it was really fixed",
    "hold": {
     "owner": "Priya Nair",
     "ownerRole": "Finance (AR)",
@@ -2731,7 +2633,7 @@
      "file": "contracts.csv",
      "recordId": "C1266:2026-08-18",
      "date": "2026-08-18",
-     "title": "Contract: 14 seats \u00d7 $47.00, Aug 18, 2026 to Aug 17, 2027"
+     "title": "Contract: 14 seats at $47.00 a month, Aug 18, 2026 to Aug 17, 2027"
     }
    ],
    "policyRef": "collections_policy.md: do not chase an invoice the customer has disputed",
@@ -2809,7 +2711,7 @@
      "file": "contracts.csv",
      "recordId": "C1045:2026-02-23",
      "date": "2026-02-23",
-     "title": "Contract: 31 seats \u00d7 $68.00, Feb 23, 2026 to Feb 22, 2027"
+     "title": "Contract: 31 seats at $68.00 a month, Feb 23, 2026 to Feb 22, 2027"
     }
    ],
    "policyRef": "collections_policy.md: do not chase an invoice the customer has disputed",
@@ -2825,6 +2727,102 @@
     "ownerRole": "Finance (AR), with Hannah Drummond for the customer's agreement",
     "deadline": "2026-10-31",
     "action": "Send a corrected invoice or a clear answer to the customer, agreeing seats or price with Hannah Drummond first. Target: 5 working days from when they raised it. Priya Nair can correct up to $2,500 herself; Dana Ruiz approves anything bigger."
+   },
+   "autoSend": {
+    "eligible": false,
+    "why": "Disputed or held bills stay with a person",
+    "permanent": true
+   }
+  },
+  {
+   "id": "INV-25852",
+   "customerId": "C1469",
+   "customerName": "Kingsway Engineering Group",
+   "amount": 5100.0,
+   "currency": "USD",
+   "issueDate": "2026-09-12",
+   "dueDate": "2026-10-12",
+   "daysOverdue": 19,
+   "agingBucket": "1-30",
+   "verdict": "hold",
+   "cause": "paid",
+   "confidence": "high",
+   "headline": "A $5,100 payment from them (received Oct 29, 2026) is unmatched. It could pay invoice INV-25469 or this one. No reminder until Marcus confirms which.",
+   "reasons": [
+    {
+     "text": "A $5,100 payment from them (received Oct 29, 2026) is unmatched. It could pay invoice INV-25469 or this one. No reminder until Marcus confirms which.",
+     "evidenceIds": [],
+     "policyRef": "Maya (COO): chasing someone who's paid gets the tool switched off"
+    },
+    {
+     "text": "Also on file: a billing ticket from Jul 9, 2026, now closed.",
+     "evidenceIds": [
+      "ticket:T880078"
+     ],
+     "policyRef": null
+    },
+    {
+     "text": "Their ticket \u201cCan you check something for me\u201d is pending in Zendesk since Jul 20, 2026: support is waiting on them, and it isn't about money.",
+     "evidenceIds": [
+      "ticket:T880184"
+     ],
+     "policyRef": "collections_policy.md: tell the account manager before finance contacts one of their accounts"
+    }
+   ],
+   "evidence": [
+    {
+     "id": "ticket:T880284",
+     "kind": "ticket",
+     "file": "tickets.csv",
+     "recordId": "T880284",
+     "date": "2026-07-31",
+     "status": "solved",
+     "title": "Query regarding our setup",
+     "detail": "Does the CRM integration bring in the company owner field? We use it to assign the account lead."
+    },
+    {
+     "id": "ticket:T880184",
+     "kind": "ticket",
+     "file": "tickets.csv",
+     "recordId": "T880184",
+     "date": "2026-07-20",
+     "status": "pending",
+     "title": "Can you check something for me",
+     "detail": "Hi there - The amount the client sees in the portal is 1,950.00 AUD but the PDF they downloaded says 1,949.99. Which one is right? They want to pay today.\n\nSigne"
+    },
+    {
+     "id": "ticket:T880078",
+     "kind": "ticket",
+     "file": "tickets.csv",
+     "recordId": "T880078",
+     "date": "2026-07-09",
+     "status": "solved",
+     "title": "Not working?",
+     "detail": "If I void an invoice, is that number gone for good or does it get reused?\n\nOscar"
+    },
+    {
+     "id": "contract:C1469:2025-12-12",
+     "kind": "contract",
+     "file": "contracts.csv",
+     "recordId": "C1469:2025-12-12",
+     "date": "2025-12-12",
+     "title": "Contract: 25 seats at $68.00 a month, Dec 12, 2025 to Dec 11, 2026"
+    }
+   ],
+   "policyRef": "Maya (COO): chasing someone who's paid gets the tool switched off",
+   "needsReview": false,
+   "draft": {
+    "to": "marcus.tan@kingswayengineeringgro.example",
+    "subject": "",
+    "body": "",
+    "tone": "none"
+   },
+   "hold": {
+    "owner": "Marcus Bell",
+    "ownerRole": "Staff Accountant (matches payments)",
+    "deadline": "2026-11-04",
+    "twinOf": "INV-25469",
+    "action": "Confirm whether the $5,100 payment pays INV-25469 or this bill. If it's this one, close it; if not, the reminder can go. Not confirmed in 2 working days, it comes back to Priya Nair."
    },
    "autoSend": {
     "eligible": false,
@@ -2877,7 +2875,7 @@
      "file": "contracts.csv",
      "recordId": "C1470:2025-12-27",
      "date": "2025-12-27",
-     "title": "Contract: 23 seats \u00d7 $68.00, Dec 27, 2025 to Dec 26, 2026"
+     "title": "Contract: 23 seats at $68.00 a month, Dec 27, 2025 to Dec 26, 2026"
     }
    ],
    "policyRef": "collections_policy.md: reminders at 7, 21 and 45 days",
@@ -2972,7 +2970,7 @@
      "file": "contracts.csv",
      "recordId": "C1261:2026-08-10",
      "date": "2026-08-10",
-     "title": "Contract: 20 seats \u00d7 $68.00, Aug 10, 2026 to Aug 9, 2027"
+     "title": "Contract: 20 seats at $68.00 a month, Aug 10, 2026 to Aug 9, 2027"
     }
    ],
    "policyRef": "collections_policy.md: do not chase an invoice the customer has disputed",
@@ -3007,7 +3005,7 @@
    "agingBucket": "31-60",
    "verdict": "hold",
    "cause": "wrong_bill",
-   "confidence": "low",
+   "confidence": "high",
    "headline": "The customer disputes this exact invoice in a support ticket and says they're holding payment until it's fixed. The ticket is marked solved in Zendesk, but the bill was never corrected or reissued.",
    "reasons": [
     {
@@ -3067,18 +3065,17 @@
      "file": "contracts.csv",
      "recordId": "C1030:2025-11-12",
      "date": "2025-11-12",
-     "title": "Contract: 19 seats \u00d7 $68.00, Nov 12, 2025 to Nov 11, 2026"
+     "title": "Contract: 19 seats at $68.00 a month, Nov 12, 2025 to Nov 11, 2026"
     }
    ],
    "policyRef": "collections_policy.md: do not chase an invoice the customer has disputed",
-   "needsReview": true,
+   "needsReview": false,
    "draft": {
     "to": "caleb.holloway@mercerbanerjeellp.example",
     "subject": "",
     "body": "",
     "tone": "none"
    },
-   "reviewReason": "a billing ticket from Aug 29, 2026 is marked solved: check it was really fixed",
    "hold": {
     "owner": "Priya Nair",
     "ownerRole": "Finance (AR)",
@@ -3155,7 +3152,7 @@
      "file": "contracts.csv",
      "recordId": "C1426:2026-01-08",
      "date": "2026-01-08",
-     "title": "Contract: 16 seats \u00d7 $68.00, Jan 8, 2026 to Jan 7, 2027"
+     "title": "Contract: 16 seats at $68.00 a month, Jan 8, 2026 to Jan 7, 2027"
     },
     {
      "id": "invoice:INV-25973",
@@ -3199,7 +3196,7 @@
    "agingBucket": "31-60",
    "verdict": "hold",
    "cause": "wrong_bill",
-   "confidence": "low",
+   "confidence": "high",
    "headline": "The customer disputes this exact invoice in a support ticket. The ticket is marked solved in Zendesk, but the bill was never corrected or reissued.",
    "reasons": [
     {
@@ -3293,18 +3290,17 @@
      "file": "contracts.csv",
      "recordId": "C1100:2026-02-10",
      "date": "2026-02-10",
-     "title": "Contract: 20 seats \u00d7 $47.00, Feb 10, 2026 to Feb 9, 2027"
+     "title": "Contract: 20 seats at $47.00 a month, Feb 10, 2026 to Feb 9, 2027"
     }
    ],
    "policyRef": "collections_policy.md: do not chase an invoice the customer has disputed",
-   "needsReview": true,
+   "needsReview": false,
    "draft": {
     "to": "anika.moreau@oyelarandevlinengineer.example",
     "subject": "",
     "body": "",
     "tone": "none"
    },
-   "reviewReason": "a billing ticket from Sep 10, 2026 is marked solved: check it was really fixed",
    "hold": {
     "owner": "Priya Nair",
     "ownerRole": "Finance (AR)",
@@ -3362,7 +3358,7 @@
      "file": "contracts.csv",
      "recordId": "C1439:2026-04-01",
      "date": "2026-04-01",
-     "title": "Contract: 13 seats \u00d7 $68.00, Apr 1, 2026 to Mar 31, 2027"
+     "title": "Contract: 13 seats at $68.00 a month, Apr 1, 2026 to Mar 31, 2027"
     }
    ],
    "policyRef": "collections_policy.md: do not chase an invoice the customer has disputed",
@@ -3472,7 +3468,7 @@
      "file": "contracts.csv",
      "recordId": "C1022:2026-09-13",
      "date": "2026-09-13",
-     "title": "Contract: 10 seats \u00d7 $47.00, Sep 13, 2026 to Sep 12, 2027"
+     "title": "Contract: 10 seats at $47.00 a month, Sep 13, 2026 to Sep 12, 2027"
     }
    ],
    "policyRef": "collections_policy.md: do not chase an invoice the customer has disputed",
@@ -3560,7 +3556,7 @@
      "file": "contracts.csv",
      "recordId": "C1409:2026-09-04",
      "date": "2026-09-04",
-     "title": "Contract: 18 seats \u00d7 $68.00, Sep 4, 2026 to Sep 3, 2027"
+     "title": "Contract: 18 seats at $68.00 a month, Sep 4, 2026 to Sep 3, 2027"
     }
    ],
    "policyRef": "collections_policy.md: do not chase an invoice the customer has disputed",
@@ -3630,7 +3626,7 @@
      "file": "contracts.csv",
      "recordId": "C1492:2026-06-24",
      "date": "2026-06-24",
-     "title": "Contract: 14 seats \u00d7 $47.00, Jun 24, 2026 to Jun 23, 2027"
+     "title": "Contract: 14 seats at $47.00 a month, Jun 24, 2026 to Jun 23, 2027"
     },
     {
      "id": "invoice:INV-25769",
@@ -3719,7 +3715,7 @@
      "file": "contracts.csv",
      "recordId": "C1407:2026-08-21",
      "date": "2026-08-21",
-     "title": "Contract: 14 seats \u00d7 $47.00, Aug 21, 2026 to Aug 20, 2027"
+     "title": "Contract: 14 seats at $47.00 a month, Aug 21, 2026 to Aug 20, 2027"
     }
    ],
    "policyRef": "collections_policy.md: tell the account manager before finance contacts one of their accounts",
@@ -3754,7 +3750,7 @@
    "agingBucket": "31-60",
    "verdict": "paid",
    "cause": "paid",
-   "confidence": "low",
+   "confidence": "high",
    "headline": "An unmatched bank payment from this customer equals this bill. It was probably paid but never matched.",
    "reasons": [
     {
@@ -3830,18 +3826,17 @@
      "file": "contracts.csv",
      "recordId": "C1273:2026-08-26",
      "date": "2026-08-26",
-     "title": "Contract: 48 seats \u00d7 $88.00, Aug 26, 2026 to Aug 25, 2027"
+     "title": "Contract: 48 seats at $88.00 a month, plus a $12,000 platform fee a year, Aug 26, 2026 to Aug 25, 2027"
     }
    ],
    "policyRef": "collections_policy.md: bank transfers take three to five working days to show as paid",
-   "needsReview": true,
+   "needsReview": false,
    "draft": {
     "to": "joel.okafor@jessoporwellagency.example",
     "subject": "",
     "body": "",
     "tone": "none"
    },
-   "reviewReason": "a billing ticket from Oct 2, 2026 is marked solved: check it was really fixed",
    "autoSend": {
     "eligible": false,
     "why": "Probably-paid bills, or customers with an unmatched payment, stay with a person",
@@ -3929,7 +3924,7 @@
      "file": "contracts.csv",
      "recordId": "C1126:2026-06-03",
      "date": "2026-06-03",
-     "title": "Contract: 31 seats \u00d7 $68.00, Jun 3, 2026 to Jun 2, 2027"
+     "title": "Contract: 31 seats at $68.00 a month, Jun 3, 2026 to Jun 2, 2027"
     }
    ],
    "policyRef": "collections_policy.md: bank transfers take three to five working days to show as paid",
@@ -3958,7 +3953,7 @@
    "agingBucket": "90+",
    "verdict": "paid",
    "cause": "paid",
-   "confidence": "low",
+   "confidence": "high",
    "headline": "An unmatched bank payment from this customer equals this bill. It was probably paid but never matched.",
    "reasons": [
     {
@@ -4027,18 +4022,17 @@
      "file": "contracts.csv",
      "recordId": "C1469:2025-12-12",
      "date": "2025-12-12",
-     "title": "Contract: 25 seats \u00d7 $68.00, Dec 12, 2025 to Dec 11, 2026"
+     "title": "Contract: 25 seats at $68.00 a month, Dec 12, 2025 to Dec 11, 2026"
     }
    ],
    "policyRef": "collections_policy.md: bank transfers take three to five working days to show as paid",
-   "needsReview": true,
+   "needsReview": false,
    "draft": {
     "to": "marcus.tan@kingswayengineeringgro.example",
     "subject": "",
     "body": "",
     "tone": "none"
    },
-   "reviewReason": "2 overdue bills have this amount; we matched the payment to the oldest. A person confirms which bill it pays; a billing ticket from Jul 9, 2026 is marked solved: check it was really fixed",
    "autoSend": {
     "eligible": false,
     "why": "Probably-paid bills, or customers with an unmatched payment, stay with a person",
@@ -4099,7 +4093,7 @@
      "file": "contracts.csv",
      "recordId": "C1188:2025-12-11",
      "date": "2025-12-11",
-     "title": "Contract: 18 seats \u00d7 $68.00, Dec 11, 2025 to Dec 10, 2026"
+     "title": "Contract: 18 seats at $68.00 a month, Dec 11, 2025 to Dec 10, 2026"
     }
    ],
    "policyRef": "collections_policy.md: bank transfers take three to five working days to show as paid",
@@ -4170,7 +4164,7 @@
      "file": "contracts.csv",
      "recordId": "C1346:2026-06-15",
      "date": "2026-06-15",
-     "title": "Contract: 12 seats \u00d7 $47.00, Jun 15, 2026 to Jun 14, 2027"
+     "title": "Contract: 12 seats at $47.00 a month, Jun 15, 2026 to Jun 14, 2027"
     }
    ],
    "policyRef": "collections_policy.md: bank transfers take three to five working days to show as paid",
@@ -4199,8 +4193,8 @@
    "agingBucket": "31-60",
    "verdict": "call",
    "cause": "card_failed",
-   "confidence": "low",
-   "headline": "Call: 59 days overdue",
+   "confidence": "high",
+   "headline": "Card failed and the retries are over: call for a new card (59 days late)",
    "reasons": [
     {
      "text": "Read before you call: they raised \u201cRe: Re: Re: Fwd:\u201d on Sep 22, 2026 (solved in Zendesk).",
@@ -4278,7 +4272,7 @@
      "file": "contracts.csv",
      "recordId": "C1375:2026-01-02",
      "date": "2026-01-02",
-     "title": "Contract: 27 seats \u00d7 $68.00, Jan 2, 2026 to Jan 1, 2027"
+     "title": "Contract: 27 seats at $68.00 a month, Jan 2, 2026 to Jan 1, 2027"
     },
     {
      "id": "invoice:INV-25803",
@@ -4291,14 +4285,13 @@
     }
    ],
    "policyRef": "Maya (COO): Priya sees any ticket from the customer next to a call",
-   "needsReview": true,
+   "needsReview": false,
    "draft": {
     "to": "kofi.glover@gloverengineering.example",
     "subject": "",
     "body": "",
     "tone": "none"
    },
-   "reviewReason": "a billing ticket from Sep 22, 2026 is marked solved: check it was really fixed",
    "autoSend": {
     "eligible": false,
     "why": "Every phone call stays with a person",
@@ -4317,8 +4310,8 @@
    "agingBucket": "61-90",
    "verdict": "call",
    "cause": "card_failed",
-   "confidence": "low",
-   "headline": "Call: 83 days overdue",
+   "confidence": "high",
+   "headline": "Card failed and the retries are over: call for a new card (83 days late)",
    "reasons": [
     {
      "text": "Read before you call: they raised \u201cQuestion re: our subscription\u201d on Sep 22, 2026 (solved in Zendesk).",
@@ -4369,7 +4362,7 @@
      "file": "contracts.csv",
      "recordId": "C1341:2026-05-09",
      "date": "2026-05-09",
-     "title": "Contract: 24 seats \u00d7 $68.00, May 9, 2026 to May 8, 2027"
+     "title": "Contract: 24 seats at $68.00 a month, May 9, 2026 to May 8, 2027"
     },
     {
      "id": "invoice:INV-25708",
@@ -4382,14 +4375,13 @@
     }
    ],
    "policyRef": "Maya (COO): Priya sees any ticket from the customer next to a call",
-   "needsReview": true,
+   "needsReview": false,
    "draft": {
     "to": "emma.stanhope@quillmottco.example",
     "subject": "",
     "body": "",
     "tone": "none"
    },
-   "reviewReason": "a billing ticket from Sep 22, 2026 is marked solved: check it was really fixed",
    "autoSend": {
     "eligible": false,
     "why": "Every phone call stays with a person",
@@ -4453,7 +4445,7 @@
      "file": "contracts.csv",
      "recordId": "C1341:2026-05-09",
      "date": "2026-05-09",
-     "title": "Contract: 24 seats \u00d7 $68.00, May 9, 2026 to May 8, 2027"
+     "title": "Contract: 24 seats at $68.00 a month, May 9, 2026 to May 8, 2027"
     },
     {
      "id": "invoice:INV-25975",
@@ -4491,8 +4483,8 @@
    "agingBucket": "61-90",
    "verdict": "call",
    "cause": "card_failed",
-   "confidence": "low",
-   "headline": "Call: 64 days overdue",
+   "confidence": "high",
+   "headline": "Card failed and the retries are over: call for a new card (64 days late)",
    "reasons": [
     {
      "text": "Read before you call: they raised \u201cBefore we renew\u201d on Oct 3, 2026 (solved in Zendesk), plus 1 more ticket since this bill was issued.",
@@ -4574,7 +4566,7 @@
      "file": "contracts.csv",
      "recordId": "C1255:2026-07-28",
      "date": "2026-07-28",
-     "title": "Contract: 16 seats \u00d7 $68.00, Jul 28, 2026 to Jul 27, 2027"
+     "title": "Contract: 16 seats at $68.00 a month, Jul 28, 2026 to Jul 27, 2027"
     },
     {
      "id": "invoice:INV-25793",
@@ -4587,14 +4579,13 @@
     }
    ],
    "policyRef": "Maya (COO): Priya sees any ticket from the customer next to a call",
-   "needsReview": true,
+   "needsReview": false,
    "draft": {
     "to": "nadia.marsh@ashgrovepartners.example",
     "subject": "",
     "body": "",
     "tone": "none"
    },
-   "reviewReason": "a billing ticket from Oct 3, 2026 is marked solved: check it was really fixed",
    "autoSend": {
     "eligible": false,
     "why": "Every phone call stays with a person",
@@ -4614,7 +4605,7 @@
    "verdict": "call",
    "cause": "card_failed",
    "confidence": "low",
-   "headline": "Call: 149 days overdue",
+   "headline": "Card failed and the retries are over: call for a new card (149 days late)",
    "reasons": [
     {
      "text": "Read before you call: they raised \u201cStill waiting on a reply\u201d on Oct 20, 2026 (solved in Zendesk).",
@@ -4677,7 +4668,7 @@
      "file": "contracts.csv",
      "recordId": "C1029:2025-11-04",
      "date": "2025-11-04",
-     "title": "Contract: 17 seats \u00d7 $47.00, Nov 4, 2025 to Nov 3, 2026"
+     "title": "Contract: 17 seats at $47.00 a month, Nov 4, 2025 to Nov 3, 2026"
     },
     {
      "id": "invoice:INV-25433",
@@ -4697,7 +4688,7 @@
     "body": "",
     "tone": "none"
    },
-   "reviewReason": "a billing ticket from Oct 20, 2026 is marked solved: check it was really fixed; automatic write-off in 1 day: decide today",
+   "reviewReason": "automatic write-off in 1 day: decide today",
    "autoSend": {
     "eligible": false,
     "why": "Every phone call stays with a person",
@@ -4717,7 +4708,7 @@
    "verdict": "call",
    "cause": "card_failed",
    "confidence": "high",
-   "headline": "Call: 54 days overdue",
+   "headline": "Card failed and the retries are over: call for a new card (54 days late)",
    "reasons": [
     {
      "text": "Read before you call: they raised \u201cHello?\u201d on Oct 27, 2026 (solved in Zendesk), plus 1 more ticket since this bill was issued.",
@@ -4789,7 +4780,7 @@
      "file": "contracts.csv",
      "recordId": "C1278:2026-09-07",
      "date": "2026-09-07",
-     "title": "Contract: 15 seats \u00d7 $47.00, Sep 7, 2026 to Sep 6, 2027"
+     "title": "Contract: 15 seats at $47.00 a month, Sep 7, 2026 to Sep 6, 2027"
     },
     {
      "id": "invoice:INV-25825",
@@ -4828,7 +4819,7 @@
    "verdict": "call",
    "cause": "card_failed",
    "confidence": "high",
-   "headline": "Call: 83 days overdue",
+   "headline": "Card failed and the retries are over: call for a new card (83 days late)",
    "reasons": [
     {
      "text": "The card failed and Stripe's retries are over. A person asks for a new card: nobody has followed this up yet.",
@@ -4865,7 +4856,7 @@
      "file": "contracts.csv",
      "recordId": "C1342:2026-05-09",
      "date": "2026-05-09",
-     "title": "Contract: 14 seats \u00d7 $47.00, May 9, 2026 to May 8, 2027"
+     "title": "Contract: 14 seats at $47.00 a month, May 9, 2026 to May 8, 2027"
     },
     {
      "id": "invoice:INV-25709",
@@ -4904,7 +4895,7 @@
    "verdict": "call",
    "cause": "card_failed",
    "confidence": "low",
-   "headline": "Call: 141 days overdue",
+   "headline": "Card failed and the retries are over: call for a new card (141 days late)",
    "reasons": [
     {
      "text": "The card failed and Stripe's retries are over. A person asks for a new card: nobody has followed this up yet.",
@@ -4943,7 +4934,7 @@
      "file": "contracts.csv",
      "recordId": "C1477:2026-03-12",
      "date": "2026-03-12",
-     "title": "Contract: 11 seats \u00d7 $47.00, Mar 12, 2026 to Mar 11, 2027"
+     "title": "Contract: 11 seats at $47.00 a month, Mar 12, 2026 to Mar 11, 2027"
     },
     {
      "id": "invoice:INV-25470",
@@ -4983,7 +4974,7 @@
    "verdict": "call",
    "cause": "card_failed",
    "confidence": "high",
-   "headline": "Call: 105 days overdue",
+   "headline": "Card failed and the retries are over: call for a new card (105 days late)",
    "reasons": [
     {
      "text": "The card failed and Stripe's retries are over. A person asks for a new card: nobody has followed this up yet.",
@@ -5015,7 +5006,7 @@
      "file": "contracts.csv",
      "recordId": "C1486:2026-05-18",
      "date": "2026-05-18",
-     "title": "Contract: 11 seats \u00d7 $47.00, May 18, 2026 to May 17, 2027"
+     "title": "Contract: 11 seats at $47.00 a month, May 18, 2026 to May 17, 2027"
     },
     {
      "id": "invoice:INV-25622",
@@ -5193,40 +5184,40 @@
    ],
    "contracts": [
     {
-     "id": "contract:None",
+     "id": "contract:C1029:2022-11-04",
      "kind": "contract",
      "file": "contracts.csv",
-     "recordId": "None",
+     "recordId": "C1029:2022-11-04",
      "date": "2022-11-04",
      "status": "",
-     "title": "17 seats \u00d7 $45.00, to Nov 3, 2023"
+     "title": "17 seats at $45.00 a month, to Nov 3, 2023"
     },
     {
-     "id": "contract:None",
+     "id": "contract:C1029:2023-11-04",
      "kind": "contract",
      "file": "contracts.csv",
-     "recordId": "None",
+     "recordId": "C1029:2023-11-04",
      "date": "2023-11-04",
      "status": "",
-     "title": "17 seats \u00d7 $45.00, to Nov 3, 2024"
+     "title": "17 seats at $45.00 a month, to Nov 3, 2024"
     },
     {
-     "id": "contract:None",
+     "id": "contract:C1029:2024-11-04",
      "kind": "contract",
      "file": "contracts.csv",
-     "recordId": "None",
+     "recordId": "C1029:2024-11-04",
      "date": "2024-11-04",
      "status": "",
-     "title": "17 seats \u00d7 $45.00, to Nov 3, 2025"
+     "title": "17 seats at $45.00 a month, to Nov 3, 2025"
     },
     {
-     "id": "contract:None",
+     "id": "contract:C1029:2025-11-04",
      "kind": "contract",
      "file": "contracts.csv",
-     "recordId": "None",
+     "recordId": "C1029:2025-11-04",
      "date": "2025-11-04",
      "status": "",
-     "title": "17 seats \u00d7 $47.00, to Nov 3, 2026"
+     "title": "17 seats at $47.00 a month, to Nov 3, 2026"
     }
    ],
    "segment": "Core",
@@ -5341,13 +5332,13 @@
    ],
    "contracts": [
     {
-     "id": "contract:None",
+     "id": "contract:C1469:2025-12-12",
      "kind": "contract",
      "file": "contracts.csv",
-     "recordId": "None",
+     "recordId": "C1469:2025-12-12",
      "date": "2025-12-12",
      "status": "",
-     "title": "25 seats \u00d7 $68.00, to Dec 11, 2026"
+     "title": "25 seats at $68.00 a month, to Dec 11, 2026"
     }
    ],
    "segment": "Growth",
@@ -5445,13 +5436,13 @@
    ],
    "contracts": [
     {
-     "id": "contract:None",
+     "id": "contract:C1477:2026-03-12",
      "kind": "contract",
      "file": "contracts.csv",
-     "recordId": "None",
+     "recordId": "C1477:2026-03-12",
      "date": "2026-03-12",
      "status": "",
-     "title": "11 seats \u00d7 $47.00, to Mar 11, 2027"
+     "title": "11 seats at $47.00 a month, to Mar 11, 2027"
     }
    ],
    "segment": "Core",
@@ -5557,22 +5548,22 @@
    ],
    "contracts": [
     {
-     "id": "contract:None",
+     "id": "contract:C1439:2025-04-01",
      "kind": "contract",
      "file": "contracts.csv",
-     "recordId": "None",
+     "recordId": "C1439:2025-04-01",
      "date": "2025-04-01",
      "status": "",
-     "title": "13 seats \u00d7 $68.00, to Mar 31, 2026"
+     "title": "13 seats at $68.00 a month, to Mar 31, 2026"
     },
     {
-     "id": "contract:None",
+     "id": "contract:C1439:2026-04-01",
      "kind": "contract",
      "file": "contracts.csv",
-     "recordId": "None",
+     "recordId": "C1439:2026-04-01",
      "date": "2026-04-01",
      "status": "",
-     "title": "13 seats \u00d7 $68.00, to Mar 31, 2027"
+     "title": "13 seats at $68.00 a month, to Mar 31, 2027"
     }
    ],
    "segment": "Growth",
@@ -5652,13 +5643,13 @@
    ],
    "contracts": [
     {
-     "id": "contract:None",
+     "id": "contract:C1486:2026-05-18",
      "kind": "contract",
      "file": "contracts.csv",
-     "recordId": "None",
+     "recordId": "C1486:2026-05-18",
      "date": "2026-05-18",
      "status": "",
-     "title": "11 seats \u00d7 $47.00, to May 17, 2027"
+     "title": "11 seats at $47.00 a month, to May 17, 2027"
     }
    ],
    "segment": "Core",
@@ -5766,49 +5757,49 @@
    ],
    "contracts": [
     {
-     "id": "contract:None",
+     "id": "contract:C1254:2022-07-27",
      "kind": "contract",
      "file": "contracts.csv",
-     "recordId": "None",
+     "recordId": "C1254:2022-07-27",
      "date": "2022-07-27",
      "status": "",
-     "title": "30 seats \u00d7 $65.00, to Jul 26, 2023"
+     "title": "30 seats at $65.00 a month, to Jul 26, 2023"
     },
     {
-     "id": "contract:None",
+     "id": "contract:C1254:2023-07-27",
      "kind": "contract",
      "file": "contracts.csv",
-     "recordId": "None",
+     "recordId": "C1254:2023-07-27",
      "date": "2023-07-27",
      "status": "",
-     "title": "37 seats \u00d7 $65.00, to Jul 26, 2024"
+     "title": "37 seats at $65.00 a month, to Jul 26, 2024"
     },
     {
-     "id": "contract:None",
+     "id": "contract:C1254:2024-07-27",
      "kind": "contract",
      "file": "contracts.csv",
-     "recordId": "None",
+     "recordId": "C1254:2024-07-27",
      "date": "2024-07-27",
      "status": "",
-     "title": "46 seats \u00d7 $65.00, to Jul 26, 2025"
+     "title": "46 seats at $65.00 a month, to Jul 26, 2025"
     },
     {
-     "id": "contract:None",
+     "id": "contract:C1254:2025-07-27",
      "kind": "contract",
      "file": "contracts.csv",
-     "recordId": "None",
+     "recordId": "C1254:2025-07-27",
      "date": "2025-07-27",
      "status": "",
-     "title": "46 seats \u00d7 $68.00, to Jul 26, 2026"
+     "title": "46 seats at $68.00 a month, to Jul 26, 2026"
     },
     {
-     "id": "contract:None",
+     "id": "contract:C1254:2026-07-27",
      "kind": "contract",
      "file": "contracts.csv",
-     "recordId": "None",
+     "recordId": "C1254:2026-07-27",
      "date": "2026-07-27",
      "status": "",
-     "title": "54 seats \u00d7 $68.00, to Jul 26, 2027"
+     "title": "54 seats at $68.00 a month, to Jul 26, 2027"
     }
    ],
    "segment": "Growth",
@@ -5969,40 +5960,40 @@
    ],
    "contracts": [
     {
-     "id": "contract:None",
+     "id": "contract:C1341:2023-05-09",
      "kind": "contract",
      "file": "contracts.csv",
-     "recordId": "None",
+     "recordId": "C1341:2023-05-09",
      "date": "2023-05-09",
      "status": "",
-     "title": "20 seats \u00d7 $65.00, to May 8, 2024"
+     "title": "20 seats at $65.00 a month, to May 8, 2024"
     },
     {
-     "id": "contract:None",
+     "id": "contract:C1341:2024-05-09",
      "kind": "contract",
      "file": "contracts.csv",
-     "recordId": "None",
+     "recordId": "C1341:2024-05-09",
      "date": "2024-05-09",
      "status": "",
-     "title": "24 seats \u00d7 $65.00, to May 8, 2025"
+     "title": "24 seats at $65.00 a month, to May 8, 2025"
     },
     {
-     "id": "contract:None",
+     "id": "contract:C1341:2025-05-09",
      "kind": "contract",
      "file": "contracts.csv",
-     "recordId": "None",
+     "recordId": "C1341:2025-05-09",
      "date": "2025-05-09",
      "status": "",
-     "title": "24 seats \u00d7 $68.00, to May 8, 2026"
+     "title": "24 seats at $68.00 a month, to May 8, 2026"
     },
     {
-     "id": "contract:None",
+     "id": "contract:C1341:2026-05-09",
      "kind": "contract",
      "file": "contracts.csv",
-     "recordId": "None",
+     "recordId": "C1341:2026-05-09",
      "date": "2026-05-09",
      "status": "",
-     "title": "24 seats \u00d7 $68.00, to May 8, 2027"
+     "title": "24 seats at $68.00 a month, to May 8, 2027"
     }
    ],
    "segment": "Growth",
@@ -6162,40 +6153,40 @@
    ],
    "contracts": [
     {
-     "id": "contract:None",
+     "id": "contract:C1342:2023-05-09",
      "kind": "contract",
      "file": "contracts.csv",
-     "recordId": "None",
+     "recordId": "C1342:2023-05-09",
      "date": "2023-05-09",
      "status": "",
-     "title": "17 seats \u00d7 $45.00, to May 8, 2024"
+     "title": "17 seats at $45.00 a month, to May 8, 2024"
     },
     {
-     "id": "contract:None",
+     "id": "contract:C1342:2024-05-09",
      "kind": "contract",
      "file": "contracts.csv",
-     "recordId": "None",
+     "recordId": "C1342:2024-05-09",
      "date": "2024-05-09",
      "status": "",
-     "title": "17 seats \u00d7 $45.00, to May 8, 2025"
+     "title": "17 seats at $45.00 a month, to May 8, 2025"
     },
     {
-     "id": "contract:None",
+     "id": "contract:C1342:2025-05-09",
      "kind": "contract",
      "file": "contracts.csv",
-     "recordId": "None",
+     "recordId": "C1342:2025-05-09",
      "date": "2025-05-09",
      "status": "",
-     "title": "14 seats \u00d7 $47.00, to May 8, 2026"
+     "title": "14 seats at $47.00 a month, to May 8, 2026"
     },
     {
-     "id": "contract:None",
+     "id": "contract:C1342:2026-05-09",
      "kind": "contract",
      "file": "contracts.csv",
-     "recordId": "None",
+     "recordId": "C1342:2026-05-09",
      "date": "2026-05-09",
      "status": "",
-     "title": "14 seats \u00d7 $47.00, to May 8, 2027"
+     "title": "14 seats at $47.00 a month, to May 8, 2027"
     }
    ],
    "segment": "Core",
@@ -6395,49 +6386,49 @@
    ],
    "contracts": [
     {
-     "id": "contract:None",
+     "id": "contract:C1100:2022-02-10",
      "kind": "contract",
      "file": "contracts.csv",
-     "recordId": "None",
+     "recordId": "C1100:2022-02-10",
      "date": "2022-02-10",
      "status": "",
-     "title": "18 seats \u00d7 $45.00, to Feb 9, 2023"
+     "title": "18 seats at $45.00 a month, to Feb 9, 2023"
     },
     {
-     "id": "contract:None",
+     "id": "contract:C1100:2023-02-10",
      "kind": "contract",
      "file": "contracts.csv",
-     "recordId": "None",
+     "recordId": "C1100:2023-02-10",
      "date": "2023-02-10",
      "status": "",
-     "title": "20 seats \u00d7 $45.00, to Feb 9, 2024"
+     "title": "20 seats at $45.00 a month, to Feb 9, 2024"
     },
     {
-     "id": "contract:None",
+     "id": "contract:C1100:2024-02-10",
      "kind": "contract",
      "file": "contracts.csv",
-     "recordId": "None",
+     "recordId": "C1100:2024-02-10",
      "date": "2024-02-10",
      "status": "",
-     "title": "20 seats \u00d7 $45.00, to Feb 9, 2025"
+     "title": "20 seats at $45.00 a month, to Feb 9, 2025"
     },
     {
-     "id": "contract:None",
+     "id": "contract:C1100:2025-02-10",
      "kind": "contract",
      "file": "contracts.csv",
-     "recordId": "None",
+     "recordId": "C1100:2025-02-10",
      "date": "2025-02-10",
      "status": "",
-     "title": "20 seats \u00d7 $47.00, to Feb 9, 2026"
+     "title": "20 seats at $47.00 a month, to Feb 9, 2026"
     },
     {
-     "id": "contract:None",
+     "id": "contract:C1100:2026-02-10",
      "kind": "contract",
      "file": "contracts.csv",
-     "recordId": "None",
+     "recordId": "C1100:2026-02-10",
      "date": "2026-02-10",
      "status": "",
-     "title": "20 seats \u00d7 $47.00, to Feb 9, 2027"
+     "title": "20 seats at $47.00 a month, to Feb 9, 2027"
     }
    ],
    "segment": "Core",
@@ -6617,49 +6608,49 @@
    ],
    "contracts": [
     {
-     "id": "contract:None",
+     "id": "contract:C1261:2022-08-10",
      "kind": "contract",
      "file": "contracts.csv",
-     "recordId": "None",
+     "recordId": "C1261:2022-08-10",
      "date": "2022-08-10",
      "status": "",
-     "title": "20 seats \u00d7 $65.00, to Aug 9, 2023"
+     "title": "20 seats at $65.00 a month, to Aug 9, 2023"
     },
     {
-     "id": "contract:None",
+     "id": "contract:C1261:2023-08-10",
      "kind": "contract",
      "file": "contracts.csv",
-     "recordId": "None",
+     "recordId": "C1261:2023-08-10",
      "date": "2023-08-10",
      "status": "",
-     "title": "20 seats \u00d7 $65.00, to Aug 9, 2024"
+     "title": "20 seats at $65.00 a month, to Aug 9, 2024"
     },
     {
-     "id": "contract:None",
+     "id": "contract:C1261:2024-08-10",
      "kind": "contract",
      "file": "contracts.csv",
-     "recordId": "None",
+     "recordId": "C1261:2024-08-10",
      "date": "2024-08-10",
      "status": "",
-     "title": "20 seats \u00d7 $65.00, to Aug 9, 2025"
+     "title": "20 seats at $65.00 a month, to Aug 9, 2025"
     },
     {
-     "id": "contract:None",
+     "id": "contract:C1261:2025-08-10",
      "kind": "contract",
      "file": "contracts.csv",
-     "recordId": "None",
+     "recordId": "C1261:2025-08-10",
      "date": "2025-08-10",
      "status": "",
-     "title": "20 seats \u00d7 $68.00, to Aug 9, 2026"
+     "title": "20 seats at $68.00 a month, to Aug 9, 2026"
     },
     {
-     "id": "contract:None",
+     "id": "contract:C1261:2026-08-10",
      "kind": "contract",
      "file": "contracts.csv",
-     "recordId": "None",
+     "recordId": "C1261:2026-08-10",
      "date": "2026-08-10",
      "status": "",
-     "title": "20 seats \u00d7 $68.00, to Aug 9, 2027"
+     "title": "20 seats at $68.00 a month, to Aug 9, 2027"
     }
    ],
    "segment": "Growth",
@@ -6839,40 +6830,40 @@
    ],
    "contracts": [
     {
-     "id": "contract:None",
+     "id": "contract:C1030:2022-11-12",
      "kind": "contract",
      "file": "contracts.csv",
-     "recordId": "None",
+     "recordId": "C1030:2022-11-12",
      "date": "2022-11-12",
      "status": "",
-     "title": "19 seats \u00d7 $65.00, to Nov 11, 2023"
+     "title": "19 seats at $65.00 a month, to Nov 11, 2023"
     },
     {
-     "id": "contract:None",
+     "id": "contract:C1030:2023-11-12",
      "kind": "contract",
      "file": "contracts.csv",
-     "recordId": "None",
+     "recordId": "C1030:2023-11-12",
      "date": "2023-11-12",
      "status": "",
-     "title": "19 seats \u00d7 $65.00, to Nov 11, 2024"
+     "title": "19 seats at $65.00 a month, to Nov 11, 2024"
     },
     {
-     "id": "contract:None",
+     "id": "contract:C1030:2024-11-12",
      "kind": "contract",
      "file": "contracts.csv",
-     "recordId": "None",
+     "recordId": "C1030:2024-11-12",
      "date": "2024-11-12",
      "status": "",
-     "title": "19 seats \u00d7 $65.00, to Nov 11, 2025"
+     "title": "19 seats at $65.00 a month, to Nov 11, 2025"
     },
     {
-     "id": "contract:None",
+     "id": "contract:C1030:2025-11-12",
      "kind": "contract",
      "file": "contracts.csv",
-     "recordId": "None",
+     "recordId": "C1030:2025-11-12",
      "date": "2025-11-12",
      "status": "",
-     "title": "19 seats \u00d7 $68.00, to Nov 11, 2026"
+     "title": "19 seats at $68.00 a month, to Nov 11, 2026"
     }
    ],
    "segment": "Growth",
@@ -7010,49 +7001,49 @@
    ],
    "contracts": [
     {
-     "id": "contract:None",
+     "id": "contract:C1264:2022-08-14",
      "kind": "contract",
      "file": "contracts.csv",
-     "recordId": "None",
+     "recordId": "C1264:2022-08-14",
      "date": "2022-08-14",
      "status": "",
-     "title": "28 seats \u00d7 $85.00, to Aug 13, 2023"
+     "title": "28 seats at $85.00 a month, plus a $12,000 platform fee a year, to Aug 13, 2023"
     },
     {
-     "id": "contract:None",
+     "id": "contract:C1264:2023-08-14",
      "kind": "contract",
      "file": "contracts.csv",
-     "recordId": "None",
+     "recordId": "C1264:2023-08-14",
      "date": "2023-08-14",
      "status": "",
-     "title": "28 seats \u00d7 $85.00, to Aug 13, 2024"
+     "title": "28 seats at $85.00 a month, plus a $12,000 platform fee a year, to Aug 13, 2024"
     },
     {
-     "id": "contract:None",
+     "id": "contract:C1264:2024-08-14",
      "kind": "contract",
      "file": "contracts.csv",
-     "recordId": "None",
+     "recordId": "C1264:2024-08-14",
      "date": "2024-08-14",
      "status": "",
-     "title": "28 seats \u00d7 $85.00, to Aug 13, 2025"
+     "title": "28 seats at $85.00 a month, plus a $12,000 platform fee a year, to Aug 13, 2025"
     },
     {
-     "id": "contract:None",
+     "id": "contract:C1264:2025-08-14",
      "kind": "contract",
      "file": "contracts.csv",
-     "recordId": "None",
+     "recordId": "C1264:2025-08-14",
      "date": "2025-08-14",
      "status": "",
-     "title": "34 seats \u00d7 $88.00, to Aug 13, 2026"
+     "title": "34 seats at $88.00 a month, plus a $12,000 platform fee a year, to Aug 13, 2026"
     },
     {
-     "id": "contract:None",
+     "id": "contract:C1264:2026-08-14",
      "kind": "contract",
      "file": "contracts.csv",
-     "recordId": "None",
+     "recordId": "C1264:2026-08-14",
      "date": "2026-08-14",
      "status": "",
-     "title": "34 seats \u00d7 $88.00, to Aug 13, 2027"
+     "title": "34 seats at $88.00 a month, plus a $12,000 platform fee a year, to Aug 13, 2027"
     }
    ],
    "segment": "Enterprise",
@@ -7150,49 +7141,49 @@
    ],
    "contracts": [
     {
-     "id": "contract:None",
+     "id": "contract:C1266:2022-08-18",
      "kind": "contract",
      "file": "contracts.csv",
-     "recordId": "None",
+     "recordId": "C1266:2022-08-18",
      "date": "2022-08-18",
      "status": "",
-     "title": "13 seats \u00d7 $45.00, to Aug 17, 2023"
+     "title": "13 seats at $45.00 a month, to Aug 17, 2023"
     },
     {
-     "id": "contract:None",
+     "id": "contract:C1266:2023-08-18",
      "kind": "contract",
      "file": "contracts.csv",
-     "recordId": "None",
+     "recordId": "C1266:2023-08-18",
      "date": "2023-08-18",
      "status": "",
-     "title": "14 seats \u00d7 $45.00, to Aug 17, 2024"
+     "title": "14 seats at $45.00 a month, to Aug 17, 2024"
     },
     {
-     "id": "contract:None",
+     "id": "contract:C1266:2024-08-18",
      "kind": "contract",
      "file": "contracts.csv",
-     "recordId": "None",
+     "recordId": "C1266:2024-08-18",
      "date": "2024-08-18",
      "status": "",
-     "title": "14 seats \u00d7 $45.00, to Aug 17, 2025"
+     "title": "14 seats at $45.00 a month, to Aug 17, 2025"
     },
     {
-     "id": "contract:None",
+     "id": "contract:C1266:2025-08-18",
      "kind": "contract",
      "file": "contracts.csv",
-     "recordId": "None",
+     "recordId": "C1266:2025-08-18",
      "date": "2025-08-18",
      "status": "",
-     "title": "14 seats \u00d7 $47.00, to Aug 17, 2026"
+     "title": "14 seats at $47.00 a month, to Aug 17, 2026"
     },
     {
-     "id": "contract:None",
+     "id": "contract:C1266:2026-08-18",
      "kind": "contract",
      "file": "contracts.csv",
-     "recordId": "None",
+     "recordId": "C1266:2026-08-18",
      "date": "2026-08-18",
      "status": "",
-     "title": "14 seats \u00d7 $47.00, to Aug 17, 2027"
+     "title": "14 seats at $47.00 a month, to Aug 17, 2027"
     }
    ],
    "segment": "Core",
@@ -7330,49 +7321,49 @@
    ],
    "contracts": [
     {
-     "id": "contract:None",
+     "id": "contract:C1152:2022-08-21",
      "kind": "contract",
      "file": "contracts.csv",
-     "recordId": "None",
+     "recordId": "C1152:2022-08-21",
      "date": "2022-08-21",
      "status": "",
-     "title": "21 seats \u00d7 $65.00, to Aug 20, 2023"
+     "title": "21 seats at $65.00 a month, to Aug 20, 2023"
     },
     {
-     "id": "contract:None",
+     "id": "contract:C1152:2023-08-21",
      "kind": "contract",
      "file": "contracts.csv",
-     "recordId": "None",
+     "recordId": "C1152:2023-08-21",
      "date": "2023-08-21",
      "status": "",
-     "title": "16 seats \u00d7 $65.00, to Aug 20, 2024"
+     "title": "16 seats at $65.00 a month, to Aug 20, 2024"
     },
     {
-     "id": "contract:None",
+     "id": "contract:C1152:2024-08-21",
      "kind": "contract",
      "file": "contracts.csv",
-     "recordId": "None",
+     "recordId": "C1152:2024-08-21",
      "date": "2024-08-21",
      "status": "",
-     "title": "16 seats \u00d7 $65.00, to Aug 20, 2025"
+     "title": "16 seats at $65.00 a month, to Aug 20, 2025"
     },
     {
-     "id": "contract:None",
+     "id": "contract:C1152:2025-08-21",
      "kind": "contract",
      "file": "contracts.csv",
-     "recordId": "None",
+     "recordId": "C1152:2025-08-21",
      "date": "2025-08-21",
      "status": "",
-     "title": "16 seats \u00d7 $68.00, to Aug 20, 2026"
+     "title": "16 seats at $68.00 a month, to Aug 20, 2026"
     },
     {
-     "id": "contract:None",
+     "id": "contract:C1152:2026-08-21",
      "kind": "contract",
      "file": "contracts.csv",
-     "recordId": "None",
+     "recordId": "C1152:2026-08-21",
      "date": "2026-08-21",
      "status": "",
-     "title": "16 seats \u00d7 $68.00, to Aug 20, 2027"
+     "title": "16 seats at $68.00 a month, to Aug 20, 2027"
     }
    ],
    "segment": "Growth",
@@ -7542,49 +7533,49 @@
    ],
    "contracts": [
     {
-     "id": "contract:None",
+     "id": "contract:C1045:2022-02-23",
      "kind": "contract",
      "file": "contracts.csv",
-     "recordId": "None",
+     "recordId": "C1045:2022-02-23",
      "date": "2022-02-23",
      "status": "",
-     "title": "27 seats \u00d7 $65.00, to Feb 22, 2023"
+     "title": "27 seats at $65.00 a month, to Feb 22, 2023"
     },
     {
-     "id": "contract:None",
+     "id": "contract:C1045:2023-02-23",
      "kind": "contract",
      "file": "contracts.csv",
-     "recordId": "None",
+     "recordId": "C1045:2023-02-23",
      "date": "2023-02-23",
      "status": "",
-     "title": "27 seats \u00d7 $65.00, to Feb 22, 2024"
+     "title": "27 seats at $65.00 a month, to Feb 22, 2024"
     },
     {
-     "id": "contract:None",
+     "id": "contract:C1045:2024-02-23",
      "kind": "contract",
      "file": "contracts.csv",
-     "recordId": "None",
+     "recordId": "C1045:2024-02-23",
      "date": "2024-02-23",
      "status": "",
-     "title": "31 seats \u00d7 $65.00, to Feb 22, 2025"
+     "title": "31 seats at $65.00 a month, to Feb 22, 2025"
     },
     {
-     "id": "contract:None",
+     "id": "contract:C1045:2025-02-23",
      "kind": "contract",
      "file": "contracts.csv",
-     "recordId": "None",
+     "recordId": "C1045:2025-02-23",
      "date": "2025-02-23",
      "status": "",
-     "title": "31 seats \u00d7 $68.00, to Feb 22, 2026"
+     "title": "31 seats at $68.00 a month, to Feb 22, 2026"
     },
     {
-     "id": "contract:None",
+     "id": "contract:C1045:2026-02-23",
      "kind": "contract",
      "file": "contracts.csv",
-     "recordId": "None",
+     "recordId": "C1045:2026-02-23",
      "date": "2026-02-23",
      "status": "",
-     "title": "31 seats \u00d7 $68.00, to Feb 22, 2027"
+     "title": "31 seats at $68.00 a month, to Feb 22, 2027"
     }
    ],
    "segment": "Growth",
@@ -7702,49 +7693,49 @@
    ],
    "contracts": [
     {
-     "id": "contract:None",
+     "id": "contract:C1154:2022-08-23",
      "kind": "contract",
      "file": "contracts.csv",
-     "recordId": "None",
+     "recordId": "C1154:2022-08-23",
      "date": "2022-08-23",
      "status": "",
-     "title": "33 seats \u00d7 $85.00, to Aug 22, 2023"
+     "title": "33 seats at $85.00 a month, plus a $12,000 platform fee a year, to Aug 22, 2023"
     },
     {
-     "id": "contract:None",
+     "id": "contract:C1154:2023-08-23",
      "kind": "contract",
      "file": "contracts.csv",
-     "recordId": "None",
+     "recordId": "C1154:2023-08-23",
      "date": "2023-08-23",
      "status": "",
-     "title": "33 seats \u00d7 $85.00, to Aug 22, 2024"
+     "title": "33 seats at $85.00 a month, plus a $12,000 platform fee a year, to Aug 22, 2024"
     },
     {
-     "id": "contract:None",
+     "id": "contract:C1154:2024-08-23",
      "kind": "contract",
      "file": "contracts.csv",
-     "recordId": "None",
+     "recordId": "C1154:2024-08-23",
      "date": "2024-08-23",
      "status": "",
-     "title": "33 seats \u00d7 $85.00, to Aug 22, 2025"
+     "title": "33 seats at $85.00 a month, plus a $12,000 platform fee a year, to Aug 22, 2025"
     },
     {
-     "id": "contract:None",
+     "id": "contract:C1154:2025-08-23",
      "kind": "contract",
      "file": "contracts.csv",
-     "recordId": "None",
+     "recordId": "C1154:2025-08-23",
      "date": "2025-08-23",
      "status": "",
-     "title": "33 seats \u00d7 $88.00, to Aug 22, 2026"
+     "title": "33 seats at $88.00 a month, plus a $12,000 platform fee a year, to Aug 22, 2026"
     },
     {
-     "id": "contract:None",
+     "id": "contract:C1154:2026-08-23",
      "kind": "contract",
      "file": "contracts.csv",
-     "recordId": "None",
+     "recordId": "C1154:2026-08-23",
      "date": "2026-08-23",
      "status": "",
-     "title": "33 seats \u00d7 $88.00, to Aug 22, 2027"
+     "title": "33 seats at $88.00 a month, plus a $12,000 platform fee a year, to Aug 22, 2027"
     }
    ],
    "segment": "Enterprise",
@@ -7832,13 +7823,13 @@
    ],
    "contracts": [
     {
-     "id": "contract:None",
+     "id": "contract:C1492:2026-06-24",
      "kind": "contract",
      "file": "contracts.csv",
-     "recordId": "None",
+     "recordId": "C1492:2026-06-24",
      "date": "2026-06-24",
      "status": "",
-     "title": "14 seats \u00d7 $47.00, to Jun 23, 2027"
+     "title": "14 seats at $47.00 a month, to Jun 23, 2027"
     }
    ],
    "segment": "Core",
@@ -7961,49 +7952,49 @@
    ],
    "contracts": [
     {
-     "id": "contract:None",
+     "id": "contract:C1273:2022-08-26",
      "kind": "contract",
      "file": "contracts.csv",
-     "recordId": "None",
+     "recordId": "C1273:2022-08-26",
      "date": "2022-08-26",
      "status": "",
-     "title": "48 seats \u00d7 $85.00, to Aug 25, 2023"
+     "title": "48 seats at $85.00 a month, plus a $12,000 platform fee a year, to Aug 25, 2023"
     },
     {
-     "id": "contract:None",
+     "id": "contract:C1273:2023-08-26",
      "kind": "contract",
      "file": "contracts.csv",
-     "recordId": "None",
+     "recordId": "C1273:2023-08-26",
      "date": "2023-08-26",
      "status": "",
-     "title": "48 seats \u00d7 $85.00, to Aug 25, 2024"
+     "title": "48 seats at $85.00 a month, plus a $12,000 platform fee a year, to Aug 25, 2024"
     },
     {
-     "id": "contract:None",
+     "id": "contract:C1273:2024-08-26",
      "kind": "contract",
      "file": "contracts.csv",
-     "recordId": "None",
+     "recordId": "C1273:2024-08-26",
      "date": "2024-08-26",
      "status": "",
-     "title": "48 seats \u00d7 $85.00, to Aug 25, 2025"
+     "title": "48 seats at $85.00 a month, plus a $12,000 platform fee a year, to Aug 25, 2025"
     },
     {
-     "id": "contract:None",
+     "id": "contract:C1273:2025-08-26",
      "kind": "contract",
      "file": "contracts.csv",
-     "recordId": "None",
+     "recordId": "C1273:2025-08-26",
      "date": "2025-08-26",
      "status": "",
-     "title": "48 seats \u00d7 $88.00, to Aug 25, 2026"
+     "title": "48 seats at $88.00 a month, plus a $12,000 platform fee a year, to Aug 25, 2026"
     },
     {
-     "id": "contract:None",
+     "id": "contract:C1273:2026-08-26",
      "kind": "contract",
      "file": "contracts.csv",
-     "recordId": "None",
+     "recordId": "C1273:2026-08-26",
      "date": "2026-08-26",
      "status": "",
-     "title": "48 seats \u00d7 $88.00, to Aug 25, 2027"
+     "title": "48 seats at $88.00 a month, plus a $12,000 platform fee a year, to Aug 25, 2027"
     }
    ],
    "segment": "Enterprise",
@@ -8101,49 +8092,49 @@
    ],
    "contracts": [
     {
-     "id": "contract:None",
+     "id": "contract:C1073:2022-08-27",
      "kind": "contract",
      "file": "contracts.csv",
-     "recordId": "None",
+     "recordId": "C1073:2022-08-27",
      "date": "2022-08-27",
      "status": "",
-     "title": "39 seats \u00d7 $85.00, to Aug 26, 2023"
+     "title": "39 seats at $85.00 a month, plus a $12,000 platform fee a year, to Aug 26, 2023"
     },
     {
-     "id": "contract:None",
+     "id": "contract:C1073:2023-08-27",
      "kind": "contract",
      "file": "contracts.csv",
-     "recordId": "None",
+     "recordId": "C1073:2023-08-27",
      "date": "2023-08-27",
      "status": "",
-     "title": "39 seats \u00d7 $85.00, to Aug 26, 2024"
+     "title": "39 seats at $85.00 a month, plus a $12,000 platform fee a year, to Aug 26, 2024"
     },
     {
-     "id": "contract:None",
+     "id": "contract:C1073:2024-08-27",
      "kind": "contract",
      "file": "contracts.csv",
-     "recordId": "None",
+     "recordId": "C1073:2024-08-27",
      "date": "2024-08-27",
      "status": "",
-     "title": "39 seats \u00d7 $85.00, to Aug 26, 2025"
+     "title": "39 seats at $85.00 a month, plus a $12,000 platform fee a year, to Aug 26, 2025"
     },
     {
-     "id": "contract:None",
+     "id": "contract:C1073:2025-08-27",
      "kind": "contract",
      "file": "contracts.csv",
-     "recordId": "None",
+     "recordId": "C1073:2025-08-27",
      "date": "2025-08-27",
      "status": "",
-     "title": "39 seats \u00d7 $88.00, to Aug 26, 2026"
+     "title": "39 seats at $88.00 a month, plus a $12,000 platform fee a year, to Aug 26, 2026"
     },
     {
-     "id": "contract:None",
+     "id": "contract:C1073:2026-08-27",
      "kind": "contract",
      "file": "contracts.csv",
-     "recordId": "None",
+     "recordId": "C1073:2026-08-27",
      "date": "2026-08-27",
      "status": "",
-     "title": "46 seats \u00d7 $88.00, to Aug 26, 2027"
+     "title": "46 seats at $88.00 a month, plus a $12,000 platform fee a year, to Aug 26, 2027"
     }
    ],
    "segment": "Enterprise",
@@ -8333,49 +8324,49 @@
    ],
    "contracts": [
     {
-     "id": "contract:None",
+     "id": "contract:C1255:2022-07-28",
      "kind": "contract",
      "file": "contracts.csv",
-     "recordId": "None",
+     "recordId": "C1255:2022-07-28",
      "date": "2022-07-28",
      "status": "",
-     "title": "16 seats \u00d7 $65.00, to Jul 27, 2023"
+     "title": "16 seats at $65.00 a month, to Jul 27, 2023"
     },
     {
-     "id": "contract:None",
+     "id": "contract:C1255:2023-07-28",
      "kind": "contract",
      "file": "contracts.csv",
-     "recordId": "None",
+     "recordId": "C1255:2023-07-28",
      "date": "2023-07-28",
      "status": "",
-     "title": "16 seats \u00d7 $65.00, to Jul 27, 2024"
+     "title": "16 seats at $65.00 a month, to Jul 27, 2024"
     },
     {
-     "id": "contract:None",
+     "id": "contract:C1255:2024-07-28",
      "kind": "contract",
      "file": "contracts.csv",
-     "recordId": "None",
+     "recordId": "C1255:2024-07-28",
      "date": "2024-07-28",
      "status": "",
-     "title": "16 seats \u00d7 $65.00, to Jul 27, 2025"
+     "title": "16 seats at $65.00 a month, to Jul 27, 2025"
     },
     {
-     "id": "contract:None",
+     "id": "contract:C1255:2025-07-28",
      "kind": "contract",
      "file": "contracts.csv",
-     "recordId": "None",
+     "recordId": "C1255:2025-07-28",
      "date": "2025-07-28",
      "status": "",
-     "title": "16 seats \u00d7 $68.00, to Jul 27, 2026"
+     "title": "16 seats at $68.00 a month, to Jul 27, 2026"
     },
     {
-     "id": "contract:None",
+     "id": "contract:C1255:2026-07-28",
      "kind": "contract",
      "file": "contracts.csv",
-     "recordId": "None",
+     "recordId": "C1255:2026-07-28",
      "date": "2026-07-28",
      "status": "",
-     "title": "16 seats \u00d7 $68.00, to Jul 27, 2027"
+     "title": "16 seats at $68.00 a month, to Jul 27, 2027"
     }
    ],
    "segment": "Growth",
@@ -8555,31 +8546,31 @@
    ],
    "contracts": [
     {
-     "id": "contract:None",
+     "id": "contract:C1375:2024-01-02",
      "kind": "contract",
      "file": "contracts.csv",
-     "recordId": "None",
+     "recordId": "C1375:2024-01-02",
      "date": "2024-01-02",
      "status": "",
-     "title": "27 seats \u00d7 $65.00, to Jan 1, 2025"
+     "title": "27 seats at $65.00 a month, to Jan 1, 2025"
     },
     {
-     "id": "contract:None",
+     "id": "contract:C1375:2025-01-02",
      "kind": "contract",
      "file": "contracts.csv",
-     "recordId": "None",
+     "recordId": "C1375:2025-01-02",
      "date": "2025-01-02",
      "status": "",
-     "title": "27 seats \u00d7 $68.00, to Jan 1, 2026"
+     "title": "27 seats at $68.00 a month, to Jan 1, 2026"
     },
     {
-     "id": "contract:None",
+     "id": "contract:C1375:2026-01-02",
      "kind": "contract",
      "file": "contracts.csv",
-     "recordId": "None",
+     "recordId": "C1375:2026-01-02",
      "date": "2026-01-02",
      "status": "",
-     "title": "27 seats \u00d7 $68.00, to Jan 1, 2027"
+     "title": "27 seats at $68.00 a month, to Jan 1, 2027"
     }
    ],
    "segment": "Growth",
@@ -8765,49 +8756,49 @@
    ],
    "contracts": [
     {
-     "id": "contract:None",
+     "id": "contract:C1126:2022-06-03",
      "kind": "contract",
      "file": "contracts.csv",
-     "recordId": "None",
+     "recordId": "C1126:2022-06-03",
      "date": "2022-06-03",
      "status": "",
-     "title": "28 seats \u00d7 $65.00, to Jun 2, 2023"
+     "title": "28 seats at $65.00 a month, to Jun 2, 2023"
     },
     {
-     "id": "contract:None",
+     "id": "contract:C1126:2023-06-03",
      "kind": "contract",
      "file": "contracts.csv",
-     "recordId": "None",
+     "recordId": "C1126:2023-06-03",
      "date": "2023-06-03",
      "status": "",
-     "title": "28 seats \u00d7 $65.00, to Jun 2, 2024"
+     "title": "28 seats at $65.00 a month, to Jun 2, 2024"
     },
     {
-     "id": "contract:None",
+     "id": "contract:C1126:2024-06-03",
      "kind": "contract",
      "file": "contracts.csv",
-     "recordId": "None",
+     "recordId": "C1126:2024-06-03",
      "date": "2024-06-03",
      "status": "",
-     "title": "28 seats \u00d7 $65.00, to Jun 2, 2025"
+     "title": "28 seats at $65.00 a month, to Jun 2, 2025"
     },
     {
-     "id": "contract:None",
+     "id": "contract:C1126:2025-06-03",
      "kind": "contract",
      "file": "contracts.csv",
-     "recordId": "None",
+     "recordId": "C1126:2025-06-03",
      "date": "2025-06-03",
      "status": "",
-     "title": "28 seats \u00d7 $68.00, to Jun 2, 2026"
+     "title": "28 seats at $68.00 a month, to Jun 2, 2026"
     },
     {
-     "id": "contract:None",
+     "id": "contract:C1126:2026-06-03",
      "kind": "contract",
      "file": "contracts.csv",
-     "recordId": "None",
+     "recordId": "C1126:2026-06-03",
      "date": "2026-06-03",
      "status": "",
-     "title": "31 seats \u00d7 $68.00, to Jun 2, 2027"
+     "title": "31 seats at $68.00 a month, to Jun 2, 2027"
     }
    ],
    "segment": "Growth",
@@ -8987,31 +8978,31 @@
    ],
    "contracts": [
     {
-     "id": "contract:None",
+     "id": "contract:C1409:2024-09-04",
      "kind": "contract",
      "file": "contracts.csv",
-     "recordId": "None",
+     "recordId": "C1409:2024-09-04",
      "date": "2024-09-04",
      "status": "",
-     "title": "18 seats \u00d7 $65.00, to Sep 3, 2025"
+     "title": "18 seats at $65.00 a month, to Sep 3, 2025"
     },
     {
-     "id": "contract:None",
+     "id": "contract:C1409:2025-09-04",
      "kind": "contract",
      "file": "contracts.csv",
-     "recordId": "None",
+     "recordId": "C1409:2025-09-04",
      "date": "2025-09-04",
      "status": "",
-     "title": "18 seats \u00d7 $68.00, to Sep 3, 2026"
+     "title": "18 seats at $68.00 a month, to Sep 3, 2026"
     },
     {
-     "id": "contract:None",
+     "id": "contract:C1409:2026-09-04",
      "kind": "contract",
      "file": "contracts.csv",
-     "recordId": "None",
+     "recordId": "C1409:2026-09-04",
      "date": "2026-09-04",
      "status": "",
-     "title": "18 seats \u00d7 $68.00, to Sep 3, 2027"
+     "title": "18 seats at $68.00 a month, to Sep 3, 2027"
     }
    ],
    "segment": "Growth",
@@ -9149,49 +9140,49 @@
    ],
    "contracts": [
     {
-     "id": "contract:None",
+     "id": "contract:C1075:2022-09-07",
      "kind": "contract",
      "file": "contracts.csv",
-     "recordId": "None",
+     "recordId": "C1075:2022-09-07",
      "date": "2022-09-07",
      "status": "",
-     "title": "26 seats \u00d7 $65.00, to Sep 6, 2023"
+     "title": "26 seats at $65.00 a month, to Sep 6, 2023"
     },
     {
-     "id": "contract:None",
+     "id": "contract:C1075:2023-09-07",
      "kind": "contract",
      "file": "contracts.csv",
-     "recordId": "None",
+     "recordId": "C1075:2023-09-07",
      "date": "2023-09-07",
      "status": "",
-     "title": "26 seats \u00d7 $65.00, to Sep 6, 2024"
+     "title": "26 seats at $65.00 a month, to Sep 6, 2024"
     },
     {
-     "id": "contract:None",
+     "id": "contract:C1075:2024-09-07",
      "kind": "contract",
      "file": "contracts.csv",
-     "recordId": "None",
+     "recordId": "C1075:2024-09-07",
      "date": "2024-09-07",
      "status": "",
-     "title": "32 seats \u00d7 $65.00, to Sep 6, 2025"
+     "title": "32 seats at $65.00 a month, to Sep 6, 2025"
     },
     {
-     "id": "contract:None",
+     "id": "contract:C1075:2025-09-07",
      "kind": "contract",
      "file": "contracts.csv",
-     "recordId": "None",
+     "recordId": "C1075:2025-09-07",
      "date": "2025-09-07",
      "status": "",
-     "title": "32 seats \u00d7 $68.00, to Sep 6, 2026"
+     "title": "32 seats at $68.00 a month, to Sep 6, 2026"
     },
     {
-     "id": "contract:None",
+     "id": "contract:C1075:2026-09-07",
      "kind": "contract",
      "file": "contracts.csv",
-     "recordId": "None",
+     "recordId": "C1075:2026-09-07",
      "date": "2026-09-07",
      "status": "",
-     "title": "32 seats \u00d7 $68.00, to Sep 6, 2027"
+     "title": "32 seats at $68.00 a month, to Sep 6, 2027"
     }
    ],
    "segment": "Growth",
@@ -9371,49 +9362,49 @@
    ],
    "contracts": [
     {
-     "id": "contract:None",
+     "id": "contract:C1278:2022-09-07",
      "kind": "contract",
      "file": "contracts.csv",
-     "recordId": "None",
+     "recordId": "C1278:2022-09-07",
      "date": "2022-09-07",
      "status": "",
-     "title": "10 seats \u00d7 $45.00, to Sep 6, 2023"
+     "title": "10 seats at $45.00 a month, to Sep 6, 2023"
     },
     {
-     "id": "contract:None",
+     "id": "contract:C1278:2023-09-07",
      "kind": "contract",
      "file": "contracts.csv",
-     "recordId": "None",
+     "recordId": "C1278:2023-09-07",
      "date": "2023-09-07",
      "status": "",
-     "title": "12 seats \u00d7 $45.00, to Sep 6, 2024"
+     "title": "12 seats at $45.00 a month, to Sep 6, 2024"
     },
     {
-     "id": "contract:None",
+     "id": "contract:C1278:2024-09-07",
      "kind": "contract",
      "file": "contracts.csv",
-     "recordId": "None",
+     "recordId": "C1278:2024-09-07",
      "date": "2024-09-07",
      "status": "",
-     "title": "15 seats \u00d7 $45.00, to Sep 6, 2025"
+     "title": "15 seats at $45.00 a month, to Sep 6, 2025"
     },
     {
-     "id": "contract:None",
+     "id": "contract:C1278:2025-09-07",
      "kind": "contract",
      "file": "contracts.csv",
-     "recordId": "None",
+     "recordId": "C1278:2025-09-07",
      "date": "2025-09-07",
      "status": "",
-     "title": "15 seats \u00d7 $47.00, to Sep 6, 2026"
+     "title": "15 seats at $47.00 a month, to Sep 6, 2026"
     },
     {
-     "id": "contract:None",
+     "id": "contract:C1278:2026-09-07",
      "kind": "contract",
      "file": "contracts.csv",
-     "recordId": "None",
+     "recordId": "C1278:2026-09-07",
      "date": "2026-09-07",
      "status": "",
-     "title": "15 seats \u00d7 $47.00, to Sep 6, 2027"
+     "title": "15 seats at $47.00 a month, to Sep 6, 2027"
     }
    ],
    "segment": "Core",
@@ -9561,49 +9552,49 @@
    ],
    "contracts": [
     {
-     "id": "contract:None",
+     "id": "contract:C1161:2022-09-09",
      "kind": "contract",
      "file": "contracts.csv",
-     "recordId": "None",
+     "recordId": "C1161:2022-09-09",
      "date": "2022-09-09",
      "status": "",
-     "title": "32 seats \u00d7 $85.00, to Sep 8, 2023"
+     "title": "32 seats at $85.00 a month, plus a $12,000 platform fee a year, to Sep 8, 2023"
     },
     {
-     "id": "contract:None",
+     "id": "contract:C1161:2023-09-09",
      "kind": "contract",
      "file": "contracts.csv",
-     "recordId": "None",
+     "recordId": "C1161:2023-09-09",
      "date": "2023-09-09",
      "status": "",
-     "title": "32 seats \u00d7 $85.00, to Sep 8, 2024"
+     "title": "32 seats at $85.00 a month, plus a $12,000 platform fee a year, to Sep 8, 2024"
     },
     {
-     "id": "contract:None",
+     "id": "contract:C1161:2024-09-09",
      "kind": "contract",
      "file": "contracts.csv",
-     "recordId": "None",
+     "recordId": "C1161:2024-09-09",
      "date": "2024-09-09",
      "status": "",
-     "title": "34 seats \u00d7 $85.00, to Sep 8, 2025"
+     "title": "34 seats at $85.00 a month, plus a $12,000 platform fee a year, to Sep 8, 2025"
     },
     {
-     "id": "contract:None",
+     "id": "contract:C1161:2025-09-09",
      "kind": "contract",
      "file": "contracts.csv",
-     "recordId": "None",
+     "recordId": "C1161:2025-09-09",
      "date": "2025-09-09",
      "status": "",
-     "title": "28 seats \u00d7 $88.00, to Sep 8, 2026"
+     "title": "28 seats at $88.00 a month, plus a $12,000 platform fee a year, to Sep 8, 2026"
     },
     {
-     "id": "contract:None",
+     "id": "contract:C1161:2026-09-09",
      "kind": "contract",
      "file": "contracts.csv",
-     "recordId": "None",
+     "recordId": "C1161:2026-09-09",
      "date": "2026-09-09",
      "status": "",
-     "title": "28 seats \u00d7 $88.00, to Sep 8, 2027"
+     "title": "28 seats at $88.00 a month, plus a $12,000 platform fee a year, to Sep 8, 2027"
     }
    ],
    "segment": "Enterprise",
@@ -9769,40 +9760,40 @@
    ],
    "contracts": [
     {
-     "id": "contract:None",
+     "id": "contract:C1188:2022-12-11",
      "kind": "contract",
      "file": "contracts.csv",
-     "recordId": "None",
+     "recordId": "C1188:2022-12-11",
      "date": "2022-12-11",
      "status": "",
-     "title": "18 seats \u00d7 $65.00, to Dec 10, 2023"
+     "title": "18 seats at $65.00 a month, to Dec 10, 2023"
     },
     {
-     "id": "contract:None",
+     "id": "contract:C1188:2023-12-11",
      "kind": "contract",
      "file": "contracts.csv",
-     "recordId": "None",
+     "recordId": "C1188:2023-12-11",
      "date": "2023-12-11",
      "status": "",
-     "title": "18 seats \u00d7 $65.00, to Dec 10, 2024"
+     "title": "18 seats at $65.00 a month, to Dec 10, 2024"
     },
     {
-     "id": "contract:None",
+     "id": "contract:C1188:2024-12-11",
      "kind": "contract",
      "file": "contracts.csv",
-     "recordId": "None",
+     "recordId": "C1188:2024-12-11",
      "date": "2024-12-11",
      "status": "",
-     "title": "18 seats \u00d7 $65.00, to Dec 10, 2025"
+     "title": "18 seats at $65.00 a month, to Dec 10, 2025"
     },
     {
-     "id": "contract:None",
+     "id": "contract:C1188:2025-12-11",
      "kind": "contract",
      "file": "contracts.csv",
-     "recordId": "None",
+     "recordId": "C1188:2025-12-11",
      "date": "2025-12-11",
      "status": "",
-     "title": "18 seats \u00d7 $68.00, to Dec 10, 2026"
+     "title": "18 seats at $68.00 a month, to Dec 10, 2026"
     }
    ],
    "segment": "Growth",
@@ -9882,22 +9873,22 @@
    ],
    "contracts": [
     {
-     "id": "contract:None",
+     "id": "contract:C1455:2025-09-11",
      "kind": "contract",
      "file": "contracts.csv",
-     "recordId": "None",
+     "recordId": "C1455:2025-09-11",
      "date": "2025-09-11",
      "status": "",
-     "title": "24 seats \u00d7 $68.00, to Sep 10, 2026"
+     "title": "24 seats at $68.00 a month, to Sep 10, 2026"
     },
     {
-     "id": "contract:None",
+     "id": "contract:C1455:2026-09-11",
      "kind": "contract",
      "file": "contracts.csv",
-     "recordId": "None",
+     "recordId": "C1455:2026-09-11",
      "date": "2026-09-11",
      "status": "",
-     "title": "24 seats \u00d7 $68.00, to Sep 10, 2027"
+     "title": "24 seats at $68.00 a month, to Sep 10, 2027"
     }
    ],
    "segment": "Growth",
@@ -10097,49 +10088,49 @@
    ],
    "contracts": [
     {
-     "id": "contract:None",
+     "id": "contract:C1022:2022-09-13",
      "kind": "contract",
      "file": "contracts.csv",
-     "recordId": "None",
+     "recordId": "C1022:2022-09-13",
      "date": "2022-09-13",
      "status": "",
-     "title": "10 seats \u00d7 $45.00, to Sep 12, 2023"
+     "title": "10 seats at $45.00 a month, to Sep 12, 2023"
     },
     {
-     "id": "contract:None",
+     "id": "contract:C1022:2023-09-13",
      "kind": "contract",
      "file": "contracts.csv",
-     "recordId": "None",
+     "recordId": "C1022:2023-09-13",
      "date": "2023-09-13",
      "status": "",
-     "title": "10 seats \u00d7 $45.00, to Sep 12, 2024"
+     "title": "10 seats at $45.00 a month, to Sep 12, 2024"
     },
     {
-     "id": "contract:None",
+     "id": "contract:C1022:2024-09-13",
      "kind": "contract",
      "file": "contracts.csv",
-     "recordId": "None",
+     "recordId": "C1022:2024-09-13",
      "date": "2024-09-13",
      "status": "",
-     "title": "10 seats \u00d7 $45.00, to Sep 12, 2025"
+     "title": "10 seats at $45.00 a month, to Sep 12, 2025"
     },
     {
-     "id": "contract:None",
+     "id": "contract:C1022:2025-09-13",
      "kind": "contract",
      "file": "contracts.csv",
-     "recordId": "None",
+     "recordId": "C1022:2025-09-13",
      "date": "2025-09-13",
      "status": "",
-     "title": "10 seats \u00d7 $47.00, to Sep 12, 2026"
+     "title": "10 seats at $47.00 a month, to Sep 12, 2026"
     },
     {
-     "id": "contract:None",
+     "id": "contract:C1022:2026-09-13",
      "kind": "contract",
      "file": "contracts.csv",
-     "recordId": "None",
+     "recordId": "C1022:2026-09-13",
      "date": "2026-09-13",
      "status": "",
-     "title": "10 seats \u00d7 $47.00, to Sep 12, 2027"
+     "title": "10 seats at $47.00 a month, to Sep 12, 2027"
     }
    ],
    "segment": "Core",
@@ -10299,40 +10290,40 @@
    ],
    "contracts": [
     {
-     "id": "contract:None",
+     "id": "contract:C1316:2022-12-13",
      "kind": "contract",
      "file": "contracts.csv",
-     "recordId": "None",
+     "recordId": "C1316:2022-12-13",
      "date": "2022-12-13",
      "status": "",
-     "title": "23 seats \u00d7 $85.00, to Dec 12, 2023"
+     "title": "23 seats at $85.00 a month, plus a $12,000 platform fee a year, to Dec 12, 2023"
     },
     {
-     "id": "contract:None",
+     "id": "contract:C1316:2023-12-13",
      "kind": "contract",
      "file": "contracts.csv",
-     "recordId": "None",
+     "recordId": "C1316:2023-12-13",
      "date": "2023-12-13",
      "status": "",
-     "title": "23 seats \u00d7 $85.00, to Dec 12, 2024"
+     "title": "23 seats at $85.00 a month, plus a $12,000 platform fee a year, to Dec 12, 2024"
     },
     {
-     "id": "contract:None",
+     "id": "contract:C1316:2024-12-13",
      "kind": "contract",
      "file": "contracts.csv",
-     "recordId": "None",
+     "recordId": "C1316:2024-12-13",
      "date": "2024-12-13",
      "status": "",
-     "title": "23 seats \u00d7 $85.00, to Dec 12, 2025"
+     "title": "23 seats at $85.00 a month, plus a $12,000 platform fee a year, to Dec 12, 2025"
     },
     {
-     "id": "contract:None",
+     "id": "contract:C1316:2025-12-13",
      "kind": "contract",
      "file": "contracts.csv",
-     "recordId": "None",
+     "recordId": "C1316:2025-12-13",
      "date": "2025-12-13",
      "status": "",
-     "title": "25 seats \u00d7 $88.00, to Dec 12, 2026"
+     "title": "25 seats at $88.00 a month, plus a $12,000 platform fee a year, to Dec 12, 2026"
     }
    ],
    "segment": "Enterprise",
@@ -10421,31 +10412,31 @@
    ],
    "contracts": [
     {
-     "id": "contract:None",
+     "id": "contract:C1411:2024-09-13",
      "kind": "contract",
      "file": "contracts.csv",
-     "recordId": "None",
+     "recordId": "C1411:2024-09-13",
      "date": "2024-09-13",
      "status": "",
-     "title": "20 seats \u00d7 $65.00, to Sep 12, 2025"
+     "title": "20 seats at $65.00 a month, to Sep 12, 2025"
     },
     {
-     "id": "contract:None",
+     "id": "contract:C1411:2025-09-13",
      "kind": "contract",
      "file": "contracts.csv",
-     "recordId": "None",
+     "recordId": "C1411:2025-09-13",
      "date": "2025-09-13",
      "status": "",
-     "title": "20 seats \u00d7 $68.00, to Sep 12, 2026"
+     "title": "20 seats at $68.00 a month, to Sep 12, 2026"
     },
     {
-     "id": "contract:None",
+     "id": "contract:C1411:2026-09-13",
      "kind": "contract",
      "file": "contracts.csv",
-     "recordId": "None",
+     "recordId": "C1411:2026-09-13",
      "date": "2026-09-13",
      "status": "",
-     "title": "16 seats \u00d7 $68.00, to Sep 12, 2027"
+     "title": "16 seats at $68.00 a month, to Sep 12, 2027"
     }
    ],
    "segment": "Growth",
@@ -10543,40 +10534,40 @@
    ],
    "contracts": [
     {
-     "id": "contract:None",
+     "id": "contract:C1361:2023-09-14",
      "kind": "contract",
      "file": "contracts.csv",
-     "recordId": "None",
+     "recordId": "C1361:2023-09-14",
      "date": "2023-09-14",
      "status": "",
-     "title": "26 seats \u00d7 $85.00, to Sep 13, 2024"
+     "title": "26 seats at $85.00 a month, plus a $12,000 platform fee a year, to Sep 13, 2024"
     },
     {
-     "id": "contract:None",
+     "id": "contract:C1361:2024-09-14",
      "kind": "contract",
      "file": "contracts.csv",
-     "recordId": "None",
+     "recordId": "C1361:2024-09-14",
      "date": "2024-09-14",
      "status": "",
-     "title": "26 seats \u00d7 $85.00, to Sep 13, 2025"
+     "title": "26 seats at $85.00 a month, plus a $12,000 platform fee a year, to Sep 13, 2025"
     },
     {
-     "id": "contract:None",
+     "id": "contract:C1361:2025-09-14",
      "kind": "contract",
      "file": "contracts.csv",
-     "recordId": "None",
+     "recordId": "C1361:2025-09-14",
      "date": "2025-09-14",
      "status": "",
-     "title": "26 seats \u00d7 $88.00, to Sep 13, 2026"
+     "title": "26 seats at $88.00 a month, plus a $12,000 platform fee a year, to Sep 13, 2026"
     },
     {
-     "id": "contract:None",
+     "id": "contract:C1361:2026-09-14",
      "kind": "contract",
      "file": "contracts.csv",
-     "recordId": "None",
+     "recordId": "C1361:2026-09-14",
      "date": "2026-09-14",
      "status": "",
-     "title": "26 seats \u00d7 $88.00, to Sep 13, 2027"
+     "title": "26 seats at $88.00 a month, plus a $12,000 platform fee a year, to Sep 13, 2027"
     }
    ],
    "segment": "Enterprise",
@@ -10739,31 +10730,31 @@
    ],
    "contracts": [
     {
-     "id": "contract:None",
+     "id": "contract:C1412:2024-09-14",
      "kind": "contract",
      "file": "contracts.csv",
-     "recordId": "None",
+     "recordId": "C1412:2024-09-14",
      "date": "2024-09-14",
      "status": "",
-     "title": "25 seats \u00d7 $65.00, to Sep 13, 2025"
+     "title": "25 seats at $65.00 a month, to Sep 13, 2025"
     },
     {
-     "id": "contract:None",
+     "id": "contract:C1412:2025-09-14",
      "kind": "contract",
      "file": "contracts.csv",
-     "recordId": "None",
+     "recordId": "C1412:2025-09-14",
      "date": "2025-09-14",
      "status": "",
-     "title": "25 seats \u00d7 $68.00, to Sep 13, 2026"
+     "title": "25 seats at $68.00 a month, to Sep 13, 2026"
     },
     {
-     "id": "contract:None",
+     "id": "contract:C1412:2026-09-14",
      "kind": "contract",
      "file": "contracts.csv",
-     "recordId": "None",
+     "recordId": "C1412:2026-09-14",
      "date": "2026-09-14",
      "status": "",
-     "title": "25 seats \u00d7 $68.00, to Sep 13, 2027"
+     "title": "25 seats at $68.00 a month, to Sep 13, 2027"
     }
    ],
    "segment": "Growth",
@@ -10939,40 +10930,40 @@
    ],
    "contracts": [
     {
-     "id": "contract:None",
+     "id": "contract:C1346:2023-06-15",
      "kind": "contract",
      "file": "contracts.csv",
-     "recordId": "None",
+     "recordId": "C1346:2023-06-15",
      "date": "2023-06-15",
      "status": "",
-     "title": "12 seats \u00d7 $45.00, to Jun 14, 2024"
+     "title": "12 seats at $45.00 a month, to Jun 14, 2024"
     },
     {
-     "id": "contract:None",
+     "id": "contract:C1346:2024-06-15",
      "kind": "contract",
      "file": "contracts.csv",
-     "recordId": "None",
+     "recordId": "C1346:2024-06-15",
      "date": "2024-06-15",
      "status": "",
-     "title": "12 seats \u00d7 $45.00, to Jun 14, 2025"
+     "title": "12 seats at $45.00 a month, to Jun 14, 2025"
     },
     {
-     "id": "contract:None",
+     "id": "contract:C1346:2025-06-15",
      "kind": "contract",
      "file": "contracts.csv",
-     "recordId": "None",
+     "recordId": "C1346:2025-06-15",
      "date": "2025-06-15",
      "status": "",
-     "title": "12 seats \u00d7 $47.00, to Jun 14, 2026"
+     "title": "12 seats at $47.00 a month, to Jun 14, 2026"
     },
     {
-     "id": "contract:None",
+     "id": "contract:C1346:2026-06-15",
      "kind": "contract",
      "file": "contracts.csv",
-     "recordId": "None",
+     "recordId": "C1346:2026-06-15",
      "date": "2026-06-15",
      "status": "",
-     "title": "12 seats \u00d7 $47.00, to Jun 14, 2027"
+     "title": "12 seats at $47.00 a month, to Jun 14, 2027"
     }
    ],
    "segment": "Core",
@@ -11072,22 +11063,22 @@
    ],
    "contracts": [
     {
-     "id": "contract:None",
+     "id": "contract:C1457:2025-09-15",
      "kind": "contract",
      "file": "contracts.csv",
-     "recordId": "None",
+     "recordId": "C1457:2025-09-15",
      "date": "2025-09-15",
      "status": "",
-     "title": "28 seats \u00d7 $68.00, to Sep 14, 2026"
+     "title": "28 seats at $68.00 a month, to Sep 14, 2026"
     },
     {
-     "id": "contract:None",
+     "id": "contract:C1457:2026-09-15",
      "kind": "contract",
      "file": "contracts.csv",
-     "recordId": "None",
+     "recordId": "C1457:2026-09-15",
      "date": "2026-09-15",
      "status": "",
-     "title": "28 seats \u00d7 $68.00, to Sep 14, 2027"
+     "title": "28 seats at $68.00 a month, to Sep 14, 2027"
     }
    ],
    "segment": "Growth",
@@ -11205,49 +11196,49 @@
    ],
    "contracts": [
     {
-     "id": "contract:None",
+     "id": "contract:C1282:2022-09-16",
      "kind": "contract",
      "file": "contracts.csv",
-     "recordId": "None",
+     "recordId": "C1282:2022-09-16",
      "date": "2022-09-16",
      "status": "",
-     "title": "27 seats \u00d7 $85.00, to Sep 15, 2023"
+     "title": "27 seats at $85.00 a month, plus a $12,000 platform fee a year, to Sep 15, 2023"
     },
     {
-     "id": "contract:None",
+     "id": "contract:C1282:2023-09-16",
      "kind": "contract",
      "file": "contracts.csv",
-     "recordId": "None",
+     "recordId": "C1282:2023-09-16",
      "date": "2023-09-16",
      "status": "",
-     "title": "27 seats \u00d7 $85.00, to Sep 15, 2024"
+     "title": "27 seats at $85.00 a month, plus a $12,000 platform fee a year, to Sep 15, 2024"
     },
     {
-     "id": "contract:None",
+     "id": "contract:C1282:2024-09-16",
      "kind": "contract",
      "file": "contracts.csv",
-     "recordId": "None",
+     "recordId": "C1282:2024-09-16",
      "date": "2024-09-16",
      "status": "",
-     "title": "30 seats \u00d7 $85.00, to Sep 15, 2025"
+     "title": "30 seats at $85.00 a month, plus a $12,000 platform fee a year, to Sep 15, 2025"
     },
     {
-     "id": "contract:None",
+     "id": "contract:C1282:2025-09-16",
      "kind": "contract",
      "file": "contracts.csv",
-     "recordId": "None",
+     "recordId": "C1282:2025-09-16",
      "date": "2025-09-16",
      "status": "",
-     "title": "30 seats \u00d7 $88.00, to Sep 15, 2026"
+     "title": "30 seats at $88.00 a month, plus a $12,000 platform fee a year, to Sep 15, 2026"
     },
     {
-     "id": "contract:None",
+     "id": "contract:C1282:2026-09-16",
      "kind": "contract",
      "file": "contracts.csv",
-     "recordId": "None",
+     "recordId": "C1282:2026-09-16",
      "date": "2026-09-16",
      "status": "",
-     "title": "30 seats \u00d7 $88.00, to Sep 15, 2027"
+     "title": "30 seats at $88.00 a month, plus a $12,000 platform fee a year, to Sep 15, 2027"
     }
    ],
    "segment": "Enterprise",
@@ -11417,49 +11408,49 @@
    ],
    "contracts": [
     {
-     "id": "contract:None",
+     "id": "contract:C1217:2022-03-18",
      "kind": "contract",
      "file": "contracts.csv",
-     "recordId": "None",
+     "recordId": "C1217:2022-03-18",
      "date": "2022-03-18",
      "status": "",
-     "title": "11 seats \u00d7 $45.00, to Mar 17, 2023"
+     "title": "11 seats at $45.00 a month, to Mar 17, 2023"
     },
     {
-     "id": "contract:None",
+     "id": "contract:C1217:2023-03-18",
      "kind": "contract",
      "file": "contracts.csv",
-     "recordId": "None",
+     "recordId": "C1217:2023-03-18",
      "date": "2023-03-18",
      "status": "",
-     "title": "13 seats \u00d7 $45.00, to Mar 17, 2024"
+     "title": "13 seats at $45.00 a month, to Mar 17, 2024"
     },
     {
-     "id": "contract:None",
+     "id": "contract:C1217:2024-03-18",
      "kind": "contract",
      "file": "contracts.csv",
-     "recordId": "None",
+     "recordId": "C1217:2024-03-18",
      "date": "2024-03-18",
      "status": "",
-     "title": "13 seats \u00d7 $45.00, to Mar 17, 2025"
+     "title": "13 seats at $45.00 a month, to Mar 17, 2025"
     },
     {
-     "id": "contract:None",
+     "id": "contract:C1217:2025-03-18",
      "kind": "contract",
      "file": "contracts.csv",
-     "recordId": "None",
+     "recordId": "C1217:2025-03-18",
      "date": "2025-03-18",
      "status": "",
-     "title": "13 seats \u00d7 $47.00, to Mar 17, 2026"
+     "title": "13 seats at $47.00 a month, to Mar 17, 2026"
     },
     {
-     "id": "contract:None",
+     "id": "contract:C1217:2026-03-18",
      "kind": "contract",
      "file": "contracts.csv",
-     "recordId": "None",
+     "recordId": "C1217:2026-03-18",
      "date": "2026-03-18",
      "status": "",
-     "title": "17 seats \u00d7 $47.00, to Mar 17, 2027"
+     "title": "17 seats at $47.00 a month, to Mar 17, 2027"
     }
    ],
    "segment": "Core",
@@ -11557,49 +11548,49 @@
    ],
    "contracts": [
     {
-     "id": "contract:None",
+     "id": "contract:C1284:2022-09-18",
      "kind": "contract",
      "file": "contracts.csv",
-     "recordId": "None",
+     "recordId": "C1284:2022-09-18",
      "date": "2022-09-18",
      "status": "",
-     "title": "20 seats \u00d7 $65.00, to Sep 17, 2023"
+     "title": "20 seats at $65.00 a month, to Sep 17, 2023"
     },
     {
-     "id": "contract:None",
+     "id": "contract:C1284:2023-09-18",
      "kind": "contract",
      "file": "contracts.csv",
-     "recordId": "None",
+     "recordId": "C1284:2023-09-18",
      "date": "2023-09-18",
      "status": "",
-     "title": "20 seats \u00d7 $65.00, to Sep 17, 2024"
+     "title": "20 seats at $65.00 a month, to Sep 17, 2024"
     },
     {
-     "id": "contract:None",
+     "id": "contract:C1284:2024-09-18",
      "kind": "contract",
      "file": "contracts.csv",
-     "recordId": "None",
+     "recordId": "C1284:2024-09-18",
      "date": "2024-09-18",
      "status": "",
-     "title": "20 seats \u00d7 $65.00, to Sep 17, 2025"
+     "title": "20 seats at $65.00 a month, to Sep 17, 2025"
     },
     {
-     "id": "contract:None",
+     "id": "contract:C1284:2025-09-18",
      "kind": "contract",
      "file": "contracts.csv",
-     "recordId": "None",
+     "recordId": "C1284:2025-09-18",
      "date": "2025-09-18",
      "status": "",
-     "title": "20 seats \u00d7 $68.00, to Sep 17, 2026"
+     "title": "20 seats at $68.00 a month, to Sep 17, 2026"
     },
     {
-     "id": "contract:None",
+     "id": "contract:C1284:2026-09-18",
      "kind": "contract",
      "file": "contracts.csv",
-     "recordId": "None",
+     "recordId": "C1284:2026-09-18",
      "date": "2026-09-18",
      "status": "",
-     "title": "20 seats \u00d7 $68.00, to Sep 17, 2027"
+     "title": "20 seats at $68.00 a month, to Sep 17, 2027"
     }
    ],
    "segment": "Growth",
@@ -11727,49 +11718,49 @@
    ],
    "contracts": [
     {
-     "id": "contract:None",
+     "id": "contract:C1077:2022-09-19",
      "kind": "contract",
      "file": "contracts.csv",
-     "recordId": "None",
+     "recordId": "C1077:2022-09-19",
      "date": "2022-09-19",
      "status": "",
-     "title": "29 seats \u00d7 $65.00, to Sep 18, 2023"
+     "title": "29 seats at $65.00 a month, to Sep 18, 2023"
     },
     {
-     "id": "contract:None",
+     "id": "contract:C1077:2023-09-19",
      "kind": "contract",
      "file": "contracts.csv",
-     "recordId": "None",
+     "recordId": "C1077:2023-09-19",
      "date": "2023-09-19",
      "status": "",
-     "title": "29 seats \u00d7 $65.00, to Sep 18, 2024"
+     "title": "29 seats at $65.00 a month, to Sep 18, 2024"
     },
     {
-     "id": "contract:None",
+     "id": "contract:C1077:2024-09-19",
      "kind": "contract",
      "file": "contracts.csv",
-     "recordId": "None",
+     "recordId": "C1077:2024-09-19",
      "date": "2024-09-19",
      "status": "",
-     "title": "29 seats \u00d7 $65.00, to Sep 18, 2025"
+     "title": "29 seats at $65.00 a month, to Sep 18, 2025"
     },
     {
-     "id": "contract:None",
+     "id": "contract:C1077:2025-09-19",
      "kind": "contract",
      "file": "contracts.csv",
-     "recordId": "None",
+     "recordId": "C1077:2025-09-19",
      "date": "2025-09-19",
      "status": "",
-     "title": "29 seats \u00d7 $68.00, to Sep 18, 2026"
+     "title": "29 seats at $68.00 a month, to Sep 18, 2026"
     },
     {
-     "id": "contract:None",
+     "id": "contract:C1077:2026-09-19",
      "kind": "contract",
      "file": "contracts.csv",
-     "recordId": "None",
+     "recordId": "C1077:2026-09-19",
      "date": "2026-09-19",
      "status": "",
-     "title": "21 seats \u00d7 $68.00, to Sep 18, 2027"
+     "title": "21 seats at $68.00 a month, to Sep 18, 2027"
     }
    ],
    "segment": "Growth",
@@ -11858,22 +11849,22 @@
    ],
    "contracts": [
     {
-     "id": "contract:None",
+     "id": "contract:C1446:2025-06-19",
      "kind": "contract",
      "file": "contracts.csv",
-     "recordId": "None",
+     "recordId": "C1446:2025-06-19",
      "date": "2025-06-19",
      "status": "",
-     "title": "23 seats \u00d7 $68.00, to Jun 18, 2026"
+     "title": "23 seats at $68.00 a month, to Jun 18, 2026"
     },
     {
-     "id": "contract:None",
+     "id": "contract:C1446:2026-06-19",
      "kind": "contract",
      "file": "contracts.csv",
-     "recordId": "None",
+     "recordId": "C1446:2026-06-19",
      "date": "2026-06-19",
      "status": "",
-     "title": "23 seats \u00d7 $68.00, to Jun 18, 2027"
+     "title": "23 seats at $68.00 a month, to Jun 18, 2027"
     }
    ],
    "segment": "Growth",
@@ -12043,31 +12034,31 @@
    ],
    "contracts": [
     {
-     "id": "contract:None",
+     "id": "contract:C1407:2024-08-21",
      "kind": "contract",
      "file": "contracts.csv",
-     "recordId": "None",
+     "recordId": "C1407:2024-08-21",
      "date": "2024-08-21",
      "status": "",
-     "title": "14 seats \u00d7 $45.00, to Aug 20, 2025"
+     "title": "14 seats at $45.00 a month, to Aug 20, 2025"
     },
     {
-     "id": "contract:None",
+     "id": "contract:C1407:2025-08-21",
      "kind": "contract",
      "file": "contracts.csv",
-     "recordId": "None",
+     "recordId": "C1407:2025-08-21",
      "date": "2025-08-21",
      "status": "",
-     "title": "14 seats \u00d7 $47.00, to Aug 20, 2026"
+     "title": "14 seats at $47.00 a month, to Aug 20, 2026"
     },
     {
-     "id": "contract:None",
+     "id": "contract:C1407:2026-08-21",
      "kind": "contract",
      "file": "contracts.csv",
-     "recordId": "None",
+     "recordId": "C1407:2026-08-21",
      "date": "2026-08-21",
      "status": "",
-     "title": "14 seats \u00d7 $47.00, to Aug 20, 2027"
+     "title": "14 seats at $47.00 a month, to Aug 20, 2027"
     }
    ],
    "segment": "Core",
@@ -12193,22 +12184,22 @@
    ],
    "contracts": [
     {
-     "id": "contract:None",
+     "id": "contract:C1437:2025-03-21",
      "kind": "contract",
      "file": "contracts.csv",
-     "recordId": "None",
+     "recordId": "C1437:2025-03-21",
      "date": "2025-03-21",
      "status": "",
-     "title": "13 seats \u00d7 $47.00, to Mar 20, 2026"
+     "title": "13 seats at $47.00 a month, to Mar 20, 2026"
     },
     {
-     "id": "contract:None",
+     "id": "contract:C1437:2026-03-21",
      "kind": "contract",
      "file": "contracts.csv",
-     "recordId": "None",
+     "recordId": "C1437:2026-03-21",
      "date": "2026-03-21",
      "status": "",
-     "title": "13 seats \u00d7 $47.00, to Mar 20, 2027"
+     "title": "13 seats at $47.00 a month, to Mar 20, 2027"
     }
    ],
    "segment": "Core",
@@ -12378,49 +12369,49 @@
    ],
    "contracts": [
     {
-     "id": "contract:None",
+     "id": "contract:C1063:2022-06-24",
      "kind": "contract",
      "file": "contracts.csv",
-     "recordId": "None",
+     "recordId": "C1063:2022-06-24",
      "date": "2022-06-24",
      "status": "",
-     "title": "15 seats \u00d7 $65.00, to Jun 23, 2023"
+     "title": "15 seats at $65.00 a month, to Jun 23, 2023"
     },
     {
-     "id": "contract:None",
+     "id": "contract:C1063:2023-06-24",
      "kind": "contract",
      "file": "contracts.csv",
-     "recordId": "None",
+     "recordId": "C1063:2023-06-24",
      "date": "2023-06-24",
      "status": "",
-     "title": "15 seats \u00d7 $65.00, to Jun 23, 2024"
+     "title": "15 seats at $65.00 a month, to Jun 23, 2024"
     },
     {
-     "id": "contract:None",
+     "id": "contract:C1063:2024-06-24",
      "kind": "contract",
      "file": "contracts.csv",
-     "recordId": "None",
+     "recordId": "C1063:2024-06-24",
      "date": "2024-06-24",
      "status": "",
-     "title": "15 seats \u00d7 $65.00, to Jun 23, 2025"
+     "title": "15 seats at $65.00 a month, to Jun 23, 2025"
     },
     {
-     "id": "contract:None",
+     "id": "contract:C1063:2025-06-24",
      "kind": "contract",
      "file": "contracts.csv",
-     "recordId": "None",
+     "recordId": "C1063:2025-06-24",
      "date": "2025-06-24",
      "status": "",
-     "title": "15 seats \u00d7 $68.00, to Jun 23, 2026"
+     "title": "15 seats at $68.00 a month, to Jun 23, 2026"
     },
     {
-     "id": "contract:None",
+     "id": "contract:C1063:2026-06-24",
      "kind": "contract",
      "file": "contracts.csv",
-     "recordId": "None",
+     "recordId": "C1063:2026-06-24",
      "date": "2026-06-24",
      "status": "",
-     "title": "15 seats \u00d7 $68.00, to Jun 23, 2027"
+     "title": "15 seats at $68.00 a month, to Jun 23, 2027"
     }
    ],
    "segment": "Growth",
@@ -12455,13 +12446,13 @@
    "payments": [],
    "contracts": [
     {
-     "id": "contract:None",
+     "id": "contract:C1504:2026-09-24",
      "kind": "contract",
      "file": "contracts.csv",
-     "recordId": "None",
+     "recordId": "C1504:2026-09-24",
      "date": "2026-09-24",
      "status": "",
-     "title": "20 seats \u00d7 $68.00, to Sep 23, 2027"
+     "title": "20 seats at $68.00 a month, to Sep 23, 2027"
     }
    ],
    "segment": "Growth",
@@ -12631,40 +12622,40 @@
    ],
    "contracts": [
     {
-     "id": "contract:None",
+     "id": "contract:C1353:2023-07-25",
      "kind": "contract",
      "file": "contracts.csv",
-     "recordId": "None",
+     "recordId": "C1353:2023-07-25",
      "date": "2023-07-25",
      "status": "",
-     "title": "16 seats \u00d7 $45.00, to Jul 24, 2024"
+     "title": "16 seats at $45.00 a month, to Jul 24, 2024"
     },
     {
-     "id": "contract:None",
+     "id": "contract:C1353:2024-07-25",
      "kind": "contract",
      "file": "contracts.csv",
-     "recordId": "None",
+     "recordId": "C1353:2024-07-25",
      "date": "2024-07-25",
      "status": "",
-     "title": "16 seats \u00d7 $45.00, to Jul 24, 2025"
+     "title": "16 seats at $45.00 a month, to Jul 24, 2025"
     },
     {
-     "id": "contract:None",
+     "id": "contract:C1353:2025-07-25",
      "kind": "contract",
      "file": "contracts.csv",
-     "recordId": "None",
+     "recordId": "C1353:2025-07-25",
      "date": "2025-07-25",
      "status": "",
-     "title": "16 seats \u00d7 $47.00, to Jul 24, 2026"
+     "title": "16 seats at $47.00 a month, to Jul 24, 2026"
     },
     {
-     "id": "contract:None",
+     "id": "contract:C1353:2026-07-25",
      "kind": "contract",
      "file": "contracts.csv",
-     "recordId": "None",
+     "recordId": "C1353:2026-07-25",
      "date": "2026-07-25",
      "status": "",
-     "title": "17 seats \u00d7 $47.00, to Jul 24, 2027"
+     "title": "17 seats at $47.00 a month, to Jul 24, 2027"
     }
    ],
    "segment": "Core",
@@ -12752,13 +12743,13 @@
    ],
    "contracts": [
     {
-     "id": "contract:None",
+     "id": "contract:C1470:2025-12-27",
      "kind": "contract",
      "file": "contracts.csv",
-     "recordId": "None",
+     "recordId": "C1470:2025-12-27",
      "date": "2025-12-27",
      "status": "",
-     "title": "23 seats \u00d7 $68.00, to Dec 26, 2026"
+     "title": "23 seats at $68.00 a month, to Dec 26, 2026"
     }
    ],
    "segment": "Growth",
@@ -12958,31 +12949,31 @@
    ],
    "contracts": [
     {
-     "id": "contract:None",
+     "id": "contract:C1379:2024-02-01",
      "kind": "contract",
      "file": "contracts.csv",
-     "recordId": "None",
+     "recordId": "C1379:2024-02-01",
      "date": "2024-02-01",
      "status": "",
-     "title": "18 seats \u00d7 $45.00, to Jan 31, 2025"
+     "title": "18 seats at $45.00 a month, to Jan 31, 2025"
     },
     {
-     "id": "contract:None",
+     "id": "contract:C1379:2025-02-01",
      "kind": "contract",
      "file": "contracts.csv",
-     "recordId": "None",
+     "recordId": "C1379:2025-02-01",
      "date": "2025-02-01",
      "status": "",
-     "title": "18 seats \u00d7 $47.00, to Jan 31, 2026"
+     "title": "18 seats at $47.00 a month, to Jan 31, 2026"
     },
     {
-     "id": "contract:None",
+     "id": "contract:C1379:2026-02-01",
      "kind": "contract",
      "file": "contracts.csv",
-     "recordId": "None",
+     "recordId": "C1379:2026-02-01",
      "date": "2026-02-01",
      "status": "",
-     "title": "18 seats \u00d7 $47.00, to Jan 31, 2027"
+     "title": "18 seats at $47.00 a month, to Jan 31, 2027"
     }
    ],
    "segment": "Core",
@@ -13152,22 +13143,22 @@
    ],
    "contracts": [
     {
-     "id": "contract:None",
+     "id": "contract:C1454:2025-09-01",
      "kind": "contract",
      "file": "contracts.csv",
-     "recordId": "None",
+     "recordId": "C1454:2025-09-01",
      "date": "2025-09-01",
      "status": "",
-     "title": "13 seats \u00d7 $47.00, to Aug 31, 2026"
+     "title": "13 seats at $47.00 a month, to Aug 31, 2026"
     },
     {
-     "id": "contract:None",
+     "id": "contract:C1454:2026-09-01",
      "kind": "contract",
      "file": "contracts.csv",
-     "recordId": "None",
+     "recordId": "C1454:2026-09-01",
      "date": "2026-09-01",
      "status": "",
-     "title": "13 seats \u00d7 $47.00, to Aug 31, 2027"
+     "title": "13 seats at $47.00 a month, to Aug 31, 2027"
     }
    ],
    "segment": "Core",
@@ -13337,49 +13328,49 @@
    ],
    "contracts": [
     {
-     "id": "contract:None",
+     "id": "contract:C1110:2022-04-08",
      "kind": "contract",
      "file": "contracts.csv",
-     "recordId": "None",
+     "recordId": "C1110:2022-04-08",
      "date": "2022-04-08",
      "status": "",
-     "title": "10 seats \u00d7 $45.00, to Apr 7, 2023"
+     "title": "10 seats at $45.00 a month, to Apr 7, 2023"
     },
     {
-     "id": "contract:None",
+     "id": "contract:C1110:2023-04-08",
      "kind": "contract",
      "file": "contracts.csv",
-     "recordId": "None",
+     "recordId": "C1110:2023-04-08",
      "date": "2023-04-08",
      "status": "",
-     "title": "11 seats \u00d7 $45.00, to Apr 7, 2024"
+     "title": "11 seats at $45.00 a month, to Apr 7, 2024"
     },
     {
-     "id": "contract:None",
+     "id": "contract:C1110:2024-04-08",
      "kind": "contract",
      "file": "contracts.csv",
-     "recordId": "None",
+     "recordId": "C1110:2024-04-08",
      "date": "2024-04-08",
      "status": "",
-     "title": "11 seats \u00d7 $45.00, to Apr 7, 2025"
+     "title": "11 seats at $45.00 a month, to Apr 7, 2025"
     },
     {
-     "id": "contract:None",
+     "id": "contract:C1110:2025-04-08",
      "kind": "contract",
      "file": "contracts.csv",
-     "recordId": "None",
+     "recordId": "C1110:2025-04-08",
      "date": "2025-04-08",
      "status": "",
-     "title": "11 seats \u00d7 $47.00, to Apr 7, 2026"
+     "title": "11 seats at $47.00 a month, to Apr 7, 2026"
     },
     {
-     "id": "contract:None",
+     "id": "contract:C1110:2026-04-08",
      "kind": "contract",
      "file": "contracts.csv",
-     "recordId": "None",
+     "recordId": "C1110:2026-04-08",
      "date": "2026-04-08",
      "status": "",
-     "title": "13 seats \u00d7 $47.00, to Apr 7, 2027"
+     "title": "13 seats at $47.00 a month, to Apr 7, 2027"
     }
    ],
    "segment": "Core",
@@ -13504,22 +13495,22 @@
    ],
    "contracts": [
     {
-     "id": "contract:None",
+     "id": "contract:C1426:2025-01-08",
      "kind": "contract",
      "file": "contracts.csv",
-     "recordId": "None",
+     "recordId": "C1426:2025-01-08",
      "date": "2025-01-08",
      "status": "",
-     "title": "16 seats \u00d7 $68.00, to Jan 7, 2026"
+     "title": "16 seats at $68.00 a month, to Jan 7, 2026"
     },
     {
-     "id": "contract:None",
+     "id": "contract:C1426:2026-01-08",
      "kind": "contract",
      "file": "contracts.csv",
-     "recordId": "None",
+     "recordId": "C1426:2026-01-08",
      "date": "2026-01-08",
      "status": "",
-     "title": "16 seats \u00d7 $68.00, to Jan 7, 2027"
+     "title": "16 seats at $68.00 a month, to Jan 7, 2027"
     }
    ],
    "segment": "Growth",
@@ -13679,40 +13670,40 @@
    ],
    "contracts": [
     {
-     "id": "contract:None",
+     "id": "contract:C1319:2022-12-16",
      "kind": "contract",
      "file": "contracts.csv",
-     "recordId": "None",
+     "recordId": "C1319:2022-12-16",
      "date": "2022-12-16",
      "status": "",
-     "title": "13 seats \u00d7 $45.00, to Dec 15, 2023"
+     "title": "13 seats at $45.00 a month, to Dec 15, 2023"
     },
     {
-     "id": "contract:None",
+     "id": "contract:C1319:2023-12-16",
      "kind": "contract",
      "file": "contracts.csv",
-     "recordId": "None",
+     "recordId": "C1319:2023-12-16",
      "date": "2023-12-16",
      "status": "",
-     "title": "9 seats \u00d7 $45.00, to Dec 15, 2024"
+     "title": "9 seats at $45.00 a month, to Dec 15, 2024"
     },
     {
-     "id": "contract:None",
+     "id": "contract:C1319:2024-12-16",
      "kind": "contract",
      "file": "contracts.csv",
-     "recordId": "None",
+     "recordId": "C1319:2024-12-16",
      "date": "2024-12-16",
      "status": "",
-     "title": "9 seats \u00d7 $45.00, to Dec 15, 2025"
+     "title": "9 seats at $45.00 a month, to Dec 15, 2025"
     },
     {
-     "id": "contract:None",
+     "id": "contract:C1319:2025-12-16",
      "kind": "contract",
      "file": "contracts.csv",
-     "recordId": "None",
+     "recordId": "C1319:2025-12-16",
      "date": "2025-12-16",
      "status": "",
-     "title": "6 seats \u00d7 $47.00, to Dec 15, 2026"
+     "title": "6 seats at $47.00 a month, to Dec 15, 2026"
     }
    ],
    "segment": "Core",
@@ -13846,9 +13837,9 @@
    {
     "label": "Shouldn't chase today",
     "methodA": "Sum of Hold + Probably paid verdicts",
-    "valueA": 441710.0,
+    "valueA": 446810.0,
     "methodB": "Recounted from the raw evidence flags",
-    "valueB": 441710.0,
+    "valueB": 446810.0,
     "ok": true,
     "unit": "money",
     "group": "cross"
@@ -13873,8 +13864,8 @@
     "ok": true,
     "unit": "count",
     "group": "coo",
-    "strictValue": 3,
-    "note": "Under the strictest reading (any open or pending ticket at all), 3 customers get a reminder today: Crane IT Partners, Harbor Engineering Group, Kingsway Engineering Group. Their pending tickets aren't about money, or the customer said it was resolved. Letting those through, with a softer tone and the account manager told, was my call after the review; Maya to confirm in the shadow week. Earlier versions would have chased 4 customers with a complaint or dispute open: Eastman Engineering, Drummond Consulting, Banerjee Petrov and Upton & Bell. Each became a rule."
+    "strictValue": 2,
+    "note": "Under the strictest reading (any open or pending ticket at all), 2 customers get a reminder today: Crane IT Partners, Harbor Engineering Group. Their pending tickets aren't about money, or the customer said it was resolved. Letting those through, with a softer tone and the account manager told, was my call after the review; Maya to confirm in the shadow week. Earlier versions would have chased 3 customers with a complaint or dispute open: Eastman Engineering, Drummond Consulting and Banerjee Petrov (a fourth, Upton & Bell, was caught only by the top-50 rule). Each became a rule."
    }
   ],
   "failures": [
@@ -14015,10 +14006,10 @@
      "customer": "Kingsway Engineering Group",
      "amount": 5100,
      "toolSaid": "send (soft) on INV-25852",
-     "shouldBe": "check first",
+     "shouldBe": "wait for Marcus",
      "foundBy": "Second look at the hand check",
      "why": "One $5,100 payment with a blank memo and two $5,100 bills. The tool assumed it pays the older one, so the newer one would have got a reminder with no check. The reviewer's 'send' was conditional on that, and the hand check passed it. If the payment was for the newer bill, that's the Paidly case.",
-     "change": "When a payment could cover either of two same-amount bills, both go to Check first and Marcus confirms which before any reminder.",
+     "change": "When a payment could cover either of two same-amount bills, the second one waits for Marcus, who is asked which bill it pays. No reminder until he confirms. The hand-check label was updated to match.",
      "status": "fixed"
     },
     {
@@ -14033,12 +14024,22 @@
      "status": "open"
     }
    ]
+  },
+  "aiUplift": {
+   "bills": 54,
+   "cacheMisses": 0,
+   "verdictsChanged": [],
+   "checkFirstRules": 5,
+   "checkFirstWithAI": 8,
+   "checkFirstChanged": 9,
+   "agreeRules": 53,
+   "agreeWithAI": 53
   }
  },
  "morningSummary": {
   "title": "Collections check, Oct 31, 2026",
   "bullets": [
-   "16 reminders to approve (4 more after a quick check)",
+   "16 reminders to approve (3 more after a quick check)",
    "12 disputed bills to fix: corrected invoice or a clear answer",
    "9 calls to make",
    "5 bills look paid: Marcus is matching them"
@@ -14046,11 +14047,11 @@
   "link": "https://ledgerline-collections.vercel.app",
   "text": "Good morning. Here's what needs you today:",
   "detail": [
-   "16 reminders ready to approve ($173,197), and 4 more after a check.",
-   "20 on hold ($363,362): 12 past their target date, so the owner acts today; the rest by Nov 3, 2026 at the earliest.",
+   "16 reminders ready to approve ($173,197), and 3 more after a check.",
+   "21 on hold ($368,462): 12 past their target date, so the owner acts today; the rest by Nov 3, 2026 at the earliest.",
    "5 probably paid already ($78,348): with Marcus Bell to match; you're copied.",
    "9 need a phone call ($9,384).",
-   "15 of these need a second look first, in Check first."
+   "5 of these need a second look first, in Check first."
   ],
   "cover": "While Priya Nair is on leave (March, dates to confirm), Dana Ruiz owns this morning list and Marcus Bell keeps the probably-paid list. Cover is off today.",
   "routing": [
@@ -14060,7 +14061,7 @@
     "channel": "Slack direct message",
     "cc": "Dana Ruiz",
     "lines": [
-     "16 reminders to approve (4 more after a quick check)",
+     "16 reminders to approve (3 more after a quick check)",
      "12 disputed bills to fix: corrected invoice or a clear answer",
      "9 calls to make",
      "5 bills look paid: Marcus is matching them"
@@ -14073,13 +14074,13 @@
     "channel": "Slack direct message",
     "cc": "Priya Nair",
     "lines": [
+     "Kingsway Engineering Group: which bill does the $5,100 payment pay, INV-25469 or INV-25852?",
      "Jessop & Orwell Agency, $62,688",
-     "Brandt & Lowell CPAs, $6,324",
-     "Kingsway Engineering Group, $5,100"
+     "Brandt & Lowell CPAs, $6,324"
     ],
-    "more": 2,
+    "more": 3,
     "by": "Nov 4",
-    "intro": "5 bills look already paid. Please match them; no reminders go out meanwhile.",
+    "intro": "5 bills look already paid. Please match them; no reminders go out meanwhile. One payment could pay either of two bills: tell Priya Nair which.",
     "link": "https://ledgerline-collections.vercel.app"
    },
    {
@@ -14122,9 +14123,9 @@
      "Paused: Eastman & Wexler CPAs, $43,680",
      "Paused: Studio Marsh, $1,410"
     ],
-    "more": 6,
+    "more": 5,
     "by": "Nov 5",
-    "intro": "3 accounts paused until you move the issue on. 6 contacts planned today; reply if any should wait.",
+    "intro": "3 accounts paused until you move the issue on. 5 contacts planned today; reply if any should wait.",
     "link": "https://ledgerline-collections.vercel.app"
    },
    {
@@ -14245,7 +14246,7 @@
   "maxAmount": 5000,
   "eligibleCount": 2,
   "eligibleAmount": 7752.0,
-  "permanentCount": 34,
+  "permanentCount": 35,
   "rule": "Maya (COO): only after a month of Priya's approvals on record showing she almost never changed them; only small, polite first or second reminders outside the top 50 with no open ticket and no unmatched payment. Top-50, disputed, probably paid, anything firmer than a friendly nudge and every phone call stay with a person permanently. Priya or Dana can switch it off in one click."
  }
 }

@@ -1,0 +1,10 @@
+{
+  "bills": 54,
+  "cacheMisses": 0,
+  "verdictsChanged": [],
+  "checkFirstRules": 5,
+  "checkFirstWithAI": 8,
+  "checkFirstChanged": 9,
+  "agreeRules": 53,
+  "agreeWithAI": 53
+}

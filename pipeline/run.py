@@ -144,7 +144,7 @@ def verified_numbers(engine: Engine, invoices: list[dict], by_cause: list[dict])
     # 3. Should-not-chase: from verdicts vs straight from the flags
     a = sum(i["amount"] for i in invoices if i["verdict"] in ("paid", "hold"))
     b = sum(r.amount for r in engine._rows if r.flags.get("paid_linked") or r.flags.get("paid_unmatched")
-            or r.flags.get("complaint_hold") or r.flags.get("disputed_hold") or r.flags.get("dispute_hold") or r.flags.get("open_ticket_hold") or r.flags.get("grave_hold") or r.flags.get("too_early") or r.flags.get("wrong_bill"))
+            or r.flags.get("complaint_hold") or r.flags.get("disputed_hold") or r.flags.get("dispute_hold") or r.flags.get("open_ticket_hold") or r.flags.get("grave_hold") or r.flags.get("too_early") or r.flags.get("wrong_bill") or r.flags.get("twin_payment"))
     out.append({"label": "Shouldn't chase today", "methodA": "Sum of Hold + Probably paid verdicts", "valueA": round(a, 2),
                 "methodB": "Recounted from the raw evidence flags", "valueB": round(b, 2), "ok": abs(a - b) < 0.5})
     # 4. The Paidly case: a bill with a matching or recent unmatched payment must never get a reminder
@@ -170,8 +170,8 @@ def verified_numbers(engine: Engine, invoices: list[dict], by_cause: list[dict])
                          + ", ".join(strict_names) + ". Their pending tickets aren't about money, or the customer said it was resolved. "
                          "Letting those through, with a softer tone and the account manager told, was my call after the review; "
                          "Maya to confirm in the shadow week. " if strict else "")
-                        + "Earlier versions would have chased 4 customers with a complaint or dispute open: Eastman Engineering, Drummond Consulting, "
-                        "Banerjee Petrov and Upton & Bell. Each became a rule."})
+                        + "Earlier versions would have chased 3 customers with a complaint or dispute open: Eastman Engineering, Drummond Consulting "
+                        "and Banerjee Petrov (a fourth, Upton & Bell, was caught only by the top-50 rule). Each became a rule."})
     for v in out:
         v.setdefault("unit", "money")
         v.setdefault("group", "internal" if v["label"] == "Causes add up" else "cross")
@@ -270,12 +270,15 @@ def main() -> None:
     routing = [{"to": priya, "role": "AR Specialist", "channel": "Slack direct message", "cc": dana or None,
                 "lines": light, "by": None}]
     paid_bills = [i for i in invoices if i["verdict"] == "paid"]
-    if paid_bills and marcus:
+    twin_bills = [i for i in invoices if (i.get("hold") or {}).get("twinOf")]
+    if (paid_bills or twin_bills) and marcus:
         routing.append({"to": marcus, "role": "Staff Accountant", "channel": "Slack direct message", "cc": priya,
-                        "lines": [f"{i['customerName']}, {money(i['amount'])}" for i in paid_bills][:3],
-                        "more": max(0, len(paid_bills) - 3),
+                        "lines": ([f"{i['customerName']}: which bill does the {money(i['amount'])} payment pay, {i['hold']['twinOf']} or {i['id']}?" for i in twin_bills]
+                                  + [f"{i['customerName']}, {money(i['amount'])}" for i in paid_bills])[:3],
+                        "more": max(0, len(twin_bills) + len(paid_bills) - 3),
                         "by": pd.Timestamp(np.busday_offset(as_of.date(), int(cfg["policy"].get("paid_match_days", 2)), roll="forward")).strftime("%b %-d"),
-                        "intro": f"{len(paid_bills)} bills look already paid. Please match them; no reminders go out meanwhile."})
+                        "intro": f"{len(paid_bills)} bills look already paid. Please match them; no reminders go out meanwhile."
+                                 + (f" One payment could pay either of two bills: tell {priya} which." if twin_bills else "")})
     by_am: dict[str, list] = {}
     for i in invoices:
         h = i.get("hold") or {}
@@ -359,7 +362,10 @@ def main() -> None:
                   "accuracy": acc, "agreementRate": round(ai.agreements / ai.judgments, 4) if ai.judgments else None,
                   "verifiedNumbers": vn, "failures": failures[:12], "runtimeSeconds": round(time.time() - t0, 2),
                   "reviewLog": (json.loads((ROOT / "reports/review/review-log.json").read_text())
-                                if args.data == "raw" and (ROOT / "reports/review/review-log.json").exists() else None)},
+                                if args.data == "raw" and (ROOT / "reports/review/review-log.json").exists() else None),
+                  # What AI ticket-reading changes on these bills, measured by pipeline/measure_ai.py from saved answers.
+                  "aiUplift": (json.loads((ROOT / "reports/ai-uplift.json").read_text())
+                               if args.data == "raw" and (ROOT / "reports/ai-uplift.json").exists() else None)},
         "morningSummary": morning,
         "settings": [
             {"name": "Small reminder (auto-send limit)", "value": money(float(cfg.get("auto_send", {}).get("max_amount") or 0)), "who": "Priya, on this page", "source": "Maya, 24 Nov"},

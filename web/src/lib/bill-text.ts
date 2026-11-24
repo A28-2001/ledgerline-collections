@@ -6,6 +6,11 @@ import type { Evidence, Invoice, Verdict } from "@/lib/types";
 
 const CLOSED = /^(closed|resolved|solved)$/i;
 
+// Holds that are the AR Specialist's own work (disputes she corrects), not someone else's.
+function isMine(inv: Invoice): boolean {
+  return Boolean(inv.hold && inv.hold.ownerRole.startsWith("Finance") && !/^too early/i.test(inv.headline));
+}
+
 const lowerFirst = (t: string) => (/^[A-Z][a-z]/.test(t) ? t.charAt(0).toLowerCase() + t.slice(1) : t);
 
 // "2026-10-21" -> "Oct 21" (parsed as UTC, so the day never shifts).
@@ -54,7 +59,7 @@ export function rowDetail(inv: Invoice, verdict: Verdict): string {
     }
     case "hold": {
       const who = inv.hold
-        ? `${inv.hold.owner} · ${inv.hold.deadline <= results.meta.asOf ? "act today" : `by ${shortDate(inv.hold.deadline)}`}`
+        ? `${isMine(inv) ? "Yours" : inv.hold.owner} · ${inv.hold.deadline <= results.meta.asOf ? "act today" : `by ${shortDate(inv.hold.deadline)}`}`
         : "";
       const mismatch = inv.cause === "wrong_bill" ? contractMismatch(inv) : null;
       const t = openTicket(inv);
@@ -100,12 +105,16 @@ export function plainReview(inv: Invoice): string {
 export function answerLine(inv: Invoice, verdict: Verdict): string {
   switch (verdict) {
     case "paid":
-      return "Probably paid. Confirm the payment, then close the bill. No reminder.";
-    case "hold":
+      return "Probably paid. Marcus matches the payment; no reminder.";
+    case "hold": {
       if (!inv.hold) return "Hold. Pause and hand to the owner.";
-      return inv.hold.deadline <= results.meta.asOf
-        ? `Hold. Hand to ${inv.hold.owner} today: the target date has passed.`
-        : `Hold. Pause and hand to ${inv.hold.owner} by ${shortDate(inv.hold.deadline)}.`;
+      if (/^too early/i.test(inv.headline)) return `Wait. The first reminder comes back on ${shortDate(inv.hold.deadline)}.`;
+      const late = inv.hold.deadline <= results.meta.asOf;
+      if (isMine(inv)) return late ? "Hold. Yours to fix today: the target date has passed." : `Hold. Yours to fix by ${shortDate(inv.hold.deadline)}.`;
+      return late
+        ? `Hold. With ${inv.hold.owner}; the target date has passed, so it's back with you today.`
+        : `Hold. With ${inv.hold.owner} until ${shortDate(inv.hold.deadline)}.`;
+    }
     case "send":
       if (inv.draft?.tone === "card_update") return "Send the update-card note, not a payment reminder.";
       if (inv.draft?.tone === "soft") return "Send a reminder, in a softer tone, and tell the account manager.";

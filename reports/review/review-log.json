@@ -127,10 +127,10 @@
       "customer": "Kingsway Engineering Group",
       "amount": 5100,
       "toolSaid": "send (soft) on INV-25852",
-      "shouldBe": "check first",
+      "shouldBe": "wait for Marcus",
       "foundBy": "Second look at the hand check",
       "why": "One $5,100 payment with a blank memo and two $5,100 bills. The tool assumed it pays the older one, so the newer one would have got a reminder with no check. The reviewer's 'send' was conditional on that, and the hand check passed it. If the payment was for the newer bill, that's the Paidly case.",
-      "change": "When a payment could cover either of two same-amount bills, both go to Check first and Marcus confirms which before any reminder.",
+      "change": "When a payment could cover either of two same-amount bills, the second one waits for Marcus, who is asked which bill it pays. No reminder until he confirms. The hand-check label was updated to match.",
       "status": "fixed"
     },
     {

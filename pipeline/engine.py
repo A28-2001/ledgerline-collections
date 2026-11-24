@@ -61,7 +61,7 @@ def grave_phrase(text: str) -> str:
 
 INVOICE_REF_RX = re.compile(r"\binv[-\s#]?(\d{4,7})\b", re.I)
 NEGATIVE_RX = re.compile(r"broken|fail|error|frustrat|not working|issue|problem|bug|slow|spins|lost|blocking", re.I)
-CAUSE_LABEL = {"unhappy": "Unhappy customer", "paid": "Already paid", "wrong_bill": "Customer says the bill is wrong",
+CAUSE_LABEL = {"unhappy": "Open complaint or ticket", "paid": "Already paid", "wrong_bill": "Customer says the bill is wrong",
                "card_failed": "Card payment failed", "simply_late": "Simply late"}
 
 
@@ -71,6 +71,17 @@ def money(x: float) -> str:
 
 def iso(x) -> str | None:
     return None if x is None or pd.isna(x) else pd.Timestamp(x).date().isoformat()
+
+
+def contract_terms(k) -> str:
+    """'26 seats at $88.00 a month, plus a $12,000 platform fee a year': the line adds up to the bill."""
+    seats = int(k["seats"]) if pd.notna(k.get("seats")) else "?"
+    price = money(k["unit_price"]) if pd.notna(k.get("unit_price")) else "?"
+    fee = k.get("platform_fee")
+    out = f"{seats} seats at {price} a month"
+    if fee is not None and pd.notna(fee) and float(fee) > 0:
+        out += f", plus a {money(float(fee))} platform fee a year"
+    return out
 
 
 def nice(x) -> str:
@@ -330,12 +341,13 @@ class Engine:
                     row.flags["paid_unmatched"] = True
                     twins = [o for o in self._rows_by_cust.get(cid, []) if o is not row and abs(o.amount - row.amount) <= row.amount * tol]
                     if twins:
-                        row.needs_review.append(f"{len(twins) + 1} overdue bills have this amount; we matched the payment to the oldest. A person confirms which bill it pays")
-                        for o in twins:  # the payment could just as well cover a twin: never remind it until that's confirmed (the Paidly case)
+                        row.flags["twin_primary"] = [o.display_id for o in twins]
+                        for o in twins:  # the payment could just as well cover a twin: it waits for Marcus (the Paidly case)
                             o.flags["twin_payment"] = True
-                            o.needs_review.append(f"a {money(best['amount'])} payment from them is unmatched and could cover this bill instead: confirm before any reminder")
-                            o.reasons.insert(0, {"text": f"A {money(best['amount'])} payment from them (received {nice(best.get('date'))}) is unmatched. The tool assumed it pays invoice {row.display_id}, "
-                                                         "but it could just as well pay this one. Marcus confirms which before anyone sends a reminder.",
+                            o.flags["twin_of"] = row.display_id
+                            o.flags["twin_amount"] = best["amount"]
+                            o.reasons.insert(0, {"text": f"A {money(best['amount'])} payment from them (received {nice(best.get('date'))}) is unmatched. It could pay invoice {row.display_id} "
+                                                         "or this one. No reminder until Marcus confirms which.",
                                                  "evidenceIds": [], "policyRef": "Maya (COO): chasing someone who's paid gets the tool switched off"})
             if paid_ev is None and cid:
                 lag = self.p.get("recent_payment_days", 21)
@@ -514,8 +526,7 @@ class Engine:
                     keid = f"contract:{kid}"
                     ev.append({"id": keid, "kind": "contract", "file": self.cfg["files"]["contracts"]["file"], "recordId": str(kid),
                                "date": iso(k.get("start")),
-                               "title": f"Contract: {int(k['seats']) if pd.notna(k.get('seats')) else '?'} seats × "
-                                        f"{money(k['unit_price']) if pd.notna(k.get('unit_price')) else '?'}"
+                               "title": "Contract: " + contract_terms(k)
                                         + (f", {nice(k.get('start'))} to {nice(k.get('end'))}" if pd.notna(k.get('start')) else "")})
                     if chk and not chk[0]:
                         row.flags["wrong_bill"] = True
@@ -670,6 +681,8 @@ class Engine:
                 verdict, cause = "hold", "wrong_bill"
             elif f.get("complaint_hold") or f.get("disputed_hold") or f.get("open_ticket_hold") or f.get("grave_hold"):
                 verdict, cause = "hold", "unhappy"
+            elif f.get("twin_payment"):
+                verdict, cause = "hold", "paid"
             elif f.get("wrong_bill"):
                 verdict, cause = "hold", "wrong_bill"
             elif long_ or big or f.get("missing_in_billing") or not row.match.ok:
@@ -707,6 +720,8 @@ class Engine:
                 cause = "card_failed" if f.get("card_failed") else "unhappy" if f.get("soft") else "simply_late"
             tone = "card_update" if f.get("card_failed") else "soft" if f.get("soft") else "standard"
             if verdict != "send":
+                row.needs_review = [n for n in row.needs_review
+                                    if "check it was really fixed" not in n and "a person reads it before anyone chases" not in n]
                 for r in row.reasons:
                     if r["text"].startswith("Open support ticket, not about money: send"):
                         r["text"] = "Also open: a support ticket that isn't about money."
@@ -734,6 +749,8 @@ class Engine:
             if verdict == "send":
                 headline = {"card_update": "Card failed: send the update-card note", "soft": "Send a softer reminder (open support ticket, not about money)"}.get(
                     tone, f"{stage}: {row.days} days overdue, nothing blocking")
+            elif verdict == "call" and f.get("card_failed"):
+                headline = f"Card failed and the retries are over: call for a new card ({row.days} days late)"
             elif verdict == "call" and (long_ or big):
                 headline = f"Call: {row.days} days overdue" + (f", {money(row.amount)}" if big else "")
             conf = "low" if row.needs_review else "high" if row.match.method in ("exact_id", "exact_name") else "medium"
@@ -744,7 +761,16 @@ class Engine:
                         "action": "Nothing today. The first reminder comes back on day 7 if it's still unpaid."}
             elif verdict == "hold":
                 deadline = iso(add_business_days(self.as_of, hold_days))
-                if cause == "wrong_bill":
+                if f.get("twin_payment"):
+                    marcus = str(self.cfg["people"].get("cash_owner", "Cash application")).split(" (")[0]
+                    back_to = self.cfg["people"]["finance_owner"].split(" (")[0]
+                    hold = {"owner": marcus, "ownerRole": "Staff Accountant (matches payments)",
+                            "deadline": iso(add_business_days(self.as_of, int(self.p.get("paid_match_days", 2)))),
+                            "twinOf": f.get("twin_of"),
+                            "action": f"Confirm whether the {money(f.get('twin_amount') or row.amount)} payment pays {f.get('twin_of')} or this bill. "
+                                      f"If it's this one, close it; if not, the reminder can go. Not confirmed in "
+                                      f"{int(self.p.get('paid_match_days', 2))} working days, it comes back to {back_to}."}
+                elif cause == "wrong_bill":
                     am = str(c["account_manager"]) if c is not None and pd.notna(c.get("account_manager")) else "the account manager"
                     days_fix = int(self.p.get("dispute_fix_days", 5))
                     owner = self.cfg["people"]["finance_owner"]
@@ -914,10 +940,11 @@ class Engine:
         kk = []
         k = self.t["contracts"]
         for r in k[k["customer_id"].astype(str) == cid].to_dict("records") if len(k) else []:
-            kk.append({"id": f"contract:{r['id']}", "kind": "contract", "file": self.cfg["files"]["contracts"]["file"],
-                       "recordId": str(r["id"]), "date": iso(r.get("start")), "status": r.get("status") or "",
-                       "title": f"{int(r['seats']) if pd.notna(r.get('seats')) else '?'} seats × "
-                                f"{money(r['unit_price']) if pd.notna(r.get('unit_price')) else '?'}, to {nice(r.get('end'))}"})
+            rid = r.get("id")
+            rid = str(rid) if rid is not None and pd.notna(rid) and str(rid) not in ("", "None") else f"{cid}:{iso(r.get('start'))}"
+            kk.append({"id": f"contract:{rid}", "kind": "contract", "file": self.cfg["files"]["contracts"]["file"],
+                       "recordId": rid, "date": iso(r.get("start")), "status": r.get("status") or "",
+                       "title": f"{contract_terms(r)}, to {nice(r.get('end'))}"})
         get = lambda f: None if pd.isna(c.get(f)) else c.get(f)  # noqa: E731
         out = {"id": cid, "name": str(c["name"]), "aliases": [], "invoiceIds": [], "tickets": tk, "payments": [], "contracts": kk}
         for f_in, f_out in (("segment", "segment"), ("plan", "plan"), ("account_manager", "accountManager")):

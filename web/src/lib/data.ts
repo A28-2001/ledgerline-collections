@@ -55,9 +55,9 @@ export const CAUSE_META: Record<Cause, { label: string; color: string; descripti
     description: "No sign of a problem. A reminder or a call should do it.",
   },
   unhappy: {
-    label: "Unhappy customer",
+    label: "Open complaint or ticket",
     color: "var(--cause-unhappy)",
-    description: "An open complaint or escalation. Fix that first.",
+    description: "A complaint or support ticket is open. Most wait until it moves; a ticket that isn't about money gets a softer reminder.",
   },
   wrong_bill: {
     label: "Customer disputes the bill",

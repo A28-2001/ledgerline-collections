@@ -11,6 +11,7 @@ const fmt = (n: number) => n.toLocaleString("en-US");
 export default function HowPage() {
   const { invoices, meta, summary } = results;
   const tk = summary.tickets;
+  const up = results.proof.aiUplift;
   const count = (v: string) => invoices.filter((i) => i.verdict === v).length;
   const wait = invoices.filter((i) => i.verdict === "hold" && i.headline.startsWith("Too early")).length;
   const rows = (name: string) => meta.files.find((f) => f.name === name)?.rows ?? 0;
@@ -128,16 +129,23 @@ export default function HowPage() {
           <div>
             <p className="text-xs font-semibold text-muted-foreground uppercase">Once legal approves a vendor</p>
             <p className="mt-1 leading-relaxed">
-              Two AI models from different families read the masked ticket text on their own; if they disagree, a person decides. In a
-              test run that sent this fictional data room&apos;s masked tickets to Groq, they held all 14 disputed bills. Proposed vendor:
-              Amazon Bedrock, in Ledgerline&apos;s existing AWS account.
+              Two AI models from different families read the masked ticket text on their own; if they disagree, a person decides. Proposed
+              vendor: Amazon Bedrock, in Ledgerline&apos;s existing AWS account.
+              {up && up.cacheMisses === 0 && (
+                <>
+                  {" "}
+                  Measured on these {up.bills} bills (with answers saved from a test run on Groq): AI changed{" "}
+                  {up.verdictsChanged.length === 0 ? "no decisions" : `${up.verdictsChanged.length} decisions`}; rules already catch all
+                  14 disputes.
+                </>
+              )}
             </p>
           </div>
           <div>
             <p className="text-xs font-semibold text-muted-foreground uppercase">Why rules aren&apos;t enough</p>
             <p className="mt-1 leading-relaxed">
               {tk
-                ? `${tk.fromOverdueUntagged ?? tk.relevantUntagged} of the ${tk.fromOverdue} tickets from customers who owe money have no tag, and tags can be wrong (a timer bug was tagged How-to). Only reading the text catches those.`
+                ? `${tk.fromOverdueUntagged ?? tk.relevantUntagged} of the ${tk.fromOverdue} tickets from customers who owe money have no tag, and tags can be wrong (a timer bug was tagged How-to). Today's bills don't need it; new tickets will, and the shadow week measures that.`
                 : "Tags are often missing or wrong. Only reading the text catches those."}
             </p>
           </div>

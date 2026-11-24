@@ -145,6 +145,14 @@ export interface Results {
     accuracy: { sampleSize: number; agreed: number; rate: number; labelledBy: string } | null;
     agreementRate: number | null; // share of AI judgments where judges agreed
     verifiedNumbers: VerifiedNumber[];
+    aiUplift?: {
+      bills: number;
+      cacheMisses: number;
+      verdictsChanged: { invoice: string; rules: string; withAI: string; review: string | null }[];
+      checkFirstRules: number;
+      checkFirstWithAI: number;
+      checkFirstChanged: number;
+    } | null;
     failures: Failure[];
     runtimeSeconds: number;
     reviewLog?: {
