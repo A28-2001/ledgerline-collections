@@ -51,7 +51,9 @@ export default function ProofPage() {
   const crossOk = cross.filter((v) => v.ok).length;
   const up = proof.aiUplift;
 
-  const differNames = (log?.entries ?? []).filter((e) => e.differsBecause).map((e) => e.customer);
+  // The bills that still differ from the review come first, so "explained below" is the first thing below.
+  const ordered = [...(log?.entries ?? [])].sort((a, b) => Number(!!b.differsBecause) - Number(!!a.differsBecause));
+  const firstPass = (log?.entries ?? []).filter((e) => e.foundBy === "Independent review, first pass").length;
   const sources = (log?.entries ?? []).reduce<{ by: string; n: number; fixed: number; confirm: number; kept: number; open: number }[]>((acc, e) => {
     let row = acc.find((r) => r.by === e.foundBy);
     if (!row) {
@@ -85,8 +87,8 @@ export default function ProofPage() {
       rest: "Top-50 accounts, disputes, probably-paid bills and every call always stay with a person; auto-send stays off until a month of approvals is on record.",
     },
     {
-      lead: "No AI vendor sees customer data in daily use",
-      rest: "until legal approves one. In testing, Claude reviewed the bills and Groq read masked tickets; the Redraft button is a demo.",
+      lead: "No AI vendor sees customer data",
+      rest: "until legal approves one: the tool runs on rules, and AI redraft is switched off. In testing, Claude reviewed the bills and Groq read masked tickets.",
     },
     {
       lead: "AI is double-checked and measured:",
@@ -110,21 +112,19 @@ export default function ProofPage() {
           </CardHeader>
           <CardContent>
             <div className="grid gap-2 sm:grid-cols-3">
-              <div className="rounded-lg border border-foreground/25 p-3">
+              <div className="rounded-lg border p-3">
                 <p className="text-xs text-muted-foreground">First pass</p>
                 <p className="tabular text-2xl font-semibold">85%</p>
                 <p className="text-xs text-muted-foreground">46 of 54 bills agreed</p>
               </div>
-              <div className="rounded-lg border p-3">
-                <p className="text-xs text-muted-foreground">After fixing what it missed</p>
-                <p className="tabular text-xl font-semibold">{proof.accuracy ? `${Math.round(proof.accuracy.rate * 100)}%` : "-"}</p>
+              <div className="rounded-lg border border-brand/40 bg-brand/10 p-3">
+                <p className="text-xs font-medium text-brand">After the fixes</p>
+                <p className="tabular text-3xl font-semibold text-brand">{proof.accuracy ? `${Math.round(proof.accuracy.rate * 100)}%` : "-"}</p>
                 <p className="text-xs text-muted-foreground">
                   {proof.accuracy
                     ? `${proof.accuracy.agreed} of ${proof.accuracy.sampleSize}.${
                         proof.accuracy.agreed < proof.accuracy.sampleSize
-                          ? ` The other ${proof.accuracy.sampleSize - proof.accuracy.agreed} differ on purpose${
-                              differNames.length ? `: ${differNames.join(" and ")}` : ""
-                            }.`
+                          ? ` The other ${proof.accuracy.sampleSize - proof.accuracy.agreed} differ on purpose, shown first below.`
                           : ""
                       }${
                         proof.accuracy.agreedOriginal != null && proof.accuracy.agreedOriginal !== proof.accuracy.agreed
@@ -141,24 +141,24 @@ export default function ProofPage() {
               </div>
             </div>
 
-            <p className="mt-5 flex flex-wrap items-baseline justify-between gap-x-4 gap-y-0.5 rounded-lg border bg-muted/40 px-3 py-2 text-sm font-medium">
-              <span>Every miss</span>
-              <span className="tabular">
-                {log.entries.length} · {split(totals)}
-              </span>
-            </p>
-
-            <ol className="mt-4 space-y-3">
-              {log.entries.slice(0, 2).map((e, idx) => (
+            <ol className="mt-5 space-y-3">
+              {ordered.slice(0, 2).map((e, idx) => (
                 <MissItem key={`${e.invoice}-${idx}`} e={e} />
               ))}
             </ol>
             {log.entries.length > 2 && (
               <details className="group mt-3">
                 <summary className="cursor-pointer text-sm font-medium text-muted-foreground hover:text-foreground">
-                  <span className="group-open:hidden">Show the other {log.entries.length - 2}, and where each came from</span>
+                  <span className="group-open:hidden">Show every miss ({log.entries.length}) and where each came from</span>
                   <span className="hidden group-open:inline">Hide them</span>
                 </summary>
+                <p className="mt-3 flex flex-wrap items-baseline justify-between gap-x-4 gap-y-0.5 rounded-lg border bg-muted/40 px-3 py-2 text-sm font-medium">
+                  <span>Every miss</span>
+                  <span className="tabular">
+                    {log.entries.length}: {firstPass} from the review&apos;s first pass, {log.entries.length - firstPass} found other ways ·{" "}
+                    {split(totals)}
+                  </span>
+                </p>
                 <ul className="mt-3 divide-y rounded-lg border text-sm" aria-label="Where every miss came from">
                   {sources.map((r) => (
                     <li key={r.by} className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-0.5 px-3 py-2">
@@ -170,7 +170,7 @@ export default function ProofPage() {
                   ))}
                 </ul>
                 <ol className="mt-3 space-y-3">
-                  {log.entries.slice(2).map((e, idx) => (
+                  {ordered.slice(2).map((e, idx) => (
                     <MissItem key={`${e.invoice}-${idx + 2}`} e={e} />
                   ))}
                 </ol>

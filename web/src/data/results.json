@@ -1,6 +1,6 @@
 {
  "meta": {
-  "generatedAt": "2026-11-24T19:09:31+00:00",
+  "generatedAt": "2026-11-24T19:23:46+00:00",
   "asOf": "2026-10-31",
   "dataSource": "real",
   "companyName": "Ledgerline",
@@ -13919,7 +13919,7 @@
     "group": "cross"
    },
    {
-    "label": "Paid but chased (the Paidly case)",
+    "label": "Would chase someone who paid (the Paidly case)",
     "methodA": "Bills with a matching or recent unmatched payment that would get a reminder",
     "valueA": 0,
     "methodB": "Allowed (Maya: chasing someone who has paid gets the tool switched off)",
@@ -13930,7 +13930,7 @@
     "note": "Earlier, a blank-memo payment was assumed to pay the older of two same-amount bills; now Marcus confirms which."
    },
    {
-    "label": "Complaint open but chased",
+    "label": "Would chase someone with a complaint open",
     "methodA": "Reminders or calls to a customer with an open ticket, or a pending one about money or marked high priority",
     "valueA": 0,
     "methodB": "Allowed (Maya: nobody chased who had a complaint open)",
@@ -13956,7 +13956,7 @@
     "why": "Correct answer: Bill of $5,100 is 19 days late; PAY-65805 for the same $5,100 is most likely for older INV-25469, so remind about this one only after confirming which invoice the payment covers; pending T880184 is about a client's invoice and should not block. Tool's reason: A $5,100 payment from them (received Oct 29, 2026) is unmatched. It could pay invoice INV-25469 or this one. No reminder until Marcus confirms which."
    }
   ],
-  "runtimeSeconds": 0.46,
+  "runtimeSeconds": 0.47,
   "reviewLog": {
    "summary": "An independent reviewer (a separate AI model, Claude in its own session, that never saw the tool's answers) checked all 54 bills from the raw records, and a person then checked every contested bill. First pass: 46 of 54 agreed (85%). Of the 8 differences, 5 were rule errors we fixed, 2 were judgment calls changed for Maya to confirm, and 1 we kept on purpose. The 2 misses we found ourselves were fixed before the review ran, so the very first version would have agreed on at most 44. After the fixes, 52 of 54 agree (96%) with the reviewer's own labels, on the same bills the rules were fixed against, so that is not a fresh-data score: the shadow week measures that. The last 2 differ on purpose: an open ticket (Eastman & Wexler) and a payment that could belong to either of two bills (Kingsway).",
    "entries": [
@@ -14080,7 +14080,8 @@
      "why": "The reviewer would send: the open ticket is a product question. The tool holds because it's open and waiting on Ledgerline.",
      "change": "Kept on purpose: a ticket waiting on us still pauses the reminder, and it's a top-50 account, so a person reads it anyway.",
      "status": "deliberate",
-     "differsBecause": "a ticket waiting on us still pauses the reminder, and it's a top-50 account, so a person reads it anyway."
+     "differsBecause": "a ticket waiting on us still pauses the reminder, and it's a top-50 account, so a person reads it anyway.",
+     "differsShort": "kept on purpose"
     },
     {
      "invoice": "INV-25852",
@@ -14092,7 +14093,8 @@
      "why": "One $5,100 payment with a blank memo, two $5,100 bills. The tool assumed it paid the older one, so the newer one would have got a reminder. My hand check passed it.",
      "change": "The second bill now waits for Marcus, who is asked which bill the payment covers. The reviewer assumed the payment paid the older bill, so this is one of the 2 bills where we differ from it on purpose.",
      "status": "fixed",
-     "differsBecause": "one $5,100 payment could pay either of two bills, so Marcus confirms which before anyone is chased."
+     "differsBecause": "one $5,100 payment could pay either of two bills, so Marcus confirms which before anyone is chased.",
+     "differsShort": "fixed after a hand check: one payment, two bills"
     },
     {
      "invoice": "-",

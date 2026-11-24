@@ -34,7 +34,7 @@ Accuracy: a separate AI model (Claude, in its own session) reviewed all 54 bills
 - **When AI is on**, two models from different families read masked ticket text; if they disagree, a person decides. Answers are cached in `data/cache/ai_cache.json`.
 - **Measured, not claimed:** `pipeline/measure_ai.py` re-runs the 54 bills with the cached AI answers (no new calls). AI changed no decisions on these bills, as rules already catch all 14 disputes, and would move 9 bills in or out of Check first. These answers came from Groq on masked tickets, in testing, before the COO said no vendor was approved. Result in [`reports/ai-uplift.json`](reports/ai-uplift.json).
 - Every ticket excerpt is masked (emails, card numbers, bank details, phone numbers) before anyone sees it.
-- The "Redraft with AI" button in the app is a demo: it sends a draft from this fictional data room to Groq, with guards against leaking ticket details or adding threats.
+- The "Redraft with AI" button is switched off until legal approves a vendor. For a demo, set `AI_REDRAFT=on` and `NEXT_PUBLIC_AI_REDRAFT=on`: it then sends a draft to Groq, with guards against leaking ticket details or adding threats.
 
 ## How it's built
 

@@ -237,6 +237,10 @@ export function MorningView({ data }: { data: Pick<Results, "invoices" | "summar
   }
 
   const decidedBy = (v: Verdict) => invoices.filter((i) => decisions[i.id] && decisions[i.id].verdict === v).length;
+  // Approved reminders with a written draft: one click opens each in the email app, ready to send.
+  const readyEmails = invoices.filter((i) => decisions[i.id]?.verdict === "send" && i.draft?.body && i.draft?.to);
+  // Bills that ride in another bill's email (one email per customer), so the row shows the email's full amount.
+  const alsoIn = (i: Invoice) => invoices.filter((x) => x.draft?.combinedWith === i.id);
   const currentStep = steps.find((s) => s.def.verdict === current);
 
   return (
@@ -467,6 +471,29 @@ export function MorningView({ data }: { data: Pick<Results, "invoices" | "summar
                 </div>
               </div>
             </div>
+            {readyEmails.length > 0 && (
+              <div className="mt-4 border-t pt-3">
+                <p className="text-sm font-medium">Emails ready to send · {readyEmails.length}</p>
+                <p className="mt-0.5 text-xs text-muted-foreground">Each opens in your email app, written and addressed. Read it, then press send.</p>
+                <ul className="mt-2 divide-y rounded-lg border bg-background text-sm">
+                  {readyEmails.map((i) => (
+                    <li key={i.id} className="flex items-center gap-3 px-3 py-2">
+                      <span className="min-w-0 flex-1 truncate">{i.customerName}</span>
+                      <span className="tabular shrink-0 text-xs text-muted-foreground">
+                        {formatMoney(i.amount + sumAmount(alsoIn(i)), i.currency)}
+                        {alsoIn(i).length > 0 && ` · ${alsoIn(i).length + 1} bills`}
+                      </span>
+                      <a
+                        href={mailtoFor(i.draft?.to ?? "", i.draft?.subject ?? "", i.draft?.body ?? "")}
+                        className="shrink-0 rounded text-xs font-medium text-brand underline-offset-4 outline-none hover:underline focus-visible:ring-2 focus-visible:ring-ring/50"
+                      >
+                        Open in email
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
           </li>
         </ol>
       </section>
@@ -501,7 +528,7 @@ export function MorningView({ data }: { data: Pick<Results, "invoices" | "summar
         {current === "check" ? (
           <Button className="w-full" onClick={() => flaggedOpen[0] && openBill(flaggedOpen[0].id)}>
             <Flag />
-            Check the next bill ({pluralize(openGroups.length, "decision")} left)
+            Check the next bill ({openGroups.length} left in Check first)
           </Button>
         ) : current !== "finish" && currentStep ? (
           <Button className="w-full" onClick={() => setConfirmStep(currentStep.def)}>
@@ -651,4 +678,9 @@ function StepStatus({ n, done, current, label, flag = false }: { n?: number; don
       {flag ? <Flag className="size-3.5" aria-hidden="true" /> : n}
     </span>
   );
+}
+
+// A reminder as a mailto link: the email app opens with the address, subject and body filled in. Nothing is sent until Priya presses send.
+function mailtoFor(to: string, subject: string, body: string): string {
+  return `mailto:${to.trim()}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
 }

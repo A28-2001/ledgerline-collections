@@ -16,6 +16,9 @@ function json(body: unknown, status = 200) {
 }
 
 export async function POST(request: Request) {
+  if (process.env.AI_REDRAFT !== "on") {
+    return json({ error: "AI redraft is switched off until legal approves an AI vendor." }, 403);
+  }
   let payload: { invoiceId?: unknown; tone?: unknown; instruction?: unknown };
   try {
     payload = await request.json();

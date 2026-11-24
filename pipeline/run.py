@@ -155,7 +155,7 @@ def verified_numbers(engine: Engine, invoices: list[dict], by_cause: list[dict])
     # 4. The Paidly case: a bill with a matching or recent unmatched payment must never get a reminder
     chased = [r for r in engine._rows if (r.flags.get("paid_unmatched") or r.flags.get("paid_linked") or r.flags.get("recent_payment") or r.flags.get("twin_payment"))
               and getattr(r, "verdict", None) == "send" and not r.needs_review]
-    out.append({"label": "Paid but chased (the Paidly case)", "methodA": "Bills with a matching or recent unmatched payment that would get a reminder",
+    out.append({"label": "Would chase someone who paid (the Paidly case)", "methodA": "Bills with a matching or recent unmatched payment that would get a reminder",
                 "valueA": len(chased), "methodB": "Allowed (Maya: chasing someone who has paid gets the tool switched off)", "valueB": 0,
                 "ok": len(chased) == 0, "unit": "count", "group": "coo",
                 "note": "Earlier, a blank-memo payment was assumed to pay the older of two same-amount bills; now Marcus confirms which."})
@@ -166,7 +166,7 @@ def verified_numbers(engine: Engine, invoices: list[dict], by_cause: list[dict])
     strict = sorted({r.match.customer_id for r in engine._rows if getattr(r, "verdict", None) in ("send", "call")
                      and any(e["kind"] == "ticket" and str(e.get("status") or "").split(" (")[0] in engine.v["ticket_open_status"] for e in r.evidence)})
     strict_names = [engine.customer_name(c) for c in strict]
-    out.append({"label": "Complaint open but chased", "methodA": "Reminders or calls to a customer with an open ticket, or a pending one about money or marked high priority",
+    out.append({"label": "Would chase someone with a complaint open", "methodA": "Reminders or calls to a customer with an open ticket, or a pending one about money or marked high priority",
                 "valueA": len(tk_open), "methodB": "Allowed (Maya: nobody chased who had a complaint open)", "valueB": 0, "ok": len(tk_open) == 0,
                 "unit": "count", "group": "coo",
                 "strictValue": len(strict),

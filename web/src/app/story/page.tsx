@@ -32,7 +32,7 @@ export default function StoryPage() {
   const firstAgreed = firstPass ? Number(firstPass[1]) : null;
   const acc = proof.accuracy;
   const entries = proof.reviewLog?.entries ?? [];
-  const checks = proof.verifiedNumbers.filter((v) => /but chased/i.test(v.label));
+  const checks = proof.verifiedNumbers.filter((v) => v.group === "coo");
   const checksTotal = checks.reduce((s, v) => s + v.valueA, 0);
 
   const data: StoryData = {
@@ -139,7 +139,7 @@ export default function StoryPage() {
       number: fmt(decisions),
       numberNote: `decisions sort the morning, built to take about 5 minutes. Then ${allMine} disputes to fix, oldest first: the day's work.`,
       text: [
-        "Five questions decide each bill, in order: already paid? a reason to hold? under 7 days late? 45+ days late? nothing in the way? The first yes gives the answer.",
+        "Five questions decide each bill, in order: already paid → Probably paid; a reason to hold, or under 7 days late → Hold; 45+ days late → Call; nothing in the way → Send.",
         `**${formatMoney(summary.shouldNotChaseAmount)} isn't chased today.** ${count("send")} bills get a reminder once Priya approves.`,
       ],
       source: `This run, all ${invoices.length} bills (Today and How it works pages)`,
@@ -158,7 +158,7 @@ export default function StoryPage() {
       id: "monday",
       kicker: "Monday",
       number: fmt(checksTotal),
-      numberNote: "customers chased who had paid or had a complaint open",
+      numberNote: "customers the tool would chase who had paid or had a complaint open",
       text: [
         strict
           ? `**${strict} customers** with a pending ticket that isn't about money wait in Check first until Maya confirms.`

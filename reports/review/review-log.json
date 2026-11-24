@@ -121,7 +121,8 @@
       "why": "The reviewer would send: the open ticket is a product question. The tool holds because it's open and waiting on Ledgerline.",
       "change": "Kept on purpose: a ticket waiting on us still pauses the reminder, and it's a top-50 account, so a person reads it anyway.",
       "status": "deliberate",
-      "differsBecause": "a ticket waiting on us still pauses the reminder, and it's a top-50 account, so a person reads it anyway."
+      "differsBecause": "a ticket waiting on us still pauses the reminder, and it's a top-50 account, so a person reads it anyway.",
+      "differsShort": "kept on purpose"
     },
     {
       "invoice": "INV-25852",
@@ -133,7 +134,8 @@
       "why": "One $5,100 payment with a blank memo, two $5,100 bills. The tool assumed it paid the older one, so the newer one would have got a reminder. My hand check passed it.",
       "change": "The second bill now waits for Marcus, who is asked which bill the payment covers. The reviewer assumed the payment paid the older bill, so this is one of the 2 bills where we differ from it on purpose.",
       "status": "fixed",
-      "differsBecause": "one $5,100 payment could pay either of two bills, so Marcus confirms which before anyone is chased."
+      "differsBecause": "one $5,100 payment could pay either of two bills, so Marcus confirms which before anyone is chased.",
+      "differsShort": "fixed after a hand check: one payment, two bills"
     },
     {
       "invoice": "-",

@@ -64,6 +64,10 @@ import { invoiceTimeline } from "@/lib/timeline";
 import type { Evidence, Invoice, Tone, Verdict } from "@/lib/types";
 import { cn } from "@/lib/utils";
 
+// AI redraft sends the draft to an AI vendor, so it stays off until legal approves one (Maya, 23 Nov).
+// For a demo: NEXT_PUBLIC_AI_REDRAFT=on here, and AI_REDRAFT=on for the API route.
+const REDRAFT_ON = process.env.NEXT_PUBLIC_AI_REDRAFT === "on";
+
 const EVIDENCE_ICON: Record<Evidence["kind"], typeof FileText> = {
   ticket: MessageSquareWarning,
   payment: CreditCard,
@@ -568,7 +572,13 @@ function DraftSection({ invoice: inv }: { invoice: Invoice }) {
         </div>
       </div>
 
-      {!isCallNotes && (
+      {!isCallNotes && !REDRAFT_ON && (
+        <p className="text-[11px] leading-relaxed text-muted-foreground">
+          AI redraft is switched off until legal approves an AI vendor (proposed: Amazon Bedrock, in the AWS account Ledgerline already has).
+          The template draft above needs no AI.
+        </p>
+      )}
+      {!isCallNotes && REDRAFT_ON && (
         <div className="grid gap-2 rounded-lg border border-dashed p-3 sm:grid-cols-[9rem_1fr_auto] sm:items-end">
           <div className="space-y-1.5">
             <Label htmlFor={`tone-${inv.id}`} className="text-xs">

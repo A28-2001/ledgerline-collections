@@ -17,7 +17,7 @@ Every morning it asks five questions of each overdue bill and gives one answer, 
 | **Send** | Nothing blocks a polite reminder | 19 bills · $177,051 |
 | **Call** | 45+ days late, or already calling them | 9 bills · $9,384 |
 
-Priya's morning is **11 decisions**, built to take about 5 minutes, one customer at a time. Then her own step: 14 disputes, oldest first, each with a reply that names the issue. Every other hold goes to an owner with a deadline that carries over day to day, and comes back to her if nobody acts.
+Priya's morning is **11 decisions**, built to take about 5 minutes, one customer at a time. Then her own step: 14 disputes, oldest first, each with a reply that names the issue. At the end, each approved reminder opens in her email app, written and addressed: she reads it and presses send. Every other hold goes to an owner with a deadline that carries over day to day, and comes back to her if nobody acts.
 
 ## What is AI, what stays with a person, and why
 
@@ -35,4 +35,4 @@ Priya's morning is **11 decisions**, built to take about 5 minutes, one customer
 
 Read the billing@ inbox (disputes sent by email are invisible today); payment plans with the VP Finance's approval; live read-only QuickBooks, Zendesk and Slack connections; save each day's decisions automatically (today it's by hand, and a missed day is flagged the next morning).
 
-**Disclosure:** built and tested on made-up data before Begin; everything using Ledgerline's data came after (see the git history). Built with Claude; the demo's redraft button uses Groq.
+**Disclosure:** built and tested on made-up data before Begin; everything using Ledgerline's data came after (see the git history). Built with Claude; an AI redraft button (Groq) exists but is switched off until legal approves a vendor.

@@ -152,7 +152,7 @@ export default function HowPage() {
         </div>
         <p className="mt-3 text-xs leading-relaxed text-muted-foreground">
           At Ledgerline today, no AI touches customer data until legal approves a vendor (Amazon Bedrock, in the existing AWS account, is
-          proposed). Never AI: the decision to send. The &ldquo;Redraft with AI&rdquo; button is a demo on this fictional data.
+          proposed). Never AI: the decision to send. AI redraft is switched off until legal approves a vendor.
         </p>
       </section>
 
