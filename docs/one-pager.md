@@ -14,8 +14,8 @@ Every morning it asks five questions of each overdue bill and gives one answer, 
 |---|---|---|
 | **Probably paid** | An unmatched payment fits the bill; Marcus matches it | 5 bills · $78,348 |
 | **Hold** | Disputed, open ticket, threat, refund owed, unclear payment, or under 7 days late | 21 bills · $368,462 |
-| **Send** | Nothing blocks a polite reminder | 19 bills (18 emails) · $177,051 |
-| **Call** | 45+ days late, or already calling them | 9 bills (8 calls) · $9,384 |
+| **Send** | Nothing blocks a polite reminder | 19 bills · $177,051 |
+| **Call** | 45+ days late, or already calling them | 9 bills · $9,384 |
 
 Priya's morning is **11 decisions**, built to take about 5 minutes, one customer at a time. Then her own step: 14 disputes, oldest first, each with a reply that names the issue. Every other hold goes to an owner with a deadline that carries over day to day, and comes back to her if nobody acts.
 

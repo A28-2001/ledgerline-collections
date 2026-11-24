@@ -71,17 +71,15 @@ def light_lines(invoices, cfg, as_of, missed_save=None) -> list[str]:
     out = []
     if missed_save is not None:
         out.append(f"No decision list was saved for {nice(missed_save)}: some reminders may come back, so check before approving")
-    emails = [i for i in send if (i.get("draft") or {}).get("body")]
     if send:
         later = len(send) - len(ready)
-        out.append(f"{len(send)} bills to remind, in {len(emails)} emails" + (f": {len(ready)} ready now, {later} after a quick check" if later else ""))
+        out.append(f"{len(send)} bills to remind" + (f": {len(ready)} ready now, {later} after a quick check" if later else ""))
     all_mine = [i for i in invoices if i["verdict"] == "hold" and i["cause"] == "wrong_bill" and i.get("hold")
                 and i["hold"]["ownerRole"].startswith("Finance")]
     if all_mine:
-        out.append(f"{len(all_mine)} disputes to fix ({len(mine)} past the 5-day target): corrected invoice or a clear answer")
+        out.append(f"{len(all_mine)} disputes to fix, {len(mine)} past the 5-day target: a corrected bill or a clear answer")
     if calls:
-        people = len({i.get("customerId") or i["id"] for i in calls})
-        out.append(f"{len(calls)} bills to call about, in {people} calls" if people != len(calls) else f"{people} calls to make")
+        out.append(f"{len(calls)} bills to call about")
     if paid:
         out.append(f"{len(paid)} bills look paid: {marcus} is matching them")
     return out

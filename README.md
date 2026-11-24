@@ -24,7 +24,7 @@ Always with a person, permanently: top-50 accounts, disputes, probably-paid bill
 
 ## Today's numbers (data as of 31 Oct 2026)
 
-54 overdue bills, $633,245. 19 bills to remind (18 emails), 21 holds (14 of them disputes Priya fixes herself), 9 bills to call about (8 calls), 5 probably paid. The morning sort is 11 decisions: 7 bills to check, then four bulk approvals. $309,000 (49%) is disputed in tickets that name the exact invoice.
+54 overdue bills, $633,245. 19 bills to remind, 21 holds (14 of them disputes Priya fixes herself), 9 bills to call about, 5 probably paid. The morning sort is 11 decisions: 7 bills to check, then four bulk approvals. $309,000 (49%) is disputed in tickets that name the exact invoice.
 
 Accuracy: a separate AI model (Claude, in its own session) reviewed all 54 bills without seeing the tool's answers, and a person checked the 11 contested bills. First pass 46 of 54 (85%); 52 of 54 (96%) after the fixes, on the same bills, so not a fresh test. The last 2 differ on purpose: an open ticket, and a payment that could belong to either of two bills. Every miss is listed in the tool and in [`reports/review/review-log.json`](reports/review/review-log.json).
 

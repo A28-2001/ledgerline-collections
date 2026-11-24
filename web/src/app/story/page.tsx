@@ -20,7 +20,6 @@ export default function StoryPage() {
   const count = (v: string) => invoices.filter((i) => i.verdict === v).length;
   const strict = proof.verifiedNumbers.find((v) => v.label.startsWith("Complaint open"))?.strictValue ?? 0;
   const allMine = invoices.filter((i) => i.verdict === "hold" && i.cause === "wrong_bill" && i.hold?.ownerRole.startsWith("Finance")).length;
-  const emails = invoices.filter((i) => i.verdict === "send" && i.draft?.body).length;
   const decisions = (() => {
     // the same count as the Today page: one per customer and reason in Check first, plus one per step
     const groups = new Set(invoices.filter((i) => i.needsReview).map((i) => `${i.customerId ?? i.customerName}|${i.verdict}|${i.reviewReason ?? ""}`));
@@ -117,8 +116,7 @@ export default function StoryPage() {
       number: fmt(tk?.fromOverdue ?? rows("tickets.csv")),
       numberNote: tk ? "support tickets from customers who owe money, and finance can't open any" : "support tickets finance can't open",
       text: [
-        "Finance has **no access to Zendesk**, where complaints live, so before chasing they ask around.",
-        "Miss one, and a reminder lands on a customer who is waiting for a fix.",
+        "Finance has **no access to Zendesk**, where the complaints live, so a reminder can reach a customer who is waiting for a fix.",
       ],
       source: "Zendesk export; Ledgerline's tool list and process notes (FIN-1)",
     },
@@ -142,7 +140,7 @@ export default function StoryPage() {
       numberNote: `decisions sort the morning, built to take about 5 minutes. Then ${allMine} disputes to fix, oldest first: the day's work.`,
       text: [
         "Five questions decide each bill, in order: already paid? a reason to hold? under 7 days late? 45+ days late? nothing in the way? The first yes gives the answer.",
-        `**${formatMoney(summary.shouldNotChaseAmount)} isn't chased today.** ${count("send")} bills get a reminder, in ${emails} emails, once Priya approves.`,
+        `**${formatMoney(summary.shouldNotChaseAmount)} isn't chased today.** ${count("send")} bills get a reminder once Priya approves.`,
       ],
       source: `This run, all ${invoices.length} bills (Today and How it works pages)`,
     },
@@ -152,8 +150,7 @@ export default function StoryPage() {
       number: firstAgreed !== null && acc ? `${firstAgreed} of ${acc.sampleSize}` : "—",
       numberNote: "bills agreed with an independent AI review on the first pass",
       text: [
-        `A separate AI model checked every bill without seeing the tool's answers. **Each disagreement became a fix or a question for Maya**${acc ? `: ${acc.agreed} of ${acc.sampleSize} agree now, on the same bills` : ""}.`,
-        "**The shadow week is the real test.**",
+        `**Each disagreement became a fix or a question for Maya**${acc ? `: ${acc.agreed} of ${acc.sampleSize} agree now` : ""}. The shadow week is the real test.`,
       ],
       source: "Review log (How sure are we page)",
     },
@@ -163,8 +160,9 @@ export default function StoryPage() {
       number: fmt(checksTotal),
       numberNote: "customers chased who had paid or had a complaint open",
       text: [
-        `The COO's two tests: both 0.${strict ? ` **${strict} customers** with a pending ticket that isn't about money wait in Check first until Maya confirms.` : ""}`,
-        "Monday: a shadow week beside Priya. **Nothing is sent without a person.**",
+        strict
+          ? `**${strict} customers** with a pending ticket that isn't about money wait in Check first until Maya confirms.`
+          : "Both of the COO's tests read 0.",
       ],
       source: "Checks on the How sure are we page; plan agreed with the COO",
     },

@@ -285,7 +285,7 @@ function ReviewPicture({ data }: { data: StoryData }) {
   return (
     <Frame
       title="How often the tool agreed with the review"
-      note={`All ${r.total} bills, reviewed by a separate AI model that never saw the tool's answers; a person checked every disagreement`}
+      note={`All ${r.total} bills; a person checked every disagreement`}
     >
       <ul className="space-y-4">
         {bars.map((b) =>
@@ -431,7 +431,7 @@ export function StoryScroll({ chapters, data, asOf }: { chapters: Chapter[]; dat
                     ))}
                   </div>
                   <p className="mt-5 max-w-md text-xs leading-relaxed text-muted-foreground">
-                    As of {asOf} · Source: {ch.source}
+                    Source: {ch.source}
                   </p>
                   <div className="mt-6 lg:hidden">
                     <Picture index={i} data={data} />
@@ -480,8 +480,8 @@ export function StoryScroll({ chapters, data, asOf }: { chapters: Chapter[]; dat
       <section aria-label="Where to go next" className="mt-6 rounded-2xl border bg-card p-6 lg:mt-0">
         <p className="text-sm font-semibold">That&rsquo;s the story. The work happens on Today.</p>
         <p className="mt-1 max-w-2xl text-sm text-muted-foreground">
-          Priya opens one list each morning, works through it in steps, and approves what goes out. Every suggestion shows its reason, the records
-          behind it and the policy line.
+          Priya works through one list each morning and approves what goes out. Every suggestion shows its reason, its records and the policy
+          line.
         </p>
         <div className="mt-4 flex flex-wrap gap-2">
           <Link

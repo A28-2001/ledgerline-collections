@@ -80,8 +80,10 @@ export default function ProofPage() {
   );
 
   const guards: { lead: string; rest: string }[] = [
-    { lead: "A person approves everything.", rest: "Auto-send stays off until a month of approvals is on record." },
-    { lead: "Some bills always stay with a person:", rest: "top-50 accounts, disputes, probably-paid bills and every call." },
+    {
+      lead: "A person approves everything.",
+      rest: "Top-50 accounts, disputes, probably-paid bills and every call always stay with a person; auto-send stays off until a month of approvals is on record.",
+    },
     {
       lead: "No AI vendor sees customer data in daily use",
       rest: "until legal approves one. In testing, Claude reviewed the bills and Groq read masked tickets; the Redraft button is a demo.",
@@ -91,7 +93,6 @@ export default function ProofPage() {
       rest: up && up.cacheMisses === 0 ? `two models must agree; on these bills it changed ${up.verdictsChanged.length === 0 ? "no answers" : `${up.verdictsChanged.length} answers`} and would move ${up.checkFirstChanged} bills in or out of Check first.` : "two models must agree, or a person decides.",
     },
     { lead: "No threats, no invented facts:", rest: "emails come from Ledgerline's templates, checked for threat words." },
-    { lead: "The headline totals are checked:", rest: `worked out two ways, ${crossOk} of ${cross.length} agree; every customer name is linked.` },
   ];
 
   return (
@@ -140,22 +141,12 @@ export default function ProofPage() {
               </div>
             </div>
 
-            <ul className="mt-5 divide-y rounded-lg border text-sm" aria-label="Where every miss came from">
-              {sources.map((r) => (
-                <li key={r.by} className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-0.5 px-3 py-2">
-                  <span>{r.by}</span>
-                  <span className="tabular text-muted-foreground">
-                    <span className="font-medium text-foreground">{r.n}</span> · {split(r)}
-                  </span>
-                </li>
-              ))}
-              <li className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-0.5 bg-muted/40 px-3 py-2 font-medium">
-                <span>Every miss</span>
-                <span className="tabular">
-                  {log.entries.length} · {split(totals)}
-                </span>
-              </li>
-            </ul>
+            <p className="mt-5 flex flex-wrap items-baseline justify-between gap-x-4 gap-y-0.5 rounded-lg border bg-muted/40 px-3 py-2 text-sm font-medium">
+              <span>Every miss</span>
+              <span className="tabular">
+                {log.entries.length} · {split(totals)}
+              </span>
+            </p>
 
             <ol className="mt-4 space-y-3">
               {log.entries.slice(0, 2).map((e, idx) => (
@@ -165,9 +156,19 @@ export default function ProofPage() {
             {log.entries.length > 2 && (
               <details className="group mt-3">
                 <summary className="cursor-pointer text-sm font-medium text-muted-foreground hover:text-foreground">
-                  <span className="group-open:hidden">Show the other {log.entries.length - 2}</span>
+                  <span className="group-open:hidden">Show the other {log.entries.length - 2}, and where each came from</span>
                   <span className="hidden group-open:inline">Hide them</span>
                 </summary>
+                <ul className="mt-3 divide-y rounded-lg border text-sm" aria-label="Where every miss came from">
+                  {sources.map((r) => (
+                    <li key={r.by} className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-0.5 px-3 py-2">
+                      <span>{r.by}</span>
+                      <span className="tabular text-muted-foreground">
+                        <span className="font-medium text-foreground">{r.n}</span> · {split(r)}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
                 <ol className="mt-3 space-y-3">
                   {log.entries.slice(2).map((e, idx) => (
                     <MissItem key={`${e.invoice}-${idx + 2}`} e={e} />

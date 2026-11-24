@@ -54,7 +54,7 @@ const STEPS: StepDef[] = [
   {
     verdict: "paid",
     title: "Probably paid",
-    explain: "A payment seems to cover each of these bills. Marcus matches them within 2 working days and you're copied. No reminder goes out.",
+    explain: "A payment seems to cover each of these. Marcus matches them within 2 working days; no reminder goes out.",
     icon: Wallet,
     button: (n) => `Hand ${pluralize(n, "bill")} to Marcus`,
     confirmTitle: (n) => `Hand ${pluralize(n, "bill")} to Marcus to match?`,
@@ -64,7 +64,7 @@ const STEPS: StepDef[] = [
   {
     verdict: "hold",
     title: "Hand off holds",
-    explain: "Don't chase these yet. Each goes to its owner with a deadline. If nobody acts by then, it comes back to finance, flagged.",
+    explain: "Don't chase these yet. Each goes to its owner with a deadline and comes back to you if nobody acts.",
     icon: Handshake,
     button: (n) => `Hand off ${pluralize(n, "hold")}`,
     confirmTitle: (n) => `Hand off ${pluralize(n, "hold")} to their owners?`,
@@ -74,7 +74,7 @@ const STEPS: StepDef[] = [
   {
     verdict: "send",
     title: "Send reminders",
-    explain: "Nothing is blocking these: no open complaint, no payment found, and the bill matches the contract. Read one or two drafts, then approve the rest. Approving doesn't send anything.",
+    explain: "Nothing blocks these. Read a draft or two, then approve the rest. Approving doesn't send anything.",
     icon: Mail,
     button: (n) => `Approve ${pluralize(n, "reminder")}`,
     confirmTitle: (n) => `Approve ${pluralize(n, "reminder")}?`,
@@ -84,7 +84,7 @@ const STEPS: StepDef[] = [
   {
     verdict: "call",
     title: "Make calls",
-    explain: "Too late, too large or too unclear for an email. A person calls, using the reasons as talking points.",
+    explain: "Past 45 days, so a person phones instead of emailing. The reasons are the talking points.",
     icon: Phone,
     button: (n) => `Add ${pluralize(n, "call")} to the list`,
     confirmTitle: (n) => `Add ${pluralize(n, "customer")} to today's call list?`,
@@ -302,7 +302,7 @@ export function MorningView({ data }: { data: Pick<Results, "invoices" | "summar
               {expanded === "check" && (
                 <div id="step-check" className="border-t px-4 pt-3 pb-4">
                   <p className="text-sm leading-relaxed text-muted-foreground">
-                    One customer at a time. If the suggestion looks right, say so; if not, change it. Decided bills join their step.
+                    One customer at a time: approve the suggestion, or change it.
                   </p>
                   <FocusQueue
                     items={openGroups.map((g) => ({ key: g[0].id, bills: g, why: plainReview(g[0]) }))}
@@ -457,7 +457,7 @@ export function MorningView({ data }: { data: Pick<Results, "invoices" | "summar
                 <p className="mt-0.5 text-sm text-muted-foreground">
                   {allDone
                     ? `${pluralize(decidedBy("send"), "reminder")} ready to send, ${pluralize(decidedBy("hold"), "hold")} handed to owners, ${pluralize(decidedBy("paid"), "bill")} with Marcus to match, ${pluralize(decidedBy("call"), "call")} on the call list. Keep the list: tomorrow's run reads it, so nothing is suggested twice.`
-                    : "When every decision is made, download the list. Saved in the tool's history folder, tomorrow's run reads it, so nothing is suggested twice and every clock keeps running. That save is manual for now. Nothing is sent automatically."}
+                    : "When you're done, download the list and save it in the history folder, so tomorrow's run remembers today. Nothing is sent automatically."}
                 </p>
                 <div className="mt-3 flex flex-wrap gap-2">
                   <Button size="sm" variant={allDone ? "default" : "outline"} onClick={exportDecisions} disabled={!allDone && Object.keys(decisions).length === 0}>
