@@ -23,7 +23,7 @@ export const metadata: Metadata = {
     template: `%s · Collections check`,
   },
   description:
-    "Every morning: which overdue bills to chase, which to hold, and why — with the evidence. A person approves everything.",
+    "Every morning: which overdue bills to chase, which to hold and why, with the evidence. A person approves everything.",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

@@ -69,9 +69,10 @@ def light_lines(invoices, cfg, as_of) -> list[str]:
     paid = [i for i in invoices if i["verdict"] == "paid"]
     marcus = str(cfg.get("people", {}).get("cash_owner", "the cash team")).split(" (")[0].split()[0]
     out = []
-    emails = [i for i in ready if (i.get("draft") or {}).get("body")]
-    if ready:
-        out.append(f"{len(ready)} bills to remind, in {len(emails)} emails" + (f" ({len(send) - len(ready)} more after a quick check)" if len(send) > len(ready) else ""))
+    emails = [i for i in send if (i.get("draft") or {}).get("body")]
+    if send:
+        later = len(send) - len(ready)
+        out.append(f"{len(send)} bills to remind, in {len(emails)} emails" + (f": {len(ready)} ready now, {later} after a quick check" if later else ""))
     all_mine = [i for i in invoices if i["verdict"] == "hold" and i["cause"] == "wrong_bill" and i.get("hold")
                 and i["hold"]["ownerRole"].startswith("Finance")]
     if all_mine:
@@ -250,7 +251,7 @@ def main() -> None:
 
     labels_path = (ROOT / "data" / "labels.csv") if args.data != "sample" else folder / "labels.csv"
     acc, failures = accuracy(invoices, labels_path, "planted answers in the sample data" if args.data == "sample" else
-                                      "an independent review of all 54 bills by a separate AI model that never saw the tool's answers, with every contested call confirmed by a person (24 Nov)")
+                                      "an independent review of all 54 bills by a separate AI model (Claude, in its own session) that never saw the tool's answers, with every contested bill checked by a person (24 Nov)")
     ms = engine.matcher.stats()
     vn = verified_numbers(engine, invoices, by_cause)
     review = [i for i in invoices if i["needsReview"]]
@@ -267,7 +268,7 @@ def main() -> None:
     light = light_lines(invoices, cfg, as_of)
     app_url = cfg.get("app_url", "https://ledgerline-collections.vercel.app")
     morning = {"title": f"Collections check, {nice(as_of)}", "bullets": light, "link": app_url,
-               "text": "Good morning. Sorting today's list takes about 5 minutes; the disputes are the day's work.",
+               "text": "Good morning. Today's list is built to sort in about 5 minutes; the disputes are the day's work.",
                "detail": bullets}
     # Who gets what (Maya, 24 Nov): Slack direct messages, one a day per person, never a channel post.
     ppl = cfg.get("people", {})
@@ -358,7 +359,7 @@ def main() -> None:
         notes.insert(0, "Sample data: made-up company and numbers, used to build and test the tool.")
     elif acc:
         notes.insert(0, "Honest accuracy: on its first pass the tool agreed with the independent reviewer on 46 of 54 bills (85%). "
-                        "Of the 8 differences, 7 were rule errors we fixed and 1 we kept on purpose. A later rule change caused one more "
+                        "Of the 8 differences, 5 were rule errors we fixed, 2 were judgment calls changed for Maya to confirm, and 1 we kept on purpose. A later rule change caused one more "
                         "(Studio Marsh), which the same review caught. The current figure is on the bills the rules were fixed against, "
                         "so it is not a fresh-data result; the shadow week measures that.")
 

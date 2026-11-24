@@ -158,7 +158,7 @@ export interface Results {
     runtimeSeconds: number;
     reviewLog?: {
       summary: string;
-      entries: { invoice: string; customer: string; amount: number; toolSaid: string; shouldBe: string; foundBy: string; why: string; change: string; status: "fixed" | "deliberate" | "open" }[];
+      entries: { invoice: string; customer: string; amount: number; toolSaid: string; shouldBe: string; foundBy: string; why: string; change: string; status: "fixed" | "confirm" | "deliberate" | "open" }[];
     } | null;
   };
   morningSummary: {

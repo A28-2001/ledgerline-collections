@@ -19,14 +19,14 @@ function MissItem({ e }: { e: Entry }) {
         {e.amount > 0 && <span className="tabular text-xs text-muted-foreground">{formatMoney(e.amount)}</span>}
         <span
           className={
-            e.status === "fixed"
+            e.status === "fixed" || e.status === "confirm"
               ? "rounded-full border border-foreground/30 px-2 text-[11px] text-foreground"
               : e.status === "deliberate"
                 ? "rounded-full border px-2 text-[11px] text-muted-foreground"
                 : "rounded-full border border-hold/60 px-2 text-[11px] text-hold-ink"
           }
         >
-          {e.status === "fixed" ? "Fixed" : e.status === "deliberate" ? "Kept on purpose" : "Still open"}
+          {e.status === "fixed" ? "Fixed" : e.status === "confirm" ? "Changed, for Maya to confirm" : e.status === "deliberate" ? "Kept on purpose" : "Still open"}
         </span>
         {e.toolSaid !== "-" && (
           <span className="text-xs text-muted-foreground">
@@ -48,29 +48,43 @@ export default function ProofPage() {
   const crossOk = cross.filter((v) => v.ok).length;
   const up = proof.aiUplift;
 
-  const sources = (log?.entries ?? []).reduce<{ by: string; n: number; fixed: number; kept: number; open: number }[]>((acc, e) => {
+  const sources = (log?.entries ?? []).reduce<{ by: string; n: number; fixed: number; confirm: number; kept: number; open: number }[]>((acc, e) => {
     let row = acc.find((r) => r.by === e.foundBy);
     if (!row) {
-      row = { by: e.foundBy, n: 0, fixed: 0, kept: 0, open: 0 };
+      row = { by: e.foundBy, n: 0, fixed: 0, confirm: 0, kept: 0, open: 0 };
       acc.push(row);
     }
     row.n += 1;
     if (e.status === "fixed") row.fixed += 1;
+    else if (e.status === "confirm") row.confirm += 1;
     else if (e.status === "deliberate") row.kept += 1;
     else row.open += 1;
     return acc;
   }, []);
-  const split = (r: { fixed: number; kept: number; open: number }) =>
-    [r.fixed && `${r.fixed} fixed`, r.kept && `${r.kept} kept on purpose`, r.open && `${r.open} still open`].filter(Boolean).join(", ");
-  const totals = sources.reduce((t, r) => ({ fixed: t.fixed + r.fixed, kept: t.kept + r.kept, open: t.open + r.open }), { fixed: 0, kept: 0, open: 0 });
+  const split = (r: { fixed: number; confirm: number; kept: number; open: number }) =>
+    [
+      r.fixed && `${r.fixed} fixed`,
+      r.confirm && `${r.confirm} changed for Maya to confirm`,
+      r.kept && `${r.kept} kept on purpose`,
+      r.open && `${r.open} still open`,
+    ]
+      .filter(Boolean)
+      .join(", ");
+  const totals = sources.reduce(
+    (t, r) => ({ fixed: t.fixed + r.fixed, confirm: t.confirm + r.confirm, kept: t.kept + r.kept, open: t.open + r.open }),
+    { fixed: 0, confirm: 0, kept: 0, open: 0 },
+  );
 
   const guards: { lead: string; rest: string }[] = [
     { lead: "A person approves everything.", rest: "Auto-send stays off until a month of approvals is on record." },
     { lead: "Some bills always stay with a person:", rest: "top-50 accounts, disputes, probably-paid bills and every call." },
-    { lead: "No customer data goes to an AI vendor", rest: "until legal approves one; ticket excerpts are masked." },
+    {
+      lead: "No AI vendor sees customer data in daily use",
+      rest: "until legal approves one. In testing, Claude reviewed the bills and Groq read masked tickets; the Redraft button is a demo.",
+    },
     {
       lead: "AI is double-checked and measured:",
-      rest: up && up.cacheMisses === 0 ? `two models must agree; on these bills it changed ${up.verdictsChanged.length === 0 ? "no answers" : `${up.verdictsChanged.length} answers`}.` : "two models must agree, or a person decides.",
+      rest: up && up.cacheMisses === 0 ? `two models must agree; on these bills it changed ${up.verdictsChanged.length === 0 ? "no answers" : `${up.verdictsChanged.length} answers`} and would move ${up.checkFirstChanged} bills in or out of Check first.` : "two models must agree, or a person decides.",
     },
     { lead: "No threats, no invented facts:", rest: "emails come from Ledgerline's templates, checked for threat words." },
     { lead: "The headline totals are checked:", rest: `worked out two ways, ${crossOk} of ${cross.length} agree; every customer name is linked.` },
@@ -85,8 +99,8 @@ export default function ProofPage() {
           <CardHeader>
             <CardTitle className="leading-snug">How often it agrees with an independent review, and every miss</CardTitle>
             <CardDescription>
-              A separate AI model reviewed all 54 bills from fact files we built, without the tool&apos;s answers. A person checked the 11
-              contested calls, not the other 43.
+              A separate AI model (Claude, in its own session) reviewed all 54 bills from fact files we built, without the tool&apos;s
+              answers. A person checked the 11 contested bills, not the other 43.
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -101,9 +115,13 @@ export default function ProofPage() {
                 <p className="tabular text-xl font-semibold">{proof.accuracy ? `${Math.round(proof.accuracy.rate * 100)}%` : "-"}</p>
                 <p className="text-xs text-muted-foreground">
                   {proof.accuracy
-                    ? `${proof.accuracy.agreed} of ${proof.accuracy.sampleSize} on the same bills${
+                    ? `${proof.accuracy.agreed} of ${proof.accuracy.sampleSize} on the same bills.${
+                        proof.accuracy.agreed < proof.accuracy.sampleSize
+                          ? ` The other ${proof.accuracy.sampleSize - proof.accuracy.agreed} differ on purpose, explained below.`
+                          : ""
+                      }${
                         proof.accuracy.agreedOriginal != null && proof.accuracy.agreedOriginal !== proof.accuracy.agreed
-                          ? ` (${proof.accuracy.agreedOriginal} against the reviewer's first labels; I changed one after my hand check)`
+                          ? ` Against the reviewer's own labels: ${proof.accuracy.agreedOriginal}.`
                           : ""
                       }`
                     : "not measured"}

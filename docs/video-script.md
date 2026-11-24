@@ -40,9 +40,9 @@ Before recording: open the site in a private window, so no earlier clicks show a
 **Screen:** How sure are we.
 
 **Say:**
-- "A separate AI model reviewed all 54 bills without seeing the tool's answers, and I checked every contested call by hand. First pass: 46 of 54, 85%."
+- "A separate AI model reviewed all 54 bills without seeing the tool's answers, and I checked every contested bill by hand. First pass: 46 of 54, 85%."
 - Scroll to the miss list: "Every miss is here, with what changed. Eight came from the review's first pass, two I found myself before it, and one was my own mistake in the hand check: a payment that could pay either of two bills. That's the exact case that got the last tool switched off, so that bill now waits for Marcus."
-- "After the fixes it's 53 of 54, but on the same bills, so that's not a fresh test. The shadow week is."
+- "After the fixes it's 52 of 54, and we disagree on the last 2 on purpose. It's the same bills, so not a fresh test. The shadow week is."
 - **The COO's two tests:** "Nobody chased who had paid, nobody chased with a complaint open: both zero. Under the strictest reading, three customers with a pending ticket that isn't about money still get a reminder. That was my call, and it's for Maya to confirm."
 - **Why it's safe on billing** (read two or three lines): "A person approves everything. Top-50 accounts, disputes and calls always stay with a person. No customer data goes to an AI vendor until legal approves one. And I measured what AI ticket-reading adds on these bills: nothing. Rules already catch all 14 disputes. AI earns its place on new tickets with a missing or wrong tag."
 

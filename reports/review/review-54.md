@@ -1,7 +1,7 @@
 # Review of all 54 overdue bills: tool vs independent reviewer
 
 The reviewer read the raw records (masked tickets, payments, contracts) and Ledgerline's policy, without seeing the tool's answers.
-Agreement: **53 of 54 bills (98%)**, $589,565 of $633,245.
+Agreement: **52 of 54 bills (96%)**, $584,465 of $633,245.
 
 ## Tool (rows) vs reviewer (columns)
 
@@ -9,9 +9,9 @@ Agreement: **53 of 54 bills (98%)**, $589,565 of $633,245.
 review  call  hold  paid  send  All
 tool                               
 call       9     0     0     0    9
-hold       0    19     0     1   20
+hold       0    19     0     2   21
 paid       0     0     5     0    5
-send       0     0     0    20   20
+send       0     0     0    19   19
 All        9    19     5    21   54
 ```
 
@@ -20,6 +20,7 @@ All        9    19     5    21   54
 | Invoice | Customer | $ | Days | Tool | Reviewer | Reviewer's reason | Tool's reason |
 |---|---|---|---|---|---|---|---|
 | INV-25873 | Eastman & Wexler CPAs | 43,680 | 15 | hold | send (medium) | TOP-50 account 15 days late with no dispute; open T881016 is a normal-priority product bug about a client's send log, so a person should write a personal reminder after telling the account manager. | They have a ticket open in Zendesk since Oct 28, 2026 (3 days). Chasing payment while their question is unanswered is what gets the tool swi |
+| INV-25852 | Kingsway Engineering Group | 5,100 | 19 | hold | send (medium) | Bill of $5,100 is 19 days late; PAY-65805 for the same $5,100 is most likely for older INV-25469, so remind about this one only after confirming which invoice the payment covers; pending T880184 is about a client's invoice and should not block. | A $5,100 payment from them (received Oct 29, 2026) is unmatched. It could pay invoice INV-25469 or this one. No reminder until Marcus confir |
 
 ## Where the reviewer doubts a rule
 
@@ -56,7 +57,6 @@ All        9    19     5    21   54
 | INV-25764 | Castell Engineering | 6,324 | hold | T880849 (marked solved) says INV-25764 bills the full month at the old higher plan after a downgrade on the 3rd and they will not pay until fixed; PAY-65766 for the same $6,324 is from Brandt & Lowell, not this customer. |
 | INV-25806 | Brandt & Lowell CPAs | 6,324 | paid | PAY-65766 ($6,324 ACH from BRANDT & LOWELL CPAS, memo 'Ledgerline subscription', received 2026-10-19) matches this 28-day bill by name and amount and should be applied now. |
 | INV-25469 | Kingsway Engineering Group | 5,100 | paid | PAY-65805 ($5,100 ACH from Kingsway Engineering Group on 2026-10-29, blank memo) matches this 111-day bill, but INV-25852 is also $5,100; apply it oldest-first here and confirm with the customer which invoice it was for. |
-| INV-25852 | Kingsway Engineering Group | 5,100 | send | Bill of $5,100 is 19 days late; PAY-65805 for the same $5,100 is most likely for older INV-25469, so remind about this one only after confirming which invoice the payment covers; pending T880184 is about a client's invoice and should not block. |
 | INV-25863 | Banerjee Design Partnership | 5,100 | send | Bill of $5,100 is 17 days late and its tickets are how-tos and a bug; PAY-65805 for the same amount came from Kingsway Engineering Group, not this customer, so send a polite reminder. |
 | INV-25890 | Oyelaran Strategy | 4,692 | send | Bill of $4,692 is 12 days late with no tickets and no matching payment, so send a polite reminder to Layla Garrick only, not departed contact Renee Fairbanks. |
 | INV-25923 | Abbott Design Partnership | 4,692 | hold | Bill is only 4 days late (first reminder is due at 7 days, on 3 November) and T880542 is an ownership-transfer request, so no contact about money today. |

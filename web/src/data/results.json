@@ -1,6 +1,6 @@
 {
  "meta": {
-  "generatedAt": "2026-11-24T18:15:09+00:00",
+  "generatedAt": "2026-11-24T18:32:41+00:00",
   "asOf": "2026-10-31",
   "dataSource": "real",
   "companyName": "Ledgerline",
@@ -36,7 +36,7 @@
   ],
   "aiMode": "rules_only",
   "notes": [
-   "Honest accuracy: on its first pass the tool agreed with the independent reviewer on 46 of 54 bills (85%). Of the 8 differences, 7 were rule errors we fixed and 1 we kept on purpose. A later rule change caused one more (Studio Marsh), which the same review caught. The current figure is on the bills the rules were fixed against, so it is not a fresh-data result; the shadow week measures that.",
+   "Honest accuracy: on its first pass the tool agreed with the independent reviewer on 46 of 54 bills (85%). Of the 8 differences, 5 were rule errors we fixed, 2 were judgment calls changed for Maya to confirm, and 1 we kept on purpose. A later rule change caused one more (Studio Marsh), which the same review caught. The current figure is on the bills the rules were fixed against, so it is not a fresh-data result; the shadow week measures that.",
    "No-vendor mode (Maya, 23 Nov): no AI provider is approved yet, so tickets are read with tags, status and simple rules run locally; no ticket text leaves Ledgerline's systems. It now holds all 14 disputed bills, the same as the AI judges. Until 24 Nov it missed two (Banerjee Petrov, Upton & Bell): their tickets named the invoice but read as escalations, so the tool said 'call'. Fixed, and every call now shows the customer's tickets beside it."
   ],
   "sources": [
@@ -13880,9 +13880,9 @@
   ],
   "accuracy": {
    "sampleSize": 54,
-   "agreed": 53,
-   "rate": 0.9815,
-   "labelledBy": "an independent review of all 54 bills by a separate AI model that never saw the tool's answers, with every contested call confirmed by a person (24 Nov)",
+   "agreed": 52,
+   "rate": 0.963,
+   "labelledBy": "an independent review of all 54 bills by a separate AI model (Claude, in its own session) that never saw the tool's answers, with every contested bill checked by a person (24 Nov)",
    "agreedOriginal": 52
   },
   "agreementRate": null,
@@ -13947,11 +13947,17 @@
     "toolSaid": "hold",
     "truth": "send",
     "why": "Correct answer: TOP-50 account 15 days late with no dispute; open T881016 is a normal-priority product bug about a client's send log, so a person should write a personal reminder after telling the account manager. Tool's reason: They have a ticket open in Zendesk since Oct 28, 2026 (3 days). Chasing payment while their question is unanswered is what gets the tool switched off; the account manager decides when to resume."
+   },
+   {
+    "invoiceId": "INV-25852",
+    "toolSaid": "hold",
+    "truth": "send",
+    "why": "Correct answer: Bill of $5,100 is 19 days late; PAY-65805 for the same $5,100 is most likely for older INV-25469, so remind about this one only after confirming which invoice the payment covers; pending T880184 is about a client's invoice and should not block. Tool's reason: A $5,100 payment from them (received Oct 29, 2026) is unmatched. It could pay invoice INV-25469 or this one. No reminder until Marcus confirms which."
    }
   ],
-  "runtimeSeconds": 0.48,
+  "runtimeSeconds": 0.47,
   "reviewLog": {
-   "summary": "An independent reviewer (a separate AI model that never saw the tool's answers) checked all 54 bills from the raw records, and a person then confirmed every contested call. First pass: 46 of 54 agreed (85%). Of the 8 differences, 7 were rule errors we fixed and 1 we kept on purpose. The 2 misses we found ourselves were fixed before the review ran, so the very first version would have agreed on at most 44. After the fixes, 53 of 54 agree (98%), on the same bills the rules were fixed against, so that is not a fresh-data score: the shadow week measures that.",
+   "summary": "An independent reviewer (a separate AI model, Claude in its own session, that never saw the tool's answers) checked all 54 bills from the raw records, and a person then checked every contested bill. First pass: 46 of 54 agreed (85%). Of the 8 differences, 5 were rule errors we fixed, 2 were judgment calls changed for Maya to confirm, and 1 we kept on purpose. The 2 misses we found ourselves were fixed before the review ran, so the very first version would have agreed on at most 44. After the fixes, 52 of 54 agree (96%) with the reviewer's own labels, on the same bills the rules were fixed against, so that is not a fresh-data score: the shadow week measures that. The last 2 differ on purpose: an open ticket (Eastman & Wexler) and a payment that could belong to either of two bills (Kingsway).",
    "entries": [
     {
      "invoice": "INV-25973",
@@ -14039,7 +14045,7 @@
      "foundBy": "Independent review, first pass",
      "why": "The \"pending\" ticket's last message from the customer was \"Closing this out\".",
      "change": "When the customer says it's resolved, the ticket stops blocking.",
-     "status": "fixed"
+     "status": "confirm"
     },
     {
      "invoice": "INV-25852",
@@ -14061,7 +14067,7 @@
      "foundBy": "Independent review, first pass",
      "why": "A pending timer bug, tagged How-to by mistake. Not about money.",
      "change": "Same call as Kingsway, for Maya to confirm.",
-     "status": "fixed"
+     "status": "confirm"
     },
     {
      "invoice": "INV-25873",
@@ -14112,13 +14118,13 @@
  "morningSummary": {
   "title": "Collections check, Oct 31, 2026",
   "bullets": [
-   "14 bills to remind, in 13 emails (5 more after a quick check)",
+   "19 bills to remind, in 18 emails: 14 ready now, 5 after a quick check",
    "14 disputes to fix (12 past the 5-day target): corrected invoice or a clear answer",
    "9 bills to call about, in 8 calls",
    "5 bills look paid: Marcus is matching them"
   ],
   "link": "https://ledgerline-collections.vercel.app",
-  "text": "Good morning. Sorting today's list takes about 5 minutes; the disputes are the day's work.",
+  "text": "Good morning. Today's list is built to sort in about 5 minutes; the disputes are the day's work.",
   "detail": [
    "14 reminders ready to approve ($168,304), and 5 more after a check.",
    "21 on hold ($368,462): 12 past their target date, so the owner acts today; the rest by Nov 3, 2026 at the earliest.",
@@ -14134,7 +14140,7 @@
     "channel": "Slack direct message",
     "cc": "Dana Ruiz",
     "lines": [
-     "14 bills to remind, in 13 emails (5 more after a quick check)",
+     "19 bills to remind, in 18 emails: 14 ready now, 5 after a quick check",
      "14 disputes to fix (12 past the 5-day target): corrected invoice or a clear answer",
      "9 bills to call about, in 8 calls",
      "5 bills look paid: Marcus is matching them"

@@ -142,9 +142,10 @@ export default function StoryPage() {
       id: "answer",
       kicker: "The answer",
       number: fmt(decisions),
-      numberNote: `decisions sort the morning (built to take about 5 minutes). Then ${allMine} disputes to fix, oldest first: the day's work.`,
+      numberNote: `decisions sort the morning, built to take about 5 minutes. Then ${allMine} disputes to fix, oldest first: the day's work.`,
       text: [
-        `Five questions decide each bill, and **${formatMoney(summary.shouldNotChaseAmount)} isn't chased today**. ${count("send")} bills get a reminder (${emails} emails) once Priya approves.`,
+        "Five questions decide each bill: already paid? a reason to hold? under 7 days late? 45+ days late? If none, a reminder.",
+        `**${formatMoney(summary.shouldNotChaseAmount)} isn't chased today.** ${count("send")} bills get a reminder, in ${emails} emails, once Priya approves.`,
       ],
       source: `This run, all ${invoices.length} bills (Today and How it works pages)`,
     },
@@ -163,7 +164,7 @@ export default function StoryPage() {
       id: "monday",
       kicker: "Monday",
       number: fmt(checksTotal),
-      numberNote: `customers chased who had paid or had a complaint open${strict ? ` (${strict} by the strictest reading, now checked first)` : ""}`,
+      numberNote: "customers chased who had paid or had a complaint open",
       text: [
         `The COO's two tests: both 0.${strict ? ` **${strict} customers** with a pending ticket that isn't about money wait in Check first until Maya confirms.` : ""}`,
         "Monday: a shadow week beside Priya. **Nothing is sent without a person.**",

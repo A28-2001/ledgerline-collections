@@ -140,7 +140,7 @@ export function FocusQueue({
       </div>
 
       <div className="min-w-0">
-        <p className="text-xs font-semibold tracking-wide text-muted-foreground uppercase">Up next · {items.length}</p>
+        <p className="text-xs font-semibold tracking-wide text-muted-foreground uppercase">In this step · {items.length}</p>
         <ul className="mt-2 divide-y overflow-hidden rounded-lg border bg-background">
           {items.slice(0, queueShown).map((it, i) => {
             const b = it.bills[0];

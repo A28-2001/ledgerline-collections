@@ -1,5 +1,5 @@
 {
-  "summary": "An independent reviewer (a separate AI model that never saw the tool's answers) checked all 54 bills from the raw records, and a person then confirmed every contested call. First pass: 46 of 54 agreed (85%). Of the 8 differences, 7 were rule errors we fixed and 1 we kept on purpose. The 2 misses we found ourselves were fixed before the review ran, so the very first version would have agreed on at most 44. After the fixes, 53 of 54 agree (98%), on the same bills the rules were fixed against, so that is not a fresh-data score: the shadow week measures that.",
+  "summary": "An independent reviewer (a separate AI model, Claude in its own session, that never saw the tool's answers) checked all 54 bills from the raw records, and a person then checked every contested bill. First pass: 46 of 54 agreed (85%). Of the 8 differences, 5 were rule errors we fixed, 2 were judgment calls changed for Maya to confirm, and 1 we kept on purpose. The 2 misses we found ourselves were fixed before the review ran, so the very first version would have agreed on at most 44. After the fixes, 52 of 54 agree (96%) with the reviewer's own labels, on the same bills the rules were fixed against, so that is not a fresh-data score: the shadow week measures that. The last 2 differ on purpose: an open ticket (Eastman & Wexler) and a payment that could belong to either of two bills (Kingsway).",
   "entries": [
     {
       "invoice": "INV-25973",
@@ -87,7 +87,7 @@
       "foundBy": "Independent review, first pass",
       "why": "The \"pending\" ticket's last message from the customer was \"Closing this out\".",
       "change": "When the customer says it's resolved, the ticket stops blocking.",
-      "status": "fixed"
+      "status": "confirm"
     },
     {
       "invoice": "INV-25852",
@@ -109,7 +109,7 @@
       "foundBy": "Independent review, first pass",
       "why": "A pending timer bug, tagged How-to by mistake. Not about money.",
       "change": "Same call as Kingsway, for Maya to confirm.",
-      "status": "fixed"
+      "status": "confirm"
     },
     {
       "invoice": "INV-25873",

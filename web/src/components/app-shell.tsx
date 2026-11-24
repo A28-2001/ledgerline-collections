@@ -97,7 +97,7 @@ export function AppShell({
 
   return (
     <div className="flex min-h-dvh w-full">
-      <aside className="dark sticky top-0 hidden h-dvh w-60 shrink-0 flex-col border-r bg-sidebar px-3 py-4 text-sidebar-foreground md:flex">
+      <aside className="sticky top-0 hidden h-dvh w-60 shrink-0 flex-col border-r bg-sidebar px-3 py-4 text-sidebar-foreground md:flex">
         <div className="px-1.5 pb-5">
           <Brand companyName={companyName} />
         </div>

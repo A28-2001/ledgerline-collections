@@ -102,8 +102,7 @@
   --chart-4: #7b5ea7;
   --chart-5: #d1495b;
   --radius: 0.625rem;
-  /* The desktop sidebar is an ink spine in both themes (it carries the .dark class);
-     these light values are for the phone menu sheet. */
+  /* The sidebar follows the theme: these light values here, ink in dark mode. */
   --sidebar: #eaf0ed;
   --sidebar-foreground: #101820;
   --sidebar-primary: #11806a;
