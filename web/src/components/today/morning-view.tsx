@@ -664,7 +664,7 @@ function StepTile({ tile, active, next, onSelect }: { tile: TileData; active: bo
           {isFinish
             ? tile.done
               ? "save the list"
-              : `of ${tile.total} decisions made`
+              : `of ${tile.total} done`
             : empty
               ? "nothing today"
               : tile.done

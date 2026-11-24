@@ -218,7 +218,7 @@ function PolicyRuler({ days, color }: { days: number; color: string }) {
       </div>
       <div className="mt-1 grid grid-cols-5 gap-0.5 text-[10px] leading-tight text-muted-foreground" aria-hidden="true">
         {STAGES.map((st, k) => (
-          <span key={st.label} className={cn("truncate", k === i ? "font-semibold text-foreground" : "invisible sm:visible")}>
+          <span key={st.label} className={cn(k === i ? "font-semibold whitespace-nowrap text-foreground" : "invisible truncate sm:visible")}>
             {st.label}
           </span>
         ))}
