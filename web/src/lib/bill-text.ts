@@ -186,3 +186,13 @@ export function keyProof(inv: Invoice, verdict: Verdict): KeyProof | null {
     detail: `Due ${formatDate(inv.dueDate)}${inv.draft?.to ? ` · Contact: ${inv.draft.to}` : ""}.`,
   };
 }
+
+// For a bill in Check first: the record the check is about (a solved billing ticket to confirm), else the usual proof.
+export function checkProof(inv: Invoice): KeyProof | null {
+  const m = (inv.reviewReason ?? "").match(/ticket from ([A-Z][a-z]{2} \d{1,2}, \d{4})/);
+  if (m) {
+    const t = inv.evidence.find((e) => e.kind === "ticket" && e.date && formatDate(e.date) === m[1]);
+    if (t) return fromEvidence(`The ticket to check (${t.status || "open"})`, t);
+  }
+  return keyProof(inv, inv.verdict);
+}

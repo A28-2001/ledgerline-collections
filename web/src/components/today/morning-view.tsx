@@ -5,12 +5,10 @@ import {
   Check,
   CheckCheck,
   ChevronDown,
-  CircleCheck,
   Download,
   Flag,
   Handshake,
   Mail,
-  PencilLine,
   Phone,
   Send,
   Wallet,
@@ -20,9 +18,8 @@ import Link from "next/link";
 import { useMemo, useState } from "react";
 import { toast } from "sonner";
 import { CopyButton } from "@/components/shared/copy-button";
-import { VerdictBadge } from "@/components/shared/verdict-badge";
-import { ReminderDots } from "@/components/shared/reminder-stepper";
 import { AllBills, effectiveVerdict } from "@/components/today/all-bills";
+import { FocusQueue } from "@/components/today/focus-queue";
 import { InvoiceSheet } from "@/components/today/invoice-sheet";
 import { MoneyBar } from "@/components/today/money-bar";
 import { Button } from "@/components/ui/button";
@@ -36,7 +33,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Progress } from "@/components/ui/progress";
-import { plainReview, rowDetail } from "@/lib/bill-text";
+import { checkProof, plainReview, rowDetail } from "@/lib/bill-text";
 import { useDecisions } from "@/lib/decisions";
 import { formatDate, formatMoney, pluralize, sumAmount, VERDICT_META } from "@/lib/data";
 import type { Invoice, Results, Verdict } from "@/lib/types";
@@ -96,14 +93,6 @@ const STEPS: StepDef[] = [
   },
 ];
 
-const ROWS_SHOWN = 6;
-// With hundreds of bills, a step opens 25 more at a time instead of all at once.
-const MORE_ROWS = 25;
-
-function moreLabel(shown: number, total: number): string {
-  if (shown >= total) return "Show fewer";
-  return total - shown <= MORE_ROWS ? `Show all ${total}` : `Show ${MORE_ROWS} more (${total - shown} left)`;
-}
 type StepKey = "check" | Verdict | "finish";
 
 function csvCell(value: string | number) {
@@ -127,7 +116,6 @@ export function MorningView({ data }: { data: Pick<Results, "invoices" | "summar
   const [startChange, setStartChange] = useState(false);
   const [openStep, setOpenStep] = useState<StepKey | null | "auto">("auto");
   const [confirmStep, setConfirmStep] = useState<StepDef | null>(null);
-  const [shownRows, setShownRows] = useState(ROWS_SHOWN);
 
   // Bills the tool isn't sure about go to "Check first" until a person has decided them.
   const flagged = useMemo(() => invoices.filter((i) => i.needsReview), [invoices]);
@@ -169,19 +157,19 @@ export function MorningView({ data }: { data: Pick<Results, "invoices" | "summar
     });
   }
 
-  // Keyboard: arrows or J/K move, Enter keeps the suggestion, C changes it.
-  function onRowKey(e: React.KeyboardEvent<HTMLLIElement>, group: Invoice[]) {
-    if (e.target !== e.currentTarget) return;
-    const rows = Array.from(e.currentTarget.parentElement?.querySelectorAll<HTMLLIElement>("li[data-row]") ?? []);
-    const at = rows.indexOf(e.currentTarget);
-    const k = e.key.toLowerCase();
-    if (k === "arrowdown" || k === "j") { e.preventDefault(); rows[Math.min(at + 1, rows.length - 1)]?.focus(); }
-    else if (k === "arrowup" || k === "k") { e.preventDefault(); rows[Math.max(at - 1, 0)]?.focus(); }
-    else if (k === "enter") {
-      e.preventDefault();
-      keepGroup(group);
-      window.requestAnimationFrame(() => (rows[at + 1] ?? rows[at - 1])?.focus());
-    } else if (k === "c") { e.preventDefault(); openBill(group[0].id, true); }
+  // The main button on a step's card, in plain words.
+  function stepPrimary(v: Verdict, inv: Invoice): string {
+    if (v === "paid") return "Hand to Marcus";
+    if (v === "send") return inv.draft?.combinedWith ? "Approve: goes in one email" : "Approve this reminder";
+    if (v === "call") return "Add to the call list";
+    if (/^too early/i.test(inv.headline)) return "OK, wait";
+    if (inv.hold?.ownerRole.startsWith("Finance")) return "Keep it: yours to fix";
+    return `Hand to ${inv.hold?.owner ?? "the owner"}`;
+  }
+
+  function decideOne(inv: Invoice, v: Verdict) {
+    approve([{ id: inv.id, verdict: v }]);
+    toast.success(`${inv.customerName}: done`, { action: { label: "Undo", onClick: () => undo(inv.id) } });
   }
 
   const current: StepKey =
@@ -196,7 +184,6 @@ export function MorningView({ data }: { data: Pick<Results, "invoices" | "summar
   }
 
   function goToStep(key: StepKey) {
-    setShownRows(ROWS_SHOWN);
     setOpenStep(key);
     scrollToStep(key);
   }
@@ -305,83 +292,25 @@ export function MorningView({ data }: { data: Pick<Results, "invoices" | "summar
                 }
                 open={expanded === "check"}
                 onToggle={() => {
-                  setShownRows(ROWS_SHOWN);
-                  setOpenStep(expanded === "check" ? null : "check");
+                                setOpenStep(expanded === "check" ? null : "check");
                 }}
                 controls="step-check"
               />
               {expanded === "check" && (
                 <div id="step-check" className="border-t px-4 pt-3 pb-4">
                   <p className="text-sm leading-relaxed text-muted-foreground">
-                    Read why each one needs a person. If the suggestion looks right, say so; if not, change it. Then these bills
-                    join their step, already decided. Bills from one customer with the same reason are one decision.
+                    One customer at a time. If the suggestion looks right, say so; if not, change it. Decided bills join their step.
                   </p>
-                  <p className="mt-1.5 hidden text-xs text-muted-foreground sm:block">
-                    Keys: <kbd className="rounded border px-1">↑</kbd> <kbd className="rounded border px-1">↓</kbd> to move ·{" "}
-                    <kbd className="rounded border px-1">Enter</kbd> looks right · <kbd className="rounded border px-1">C</kbd> change
-                  </p>
-                  {flaggedOpen.length === 0 ? (
-                    <p className="mt-3 flex items-center gap-1.5 text-sm font-medium text-paid-ink">
-                      <CircleCheck className="size-4" aria-hidden="true" />
-                      All checked
-                    </p>
-                  ) : (
-                    <ul className="mt-3 divide-y overflow-hidden rounded-lg border">
-                      {openGroups.slice(0, shownRows).map((group) => {
-                        const inv = group[0];
-                        return (
-                        <li
-                          key={inv.id}
-                          data-row
-                          tabIndex={0}
-                          onKeyDown={(e) => onRowKey(e, group)}
-                          aria-label={`${inv.customerName}, ${pluralize(group.length, "bill")}, ${VERDICT_META[inv.verdict].label}. Enter keeps it, C changes it.`}
-                          className="flex flex-col gap-2 px-3 py-2.5 outline-none focus-visible:bg-muted/60 focus-visible:ring-2 focus-visible:ring-ring/50 sm:flex-row sm:items-center sm:gap-3"
-                        >
-                          <button
-                            type="button"
-                            onClick={() => openBill(inv.id)}
-                            className="min-w-0 flex-1 rounded text-left outline-none focus-visible:ring-2 focus-visible:ring-ring/50"
-                          >
-                            <span className="flex flex-wrap items-center gap-x-2 gap-y-1">
-                              <span className="truncate text-sm font-medium">{inv.customerName}</span>
-                              <VerdictBadge verdict={inv.verdict} className="text-[11px]" />
-                              <span className="tabular text-xs text-muted-foreground">
-                                {formatMoney(sumAmount(group), inv.currency)}
-                                {group.length > 1 ? ` · ${group.length} bills` : ""}
-                              </span>
-                            </span>
-                            <span className="mt-0.5 block text-xs leading-snug text-muted-foreground">{plainReview(inv)}</span>
-                          </button>
-                          <div className="flex shrink-0 gap-2">
-                            <Button
-                              size="sm"
-                              variant="outline"
-                              onClick={() => keepGroup(group)}
-                            >
-                              <Check />
-                              Looks right
-                            </Button>
-                            <Button size="sm" variant="ghost" onClick={() => openBill(inv.id, true)}>
-                              <PencilLine />
-                              Change
-                            </Button>
-                          </div>
-                        </li>
-                        );
-                      })}
-                    </ul>
-                  )}
-                  {openGroups.length > ROWS_SHOWN && (
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      className="mt-2"
-                      onClick={() => setShownRows((n) => (n >= openGroups.length ? ROWS_SHOWN : n + MORE_ROWS))}
-                    >
-                      {moreLabel(shownRows, openGroups.length)}
-                    </Button>
-                  )}
+                  <FocusQueue
+                    items={openGroups.map((g) => ({ key: g[0].id, bills: g, why: plainReview(g[0]) }))}
+                    verdictOf={(i) => i.verdict}
+                    proofOf={checkProof}
+                    primaryLabel={(it) => `Looks right: ${VERDICT_META[it.bills[0].verdict].label}`}
+                    onPrimary={(it) => keepGroup(it.bills)}
+                    onChange={(it) => openBill(it.bills[0].id, true)}
+                    onOpen={(it) => openBill(it.bills[0].id)}
+                    emptyText={`All ${pluralize(flagged.length, "bill")} checked.`}
+                  />
                 </div>
               )}
             </li>
@@ -393,8 +322,6 @@ export function MorningView({ data }: { data: Pick<Results, "invoices" | "summar
             const isOpen = expanded === key;
             const Icon = s.def.icon;
             const amount = sumAmount(s.items);
-            const ordered = [...s.undecided, ...s.items.filter((i) => decisions[i.id])];
-            const visible = ordered.slice(0, isOpen ? shownRows : ROWS_SHOWN);
             const sub =
               s.items.length === 0 && s.waiting === 0
                 ? "Nothing today"
@@ -418,8 +345,7 @@ export function MorningView({ data }: { data: Pick<Results, "invoices" | "summar
                   amount={s.items.length ? formatMoney(amount) : undefined}
                   open={isOpen}
                   onToggle={() => {
-                    setShownRows(ROWS_SHOWN);
-                    setOpenStep(isOpen ? null : key);
+                                    setOpenStep(isOpen ? null : key);
                   }}
                   controls={`step-${key}`}
                 />
@@ -444,42 +370,25 @@ export function MorningView({ data }: { data: Pick<Results, "invoices" | "summar
                         {s.waiting > 0 ? "These bills are waiting in Check first." : "No bills in this step today."}
                       </p>
                     ) : (
-                      <ul className="mt-3 divide-y overflow-hidden rounded-lg border">
-                        {visible.map((inv) => {
-                          const d = decisions[inv.id];
-                          return (
-                            <BillRow
-                              key={inv.id}
-                              inv={inv}
-                              decided={Boolean(d)}
-                              verdict={key}
-                              detail={d?.status === "overridden" ? `Changed by you: ${d.reason ?? ""}` : rowDetail(inv, key)}
-                              onOpen={() => openBill(inv.id)}
-                            />
-                          );
-                        })}
-                      </ul>
+                      <FocusQueue
+                        items={s.undecided.map((inv) => ({ key: inv.id, bills: [inv], why: rowDetail(inv, key) }))}
+                        verdictOf={() => key}
+                        primaryLabel={(it) => stepPrimary(key, it.bills[0])}
+                        onPrimary={(it) => decideOne(it.bills[0], key)}
+                        onChange={(it) => openBill(it.bills[0].id, true)}
+                        onOpen={(it) => openBill(it.bills[0].id)}
+                        doneText={s.decidedCount > 0 && s.undecided.length > 0 ? `${s.def.done(s.decidedCount)} so far` : undefined}
+                        emptyText={`Step done: ${s.def.done(s.decidedCount)}.`}
+                        footer={
+                          s.undecided.length > 1 ? (
+                            <Button variant="outline" className="w-full" onClick={() => setConfirmStep(s.def)}>
+                              <CheckCheck />
+                              {s.def.button(s.undecided.length)}
+                            </Button>
+                          ) : undefined
+                        }
+                      />
                     )}
-                    <div className="mt-3 flex flex-wrap items-center justify-between gap-2">
-                      {ordered.length > ROWS_SHOWN ? (
-                        <Button variant="ghost" size="sm" onClick={() => setShownRows((n) => (n >= ordered.length ? ROWS_SHOWN : n + MORE_ROWS))}>
-                          {moreLabel(shownRows, ordered.length)}
-                        </Button>
-                      ) : (
-                        <span />
-                      )}
-                      {s.undecided.length > 0 ? (
-                        <Button onClick={() => setConfirmStep(s.def)}>
-                          <CheckCheck />
-                          {s.def.button(s.undecided.length)}
-                        </Button>
-                      ) : s.items.length > 0 ? (
-                        <p className="flex items-center gap-1.5 text-sm font-medium text-paid-ink">
-                          <CircleCheck className="size-4" aria-hidden="true" />
-                          Step done
-                        </p>
-                      ) : null}
-                    </div>
                   </div>
                 )}
               </li>
@@ -700,47 +609,5 @@ function StepStatus({ n, done, current, label, flag = false }: { n?: number; don
     >
       {flag ? <Flag className="size-3.5" aria-hidden="true" /> : n}
     </span>
-  );
-}
-
-function BillRow({
-  inv,
-  decided,
-  verdict,
-  detail,
-  onOpen,
-}: {
-  inv: Invoice;
-  decided: boolean;
-  verdict: Verdict;
-  detail: string;
-  onOpen: () => void;
-}) {
-  return (
-    <li>
-      <button
-        type="button"
-        onClick={onOpen}
-        className={cn(
-          "flex w-full items-center gap-3 px-3 py-2.5 text-left outline-none transition-colors hover:bg-muted/50 focus-visible:bg-muted/60 focus-visible:ring-2 focus-visible:ring-ring/50 focus-visible:ring-inset",
-          decided && "opacity-60",
-        )}
-      >
-        <div className="min-w-0 flex-1">
-          <div className="flex items-center gap-1.5">
-            {decided && <CircleCheck className="size-3.5 shrink-0 text-paid-ink" aria-label="Decided" />}
-            <span className="truncate text-sm font-medium">{inv.customerName}</span>
-          </div>
-          <p className="truncate text-xs text-muted-foreground" title={detail}>
-            {detail}
-          </p>
-        </div>
-        <ReminderDots invoice={inv} verdict={verdict} className="hidden shrink-0 sm:flex" />
-        <div className="shrink-0 text-right">
-          <p className="tabular text-sm font-medium">{formatMoney(inv.amount, inv.currency)}</p>
-          <p className="tabular text-xs text-muted-foreground">{inv.daysOverdue}d late</p>
-        </div>
-      </button>
-    </li>
   );
 }
