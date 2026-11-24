@@ -9,7 +9,15 @@ import type { TrendPoint } from "@/lib/types";
 
 type Mode = "amount" | "share";
 
-export function TrendChart({ trend, markers }: { trend: TrendPoint[]; markers: { month: string; label: string }[] }) {
+export function TrendChart({
+  trend,
+  markers,
+  simple = false,
+}: {
+  trend: TrendPoint[];
+  markers: { month: string; label: string }[];
+  simple?: boolean; // dollars only, no switch
+}) {
   const [mode, setMode] = useState<Mode>("amount");
   const config: ChartConfig = {
     overdueAmount: { label: "Overdue", color: "var(--accent-brand)" },
@@ -21,14 +29,16 @@ export function TrendChart({ trend, markers }: { trend: TrendPoint[]; markers: {
 
   return (
     <div>
-      <div className="mb-3 flex justify-end">
-        <Tabs value={mode} onValueChange={(v) => setMode(v as Mode)}>
-          <TabsList>
-            <TabsTrigger value="amount">Overdue $</TabsTrigger>
-            <TabsTrigger value="share">Share of open bills</TabsTrigger>
-          </TabsList>
-        </Tabs>
-      </div>
+      {!simple && (
+        <div className="mb-3 flex justify-end">
+          <Tabs value={mode} onValueChange={(v) => setMode(v as Mode)}>
+            <TabsList>
+              <TabsTrigger value="amount">Overdue $</TabsTrigger>
+              <TabsTrigger value="share">Share of open bills</TabsTrigger>
+            </TabsList>
+          </Tabs>
+        </div>
+      )}
       <ChartContainer config={config} className="aspect-auto h-64 w-full">
         <AreaChart data={trend} margin={{ left: 4, right: 12, top: 16, bottom: 0 }}>
           <defs>

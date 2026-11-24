@@ -1,6 +1,6 @@
 {
  "meta": {
-  "generatedAt": "2026-11-24T15:43:10+00:00",
+  "generatedAt": "2026-11-24T16:00:38+00:00",
   "asOf": "2026-10-31",
   "dataSource": "real",
   "companyName": "Ledgerline",
@@ -13885,7 +13885,7 @@
     "why": "Correct answer: TOP-50 account 15 days late with no dispute; open T881016 is a normal-priority product bug about a client's send log, so a person should write a personal reminder after telling the account manager. Tool's reason: They have a ticket open in Zendesk since Oct 28, 2026 (3 days). Chasing payment while their question is unanswered is what gets the tool switched off; the account manager decides when to resume."
    }
   ],
-  "runtimeSeconds": 0.47,
+  "runtimeSeconds": 0.49,
   "reviewLog": {
    "summary": "An independent reviewer (a separate AI model that never saw the tool's answers) checked all 54 bills from the raw records, and a person then confirmed every contested call. First pass: 46 of 54 agreed (85%). Of the 8 differences, 7 were rule errors we fixed and 1 we kept on purpose. The 2 misses we found ourselves were fixed before the review ran, so the very first version would have agreed on at most 44. After the fixes, 53 of 54 agree (98%), on the same bills the rules were fixed against, so that is not a fresh-data score: the shadow week measures that.",
    "entries": [
@@ -14038,13 +14038,20 @@
  "morningSummary": {
   "title": "Collections check, Oct 31, 2026",
   "bullets": [
+   "16 reminders to approve (4 more after a quick check)",
+   "12 disputed bills to fix: corrected invoice or a clear answer",
+   "9 calls to make",
+   "5 bills look paid: Marcus is matching them"
+  ],
+  "link": "https://ledgerline-collections.vercel.app",
+  "text": "Good morning. Here's what needs you today:",
+  "detail": [
    "16 reminders ready to approve ($173,197), and 4 more after a check.",
    "20 on hold ($363,362): 12 past their target date, so the owner acts today; the rest by Nov 3, 2026 at the earliest.",
    "5 probably paid already ($78,348): with Marcus Bell to match; you're copied.",
    "9 need a phone call ($9,384).",
    "15 of these need a second look first, in Check first."
   ],
-  "text": "Good morning. $441,710 of $633,245 overdue (70%) sits with customers we shouldn't chase today: they've probably paid, they're unhappy, or the bill is wrong. Today: 16 reminders ready to approve ($173,197), and 4 more after a check. 20 on hold ($363,362): 12 past their target date, so the owner acts today; the rest by Nov 3, 2026 at the earliest. 5 probably paid already ($78,348): with Marcus Bell to match; you're copied. 9 need a phone call ($9,384). 15 of these need a second look first, in Check first.",
   "cover": "While Priya Nair is on leave (March, dates to confirm), Dana Ruiz owns this morning list and Marcus Bell keeps the probably-paid list. Cover is off today.",
   "routing": [
    {
@@ -14053,11 +14060,10 @@
     "channel": "Slack direct message",
     "cc": "Dana Ruiz",
     "lines": [
-     "16 reminders ready to approve ($173,197), and 4 more after a check.",
-     "20 on hold ($363,362): 12 past their target date, so the owner acts today; the rest by Nov 3, 2026 at the earliest.",
-     "5 probably paid already ($78,348): with Marcus Bell to match; you're copied.",
-     "9 need a phone call ($9,384).",
-     "15 of these need a second look first, in Check first."
+     "16 reminders to approve (4 more after a quick check)",
+     "12 disputed bills to fix: corrected invoice or a clear answer",
+     "9 calls to make",
+     "5 bills look paid: Marcus is matching them"
     ],
     "by": null
    },
@@ -14067,14 +14073,14 @@
     "channel": "Slack direct message",
     "cc": "Priya Nair",
     "lines": [
-     "Jessop & Orwell Agency: invoice INV-25784, $62,688",
-     "Brandt & Lowell CPAs: invoice INV-25806, $6,324",
-     "Kingsway Engineering Group: invoice INV-25469, $5,100",
-     "Castellano, Crane & Co: invoice INV-25845, $3,672",
-     "Yardley & Duarte Advisory: invoice INV-25867, $564"
+     "Jessop & Orwell Agency, $62,688",
+     "Brandt & Lowell CPAs, $6,324",
+     "Kingsway Engineering Group, $5,100"
     ],
+    "more": 2,
     "by": "Nov 4",
-    "intro": "5 overdue bills look already paid. Please match them; Priya Nair is copied and holds the reminders."
+    "intro": "5 bills look already paid. Please match them; no reminders go out meanwhile.",
+    "link": "https://ledgerline-collections.vercel.app"
    },
    {
     "to": "Hannah Drummond",
@@ -14082,24 +14088,14 @@
     "channel": "Slack direct message (one a day)",
     "cc": null,
     "lines": [
-     "Paused: Brandt Ashby IT, invoice INV-25822, $26,112. The customer disputes this exact invoice in a support ticket and says they're holding payment until it's fixed.",
-     "Paused: Castell Engineering, invoice INV-25764, $6,324. The customer disputes this exact invoice in a support ticket and says they're holding payment until it's fixed.",
-     "Paused: Eastman Engineering, invoice INV-25973, $3,264. On Aug 30, 2026 they threatened or started a complaint to a regulator or consumer affairs office and a card dispute\u2026",
-     "Paused: Wexler Media, invoice INV-25811, $1,224. The customer disputes this exact invoice in a support ticket.",
-     "Paused: Drummond Consulting, invoice INV-25769, $658. On Jul 2, 2026 they threatened or started a card dispute (chargeback) with their bank (ticket marked solved).",
-     "Going out after Priya Nair approves: a reminder to Hollis & Stanhope Advisory, invoice INV-25869, $22,848",
-     "Going out after Priya Nair approves: a reminder to Banerjee Design Partnership, invoice INV-25863, $5,100",
-     "Going out after Priya Nair approves: a reminder to Oyelaran Strategy, invoice INV-25890, $4,692",
-     "Going out after Priya Nair approves: a reminder to Corbin Media, invoice INV-25881, $2,397",
-     "Going out after Priya Nair approves: a reminder to Ellery Achebe Chartered Accountants, invoice INV-25912, $799",
-     "Going out after Priya Nair approves: a call to Quill, Mott & Co, invoice INV-25708, $1,632",
-     "Going out after Priya Nair approves: a call to Quill, Mott & Co, invoice INV-25975, $1,632",
-     "Going out after Priya Nair approves: a call to Ashgrove Partners, invoice INV-25793, $1,088",
-     "Going out after Priya Nair approves: a call to Northgate Creative, invoice INV-25433, $799",
-     "Going out after Priya Nair approves: a call to Studio Nakamura, invoice INV-25622, $517"
+     "Paused: Brandt Ashby IT, $26,112",
+     "Paused: Castell Engineering, $6,324",
+     "Paused: Eastman Engineering, $3,264"
     ],
+    "more": 12,
     "by": "Nov 5",
-    "intro": "5 of your accounts have a reminder paused. Get each issue moving or tell Priya Nair the reminder can go; after 3 working days it comes back to Priya Nair. 10 contacts planned today on your accounts: reply if any of them should wait."
+    "intro": "5 accounts paused until you move the issue on. 10 contacts planned today; reply if any should wait.",
+    "link": "https://ledgerline-collections.vercel.app"
    },
    {
     "to": "Maria Yardley",
@@ -14107,22 +14103,14 @@
     "channel": "Slack direct message (one a day)",
     "cc": null,
     "lines": [
-     "Paused: Delacroix, Jessop & Co, invoice INV-25834, $41,568. The customer disputes this exact invoice in a support ticket and says they're holding payment until it's fixed.",
-     "Paused: Ambrose & Lowell Advisory, invoice INV-25897, $658. They have a ticket pending in Zendesk since Aug 24, 2026 (68 days).",
-     "Going out after Priya Nair approves: a reminder to Riverside Consulting Group, invoice INV-25885, $17,136",
-     "Going out after Priya Nair approves: a reminder to Sinclair & Vance LLP, invoice INV-25883, $16,320",
-     "Going out after Priya Nair approves: a reminder to Rosales Engineering, invoice INV-25906, $16,320",
-     "Going out after Priya Nair approves: a reminder to Glover Strategy, invoice INV-25858, $9,600",
-     "Going out after Priya Nair approves: a reminder to Crane IT Partners, invoice INV-25902, $3,060",
-     "Going out after Priya Nair approves: a reminder to Rosales Engineering, invoice INV-25907, $2,500",
-     "Going out after Priya Nair approves: a reminder to Tan Accounting, invoice INV-25928, $611",
-     "Going out after Priya Nair approves: a reminder to Hume Accounting, invoice INV-26005, $282",
-     "Going out after Priya Nair approves: a call to Glover Engineering, invoice INV-25803, $1,836",
-     "Going out after Priya Nair approves: a call to Kowalczyk + Stanhope Architects, invoice INV-25825, $705",
-     "Going out after Priya Nair approves: a call to Hollis Nair Engineers, invoice INV-25470, $517"
+     "Paused: Delacroix, Jessop & Co, $41,568",
+     "Paused: Ambrose & Lowell Advisory, $658",
+     "Planned: reminder to Riverside Consulting Group, $17,136"
     ],
+    "more": 10,
     "by": "Nov 5",
-    "intro": "2 of your accounts have a reminder paused. Get each issue moving or tell Priya Nair the reminder can go; after 3 working days it comes back to Priya Nair. 11 contacts planned today on your accounts: reply if any of them should wait."
+    "intro": "2 accounts paused until you move the issue on. 11 contacts planned today; reply if any should wait.",
+    "link": "https://ledgerline-collections.vercel.app"
    },
    {
     "to": "Nadia Sinclair",
@@ -14130,18 +14118,14 @@
     "channel": "Slack direct message (one a day)",
     "cc": null,
     "lines": [
-     "Paused: Okafor & Nakamura LLP, invoice INV-25765, $46,848. The customer disputes this exact invoice in a support ticket and says they're holding payment until it's fixed.",
-     "Paused: Eastman & Wexler CPAs, invoice INV-25873, $43,680. They have a ticket open in Zendesk since Oct 28, 2026 (3 days).",
-     "Paused: Studio Marsh, invoice INV-25854, $1,410. A billing ticket from Oct 29, 2026, only 2 days ago, is marked solved in Zendesk, but nothing shows the money issue was\u2026",
-     "Going out after Priya Nair approves: a reminder to Okafor Legal, invoice INV-25848, $19,584",
-     "Going out after Priya Nair approves: a reminder to Voss & Kowalczyk Agency, invoice INV-25859, $13,056",
-     "Going out after Priya Nair approves: a reminder to Kingsway Engineering Group, invoice INV-25852, $5,100",
-     "Going out after Priya Nair approves: a reminder to Harbor Engineering Group, invoice INV-25898, $1,833",
-     "Going out after Priya Nair approves: a reminder to Bramwell Sinclair Chartered Accountants, invoice INV-25969, $611",
-     "Going out after Priya Nair approves: a call to Moreau & Crane Agency, invoice INV-25709, $658"
+     "Paused: Okafor & Nakamura LLP, $46,848",
+     "Paused: Eastman & Wexler CPAs, $43,680",
+     "Paused: Studio Marsh, $1,410"
     ],
+    "more": 6,
     "by": "Nov 5",
-    "intro": "3 of your accounts have a reminder paused. Get each issue moving or tell Priya Nair the reminder can go; after 3 working days it comes back to Priya Nair. 6 contacts planned today on your accounts: reply if any of them should wait."
+    "intro": "3 accounts paused until you move the issue on. 6 contacts planned today; reply if any should wait.",
+    "link": "https://ledgerline-collections.vercel.app"
    },
    {
     "to": "Nadia Upton",
@@ -14149,13 +14133,14 @@
     "channel": "Slack direct message (one a day)",
     "cc": null,
     "lines": [
-     "Paused: Riverside Partners, invoice INV-25787, $60,576. The customer disputes this exact invoice in a support ticket and says they're holding payment until it's fixed.",
-     "Paused: Wexler & Hume Advisory, invoice INV-25712, $4,080. The customer disputes this exact invoice in a support ticket.",
-     "Going out after Priya Nair approves: a reminder to Thornfield Consulting Group, invoice INV-25862, $39,456",
-     "Going out after Priya Nair approves: a reminder to Ruiz & Whitfield CPAs, invoice INV-25926, $846"
+     "Paused: Riverside Partners, $60,576",
+     "Paused: Wexler & Hume Advisory, $4,080",
+     "Planned: reminder to Thornfield Consulting Group, $39,456"
     ],
+    "more": 1,
     "by": "Nov 5",
-    "intro": "2 of your accounts have a reminder paused. Get each issue moving or tell Priya Nair the reminder can go; after 3 working days it comes back to Priya Nair. 2 contacts planned today on your accounts: reply if any of them should wait."
+    "intro": "2 accounts paused until you move the issue on. 2 contacts planned today; reply if any should wait.",
+    "link": "https://ledgerline-collections.vercel.app"
    },
    {
     "to": "Dana Ruiz",
@@ -14163,11 +14148,13 @@
     "channel": "Slack direct message",
     "cc": "Priya Nair",
     "lines": [
-     "Northgate Creative: invoice INV-25433, $799, written off automatically in 1 day",
-     "Hollis Nair Engineers: invoice INV-25470, $517, written off automatically in 9 days"
+     "Northgate Creative: $799, written off in 1 day",
+     "Hollis Nair Engineers: $517, written off in 9 days"
     ],
+    "more": 0,
     "by": null,
-    "intro": "2 card invoices will be written off automatically soon. Chase them or let them go?"
+    "intro": "2 card invoices will be written off automatically soon. Chase them or let them go?",
+    "link": "https://ledgerline-collections.vercel.app"
    }
   ]
  },

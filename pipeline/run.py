@@ -58,6 +58,28 @@ def trend(engine: Engine) -> list[dict]:
     return out
 
 
+def light_lines(invoices, cfg, as_of) -> list[str]:
+    """The morning message, kept light: what needs Priya today, in four short lines at most."""
+    as_iso = as_of.strftime("%Y-%m-%d")
+    send = [i for i in invoices if i["verdict"] == "send"]
+    ready = [i for i in send if not i["needsReview"]]
+    mine = [i for i in invoices if i["verdict"] == "hold" and i["cause"] == "wrong_bill" and i.get("hold")
+            and i["hold"]["deadline"] <= as_iso and i["hold"]["ownerRole"].startswith("Finance")]
+    calls = [i for i in invoices if i["verdict"] == "call"]
+    paid = [i for i in invoices if i["verdict"] == "paid"]
+    marcus = str(cfg.get("people", {}).get("cash_owner", "the cash team")).split(" (")[0].split()[0]
+    out = []
+    if ready:
+        out.append(f"{len(ready)} reminders to approve" + (f" ({len(send) - len(ready)} more after a quick check)" if len(send) > len(ready) else ""))
+    if mine:
+        out.append(f"{len(mine)} disputed bills to fix: corrected invoice or a clear answer")
+    if calls:
+        out.append(f"{len(calls)} calls to make")
+    if paid:
+        out.append(f"{len(paid)} bills look paid: {marcus} is matching them")
+    return out
+
+
 def send_line(invoices) -> str:
     """Reminders ready now, and the ones that wait for a check first."""
     send = [i for i in invoices if i["verdict"] == "send"]
@@ -236,20 +258,24 @@ def main() -> None:
         f"{by_verdict['call']['count']} need a phone call ({money(by_verdict['call']['amount'])}).",
         f"{len(review)} of these need a second look first, in Check first." if review else "Nothing needs a second look.",
     ]
-    morning = {"title": f"Collections check, {nice(as_of)}", "bullets": bullets,
-               "text": f"Good morning. {headline} Today: " + " ".join(bullets)}
+    light = light_lines(invoices, cfg, as_of)
+    app_url = cfg.get("app_url", "https://ledgerline-collections.vercel.app")
+    morning = {"title": f"Collections check, {nice(as_of)}", "bullets": light, "link": app_url,
+               "text": "Good morning. Here's what needs you today:",
+               "detail": bullets}
     # Who gets what (Maya, 24 Nov): Slack direct messages, one a day per person, never a channel post.
     ppl = cfg.get("people", {})
     first = lambda x: str(x).split(" (")[0]  # noqa: E731
     priya, dana, marcus = first(ppl.get("finance_owner", "Finance")), first(ppl.get("vp_finance", "")), first(ppl.get("cash_owner", ""))
     routing = [{"to": priya, "role": "AR Specialist", "channel": "Slack direct message", "cc": dana or None,
-                "lines": bullets, "by": None}]
+                "lines": light, "by": None}]
     paid_bills = [i for i in invoices if i["verdict"] == "paid"]
     if paid_bills and marcus:
         routing.append({"to": marcus, "role": "Staff Accountant", "channel": "Slack direct message", "cc": priya,
-                        "lines": [f"{i['customerName']}: invoice {i['id']}, {money(i['amount'])}" for i in paid_bills],
+                        "lines": [f"{i['customerName']}, {money(i['amount'])}" for i in paid_bills][:3],
+                        "more": max(0, len(paid_bills) - 3),
                         "by": pd.Timestamp(np.busday_offset(as_of.date(), int(cfg["policy"].get("paid_match_days", 2)), roll="forward")).strftime("%b %-d"),
-                        "intro": f"{len(paid_bills)} overdue bills look already paid. Please match them; {priya} is copied and holds the reminders."})
+                        "intro": f"{len(paid_bills)} bills look already paid. Please match them; no reminders go out meanwhile."})
     by_am: dict[str, list] = {}
     for i in invoices:
         h = i.get("hold") or {}
@@ -266,27 +292,28 @@ def main() -> None:
             going.setdefault(am_name, []).append(i)
     for am in sorted(set(by_am) | set(going)):
         bills, out_today = by_am.get(am, []), going.get(am, [])
-        lines = [f"Paused: {i['customerName']}, invoice {i['id']}, {money(i['amount'])}. {short(i['headline'])}" for i in bills]
-        lines += [f"Going out after {priya} approves: {'a reminder' if i['verdict'] == 'send' else 'a call'} to {i['customerName']}, "
-                  f"invoice {i['id']}, {money(i['amount'])}" for i in out_today]
+        lines = [f"Paused: {i['customerName']}, {money(i['amount'])}" for i in bills]
+        lines += [f"Planned: {'reminder' if i['verdict'] == 'send' else 'call'} to {i['customerName']}, {money(i['amount'])}" for i in out_today]
         intro = []
         if bills:
-            intro.append(f"{len(bills)} of your accounts have a reminder paused. Get each issue moving or tell {priya} the reminder can go; "
-                         f"after {cfg['policy'].get('am_pause_days', 3)} working days it comes back to {priya}.")
+            intro.append(f"{len(bills)} {'account' if len(bills) == 1 else 'accounts'} paused until you move the issue on.")
         if out_today:
-            intro.append(f"{len(out_today)} {'contact' if len(out_today) == 1 else 'contacts'} planned today on your accounts: reply if any of them should wait.")
+            intro.append(f"{len(out_today)} {'contact' if len(out_today) == 1 else 'contacts'} planned today; reply if any should wait.")
         routing.append({"to": am, "role": "Account manager", "channel": "Slack direct message (one a day)", "cc": None,
-                        "lines": lines,
+                        "lines": lines[:3], "more": max(0, len(lines) - 3),
                         "by": pd.Timestamp(np.busday_offset(as_of.date(), int(cfg["policy"].get("am_pause_days", 3)), roll="forward")).strftime("%b %-d") if bills else None,
                         "intro": " ".join(intro)})
     # Dana: automatic write-offs coming (Maya: flag her at least five working days before)
     wo = [(r, i) for r in engine._rows for i in invoices if i["id"] == r.display_id and r.flags.get("writeoff_days_left") is not None]
     if wo and dana:
+        wo_lines = [f"{i['customerName']}: {money(i['amount'])}, written off in {r.flags['writeoff_days_left']} day{'' if r.flags['writeoff_days_left'] == 1 else 's'}"
+                    for r, i in sorted(wo, key=lambda x: x[0].flags["writeoff_days_left"])]
         routing.append({"to": dana, "role": "VP Finance", "channel": "Slack direct message", "cc": priya,
-                        "lines": [f"{i['customerName']}: invoice {i['id']}, {money(i['amount'])}, written off automatically in {r.flags['writeoff_days_left']} day{'' if r.flags['writeoff_days_left'] == 1 else 's'}"
-                                  for r, i in sorted(wo, key=lambda x: x[0].flags["writeoff_days_left"])],
+                        "lines": wo_lines[:3], "more": max(0, len(wo_lines) - 3),
                         "by": None,
                         "intro": f"{len(wo)} card invoices will be written off automatically soon. Chase them or let them go?"})
+    for r in routing[1:]:
+        r["link"] = app_url
     lc = cfg.get("leave_cover") or {}
     if lc:
         morning["cover"] = (f"While {lc.get('person')} is on leave ({str(lc.get('when')).replace(' (', ', ').rstrip(')')}), {first(lc.get('cover', ''))} owns this morning list and "

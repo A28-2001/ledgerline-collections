@@ -231,7 +231,13 @@ export function MorningView({ data }: { data: Pick<Results, "invoices" | "summar
   }
 
   const decidedBy = (v: Verdict) => invoices.filter((i) => decisions[i.id] && decisions[i.id].verdict === v).length;
-  const morningText = [morningSummary.title, "", morningSummary.text].join("\n");
+  const morningText = [
+    morningSummary.title,
+    "",
+    morningSummary.text,
+    ...morningSummary.bullets.map((b) => `• ${b}`),
+    ...(morningSummary.link ? ["", `Open today's list: ${morningSummary.link}`] : []),
+  ].join("\n");
   const currentStep = steps.find((s) => s.def.verdict === current);
 
   return (

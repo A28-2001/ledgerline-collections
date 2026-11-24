@@ -156,7 +156,19 @@ export interface Results {
     title: string;
     bullets: string[];
     text: string;
-    routing?: { to: string; role: string; channel: string; cc: string | null; lines: string[]; by: string | null; intro?: string }[];
+    link?: string; // the app, for everything beyond the short message
+    detail?: string[]; // the longer version, kept for reference
+    routing?: {
+      to: string;
+      role: string;
+      channel: string;
+      cc: string | null;
+      lines: string[];
+      by: string | null;
+      intro?: string;
+      more?: number; // bills not listed in the message; they're in the app
+      link?: string;
+    }[];
     cover?: string;
   };
   settings?: { name: string; value: string; who: string; source: string }[];

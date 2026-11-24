@@ -3,6 +3,8 @@ import Link from "next/link";
 import { PageHeader } from "@/components/shared/page-header";
 import { EmptyState } from "@/components/shared/empty-state";
 import { VerdictBadge } from "@/components/shared/verdict-badge";
+import { SimpleBars } from "@/components/why/cause-chart";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { customerHref, formatMoney, results } from "@/lib/data";
 import type { Verdict } from "@/lib/types";
@@ -24,13 +26,39 @@ export default function CustomersPage() {
     })
     .sort((a, b) => b.overdue - a.overdue || a.c.name.localeCompare(b.c.name));
   const unmatched = results.invoices.filter((i) => !i.customerId);
+  const total = rows.reduce((sum, r) => sum + r.overdue, 0);
+  const top = rows.slice(0, 5);
+  const topShare = total ? Math.round((top.reduce((sum, r) => sum + r.overdue, 0) / total) * 100) : 0;
 
   return (
     <>
       <PageHeader
         title="Customers"
-        description="Each customer joined across billing, the accounting export, payments, tickets and contracts. A customer whose name only nearly matched is flagged for a person to check."
+        description="Every customer with an overdue bill, biggest first."
       />
+      {top.length > 0 && (
+        <Card className="mb-6">
+          <CardHeader>
+            <CardTitle className="leading-snug">
+              The {top.length} biggest hold {topShare}% of the overdue money
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <SimpleBars
+              label="The biggest customers by overdue money"
+              total={total}
+              rows={top.map((r) => ({
+                key: r.c.id,
+                label: r.c.name,
+                amount: r.overdue,
+                count: r.invs.length,
+                color: "var(--muted-foreground)",
+              }))}
+            />
+          </CardContent>
+        </Card>
+      )}
+
       <div className="overflow-hidden rounded-xl border bg-card">
         {rows.length === 0 ? (
           <div className="p-4">
@@ -41,7 +69,6 @@ export default function CustomersPage() {
             <TableHeader>
               <TableRow className="hover:bg-transparent">
                 <TableHead className="pl-4">Customer</TableHead>
-                <TableHead className="hidden sm:table-cell">Segment</TableHead>
                 <TableHead className="text-right">Overdue</TableHead>
                 <TableHead className="hidden pr-4 md:table-cell">What to do</TableHead>
               </TableRow>
@@ -56,10 +83,12 @@ export default function CustomersPage() {
                     >
                       {c.name}
                     </Link>
-                    <span className="text-xs text-muted-foreground">
-                      {invs.length} overdue {invs.length === 1 ? "bill" : "bills"}
-                      {weakest < 1 && <span className="text-hold-ink"> · name only nearly matched: check</span>}
-                    </span>
+                    {(invs.length > 1 || weakest < 1) && (
+                      <span className="text-xs text-muted-foreground">
+                        {invs.length > 1 && `${invs.length} bills`}
+                        {weakest < 1 && <span className="text-hold-ink">{invs.length > 1 ? " · " : ""}name only nearly matched: check</span>}
+                      </span>
+                    )}
                     {todo.length > 0 && (
                       <span className="mt-1 flex flex-wrap gap-1 md:hidden">
                         {todo.map((v) => (
@@ -68,7 +97,6 @@ export default function CustomersPage() {
                       </span>
                     )}
                   </TableCell>
-                  <TableCell className="hidden text-muted-foreground sm:table-cell">{c.segment ?? "—"}</TableCell>
                   <TableCell className="tabular text-right font-medium">{formatMoney(overdue)}</TableCell>
                   <TableCell className="hidden pr-4 md:table-cell">
                     {todo.length ? (

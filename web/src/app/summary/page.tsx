@@ -1,5 +1,6 @@
-import { Bot } from "lucide-react";
+import { ArrowUpRight, Bot } from "lucide-react";
 import type { Metadata } from "next";
+import Link from "next/link";
 import { PageHeader } from "@/components/shared/page-header";
 import { CopyButton } from "@/components/shared/copy-button";
 import { formatDate, results } from "@/lib/data";
@@ -8,17 +9,23 @@ export const metadata: Metadata = { title: "Morning message" };
 
 export default function SummaryPage() {
   const { morningSummary: s, meta } = results;
-  const plain = [s.title, "", s.text, "", ...s.bullets.map((b) => `• ${b}`)].join("\n");
+  const plain = [
+    s.title,
+    "",
+    s.text,
+    ...s.bullets.map((b) => `• ${b}`),
+    ...(s.link ? ["", `Open today's list: ${s.link}`] : []),
+  ].join("\n");
 
   return (
     <>
       <PageHeader
         title="Morning message"
-        description="What the finance team reads first thing, in chat or email: what to approve, what's on hold, and who to call."
+        description="Every working day, one short Slack message each. Only what needs them today; the rest is in the app."
         actions={<CopyButton text={plain} label="Copy message" variant="default" size="default" />}
       />
 
-      <div className="mx-auto max-w-2xl">
+      <div className="mx-auto max-w-xl">
         <div className="rounded-2xl border bg-card shadow-sm">
           <div className="flex items-center gap-3 border-b px-5 py-3.5">
             <span className="grid size-9 place-items-center rounded-full bg-foreground text-background">
@@ -27,15 +34,14 @@ export default function SummaryPage() {
             <div className="min-w-0">
               <p className="text-sm font-semibold">Collections check</p>
               <p className="text-xs text-muted-foreground">
-                to {s.routing?.[0]?.to ?? "Finance team"}{s.routing?.[0]?.cc ? `, copy to ${s.routing[0].cc}` : ""} · data as of {formatDate(meta.asOf)}
+                to {s.routing?.[0]?.to ?? "Finance team"} · {formatDate(meta.asOf)}
               </p>
             </div>
           </div>
-          <div className="space-y-4 px-5 py-5 text-sm leading-relaxed">
-            <p className="text-base font-semibold tracking-tight">{s.title}</p>
+          <div className="space-y-3 px-5 py-5 text-sm leading-relaxed">
             <p>{s.text}</p>
             {s.bullets.length > 0 ? (
-              <ul className="space-y-2">
+              <ul className="space-y-1.5">
                 {s.bullets.map((b, i) => (
                   <li key={i} className="flex gap-2.5">
                     <span className="mt-2 size-1.5 shrink-0 rounded-full bg-brand" aria-hidden="true" />
@@ -44,42 +50,44 @@ export default function SummaryPage() {
                 ))}
               </ul>
             ) : (
-              <p className="text-muted-foreground">Nothing needs attention today.</p>
+              <p className="text-muted-foreground">Nothing needs you today.</p>
             )}
-          </div>
-          <div className="border-t px-5 py-3 text-xs text-muted-foreground">
-            Open the Today page to approve. Nothing has been sent.
+            <Link
+              href="/"
+              className="inline-flex items-center gap-1 pt-1 text-sm font-medium underline decoration-border underline-offset-4 hover:decoration-foreground"
+            >
+              Open today&apos;s list
+              <ArrowUpRight className="size-3.5" aria-hidden="true" />
+            </Link>
           </div>
         </div>
-
-        {s.cover && <p className="mt-4 rounded-lg border bg-muted/40 px-4 py-3 text-sm text-muted-foreground">{s.cover}</p>}
+        <p className="mt-2 text-center text-xs text-muted-foreground">Nothing has been sent. Priya approves everything in the app.</p>
 
         {s.routing && s.routing.length > 1 && (
-          <section className="mt-8" aria-label="Who gets what this morning">
-            <h2 className="text-lg font-semibold tracking-tight">Who gets what this morning</h2>
-            <p className="mt-1 text-sm text-muted-foreground">
-              One Slack direct message per person, once a day, never a channel post. Timings are the COO&apos;s starting point, for the VP Finance to confirm.
-            </p>
-            <ul className="mt-4 space-y-3">
+          <section className="mt-8" aria-label="Everyone else">
+            <h2 className="text-base font-semibold tracking-tight">Everyone else gets one short message too</h2>
+            <ul className="mt-3 space-y-2.5">
               {s.routing.slice(1).map((r) => (
                 <li key={r.to} className="rounded-xl border bg-card p-4 text-sm">
                   <p className="font-semibold">
-                    To {r.to} <span className="font-normal text-muted-foreground">· {r.role} · {r.channel}{r.cc ? ` · copy to ${r.cc}` : ""}</span>
+                    {r.to} <span className="font-normal text-muted-foreground">· {r.role}</span>
                   </p>
-                  {r.intro && <p className="mt-1.5 leading-relaxed">{r.intro}</p>}
-                  <ul className="mt-2 space-y-1 text-muted-foreground">
-                    {r.lines.map((l, i) => (
-                      <li key={i} className="flex gap-2">
-                        <span className="mt-2 size-1 shrink-0 rounded-full bg-muted-foreground" aria-hidden="true" />
-                        <span>{l}</span>
-                      </li>
-                    ))}
-                  </ul>
+                  {r.intro && <p className="mt-1 leading-relaxed">{r.intro}</p>}
+                  {r.lines.length > 0 && (
+                    <ul className="mt-1.5 space-y-0.5 text-muted-foreground">
+                      {r.lines.map((l, i) => (
+                        <li key={i}>{l}</li>
+                      ))}
+                      {(r.more ?? 0) > 0 && <li>and {r.more} more in the app</li>}
+                    </ul>
+                  )}
                 </li>
               ))}
             </ul>
           </section>
         )}
+
+        {s.cover && <p className="mt-6 text-xs leading-relaxed text-muted-foreground">{s.cover}</p>}
       </div>
     </>
   );
