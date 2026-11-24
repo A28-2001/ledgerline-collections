@@ -1,6 +1,6 @@
 {
  "meta": {
-  "generatedAt": "2026-11-24T06:49:02+00:00",
+  "generatedAt": "2026-11-24T06:55:53+00:00",
   "asOf": "2026-10-31",
   "dataSource": "real",
   "companyName": "Ledgerline",
@@ -13730,7 +13730,7 @@
    "sampleSize": 54,
    "agreed": 53,
    "rate": 0.9815,
-   "labelledBy": "an independent review of all 54 bills by a reviewer who never saw the tool's answers (first pass; a person confirms)"
+   "labelledBy": "an independent review of all 54 bills by a reviewer who never saw the tool's answers, with every contested call confirmed by hand (24 Nov)"
   },
   "agreementRate": null,
   "verifiedNumbers": [
@@ -13793,7 +13793,7 @@
   ],
   "runtimeSeconds": 0.44,
   "reviewLog": {
-   "summary": "First pass against an independent review of all 54 real bills: 46 agreed (85%). We fixed every rule error the misses exposed; after the fixes 53 of 54 agree (98%). That second figure is on the same bills the rules were fixed against, so it is not a fresh-data result: the shadow week measures that.",
+   "summary": "First pass against an independent review of all 54 real bills (the reviewer never saw the tool's answers): 46 agreed (85%). Every contested call below was then checked and confirmed by hand. We fixed each rule error the misses exposed; after the fixes 53 of 54 agree (98%). That second figure is on the same bills the rules were fixed against, so it is not a fresh-data result: the shadow week measures that.",
    "entries": [
     {
      "invoice": "INV-25973",

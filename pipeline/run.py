@@ -178,7 +178,7 @@ def main() -> None:
 
     labels_path = (ROOT / "data" / "labels.csv") if args.data != "sample" else folder / "labels.csv"
     acc, failures = accuracy(invoices, labels_path, "planted answers in the sample data" if args.data == "sample" else
-                                      "an independent review of all 54 bills by a reviewer who never saw the tool's answers (first pass; a person confirms)")
+                                      "an independent review of all 54 bills by a reviewer who never saw the tool's answers, with every contested call confirmed by hand (24 Nov)")
     ms = engine.matcher.stats()
     vn = verified_numbers(engine, invoices, by_cause)
     review = [i for i in invoices if i["needsReview"]]
