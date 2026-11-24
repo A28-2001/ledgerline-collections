@@ -1,6 +1,6 @@
 {
  "meta": {
-  "generatedAt": "2026-11-24T16:08:43+00:00",
+  "generatedAt": "2026-11-24T17:01:54+00:00",
   "asOf": "2026-10-31",
   "dataSource": "real",
   "companyName": "Ledgerline",
@@ -13853,7 +13853,7 @@
     "ok": true,
     "unit": "count",
     "group": "coo",
-    "note": "Earlier version: one blank-memo payment could pay either of two same-amount Kingsway bills, and the tool assumed the older one. Now both go to Check first."
+    "note": "An earlier version assumed a blank-memo payment paid the older of two same-amount Kingsway bills. Now the other bill waits for Marcus to say which."
    },
    {
     "label": "Complaint open but chased",
@@ -13865,7 +13865,7 @@
     "unit": "count",
     "group": "coo",
     "strictValue": 2,
-    "note": "Under the strictest reading (any open or pending ticket at all), 2 customers get a reminder today: Crane IT Partners, Harbor Engineering Group. Their pending tickets aren't about money, or the customer said it was resolved. Letting those through, with a softer tone and the account manager told, was my call after the review; Maya to confirm in the shadow week. Earlier versions would have chased 3 customers with a complaint or dispute open: Eastman Engineering, Drummond Consulting and Banerjee Petrov (a fourth, Upton & Bell, was caught only by the top-50 rule). Each became a rule."
+    "note": "2 customers (Crane IT Partners, Harbor Engineering Group) have a pending ticket that isn't about money, or said it was resolved, so they still get a reminder: my call after the review, for Maya to confirm. Earlier versions would have chased 3 customers with a complaint open; each became a rule."
    }
   ],
   "failures": [
@@ -13876,7 +13876,7 @@
     "why": "Correct answer: TOP-50 account 15 days late with no dispute; open T881016 is a normal-priority product bug about a client's send log, so a person should write a personal reminder after telling the account manager. Tool's reason: They have a ticket open in Zendesk since Oct 28, 2026 (3 days). Chasing payment while their question is unanswered is what gets the tool switched off; the account manager decides when to resume."
    }
   ],
-  "runtimeSeconds": 0.49,
+  "runtimeSeconds": 0.47,
   "reviewLog": {
    "summary": "An independent reviewer (a separate AI model that never saw the tool's answers) checked all 54 bills from the raw records, and a person then confirmed every contested call. First pass: 46 of 54 agreed (85%). Of the 8 differences, 7 were rule errors we fixed and 1 we kept on purpose. The 2 misses we found ourselves were fixed before the review ran, so the very first version would have agreed on at most 44. After the fixes, 53 of 54 agree (98%), on the same bills the rules were fixed against, so that is not a fresh-data score: the shadow week measures that.",
    "entries": [
@@ -13887,8 +13887,8 @@
      "toolSaid": "send",
      "shouldBe": "hold",
      "foundBy": "Independent review, first pass",
-     "why": "Two months before this bill, the customer filed a complaint with the state consumer affairs office and threatened to contest the card charge over a 35% renewal increase. The tool only linked tickets raised after the bill.",
-     "change": "A chargeback, regulator or legal threat in the last 180 days stops chasing, whenever it was raised, until the account manager and Head of Support confirm it is settled.",
+     "why": "Two months before this bill they complained to the state consumer affairs office and threatened to contest the card charge. The tool only linked tickets raised after the bill.",
+     "change": "A chargeback, regulator or legal threat in the last 180 days stops chasing until the account manager and Head of Support say it's settled.",
      "status": "fixed"
     },
     {
@@ -13898,7 +13898,7 @@
      "toolSaid": "call",
      "shouldBe": "hold",
      "foundBy": "Independent review, first pass",
-     "why": "The customer opened chargebacks on two payments (2 July). The ticket was 121 days old and the first window was 120.",
+     "why": "They opened chargebacks on two payments on 2 July, one day outside the first 120-day window.",
      "change": "Same rule, with a 180-day window as a setting.",
      "status": "fixed"
     },
@@ -13909,8 +13909,8 @@
      "toolSaid": "call",
      "shouldBe": "hold",
      "foundBy": "Our own check, before the review (shown to Maya)",
-     "why": "The ticket named this invoice and refused to pay for a cancelled module, but the rules read \"cancellation\" as an escalation, not a dispute, so the tool said call.",
-     "change": "A ticket naming an unpaid bill is a dispute whatever else the rules call it; every call shows the customer's tickets beside it.",
+     "why": "The ticket named this invoice and refused to pay for a cancelled module, but the rules read \"cancellation\" as an escalation, so the tool said call.",
+     "change": "A ticket naming an unpaid bill is a dispute, whatever else it says. Every call shows the customer's tickets beside it.",
      "status": "fixed"
     },
     {
@@ -13920,7 +13920,7 @@
      "toolSaid": "call",
      "shouldBe": "hold",
      "foundBy": "Our own check, before the review (shown to Maya)",
-     "why": "\"Late fee should not be there\": the word \"outage\" made it an escalation, so the dispute was missed. Saved only by the top-50 rule.",
+     "why": "\"Late fee should not be there\": the word \"outage\" made it an escalation, so the dispute was missed. Only the top-50 rule caught it.",
      "change": "Same fix as Banerjee Petrov.",
      "status": "fixed"
     },
@@ -13931,8 +13931,8 @@
      "toolSaid": "send",
      "shouldBe": "hold",
      "foundBy": "Independent review, first pass",
-     "why": "Only 4 days late. The policy's first reminder goes at 7 days.",
-     "change": "Bills under 7 days late wait; the first reminder comes back on day 7.",
+     "why": "Only 4 days late; the first reminder goes at day 7.",
+     "change": "Bills under 7 days late wait until day 7.",
      "status": "fixed"
     },
     {
@@ -13943,7 +13943,7 @@
      "shouldBe": "call",
      "foundBy": "Independent review, first pass",
      "why": "The same customer also gets a call about an 83-day bill: an email and a call on the same day.",
-     "change": "One conversation per customer: other bills are covered on the same call.",
+     "change": "One conversation per customer: other bills go on the same call.",
      "status": "fixed"
     },
     {
@@ -13953,8 +13953,8 @@
      "toolSaid": "send",
      "shouldBe": "hold",
      "foundBy": "Independent review, after a rule change",
-     "why": "Two days earlier the customer asked where a duplicate-charge refund Ledgerline had approved was. Zendesk marked it solved. Its pending product ticket had kept it on hold; when we stopped pending tickets blocking, it would have switched to a reminder to someone we owe money. The review caught it before any version went out.",
-     "change": "A money complaint from the last 30 days holds the bill even when Zendesk marks it solved.",
+     "why": "Two days earlier they asked where an approved duplicate-charge refund was. A rule change briefly let a reminder through; the review caught it before any version went out.",
+     "change": "A money complaint from the last 30 days holds the bill, even when Zendesk marks it solved.",
      "status": "fixed"
     },
     {
@@ -13964,7 +13964,7 @@
      "toolSaid": "hold",
      "shouldBe": "send",
      "foundBy": "Independent review, first pass",
-     "why": "The \"pending\" ticket's last message from the customer was \"Closing this out\"; the word \"wiped\" in the subject made it look serious.",
+     "why": "The \"pending\" ticket's last message from the customer was \"Closing this out\".",
      "change": "When the customer says it's resolved, the ticket stops blocking.",
      "status": "fixed"
     },
@@ -13975,8 +13975,8 @@
      "toolSaid": "hold",
      "shouldBe": "send",
      "foundBy": "Independent review, first pass",
-     "why": "A normal-priority question \"pending\" since July: in Zendesk that means support is waiting on the customer.",
-     "change": "My call after the review, for Maya to confirm in the shadow week: a pending ticket (support waiting on the customer) pauses the reminder only if it's about money, high priority, or still waiting on Ledgerline. Otherwise a softer reminder, and the account manager is told. Under the strictest reading of her rule, 3 customers would be held instead.",
+     "why": "A normal-priority question, pending since July: support is waiting on the customer.",
+     "change": "My call, for Maya to confirm: a pending ticket pauses the reminder only if it's about money, urgent, or waiting on us. Otherwise a softer reminder, and the account manager is told.",
      "status": "fixed"
     },
     {
@@ -13986,7 +13986,7 @@
      "toolSaid": "hold",
      "shouldBe": "send",
      "foundBy": "Independent review, first pass",
-     "why": "A pending timer bug, mis-tagged How-to. Not about money.",
+     "why": "A pending timer bug, tagged How-to by mistake. Not about money.",
      "change": "Same call as Kingsway, for Maya to confirm.",
      "status": "fixed"
     },
@@ -13997,8 +13997,8 @@
      "toolSaid": "hold",
      "shouldBe": "send",
      "foundBy": "Independent review, first pass",
-     "why": "The reviewer would send: the open ticket is a product question, not a dispute. The tool holds because the ticket is open and waiting on Ledgerline (3 days).",
-     "change": "Kept on purpose: an open ticket waiting on us still pauses the reminder, and it's a top-50 account, so a person reads it either way.",
+     "why": "The reviewer would send: the open ticket is a product question. The tool holds because it's open and waiting on Ledgerline.",
+     "change": "Kept on purpose: a ticket waiting on us still pauses the reminder, and it's a top-50 account, so a person reads it anyway.",
      "status": "deliberate"
     },
     {
@@ -14008,8 +14008,8 @@
      "toolSaid": "send (soft) on INV-25852",
      "shouldBe": "wait for Marcus",
      "foundBy": "Second look at the hand check",
-     "why": "One $5,100 payment with a blank memo and two $5,100 bills. The tool assumed it pays the older one, so the newer one would have got a reminder with no check. The reviewer's 'send' was conditional on that, and the hand check passed it. If the payment was for the newer bill, that's the Paidly case.",
-     "change": "When a payment could cover either of two same-amount bills, the second one waits for Marcus, who is asked which bill it pays. No reminder until he confirms. The hand-check label was updated to match.",
+     "why": "One $5,100 payment with a blank memo, two $5,100 bills. The tool assumed it paid the older one, so the newer one would have got a reminder. My hand check passed it.",
+     "change": "The second bill now waits for Marcus, who is asked which bill the payment covers. The label was updated to match.",
      "status": "fixed"
     },
     {
@@ -14019,8 +14019,8 @@
      "toolSaid": "-",
      "shouldBe": "-",
      "foundBy": "Reading the data room",
-     "why": "Customers also reply to billing@ in Gmail. Disputes sent there are invisible to the tool and aren't in the data room.",
-     "change": "Next step: read the billing@ inbox (Google is already a vendor).",
+     "why": "Customers also email billing@ in Gmail. Disputes sent there are invisible to the tool.",
+     "change": "Next: read the billing@ inbox (Google is already a vendor).",
      "status": "open"
     }
    ]

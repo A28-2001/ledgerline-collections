@@ -144,7 +144,7 @@ def verified_numbers(engine: Engine, invoices: list[dict], by_cause: list[dict])
     # 3. Should-not-chase: from verdicts vs straight from the flags
     a = sum(i["amount"] for i in invoices if i["verdict"] in ("paid", "hold"))
     b = sum(r.amount for r in engine._rows if r.flags.get("paid_linked") or r.flags.get("paid_unmatched")
-            or r.flags.get("complaint_hold") or r.flags.get("disputed_hold") or r.flags.get("dispute_hold") or r.flags.get("open_ticket_hold") or r.flags.get("grave_hold") or r.flags.get("too_early") or r.flags.get("wrong_bill") or r.flags.get("twin_payment"))
+            or r.flags.get("complaint_hold") or r.flags.get("disputed_hold") or r.flags.get("dispute_hold") or r.flags.get("open_ticket_hold") or r.flags.get("grave_hold") or r.flags.get("too_early") or r.flags.get("wrong_bill") or r.flags.get("twin_payment") or r.flags.get("wait_next"))
     out.append({"label": "Shouldn't chase today", "methodA": "Sum of Hold + Probably paid verdicts", "valueA": round(a, 2),
                 "methodB": "Recounted from the raw evidence flags", "valueB": round(b, 2), "ok": abs(a - b) < 0.5})
     # 4. The Paidly case: a bill with a matching or recent unmatched payment must never get a reminder
@@ -153,8 +153,8 @@ def verified_numbers(engine: Engine, invoices: list[dict], by_cause: list[dict])
     out.append({"label": "Paid but chased (the Paidly case)", "methodA": "Bills with a matching or recent unmatched payment that would get a reminder",
                 "valueA": len(chased), "methodB": "Allowed (Maya: chasing someone who has paid gets the tool switched off)", "valueB": 0,
                 "ok": len(chased) == 0, "unit": "count", "group": "coo",
-                "note": "Earlier version: one blank-memo payment could pay either of two same-amount Kingsway bills, and the tool "
-                        "assumed the older one. Now both go to Check first."})
+                "note": "An earlier version assumed a blank-memo payment paid the older of two same-amount Kingsway bills. "
+                        "Now the other bill waits for Marcus to say which."})
     # 5. Maya's real test, second half: nobody chased who had a complaint open
     tk_open = [r for r in engine._rows if getattr(r, "verdict", None) in ("send", "call") and not r.needs_review
                and any(e["kind"] == "ticket" and str(e.get("status") or "") in engine.v["ticket_open_status"] for e in r.evidence)
@@ -166,12 +166,9 @@ def verified_numbers(engine: Engine, invoices: list[dict], by_cause: list[dict])
                 "valueA": len(tk_open), "methodB": "Allowed (Maya: nobody chased who had a complaint open)", "valueB": 0, "ok": len(tk_open) == 0,
                 "unit": "count", "group": "coo",
                 "strictValue": len(strict),
-                "note": (f"Under the strictest reading (any open or pending ticket at all), {len(strict)} customers get a reminder today: "
-                         + ", ".join(strict_names) + ". Their pending tickets aren't about money, or the customer said it was resolved. "
-                         "Letting those through, with a softer tone and the account manager told, was my call after the review; "
-                         "Maya to confirm in the shadow week. " if strict else "")
-                        + "Earlier versions would have chased 3 customers with a complaint or dispute open: Eastman Engineering, Drummond Consulting "
-                        "and Banerjee Petrov (a fourth, Upton & Bell, was caught only by the top-50 rule). Each became a rule."})
+                "note": (f"{len(strict)} customers ({', '.join(strict_names)}) have a pending ticket that isn't about money, or said it was "
+                         "resolved, so they still get a reminder: my call after the review, for Maya to confirm. " if strict else "")
+                        + "Earlier versions would have chased 3 customers with a complaint open; each became a rule."})
     for v in out:
         v.setdefault("unit", "money")
         v.setdefault("group", "internal" if v["label"] == "Causes add up" else "cross")

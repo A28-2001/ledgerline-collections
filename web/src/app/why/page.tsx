@@ -32,6 +32,9 @@ export default function WhyPage() {
   const tenths = total ? Math.round((summary.shouldNotChaseAmount / total) * 10) : 0;
   const disputed = invoices.filter((i) => i.cause === "wrong_bill");
   const solved = disputed.filter((i) => /marked solved/i.test(i.headline)).length;
+  const otherCards = invoices.filter(
+    (i) => i.cause !== "card_failed" && i.reasons.some((r) => /stripe|card (payment )?(failed|didn't go through)|failed card/i.test(r.text)),
+  ).length;
 
   return (
     <>
@@ -90,7 +93,11 @@ export default function WhyPage() {
                     {m?.label ?? s.label}
                   </div>
                   {first && <p className="mt-1 text-[11px] font-semibold tracking-wide text-muted-foreground uppercase">Biggest reason</p>}
-                  <p className="mt-1 text-xs leading-relaxed text-muted-foreground">{m?.description}</p>
+                  <p className="mt-1 text-xs leading-relaxed text-muted-foreground">
+                    {m?.description}
+                    {s.cause === "card_failed" && otherCards > 0 &&
+                      ` ${otherCards} more failed-card ${otherCards === 1 ? "bill also has" : "bills also have"} an open ticket, so ${otherCards === 1 ? "it's" : "they're"} counted under that reason.`}
+                  </p>
                 </li>
               );
             })}

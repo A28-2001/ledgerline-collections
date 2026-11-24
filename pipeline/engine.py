@@ -126,6 +126,7 @@ class Engine:
         self.matcher = Matcher(data.tables["customers"], self.cfg, ai)
         self.t = data.tables
         self.ticket_labels: dict[str, dict] = {}
+        self.history = self._load_history()
         cu = self.t["customers"]
         n = int(self.p.get("top_accounts") or 0)
         if n and len(cu) and cu["arr"].notna().any():
@@ -718,6 +719,21 @@ class Engine:
             else:
                 verdict = "send"
                 cause = "card_failed" if f.get("card_failed") else "unhappy" if f.get("soft") else "simply_late"
+            sent = self.history.get(row.display_id)
+            if verdict == "send" and sent is not None and row.due is not None and pd.notna(row.due):
+                steps = sorted(int(r["from_days"]) for r in self.p["reminders"])
+                nxt = next((t for t in steps if t > (sent - row.due).days), None)
+                if nxt is None or row.days < nxt:
+                    verdict = "hold"
+                    f["wait_next"] = True
+                    f["next_due"] = row.due + pd.Timedelta(days=nxt) if nxt else None
+                    row.reasons.insert(0, {"text": f"Too early for the next reminder: one was approved on {nice(sent)}. "
+                                                   + (f"The next is due on day {nxt} ({nice(f['next_due'])}) if it's still unpaid."
+                                                      if nxt else "That was the last email; a person decides what comes next."),
+                                           "evidenceIds": [], "policyRef": self.p["reminders"][0]["ref"]})
+                else:
+                    row.reasons.insert(0, {"text": f"The last reminder was approved on {nice(sent)}; this is the next one.",
+                                           "evidenceIds": [], "policyRef": None})
             tone = "card_update" if f.get("card_failed") else "soft" if f.get("soft") else "standard"
             if verdict != "send":
                 row.needs_review = [n for n in row.needs_review
@@ -741,7 +757,7 @@ class Engine:
                 row.reasons.append({"text": contact_note.capitalize() + ".", "evidenceIds": [], "policyRef": None})
 
             headline = row.reasons[0]["text"] if row.reasons else ""
-            if verdict == "hold" and f.get("too_early"):
+            if verdict == "hold" and (f.get("too_early") or f.get("wait_next")):
                 headline = row.reasons[0]["text"]
             elif verdict == "hold":
                 headline = next((r["text"] for r in row.reasons if "dispute" in r["text"] or "complaint" in r["text"].lower()
@@ -755,7 +771,11 @@ class Engine:
                 headline = f"Call: {row.days} days overdue" + (f", {money(row.amount)}" if big else "")
             conf = "low" if row.needs_review else "high" if row.match.method in ("exact_id", "exact_name") else "medium"
             hold = None
-            if verdict == "hold" and f.get("too_early"):
+            if verdict == "hold" and f.get("wait_next"):
+                me = self.cfg["people"]["finance_owner"].split(" (")[0]
+                hold = {"owner": me, "ownerRole": "Finance (AR)", "deadline": iso(f.get("next_due") or self.as_of),
+                        "action": "Nothing today. The next reminder comes back on its day if the bill is still unpaid."}
+            elif verdict == "hold" and f.get("too_early"):
                 me = self.cfg["people"]["finance_owner"].split(" (")[0]
                 hold = {"owner": me, "ownerRole": "Finance (AR)", "deadline": iso(row.due + pd.Timedelta(days=int(self.p["reminders"][0]["from_days"]))),
                         "action": "Nothing today. The first reminder comes back on day 7 if it's still unpaid."}
@@ -887,6 +907,28 @@ class Engine:
         c = self._customers_df.loc[cid] if cid is not None and cid in self._customers_df.index else None
         am = c.get("account_manager") if c is not None else None
         return str(am) if am is not None and pd.notna(am) and str(am) else None
+
+    def _load_history(self) -> dict:
+        """Memory between mornings: the decision lists Priya downloads from the Today page, dropped into
+        history_dir. For each bill, the last day a reminder was approved (on or before the as-of date)."""
+        import csv as _csv
+        from pathlib import Path as _Path
+        hd = self.cfg.get("history_dir")
+        out: dict[str, pd.Timestamp] = {}
+        if not hd:
+            return out
+        folder = _Path(hd) if _Path(hd).is_absolute() else _Path(__file__).resolve().parent.parent / hd
+        for f in sorted(folder.glob("*.csv")) if folder.exists() else []:
+            for r in _csv.DictReader(f.open()):
+                if (r.get("final") or "").strip() != "send" or not r.get("decided_at"):
+                    continue
+                when = pd.Timestamp(str(r["decided_at"])[:10])
+                if when > self.as_of:
+                    continue
+                key = str(r.get("invoice_id") or "").strip()
+                if key and (key not in out or when > out[key]):
+                    out[key] = when
+        return out
 
     def _approver(self, cid, amount: float) -> str:
         """Maya: Priya corrects up to the limit herself; Dana approves above it or on any top-50 account."""

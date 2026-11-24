@@ -13,11 +13,11 @@ Every morning it asks five questions of each overdue bill, in order, and gives o
 | Answer | When | Today |
 |---|---|---|
 | **Probably paid** | An unmatched payment fits the bill; Marcus matches it | 5 · $78,348 |
-| **Hold** | Disputed, open ticket, chargeback or regulator threat, refund owed, or under 7 days late | 21 · $368,462 |
+| **Hold** | Disputed, open ticket, chargeback or regulator threat, refund owed, unclear payment, or under 7 days late | 21 · $368,462 |
 | **Call** | 45+ days late, or already calling them | 9 · $9,384 |
 | **Send** | Nothing blocks a polite reminder | 19 · $177,051 |
 
-Priya sorts **54 bills in 19 decisions**; her real work today is correcting 12 disputed bills past the 5-day target ($241,320). Every other hold goes to an owner with a deadline; if nobody acts, it comes back to her.
+Priya's morning is **5 bills to check and four bulk approvals**; her real work is then correcting 12 disputed bills past the 5-day target ($241,320). Every other hold goes to an owner with a deadline; if nobody acts, it comes back to her. Each morning the tool reads yesterday's decision list, so an approved reminder is never suggested twice.
 
 ## What is AI, what stays with a person, and why
 

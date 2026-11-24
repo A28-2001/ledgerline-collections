@@ -136,3 +136,6 @@ people:
   billing_owner: Ana Duarte (Billing Support Specialist)
   vp_finance: Dana Ruiz (VP Finance)
   cash_owner: Marcus Bell (Staff Accountant)
+
+# Memory between mornings: drop each day's decision list (the CSV from the Today page) here.
+history_dir: data/history

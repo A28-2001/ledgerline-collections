@@ -14,8 +14,8 @@ const NAV = [
   { href: "/", label: "Today", icon: Inbox },
   { href: "/why", label: "Why overdue", icon: BarChart3 },
   { href: "/customers", label: "Customers", icon: Building2 },
-  { href: "/proof", label: "How sure are we", icon: ShieldCheck },
   { href: "/summary", label: "Morning message", icon: MessageSquareText },
+  { href: "/proof", label: "How sure are we", icon: ShieldCheck },
   { href: "/how", label: "How it works", icon: Workflow },
 ] as const;
 

@@ -92,6 +92,32 @@ def rehearsal_check(baseline: dict):
     print(f"Rehearsal with renamed columns and subfolders: mapping suggested, {len(got)} verdicts identical.")
 
 
+def history_check(rules: dict):
+    """Memory between mornings: an approved reminder comes back as a wait for its next stage, not a second email."""
+    import csv
+    import tempfile
+
+    import pandas as pd
+    cfg = load_config(ROOT / "pipeline" / "config.sample.yaml")
+    send = next(i for i in rules.values() if i["verdict"] == "send")
+    with tempfile.TemporaryDirectory() as tmp:
+        data = load(ROOT / "data" / "sample", cfg)
+        as_of = as_of_date(data)
+        with open(Path(tmp) / "decisions.csv", "w", newline="") as fh:
+            w = csv.writer(fh)
+            w.writerow(["invoice_id", "final", "decision", "decided_at"])
+            # approved this morning: a second run today must not suggest it again
+            w.writerow([send["id"], "send", "approved", as_of.strftime("%Y-%m-%dT09:00:00Z")])
+        cfg["history_dir"] = tmp
+        data = load(ROOT / "data" / "sample", cfg)
+        a = ai_mod.AI(cfg)
+        a.enabled = False
+        res = {i["id"]: i for i in Engine(data, as_of, a).run()["invoices"]}
+    again = res[send["id"]]
+    assert again["verdict"] == "hold" and again["headline"].startswith("Too early for the next reminder"), again["headline"]
+    print(f"Memory between mornings: {send['id']}, already approved, waits for its next stage instead of a second email.")
+
+
 def main():
     assert norm_id("INV-001043") == "1043" and norm_id("1043.0") == "1043" and norm_id(" 1043 ") == "1043"
     assert clean("Northwind Logistics, Inc.") == clean("NORTHWIND LOGISTICS INC") == "northwind logistics"
@@ -126,6 +152,7 @@ def main():
     assert paidly and all(rules[k]["verdict"] == "paid" for k in rules if norm_id(k) in paidly), "Paidly case: a paid bill would be chased"
     print(f"Paidly case: all {len(paidly)} bills paid by an unmatched bank payment are marked paid, none chased.")
     rehearsal_check(rules)
+    history_check(rules)
     print(f"{len(withai)} bills, {len(disputed)} with judges disagreeing (all held for a person). All checks passed.")
 
 

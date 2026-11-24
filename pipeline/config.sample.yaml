@@ -104,3 +104,6 @@ trend_markers:
 people:
   finance_owner: Finance team
   billing_owner: Billing team
+
+# Memory between mornings: drop each day's decision list (the CSV from the Today page) here.
+history_dir: data/history

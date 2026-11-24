@@ -16,10 +16,12 @@ export default function HowPage() {
   const wait = invoices.filter((i) => i.verdict === "hold" && i.headline.startsWith("Too early")).length;
   const rows = (name: string) => meta.files.find((f) => f.name === name)?.rows ?? 0;
   const unmatchedPayments = summary.unmatchedPayments ?? 0;
+  const calls = invoices.filter((i) => i.verdict === "call");
+  const allCards = calls.length > 0 && calls.every((i) => i.cause === "card_failed");
 
   const sources = [
     { name: "QuickBooks", detail: `${fmt(invoices.length)} overdue bills (AR aging)` },
-    { name: "Bank and Stripe", detail: `${unmatchedPayments} payments not yet matched` },
+    { name: "Bank and Stripe", detail: `${unmatchedPayments} payments not yet matched to a bill` },
     {
       name: "Zendesk",
       detail: tk
@@ -30,15 +32,15 @@ export default function HowPage() {
   ];
 
   const steps = [
-    { q: "Already paid?", hint: "An unmatched payment matches the bill, by memo or by name and amount", answer: "Probably paid", n: count("paid"),
-      who: "Marcus matches it within 2 working days, Priya copied", tone: "paid" },
-    { q: "A reason not to talk about money?", hint: "They dispute the bill, a ticket is still open, they threatened a chargeback or a regulator, or we owe them a refund",
-      answer: "Hold", n: count("hold") - wait, who: "Priya fixes disputes in 5 working days; account managers have 3 days on open tickets", tone: "hold" },
-    { q: "Under 7 days late?", hint: "The policy's first reminder goes at day 7", answer: "Wait", n: wait, who: "Comes back on day 7 if still unpaid. Other pages count it with the holds (20 in all)", tone: "wait" },
-    { q: "45+ days late, or already calling them?", hint: "The 45-day email threatens suspension, so a person phones instead; one conversation per customer",
-      answer: "Call", n: count("call"), who: "Priya calls, with the customer's tickets in front of her", tone: "call" },
+    { q: "Already paid?", hint: "An unmatched payment fits the bill, by its memo or by name and amount", answer: "Probably paid", n: count("paid"),
+      who: "Marcus matches it within 2 working days; Priya is copied", tone: "paid" },
+    { q: "A reason not to talk about money?", hint: "They dispute the bill, a ticket is still open, they threatened a chargeback or a regulator, we owe them a refund, or a payment could pay either of two bills",
+      answer: "Hold", n: count("hold") - wait, who: "Priya fixes disputes within 5 working days. Account managers get 3 days on open tickets; Marcus gets 2 on an unclear payment", tone: "hold" },
+    { q: "Under 7 days late?", hint: "The policy's first reminder goes at day 7", answer: "Wait", n: wait, who: `Comes back on day 7 if still unpaid. Other pages count it with the holds (${count("hold")} in all)`, tone: "wait" },
+    { q: "45+ days late, or already calling them?", hint: "The 45-day email threatens suspension, so a person phones instead. One conversation per customer",
+      answer: "Call", n: count("call"), who: `Priya calls, with the customer's tickets in front of her${allCards ? ". Today they're all failed cards: ask for a new card" : ""}`, tone: "call" },
     { q: "None of the above", hint: "Nothing blocks a reminder", answer: "Send a reminder", n: count("send"),
-      who: "Priya approves in one click; nothing goes out on its own", tone: "send" },
+      who: "Priya approves them in one click. Approving doesn't send; nothing goes out on its own", tone: "send" },
   ];
 
   const toneClass: Record<string, string> = {
@@ -145,7 +147,7 @@ export default function HowPage() {
             <p className="text-xs font-semibold text-muted-foreground uppercase">Why rules aren&apos;t enough</p>
             <p className="mt-1 leading-relaxed">
               {tk
-                ? `${tk.fromOverdueUntagged ?? tk.relevantUntagged} of the ${tk.fromOverdue} tickets from customers who owe money have no tag, and tags can be wrong (a timer bug was tagged How-to). Today's bills don't need it; new tickets will, and the shadow week measures that.`
+                ? `${tk.fromOverdueUntagged ?? tk.relevantUntagged} of the ${tk.fromOverdue} tickets from customers who owe money have no tag, and tags can be wrong (a timer bug was tagged How-to). On today's bills rules were enough; new tickets with a missing or wrong tag are where AI earns its place.`
                 : "Tags are often missing or wrong. Only reading the text catches those."}
             </p>
           </div>
