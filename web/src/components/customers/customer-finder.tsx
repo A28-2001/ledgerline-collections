@@ -95,11 +95,25 @@ export function CustomerFinder({ rows }: { rows: CustomerRow[] }) {
                 {r.nearMatch && <span className="text-hold-ink"> · check name</span>}
               </Link>
               <span className="tabular text-right text-xs text-muted-foreground sm:order-3">{formatMoney(r.overdue, "USD", true)}</span>
-              <div className="col-span-2 flex h-2.5 overflow-hidden rounded-full bg-muted sm:order-2 sm:col-span-1 sm:h-3" aria-hidden="true">
-                {ORDER.filter((v) => r.byVerdict[v] > 0).map((v) => (
-                  <div key={v} className="h-full" style={{ width: `${Math.max(1, (r.byVerdict[v] / max) * 100)}%`, background: VERDICT_META[v].chart }} />
-                ))}
-              </div>
+              {(() => {
+                // Lollipop: a thin stem to the amount, a dot in the colour of what to do.
+                // A customer with two kinds of bill gets a ring in the second colour.
+                const kinds = ORDER.filter((v) => r.byVerdict[v] > 0).sort((a, b) => r.byVerdict[b] - r.byVerdict[a]);
+                const pct = 2 + (r.overdue / max) * 95;
+                return (
+                  <div className="relative col-span-2 h-4 sm:order-2 sm:col-span-1" aria-hidden="true">
+                    <div className="absolute top-1/2 left-0 h-0.5 -translate-y-1/2 rounded-full bg-border" style={{ width: `${pct}%` }} />
+                    <div
+                      className="absolute top-1/2 size-3 -translate-x-1/2 -translate-y-1/2 rounded-full"
+                      style={{
+                        left: `${pct}%`,
+                        background: VERDICT_META[kinds[0]].chart,
+                        boxShadow: kinds[1] ? `0 0 0 2px var(--card), 0 0 0 4px ${VERDICT_META[kinds[1]].chart}` : undefined,
+                      }}
+                    />
+                  </div>
+                );
+              })()}
             </li>
           ))}
         </ul>

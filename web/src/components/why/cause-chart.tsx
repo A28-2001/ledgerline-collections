@@ -57,3 +57,37 @@ export function CauseChart({ slices, total, highlight }: { slices: CauseSlice[];
     .map((s) => ({ key: s.cause, label: CAUSE_META[s.cause]?.label ?? s.label, amount: s.amount, count: s.count, color: CAUSE_META[s.cause]?.color }));
   return <SimpleBars rows={rows} total={total} highlight={highlight} label="Overdue money by reason" />;
 }
+
+// Vertical columns for a short, ordered set (days late: 1-30, 31-60, 61-90, 90+). The tallest is highlighted.
+export function ColumnChart({ rows, total, label }: { rows: BarRow[]; total: number; label: string }) {
+  if (rows.length === 0) return null;
+  const max = Math.max(...rows.map((r) => r.amount), 1);
+  const top = rows.reduce((a, b) => (b.amount > a.amount ? b : a)).key;
+  return (
+    <div role="img" aria-label={`${label}: ${rows.map((r) => `${r.label} ${formatMoney(r.amount, "USD", true)}`).join(", ")}`}>
+      <div className="flex h-48 items-end gap-3 border-b sm:gap-5">
+        {rows.map((r) => (
+          <div key={r.key} className="flex h-full min-w-0 flex-1 flex-col items-center justify-end">
+            <span className={cn("tabular mb-1.5 text-xs", r.key === top ? "font-semibold text-foreground" : "text-muted-foreground")}>
+              {formatMoney(r.amount, "USD", true)}
+            </span>
+            <div
+              className={cn("w-full max-w-16 rounded-t-md", r.key === top ? "bg-foreground/80" : "bg-muted-foreground/45")}
+              style={{ height: `${Math.max(2, (r.amount / max) * 85)}%` }}
+            />
+          </div>
+        ))}
+      </div>
+      <div className="mt-2 flex gap-3 sm:gap-5">
+        {rows.map((r) => (
+          <div key={r.key} className="min-w-0 flex-1 text-center">
+            <p className={cn("text-xs", r.key === top ? "font-semibold" : "text-muted-foreground")}>{r.label}</p>
+            <p className="tabular text-[11px] text-muted-foreground">
+              {r.count} {r.count === 1 ? "bill" : "bills"} · {formatPercent(total ? r.amount / total : 0)}
+            </p>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}

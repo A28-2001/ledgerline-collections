@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { EmptyState } from "@/components/shared/empty-state";
 import { PageHeader } from "@/components/shared/page-header";
-import { CauseChart, SimpleBars } from "@/components/why/cause-chart";
+import { CauseChart, ColumnChart } from "@/components/why/cause-chart";
 import { TrendChart } from "@/components/why/trend-chart";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { CAUSE_META, formatMoney, results } from "@/lib/data";
@@ -115,7 +115,7 @@ export default function WhyPage() {
             {invoices.length === 0 ? (
               <EmptyState title="No overdue bills" />
             ) : (
-              <SimpleBars
+              <ColumnChart
                 label="Overdue money by days late"
                 total={age.total}
                 rows={age.rows

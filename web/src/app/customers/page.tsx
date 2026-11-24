@@ -108,7 +108,7 @@ export default function CustomersPage() {
       <Card className="mt-6">
         <CardHeader>
           <CardTitle className="leading-snug">Find a customer</CardTitle>
-          <CardDescription>Biggest first, coloured by what to do. Click a name for the details.</CardDescription>
+          <CardDescription>Biggest first. The dot shows what to do; a ring means a second kind of bill. Click a name for the details.</CardDescription>
         </CardHeader>
         <CardContent>
           <CustomerFinder rows={rows} />
