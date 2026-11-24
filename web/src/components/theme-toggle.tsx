@@ -13,10 +13,11 @@ const OPTIONS = [
   { value: "system", label: "Auto", icon: Monitor },
 ] as const;
 
+// Nothing is selected until the saved choice is known, so the switch never flips from Auto to Light on load.
 function useMountedTheme() {
   const { theme, setTheme } = useTheme();
   const mounted = useSyncExternalStore(emptySubscribe, () => true, () => false);
-  return { current: mounted ? (theme ?? "system") : "system", setTheme, mounted };
+  return { current: mounted ? (theme ?? "system") : null, setTheme, mounted };
 }
 
 // A clear choice: Light, Dark or Auto (follows the device). The choice is remembered in this browser.
