@@ -50,3 +50,13 @@ I'd switch yours off for the same kind of thing: chasing someone who's paid, or 
 - Permanently with a person: top-50 accounts, disputed or probably-paid bills, anything firmer than a friendly nudge, every phone call.
 - Each bill shows whether it could ever be auto-sent and why not. Priya or Dana can see why each one went out and turn auto-send off in one click.
 - Open: what counts as "small" (ask her).
+
+## 5. The note for legal, and what counts as "small"
+
+**Us:** (sent the Bedrock note for legal and confirmed the ladder) One gap: what amount counts as a "small" reminder?
+
+**Maya:** Thanks, the note is exactly what legal needs, and I'll send it over today. For "small," I'd start at invoices under $5,000, which covers most monthly bills from our smaller firms and keeps every big annual invoice with a person. Our VP Finance may want it lower, so make it a setting Priya can change herself rather than something baked in. I'd rather start tight and loosen it after a quiet month than the other way round.
+
+**What it changes:**
+- "Small" starts at under $5,000, as a setting Priya changes herself on the page, not a number in the code.
+- Start tight, loosen after a quiet month: the setting only matters once the ladder unlocks; until then every reminder is approved by a person.

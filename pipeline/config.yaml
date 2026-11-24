@@ -104,7 +104,7 @@ ai:
 auto_send:
   days_on_record: 30
   max_days: 45          # first or second reminder only (policy: reminders at 7 and 21 days)
-  max_amount: null      # "small": not set yet, Maya to confirm
+  max_amount: 5000      # Maya: start at under $5,000; Priya can change it in the app (start tight, loosen later)
 
 trend_markers:
   - {month: "2026-03", label: Billing engine rewrite (16 Mar)}

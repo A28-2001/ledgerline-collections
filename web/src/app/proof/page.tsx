@@ -114,7 +114,7 @@ export default function ProofPage() {
         </Card>
       </div>
 
-      {results.autoSend && <TrustLadder data={results.autoSend} />}
+      {results.autoSend && <TrustLadder data={results.autoSend} invoices={invoices} />}
 
       <Card className="mt-6">
         <CardHeader>

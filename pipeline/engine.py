@@ -655,18 +655,10 @@ class Engine:
             why.append("past the second reminder: anything firmer stays with a person")
         if row.needs_review:
             why.append("in Check first")
-        cap = a.get("max_amount")
-        if cap is None:
-            size = "size limit not set yet (Maya to confirm what counts as small)"
-        elif row.amount > float(cap):
-            why.append(f"over the {money(float(cap))} limit for small reminders")
-            size = None
-        else:
-            size = None
+        # The size limit ("small") is a setting Priya changes herself in the app (Maya); the app applies it.
         if why:
             return {"eligible": False, "why": why[0][0].upper() + why[0][1:], "permanent": False}
-        return {"eligible": True, "why": "Small, polite first or second reminder; outside the top 50; no open ticket; no unmatched payment"
-                + (f"; {size}" if size else ""), "permanent": False}
+        return {"eligible": True, "why": "Polite first or second reminder; outside the top 50; no open ticket; no unmatched payment", "permanent": False}
 
     def _customer(self, cid, customers, tickets) -> dict:
         c = customers.loc[cid]

@@ -1,6 +1,6 @@
 {
  "meta": {
-  "generatedAt": "2026-11-24T05:58:50+00:00",
+  "generatedAt": "2026-11-24T06:04:27+00:00",
   "asOf": "2026-10-31",
   "dataSource": "real",
   "companyName": "Ledgerline",
@@ -265,7 +265,7 @@
    "reminderStage": "First reminder (7 days)",
    "autoSend": {
     "eligible": true,
-    "why": "Small, polite first or second reminder; outside the top 50; no open ticket; no unmatched payment; size limit not set yet (Maya to confirm what counts as small)",
+    "why": "Polite first or second reminder; outside the top 50; no open ticket; no unmatched payment",
     "permanent": false
    }
   },
@@ -358,7 +358,7 @@
    "reminderStage": "First reminder (7 days)",
    "autoSend": {
     "eligible": true,
-    "why": "Small, polite first or second reminder; outside the top 50; no open ticket; no unmatched payment; size limit not set yet (Maya to confirm what counts as small)",
+    "why": "Polite first or second reminder; outside the top 50; no open ticket; no unmatched payment",
     "permanent": false
    }
   },
@@ -433,7 +433,7 @@
    "reminderStage": "First reminder (7 days)",
    "autoSend": {
     "eligible": true,
-    "why": "Small, polite first or second reminder; outside the top 50; no open ticket; no unmatched payment; size limit not set yet (Maya to confirm what counts as small)",
+    "why": "Polite first or second reminder; outside the top 50; no open ticket; no unmatched payment",
     "permanent": false
    }
   },
@@ -541,7 +541,7 @@
    "reminderStage": "First reminder (7 days)",
    "autoSend": {
     "eligible": true,
-    "why": "Small, polite first or second reminder; outside the top 50; no open ticket; no unmatched payment; size limit not set yet (Maya to confirm what counts as small)",
+    "why": "Polite first or second reminder; outside the top 50; no open ticket; no unmatched payment",
     "permanent": false
    }
   },
@@ -616,7 +616,7 @@
    "reminderStage": "First reminder (7 days)",
    "autoSend": {
     "eligible": true,
-    "why": "Small, polite first or second reminder; outside the top 50; no open ticket; no unmatched payment; size limit not set yet (Maya to confirm what counts as small)",
+    "why": "Polite first or second reminder; outside the top 50; no open ticket; no unmatched payment",
     "permanent": false
    }
   },
@@ -669,7 +669,7 @@
    "reminderStage": "First reminder (7 days)",
    "autoSend": {
     "eligible": true,
-    "why": "Small, polite first or second reminder; outside the top 50; no open ticket; no unmatched payment; size limit not set yet (Maya to confirm what counts as small)",
+    "why": "Polite first or second reminder; outside the top 50; no open ticket; no unmatched payment",
     "permanent": false
    }
   },
@@ -744,7 +744,7 @@
    "reminderStage": "First reminder (7 days)",
    "autoSend": {
     "eligible": true,
-    "why": "Small, polite first or second reminder; outside the top 50; no open ticket; no unmatched payment; size limit not set yet (Maya to confirm what counts as small)",
+    "why": "Polite first or second reminder; outside the top 50; no open ticket; no unmatched payment",
     "permanent": false
    }
   },
@@ -808,7 +808,7 @@
    "reminderStage": "First reminder (7 days)",
    "autoSend": {
     "eligible": true,
-    "why": "Small, polite first or second reminder; outside the top 50; no open ticket; no unmatched payment; size limit not set yet (Maya to confirm what counts as small)",
+    "why": "Polite first or second reminder; outside the top 50; no open ticket; no unmatched payment",
     "permanent": false
    }
   },
@@ -988,7 +988,7 @@
    "reminderStage": "First reminder (7 days)",
    "autoSend": {
     "eligible": true,
-    "why": "Small, polite first or second reminder; outside the top 50; no open ticket; no unmatched payment; size limit not set yet (Maya to confirm what counts as small)",
+    "why": "Polite first or second reminder; outside the top 50; no open ticket; no unmatched payment",
     "permanent": false
    }
   },
@@ -1046,7 +1046,7 @@
    "reminderStage": "First reminder (7 days)",
    "autoSend": {
     "eligible": true,
-    "why": "Small, polite first or second reminder; outside the top 50; no open ticket; no unmatched payment; size limit not set yet (Maya to confirm what counts as small)",
+    "why": "Polite first or second reminder; outside the top 50; no open ticket; no unmatched payment",
     "permanent": false
    }
   },
@@ -1109,7 +1109,7 @@
    "reminderStage": "First reminder (7 days)",
    "autoSend": {
     "eligible": true,
-    "why": "Small, polite first or second reminder; outside the top 50; no open ticket; no unmatched payment; size limit not set yet (Maya to confirm what counts as small)",
+    "why": "Polite first or second reminder; outside the top 50; no open ticket; no unmatched payment",
     "permanent": false
    }
   },
@@ -1251,7 +1251,7 @@
    "reminderStage": "First reminder (7 days)",
    "autoSend": {
     "eligible": true,
-    "why": "Small, polite first or second reminder; outside the top 50; no open ticket; no unmatched payment; size limit not set yet (Maya to confirm what counts as small)",
+    "why": "Polite first or second reminder; outside the top 50; no open ticket; no unmatched payment",
     "permanent": false
    }
   },
@@ -13622,7 +13622,7 @@
    }
   ],
   "failures": [],
-  "runtimeSeconds": 0.41
+  "runtimeSeconds": 0.46
  },
  "morningSummary": {
   "title": "Collections check, 2026-10-31",
@@ -13639,9 +13639,9 @@
   "on": false,
   "daysOnRecord": 0,
   "daysNeeded": 30,
-  "maxAmount": null,
-  "eligibleCount": 12,
-  "eligibleAmount": 171304.0,
+  "maxAmount": 5000,
+  "eligibleCount": 3,
+  "eligibleAmount": 11884.0,
   "permanentCount": 30,
   "rule": "Maya (COO): only after a month of Priya's approvals on record showing she almost never changed them; only small, polite first or second reminders outside the top 50 with no open ticket and no unmatched payment. Top-50, disputed, probably paid, anything firmer than a friendly nudge and every phone call stay with a person permanently. Priya or Dana can switch it off in one click."
  }

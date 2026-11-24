@@ -219,8 +219,8 @@ def main() -> None:
             "daysOnRecord": 0,
             "daysNeeded": int(cfg.get("auto_send", {}).get("days_on_record", 30)),
             "maxAmount": cfg.get("auto_send", {}).get("max_amount"),
-            "eligibleCount": sum(1 for i in invoices if i.get("autoSend", {}).get("eligible")),
-            "eligibleAmount": round(sum(i["amount"] for i in invoices if i.get("autoSend", {}).get("eligible")), 2),
+            "eligibleCount": sum(1 for i in invoices if i.get("autoSend", {}).get("eligible") and i["amount"] < float(cfg.get("auto_send", {}).get("max_amount") or 0)),
+            "eligibleAmount": round(sum(i["amount"] for i in invoices if i.get("autoSend", {}).get("eligible") and i["amount"] < float(cfg.get("auto_send", {}).get("max_amount") or 0)), 2),
             "permanentCount": sum(1 for i in invoices if i.get("autoSend", {}).get("permanent")),
             "rule": "Maya (COO): only after a month of Priya's approvals on record showing she almost never changed them; only small, polite "
                     "first or second reminders outside the top 50 with no open ticket and no unmatched payment. Top-50, disputed, probably paid, "

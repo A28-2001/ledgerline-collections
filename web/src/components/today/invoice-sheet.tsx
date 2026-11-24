@@ -40,6 +40,7 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle } from "@/components/ui/sheet";
 import { Textarea } from "@/components/ui/textarea";
+import { couldAutoSend, useAutoSendCap } from "@/lib/auto-send";
 import { answerLine, keyProof, plainReview } from "@/lib/bill-text";
 import type { Decision } from "@/lib/decisions";
 import {
@@ -53,6 +54,7 @@ import {
   VERDICT_META,
   VERDICTS,
   VOTE_LABEL,
+  results,
 } from "@/lib/data";
 import type { Evidence, Invoice, Tone, Verdict } from "@/lib/types";
 import { cn } from "@/lib/utils";
@@ -152,6 +154,7 @@ function InvoiceDetail({
 }) {
   const [highlight, setHighlight] = useState<string | null>(null);
   const [overrideOpen, setOverrideOpen] = useState(startWithChange && !decision);
+  const [cap] = useAutoSendCap(results.autoSend?.maxAmount ?? null);
   const verdict = decision?.verdict ?? inv.verdict;
   const evidenceById = new Map(inv.evidence.map((e) => [e.id, e]));
 
@@ -254,8 +257,10 @@ function InvoiceDetail({
             {inv.autoSend && (
               <p className="mt-2 text-xs text-muted-foreground">
                 <span className="font-medium text-foreground">Auto-send:</span>{" "}
-                {inv.autoSend.eligible
+                {couldAutoSend(inv, cap)
                   ? "could go out on its own once the trust ladder is on. Today a person approves it."
+                  : inv.autoSend.eligible
+                    ? `not now. Over the ${cap === null ? "size" : "$" + cap.toLocaleString("en-US")} limit for small reminders (Priya can change it).`
                   : `${inv.autoSend.permanent ? "never" : "not now"}. ${inv.autoSend.why}.`}
               </p>
             )}
