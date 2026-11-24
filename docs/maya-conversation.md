@@ -26,3 +26,14 @@ I'd switch yours off for the same kind of thing: chasing someone who's paid, or 
 - Dispute holds are owned by Priya Nair; the account manager is added when the ticket is about seats, price, plan, discount or renewal.
 - Target: a corrected invoice or a clear answer within 5 working days of the customer raising it (Dana to confirm). Each hold shows how many working days it has been open and whether it's past the 5.
 - Nothing relies on memory: a dispute comes back on the list every morning, with its age and owner, until the bill is fixed or paid. The morning message also goes to Dana, so the list survives Priya's leave in March.
+
+## 3. Which AI vendor, and does it work without one
+
+**Us:** Done. Each disputed bill now shows Priya as the owner, the account manager when it's seats or pricing, and how many working days it's been open against your five. The list is rebuilt from Zendesk and the ledger every morning, so nothing depends on memory, and Dana gets the same morning summary for when Priya's on leave. One more: the tool uses AI to read ticket text, and the SLA policy says ticket content can't go to a new vendor without a data processing agreement. Is there an AI vendor legal has approved, or should it run on rules only until there is?
+
+**Maya:** Legal hasn't signed off on any AI provider specifically. The rule is that vendors we already use are covered and anything new needs a DPA first. So tell me exactly which provider you'd use and show me in writing that it doesn't train on our data, and I'll take that to legal. If it turns out to be a new vendor, a DPA won't land by Monday, so I'd rather see it run on rules against ticket tags and status until then than have it blocked on day one. Does it still catch most of those disputed bills without reading the text?
+
+**What it changes:**
+- Production default is now no-vendor mode: ticket tags, status and simple rules run locally; nothing leaves Ledgerline's systems. Measured on the real data: 12 of the 14 disputed bills held, 1 sent to a person (tagged billing), the last ($2,652) is 92 days late so it's a phone call anyway. No disputed bill gets an unchecked reminder. Cost: 18 bills in Check first instead of 10.
+- Provider for legal: Amazon Bedrock in Ledgerline's existing AWS account (AWS is already a vendor; legal to confirm the existing terms cover it). AWS states Bedrock doesn't use prompts or completions to train models or share them with third parties. Groq (used in the demo) is a new vendor: it offers a DPA, says it doesn't train on customer data, and has zero data retention, but it would need that DPA first.
+- The AI step stays one swappable function: switch `ai.ticket_text` to `redacted` and point it at the approved provider once legal signs off.

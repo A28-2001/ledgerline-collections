@@ -1,6 +1,6 @@
 {
  "meta": {
-  "generatedAt": "2026-11-24T05:52:02+00:00",
+  "generatedAt": "2026-11-24T05:55:23+00:00",
   "asOf": "2026-10-31",
   "dataSource": "real",
   "companyName": "Ledgerline",
@@ -34,8 +34,9 @@
     "rows": 1041
    }
   ],
-  "aiMode": "groq",
+  "aiMode": "rules_only",
   "notes": [
+   "No-vendor mode (Maya, 23 Nov): no AI provider is approved yet, so tickets are read with tags, status and simple rules run locally; nothing leaves Ledgerline's systems. On the same data the AI judges (redacted text) held all 14 disputed bills; this mode holds 12, sends 1 to a person and the last is a 92-day phone call anyway. No disputed bill gets an unchecked reminder.",
    "Payment status not recorded: failed card check skipped."
   ]
  },
@@ -44,34 +45,34 @@
   "overdueCount": 54,
   "byVerdict": {
    "send": {
-    "count": 24,
-    "amount": 230977.0
+    "count": 25,
+    "amount": 234427.0
    },
    "hold": {
-    "count": 16,
-    "amount": 315510.0
+    "count": 13,
+    "amount": 265344.0
    },
    "paid": {
     "count": 5,
     "amount": 78348.0
    },
    "call": {
-    "count": 9,
-    "amount": 8410.0
+    "count": 11,
+    "amount": 55126.0
    }
   },
   "byCause": [
    {
     "cause": "wrong_bill",
     "label": "Customer says the bill is wrong",
-    "amount": 309000.0,
-    "count": 14
+    "amount": 262284.0,
+    "count": 12
    },
    {
     "cause": "simply_late",
     "label": "Simply late",
-    "amount": 220441.0,
-    "count": 15
+    "amount": 228760.0,
+    "count": 18
    },
    {
     "cause": "paid",
@@ -80,20 +81,20 @@
     "count": 5
    },
    {
+    "cause": "unhappy",
+    "label": "Unhappy customer",
+    "amount": 47398.0,
+    "count": 3
+   },
+   {
     "cause": "card_failed",
     "label": "Card payment failed",
     "amount": 16455.0,
     "count": 16
-   },
-   {
-    "cause": "unhappy",
-    "label": "Unhappy customer",
-    "amount": 9001.0,
-    "count": 4
    }
   ],
-  "shouldNotChaseAmount": 393858.0,
-  "headline": "$387,348 of $633,245 overdue (61%) sits with customers we shouldn't chase today: they've probably paid, they're unhappy, or the bill is wrong. Another $6,510 is paused until a person reads a ticket the AI wasn't sure about."
+  "shouldNotChaseAmount": 343692.0,
+  "headline": "$343,692 of $633,245 overdue (54%) sits with customers we shouldn't chase today: they've probably paid, they're unhappy, or the bill is wrong."
  },
  "invoices": [
   {
@@ -107,10 +108,17 @@
    "daysOverdue": 15,
    "agingBucket": "1-30",
    "verdict": "send",
-   "cause": "simply_late",
+   "cause": "unhappy",
    "confidence": "low",
-   "headline": "First reminder (7 days): 15 days overdue, nothing blocking",
+   "headline": "Send a softer reminder (open product complaint)",
    "reasons": [
+    {
+     "text": "Open product complaint (not about money): send, but in a softer tone, and tell the account manager.",
+     "evidenceIds": [
+      "ticket:T881016"
+     ],
+     "policyRef": null
+    },
     {
      "text": "One of the 50 largest accounts: nothing goes out until a person has read it.",
      "evidenceIds": [],
@@ -176,29 +184,12 @@
    "needsReview": true,
    "draft": {
     "to": "anika.langford@eastmanwexlercpas.example",
-    "subject": "Invoice INV-25873 is overdue",
-    "body": "Hi Anika,\n\nA quick note that invoice INV-25873 for $43,680 was due on Oct 16, 2026 and is still open on our side.\n\nIf you've already paid, thank you, and please ignore this. If anything on the invoice looks wrong, like the seat count or plan, just reply and we'll fix it before you pay.\n\nThanks,\nPriya Nair\nLedgerline Billing",
-    "tone": "standard"
+    "subject": "Invoice INV-25873: a quick note",
+    "body": "Hi Anika,\n\nI know your team has an open request with our support team, and they're on it. Separately, invoice INV-25873 for $43,680 was due on Oct 16, 2026. When you get a moment, could you check where it is? If anything about the invoice looks wrong, just reply and we'll put it right.\n\nThanks,\nPriya Nair\nLedgerline Billing",
+    "tone": "soft"
    },
    "reminderStage": "First reminder (7 days)",
-   "reviewReason": "the AI wasn't sure what this ticket means; one of the 50 largest accounts: a person reads or writes this one personally",
-   "agreement": {
-    "agree": false,
-    "votes": [
-     {
-      "judge": "rules",
-      "answer": "other_complaint"
-     },
-     {
-      "judge": "gpt-oss-20b (prompt A)",
-      "answer": "other_complaint"
-     },
-     {
-      "judge": "qwen3.8-27b (prompt B)",
-      "answer": "not_a_complaint"
-     }
-    ]
-   }
+   "reviewReason": "one of the 50 largest accounts: a person reads or writes this one personally"
   },
   {
    "id": "INV-25862",
@@ -216,13 +207,11 @@
    "headline": "First reminder (7 days): 17 days overdue, nothing blocking",
    "reasons": [
     {
-     "text": "17 days overdue, no open complaint, no payment found, bill matches the contract.",
+     "text": "A billing ticket from Aug 11, 2026 is closed. Mentioned for context; it doesn't block the reminder.",
      "evidenceIds": [
-      "ticket:T880857",
-      "ticket:T880365",
-      "contract:C1361:2026-09-14"
+      "ticket:T880365"
      ],
-     "policyRef": "collections_policy.md: reminders at 7, 21 and 45 days"
+     "policyRef": null
     },
     {
      "text": "Tell Nadia Upton (account manager) before this goes out.",
@@ -260,7 +249,7 @@
      "title": "Contract: 26 seats \u00d7 $88.00, Sep 14, 2026 to Sep 13, 2027"
     }
    ],
-   "policyRef": "collections_policy.md: reminders at 7, 21 and 45 days",
+   "policyRef": "collections_policy.md: tell the account manager before finance contacts one of their accounts",
    "needsReview": false,
    "draft": {
     "to": "nadia.vance@thornfieldconsultinggr.example",
@@ -268,24 +257,7 @@
     "body": "Hi Nadia,\n\nA quick note that invoice INV-25862 for $39,456 was due on Oct 14, 2026 and is still open on our side.\n\nIf you've already paid, thank you, and please ignore this. If anything on the invoice looks wrong, like the seat count or plan, just reply and we'll fix it before you pay.\n\nThanks,\nPriya Nair\nLedgerline Billing",
     "tone": "standard"
    },
-   "reminderStage": "First reminder (7 days)",
-   "agreement": {
-    "agree": false,
-    "votes": [
-     {
-      "judge": "rules",
-      "answer": "billing_complaint"
-     },
-     {
-      "judge": "gpt-oss-20b (prompt A)",
-      "answer": "not_a_complaint"
-     },
-     {
-      "judge": "qwen3.8-27b (prompt B)",
-      "answer": "billing_complaint"
-     }
-    ]
-   }
+   "reminderStage": "First reminder (7 days)"
   },
   {
    "id": "INV-25869",
@@ -303,15 +275,11 @@
    "headline": "First reminder (7 days): 16 days overdue, nothing blocking",
    "reasons": [
     {
-     "text": "16 days overdue, no open complaint, no payment found, bill matches the contract.",
+     "text": "A billing ticket from Aug 4, 2026 is closed. Mentioned for context; it doesn't block the reminder.",
      "evidenceIds": [
-      "ticket:T880752",
-      "ticket:T880629",
-      "ticket:T880307",
-      "ticket:T880289",
-      "contract:C1457:2026-09-15"
+      "ticket:T880307"
      ],
-     "policyRef": "collections_policy.md: reminders at 7, 21 and 45 days"
+     "policyRef": null
     },
     {
      "text": "Tell Hannah Drummond (account manager) before this goes out.",
@@ -369,7 +337,7 @@
      "title": "Contract: 28 seats \u00d7 $68.00, Sep 15, 2026 to Sep 14, 2027"
     }
    ],
-   "policyRef": "collections_policy.md: reminders at 7, 21 and 45 days",
+   "policyRef": "collections_policy.md: tell the account manager before finance contacts one of their accounts",
    "needsReview": false,
    "draft": {
     "to": "daniel.whitfield@hollisstanhopeadvisory.example",
@@ -377,24 +345,7 @@
     "body": "Hi Daniel,\n\nA quick note that invoice INV-25869 for $22,848 was due on Oct 15, 2026 and is still open on our side.\n\nIf you've already paid, thank you, and please ignore this. If anything on the invoice looks wrong, like the seat count or plan, just reply and we'll fix it before you pay.\n\nThanks,\nPriya Nair\nLedgerline Billing",
     "tone": "standard"
    },
-   "reminderStage": "First reminder (7 days)",
-   "agreement": {
-    "agree": true,
-    "votes": [
-     {
-      "judge": "rules",
-      "answer": "not_a_complaint"
-     },
-     {
-      "judge": "gpt-oss-20b (prompt A)",
-      "answer": "other_complaint"
-     },
-     {
-      "judge": "qwen3.8-27b (prompt B)",
-      "answer": "other_complaint"
-     }
-    ]
-   }
+   "reminderStage": "First reminder (7 days)"
   },
   {
    "id": "INV-25848",
@@ -464,24 +415,7 @@
     "body": "Hi Lucia,\n\nA quick note that invoice INV-25848 for $19,584 was due on Oct 11, 2026 and is still open on our side.\n\nIf you've already paid, thank you, and please ignore this. If anything on the invoice looks wrong, like the seat count or plan, just reply and we'll fix it before you pay.\n\nThanks,\nPriya Nair\nLedgerline Billing",
     "tone": "standard"
    },
-   "reminderStage": "First reminder (7 days)",
-   "agreement": {
-    "agree": true,
-    "votes": [
-     {
-      "judge": "rules",
-      "answer": "not_a_complaint"
-     },
-     {
-      "judge": "gpt-oss-20b (prompt A)",
-      "answer": "not_a_complaint"
-     },
-     {
-      "judge": "qwen3.8-27b (prompt B)",
-      "answer": "not_a_complaint"
-     }
-    ]
-   }
+   "reminderStage": "First reminder (7 days)"
   },
   {
    "id": "INV-25885",
@@ -499,11 +433,16 @@
    "headline": "First reminder (7 days): 12 days overdue, nothing blocking",
    "reasons": [
     {
-     "text": "A billing ticket from Sep 11, 2026 is closed. Mentioned for context; it doesn't block the reminder.",
+     "text": "12 days overdue, no open complaint, no payment found, bill matches the contract.",
      "evidenceIds": [
-      "ticket:T880631"
+      "ticket:T880714",
+      "ticket:T880631",
+      "ticket:T880408",
+      "ticket:T880259",
+      "ticket:T880166",
+      "contract:C1077:2026-09-19"
      ],
-     "policyRef": null
+     "policyRef": "collections_policy.md: reminders at 7, 21 and 45 days"
     },
     {
      "text": "Tell Maria Yardley (account manager) before this goes out.",
@@ -571,7 +510,7 @@
      "title": "Contract: 21 seats \u00d7 $68.00, Sep 19, 2026 to Sep 18, 2027"
     }
    ],
-   "policyRef": "collections_policy.md: tell the account manager before finance contacts one of their accounts",
+   "policyRef": "collections_policy.md: reminders at 7, 21 and 45 days",
    "needsReview": false,
    "draft": {
     "to": "quentin.bramwell@riversideconsultinggro.example",
@@ -579,24 +518,7 @@
     "body": "Hi Quentin,\n\nA quick note that invoice INV-25885 for $17,136 was due on Oct 19, 2026 and is still open on our side.\n\nIf you've already paid, thank you, and please ignore this. If anything on the invoice looks wrong, like the seat count or plan, just reply and we'll fix it before you pay.\n\nThanks,\nPriya Nair\nLedgerline Billing",
     "tone": "standard"
    },
-   "reminderStage": "First reminder (7 days)",
-   "agreement": {
-    "agree": true,
-    "votes": [
-     {
-      "judge": "rules",
-      "answer": "not_a_complaint"
-     },
-     {
-      "judge": "gpt-oss-20b (prompt A)",
-      "answer": "not_a_complaint"
-     },
-     {
-      "judge": "qwen3.8-27b (prompt B)",
-      "answer": "not_a_complaint"
-     }
-    ]
-   }
+   "reminderStage": "First reminder (7 days)"
   },
   {
    "id": "INV-25883",
@@ -666,24 +588,7 @@
     "body": "Hi Tessa,\n\nA quick note that invoice INV-25883 for $16,320 was due on Oct 18, 2026 and is still open on our side.\n\nIf you've already paid, thank you, and please ignore this. If anything on the invoice looks wrong, like the seat count or plan, just reply and we'll fix it before you pay.\n\nThanks,\nPriya Nair\nLedgerline Billing",
     "tone": "standard"
    },
-   "reminderStage": "First reminder (7 days)",
-   "agreement": {
-    "agree": true,
-    "votes": [
-     {
-      "judge": "rules",
-      "answer": "not_a_complaint"
-     },
-     {
-      "judge": "gpt-oss-20b (prompt A)",
-      "answer": "not_a_complaint"
-     },
-     {
-      "judge": "qwen3.8-27b (prompt B)",
-      "answer": "not_a_complaint"
-     }
-    ]
-   }
+   "reminderStage": "First reminder (7 days)"
   },
   {
    "id": "INV-25906",
@@ -801,24 +706,7 @@
     "body": "Hi Quentin,\n\nA quick note that invoice INV-25859 for $13,056 was due on Oct 13, 2026 and is still open on our side.\n\nIf you've already paid, thank you, and please ignore this. If anything on the invoice looks wrong, like the seat count or plan, just reply and we'll fix it before you pay.\n\nThanks,\nPriya Nair\nLedgerline Billing",
     "tone": "standard"
    },
-   "reminderStage": "First reminder (7 days)",
-   "agreement": {
-    "agree": false,
-    "votes": [
-     {
-      "judge": "rules",
-      "answer": "serious_escalation"
-     },
-     {
-      "judge": "gpt-oss-20b (prompt A)",
-      "answer": "not_a_complaint"
-     },
-     {
-      "judge": "qwen3.8-27b (prompt B)",
-      "answer": "billing_complaint"
-     }
-    ]
-   }
+   "reminderStage": "First reminder (7 days)"
   },
   {
    "id": "INV-25858",
@@ -877,24 +765,85 @@
     "body": "Hi Anika,\n\nA quick note that invoice INV-25858 for $9,600 was due on Oct 13, 2026 and is still open on our side.\n\nIf you've already paid, thank you, and please ignore this. If anything on the invoice looks wrong, like the seat count or plan, just reply and we'll fix it before you pay.\n\nThanks,\nPriya Nair\nLedgerline Billing",
     "tone": "standard"
    },
-   "reminderStage": "First reminder (7 days)",
-   "agreement": {
-    "agree": true,
-    "votes": [
-     {
-      "judge": "rules",
-      "answer": "not_a_complaint"
-     },
-     {
-      "judge": "gpt-oss-20b (prompt A)",
-      "answer": "not_a_complaint"
-     },
-     {
-      "judge": "qwen3.8-27b (prompt B)",
-      "answer": "not_a_complaint"
-     }
-    ]
-   }
+   "reminderStage": "First reminder (7 days)"
+  },
+  {
+   "id": "INV-25852",
+   "customerId": "C1469",
+   "customerName": "Kingsway Engineering Group",
+   "amount": 5100.0,
+   "currency": "USD",
+   "issueDate": "2026-09-12",
+   "dueDate": "2026-10-12",
+   "daysOverdue": 19,
+   "agingBucket": "1-30",
+   "verdict": "send",
+   "cause": "simply_late",
+   "confidence": "high",
+   "headline": "First reminder (7 days): 19 days overdue, nothing blocking",
+   "reasons": [
+    {
+     "text": "A billing ticket from Jul 9, 2026 is closed. Mentioned for context; it doesn't block the reminder.",
+     "evidenceIds": [
+      "ticket:T880078"
+     ],
+     "policyRef": null
+    },
+    {
+     "text": "Tell Nadia Sinclair (account manager) before this goes out.",
+     "evidenceIds": [],
+     "policyRef": "collections_policy.md: tell the account manager before finance contacts one of their accounts"
+    }
+   ],
+   "evidence": [
+    {
+     "id": "ticket:T880284",
+     "kind": "ticket",
+     "file": "tickets.csv",
+     "recordId": "T880284",
+     "date": "2026-07-31",
+     "status": "solved",
+     "title": "Query regarding our setup",
+     "detail": "Does the CRM integration bring in the company owner field? We use it to assign the account lead."
+    },
+    {
+     "id": "ticket:T880184",
+     "kind": "ticket",
+     "file": "tickets.csv",
+     "recordId": "T880184",
+     "date": "2026-07-20",
+     "status": "pending",
+     "title": "Can you check something for me",
+     "detail": "Hi there - The amount the client sees in the portal is 1,950.00 AUD but the PDF they downloaded says 1,949.99. Which one is right? They want to pay today.\n\nSigne"
+    },
+    {
+     "id": "ticket:T880078",
+     "kind": "ticket",
+     "file": "tickets.csv",
+     "recordId": "T880078",
+     "date": "2026-07-09",
+     "status": "solved",
+     "title": "Not working?",
+     "detail": "If I void an invoice, is that number gone for good or does it get reused?\n\nOscar"
+    },
+    {
+     "id": "contract:C1469:2025-12-12",
+     "kind": "contract",
+     "file": "contracts.csv",
+     "recordId": "C1469:2025-12-12",
+     "date": "2025-12-12",
+     "title": "Contract: 25 seats \u00d7 $68.00, Dec 12, 2025 to Dec 11, 2026"
+    }
+   ],
+   "policyRef": "collections_policy.md: tell the account manager before finance contacts one of their accounts",
+   "needsReview": false,
+   "draft": {
+    "to": "marcus.tan@kingswayengineeringgro.example",
+    "subject": "Invoice INV-25852 is overdue",
+    "body": "Hi Marcus,\n\nA quick note that invoice INV-25852 for $5,100 was due on Oct 12, 2026 and is still open on our side.\n\nIf you've already paid, thank you, and please ignore this. If anything on the invoice looks wrong, like the seat count or plan, just reply and we'll fix it before you pay.\n\nThanks,\nPriya Nair\nLedgerline Billing",
+    "tone": "standard"
+   },
+   "reminderStage": "First reminder (7 days)"
   },
   {
    "id": "INV-25863",
@@ -986,24 +935,7 @@
     "body": "Hi Caleb,\n\nA quick note that invoice INV-25863 for $5,100 was due on Oct 14, 2026 and is still open on our side.\n\nIf you've already paid, thank you, and please ignore this. If anything on the invoice looks wrong, like the seat count or plan, just reply and we'll fix it before you pay.\n\nThanks,\nPriya Nair\nLedgerline Billing",
     "tone": "standard"
    },
-   "reminderStage": "First reminder (7 days)",
-   "agreement": {
-    "agree": true,
-    "votes": [
-     {
-      "judge": "rules",
-      "answer": "not_a_complaint"
-     },
-     {
-      "judge": "gpt-oss-20b (prompt A)",
-      "answer": "not_a_complaint"
-     },
-     {
-      "judge": "qwen3.8-27b (prompt B)",
-      "answer": "not_a_complaint"
-     }
-    ]
-   }
+   "reminderStage": "First reminder (7 days)"
   },
   {
    "id": "INV-25890",
@@ -1074,12 +1006,11 @@
    "headline": "First reminder (7 days): 4 days overdue, nothing blocking",
    "reasons": [
     {
-     "text": "4 days overdue, no open complaint, no payment found, bill matches the contract.",
+     "text": "A billing ticket from Sep 2, 2026 is closed. Mentioned for context; it doesn't block the reminder.",
      "evidenceIds": [
-      "ticket:T880542",
-      "contract:C1470:2025-12-27"
+      "ticket:T880542"
      ],
-     "policyRef": "collections_policy.md: reminders at 7, 21 and 45 days"
+     "policyRef": null
     },
     {
      "text": "Tell Nadia Sinclair (account manager) before this goes out.",
@@ -1107,7 +1038,7 @@
      "title": "Contract: 23 seats \u00d7 $68.00, Dec 27, 2025 to Dec 26, 2026"
     }
    ],
-   "policyRef": "collections_policy.md: reminders at 7, 21 and 45 days",
+   "policyRef": "collections_policy.md: tell the account manager before finance contacts one of their accounts",
    "needsReview": false,
    "draft": {
     "to": "dalia.wexler@abbottdesignpartnershi.example",
@@ -1115,24 +1046,7 @@
     "body": "Hi Dalia,\n\nA quick note that invoice INV-25923 for $4,692 was due on Oct 27, 2026 and is still open on our side.\n\nIf you've already paid, thank you, and please ignore this. If anything on the invoice looks wrong, like the seat count or plan, just reply and we'll fix it before you pay.\n\nThanks,\nPriya Nair\nLedgerline Billing",
     "tone": "standard"
    },
-   "reminderStage": "First reminder (7 days)",
-   "agreement": {
-    "agree": true,
-    "votes": [
-     {
-      "judge": "rules",
-      "answer": "billing_complaint"
-     },
-     {
-      "judge": "gpt-oss-20b (prompt A)",
-      "answer": "other_complaint"
-     },
-     {
-      "judge": "qwen3.8-27b (prompt B)",
-      "answer": "other_complaint"
-     }
-    ]
-   }
+   "reminderStage": "First reminder (7 days)"
   },
   {
    "id": "INV-25973",
@@ -1149,6 +1063,13 @@
    "confidence": "high",
    "headline": "Card failed: send the update-card note",
    "reasons": [
+    {
+     "text": "A billing ticket from Aug 30, 2026 is closed. Mentioned for context; it doesn't block the reminder.",
+     "evidenceIds": [
+      "ticket:T880519"
+     ],
+     "policyRef": null
+    },
     {
      "text": "The card failed and Stripe's retries are over. A person asks for a new card: nobody has followed this up yet.",
      "evidenceIds": [
@@ -1209,111 +1130,7 @@
     "body": "Hi Ivy,\n\nThe card on file for Eastman Engineering didn't go through for invoice INV-25973 ($3,264), and the automatic retries have now finished. Could you update the card, or reply and we'll send bank details instead?\n\nThanks,\nPriya Nair\nLedgerline Billing",
     "tone": "card_update"
    },
-   "reminderStage": "Second reminder (21 days)",
-   "agreement": {
-    "agree": false,
-    "votes": [
-     {
-      "judge": "rules",
-      "answer": "billing_complaint"
-     },
-     {
-      "judge": "gpt-oss-20b (prompt A)",
-      "answer": "billing_complaint"
-     },
-     {
-      "judge": "qwen3.8-27b (prompt B)",
-      "answer": "serious_escalation"
-     }
-    ]
-   }
-  },
-  {
-   "id": "INV-25902",
-   "customerId": "C1063",
-   "customerName": "Crane IT Partners",
-   "amount": 3060.0,
-   "currency": "USD",
-   "issueDate": "2026-09-24",
-   "dueDate": "2026-10-24",
-   "daysOverdue": 7,
-   "agingBucket": "1-30",
-   "verdict": "send",
-   "cause": "simply_late",
-   "confidence": "high",
-   "headline": "First reminder (7 days): 7 days overdue, nothing blocking",
-   "reasons": [
-    {
-     "text": "7 days overdue, no open complaint, no payment found, bill matches the contract.",
-     "evidenceIds": [
-      "ticket:T880332",
-      "ticket:T880058",
-      "contract:C1063:2026-06-24"
-     ],
-     "policyRef": "collections_policy.md: reminders at 7, 21 and 45 days"
-    },
-    {
-     "text": "Tell Maria Yardley (account manager) before this goes out.",
-     "evidenceIds": [],
-     "policyRef": "collections_policy.md: tell the account manager before finance contacts one of their accounts"
-    }
-   ],
-   "evidence": [
-    {
-     "id": "ticket:T880332",
-     "kind": "ticket",
-     "file": "tickets.csv",
-     "recordId": "T880332",
-     "date": "2026-08-06",
-     "status": "solved",
-     "title": "Important - please read",
-     "detail": "Hi team,\n\nI'd like an email to myself whenever a reminder goes out to a client, so I'm not caught off guard if they ring. Is that a thing?\n\nAisha"
-    },
-    {
-     "id": "ticket:T880058",
-     "kind": "ticket",
-     "file": "tickets.csv",
-     "recordId": "T880058",
-     "date": "2026-07-07",
-     "status": "pending",
-     "title": "Accounting sync wiped our tax codes",
-     "detail": "Hello,\n\nTax codes are back and the last two months reconciled cleanly against the ledger. Our bookkeeper double-checked every line. Closing this out."
-    },
-    {
-     "id": "contract:C1063:2026-06-24",
-     "kind": "contract",
-     "file": "contracts.csv",
-     "recordId": "C1063:2026-06-24",
-     "date": "2026-06-24",
-     "title": "Contract: 15 seats \u00d7 $68.00, Jun 24, 2026 to Jun 23, 2027"
-    }
-   ],
-   "policyRef": "collections_policy.md: reminders at 7, 21 and 45 days",
-   "needsReview": false,
-   "draft": {
-    "to": "ian.achebe@craneitpartners.example",
-    "subject": "Invoice INV-25902 is overdue",
-    "body": "Hi Ian,\n\nA quick note that invoice INV-25902 for $3,060 was due on Oct 24, 2026 and is still open on our side.\n\nIf you've already paid, thank you, and please ignore this. If anything on the invoice looks wrong, like the seat count or plan, just reply and we'll fix it before you pay.\n\nThanks,\nPriya Nair\nLedgerline Billing",
-    "tone": "standard"
-   },
-   "reminderStage": "First reminder (7 days)",
-   "agreement": {
-    "agree": true,
-    "votes": [
-     {
-      "judge": "rules",
-      "answer": "serious_escalation"
-     },
-     {
-      "judge": "gpt-oss-20b (prompt A)",
-      "answer": "not_a_complaint"
-     },
-     {
-      "judge": "qwen3.8-27b (prompt B)",
-      "answer": "not_a_complaint"
-     }
-    ]
-   }
+   "reminderStage": "Second reminder (21 days)"
   },
   {
    "id": "INV-25907",
@@ -1375,17 +1192,22 @@
    "agingBucket": "1-30",
    "verdict": "send",
    "cause": "simply_late",
-   "confidence": "high",
+   "confidence": "low",
    "headline": "First reminder (7 days): 13 days overdue, nothing blocking",
    "reasons": [
     {
-     "text": "13 days overdue, no open complaint, no payment found, bill matches the contract.",
+     "text": "A billing ticket from Sep 16, 2026 is closed. Mentioned for context; it doesn't block the reminder.",
      "evidenceIds": [
-      "ticket:T880691",
-      "ticket:T880456",
-      "contract:C1217:2026-03-18"
+      "ticket:T880691"
      ],
-     "policyRef": "collections_policy.md: reminders at 7, 21 and 45 days"
+     "policyRef": null
+    },
+    {
+     "text": "A billing ticket from Aug 21, 2026 is closed. Mentioned for context; it doesn't block the reminder.",
+     "evidenceIds": [
+      "ticket:T880456"
+     ],
+     "policyRef": null
     },
     {
      "text": "Tell Hannah Drummond (account manager) before this goes out.",
@@ -1423,8 +1245,8 @@
      "title": "Contract: 17 seats \u00d7 $47.00, Mar 18, 2026 to Mar 17, 2027"
     }
    ],
-   "policyRef": "collections_policy.md: reminders at 7, 21 and 45 days",
-   "needsReview": false,
+   "policyRef": "collections_policy.md: tell the account manager before finance contacts one of their accounts",
+   "needsReview": true,
    "draft": {
     "to": "ethan.underhill@corbinmedia.example",
     "subject": "Invoice INV-25881 is overdue",
@@ -1432,23 +1254,7 @@
     "tone": "standard"
    },
    "reminderStage": "First reminder (7 days)",
-   "agreement": {
-    "agree": false,
-    "votes": [
-     {
-      "judge": "rules",
-      "answer": "billing_complaint"
-     },
-     {
-      "judge": "gpt-oss-20b (prompt A)",
-      "answer": "other_complaint"
-     },
-     {
-      "judge": "qwen3.8-27b (prompt B)",
-      "answer": "not_a_complaint"
-     }
-    ]
-   }
+   "reviewReason": "a billing ticket from Sep 16, 2026 is marked solved: check it was really fixed; ticket tagged billing on Sep 16, 2026, after this bill was issued: a person reads it before anyone chases"
   },
   {
    "id": "INV-25898",
@@ -1461,21 +1267,14 @@
    "daysOverdue": 10,
    "agingBucket": "1-30",
    "verdict": "send",
-   "cause": "unhappy",
+   "cause": "simply_late",
    "confidence": "high",
-   "headline": "Send a softer reminder (open product complaint)",
+   "headline": "First reminder (7 days): 10 days overdue, nothing blocking",
    "reasons": [
     {
      "text": "A billing ticket from Jul 24, 2026 is closed. Mentioned for context; it doesn't block the reminder.",
      "evidenceIds": [
       "ticket:T880226"
-     ],
-     "policyRef": null
-    },
-    {
-     "text": "Open product complaint (not about money): send, but in a softer tone, and tell the account manager.",
-     "evidenceIds": [
-      "ticket:T880229"
      ],
      "policyRef": null
     },
@@ -1529,28 +1328,11 @@
    "needsReview": false,
    "draft": {
     "to": "samuel.birch@harborengineeringgroup.example",
-    "subject": "Invoice INV-25898: a quick note",
-    "body": "Hi Samuel,\n\nI know your team has an open request with our support team, and they're on it. Separately, invoice INV-25898 for $1,833 was due on Oct 21, 2026. When you get a moment, could you check where it is? If anything about the invoice looks wrong, just reply and we'll put it right.\n\nThanks,\nPriya Nair\nLedgerline Billing",
-    "tone": "soft"
+    "subject": "Invoice INV-25898 is overdue",
+    "body": "Hi Samuel,\n\nA quick note that invoice INV-25898 for $1,833 was due on Oct 21, 2026 and is still open on our side.\n\nIf you've already paid, thank you, and please ignore this. If anything on the invoice looks wrong, like the seat count or plan, just reply and we'll fix it before you pay.\n\nThanks,\nPriya Nair\nLedgerline Billing",
+    "tone": "standard"
    },
-   "reminderStage": "First reminder (7 days)",
-   "agreement": {
-    "agree": true,
-    "votes": [
-     {
-      "judge": "rules",
-      "answer": "other_complaint"
-     },
-     {
-      "judge": "gpt-oss-20b (prompt A)",
-      "answer": "not_a_complaint"
-     },
-     {
-      "judge": "qwen3.8-27b (prompt B)",
-      "answer": "not_a_complaint"
-     }
-    ]
-   }
+   "reminderStage": "First reminder (7 days)"
   },
   {
    "id": "INV-25975",
@@ -1567,6 +1349,13 @@
    "confidence": "high",
    "headline": "Card failed: send the update-card note",
    "reasons": [
+    {
+     "text": "A billing ticket from Sep 22, 2026 is closed. Mentioned for context; it doesn't block the reminder.",
+     "evidenceIds": [
+      "ticket:T880731"
+     ],
+     "policyRef": null
+    },
     {
      "text": "The card failed and Stripe's retries are over. A person asks for a new card: nobody has followed this up yet.",
      "evidenceIds": [
@@ -1617,24 +1406,113 @@
     "body": "Hi Emma,\n\nThe card on file for Quill, Mott & Co didn't go through for invoice INV-25975 ($1,632), and the automatic retries have now finished. Could you update the card, or reply and we'll send bank details instead?\n\nThanks,\nPriya Nair\nLedgerline Billing",
     "tone": "card_update"
    },
-   "reminderStage": "Second reminder (21 days)",
-   "agreement": {
-    "agree": false,
-    "votes": [
-     {
-      "judge": "rules",
-      "answer": "billing_complaint"
-     },
-     {
-      "judge": "gpt-oss-20b (prompt A)",
-      "answer": "other_complaint"
-     },
-     {
-      "judge": "qwen3.8-27b (prompt B)",
-      "answer": "billing_complaint"
-     }
-    ]
-   }
+   "reminderStage": "Second reminder (21 days)"
+  },
+  {
+   "id": "INV-25854",
+   "customerId": "C1022",
+   "customerName": "Studio Marsh",
+   "amount": 1410.0,
+   "currency": "USD",
+   "issueDate": "2026-09-13",
+   "dueDate": "2026-10-13",
+   "daysOverdue": 18,
+   "agingBucket": "1-30",
+   "verdict": "send",
+   "cause": "simply_late",
+   "confidence": "low",
+   "headline": "First reminder (7 days): 18 days overdue, nothing blocking",
+   "reasons": [
+    {
+     "text": "A billing ticket from Oct 29, 2026 is closed. Mentioned for context; it doesn't block the reminder.",
+     "evidenceIds": [
+      "ticket:T881021"
+     ],
+     "policyRef": null
+    },
+    {
+     "text": "A billing ticket from Aug 12, 2026 is closed. Mentioned for context; it doesn't block the reminder.",
+     "evidenceIds": [
+      "ticket:T880375"
+     ],
+     "policyRef": null
+    },
+    {
+     "text": "Tell Nadia Sinclair (account manager) before this goes out.",
+     "evidenceIds": [],
+     "policyRef": "collections_policy.md: tell the account manager before finance contacts one of their accounts"
+    }
+   ],
+   "evidence": [
+    {
+     "id": "ticket:T881021",
+     "kind": "ticket",
+     "file": "tickets.csv",
+     "recordId": "T881021",
+     "date": "2026-10-29",
+     "status": "solved",
+     "title": "Second attempt",
+     "detail": "Morning,\n\nsorry to bother you again about this. you said last week the duplicate refund was approved but i still don't see it and my manager keeps asking. is there a reference number i can give our bank?"
+    },
+    {
+     "id": "ticket:T880643",
+     "kind": "ticket",
+     "file": "tickets.csv",
+     "recordId": "T880643",
+     "date": "2026-09-12",
+     "status": "pending",
+     "title": "Support",
+     "detail": "Morning,\n\nmy colleague noticed the invoice email says due the 14th, i definitely typed 15th. retyped it, saved, same thing in the email preview\n\nRhys"
+    },
+    {
+     "id": "ticket:T880375",
+     "kind": "ticket",
+     "file": "tickets.csv",
+     "recordId": "T880375",
+     "date": "2026-08-12",
+     "status": "solved",
+     "title": "ticket",
+     "detail": "Hi,\n\nIs there a way to preview the prorated amount before confirming a plan change? I'd have held off if I'd known it would be charged immediately."
+    },
+    {
+     "id": "ticket:T880316",
+     "kind": "ticket",
+     "file": "tickets.csv",
+     "recordId": "T880316",
+     "date": "2026-08-05",
+     "status": "solved",
+     "title": "please advise",
+     "detail": "Hi,\n\nIs there a setting to force people to change their password every 90 days? Our professional indemnity insurer has asked whether we have something like that in place."
+    },
+    {
+     "id": "ticket:T880056",
+     "kind": "ticket",
+     "file": "tickets.csv",
+     "recordId": "T880056",
+     "date": "2026-07-07",
+     "status": "solved",
+     "title": "FYI",
+     "detail": "Is the reminder schedule set per invoice or globally? I'd like to tweak it for one large invoice without affecting the rest."
+    },
+    {
+     "id": "contract:C1022:2026-09-13",
+     "kind": "contract",
+     "file": "contracts.csv",
+     "recordId": "C1022:2026-09-13",
+     "date": "2026-09-13",
+     "title": "Contract: 10 seats \u00d7 $47.00, Sep 13, 2026 to Sep 12, 2027"
+    }
+   ],
+   "policyRef": "collections_policy.md: tell the account manager before finance contacts one of their accounts",
+   "needsReview": true,
+   "draft": {
+    "to": "rhys.underhill@studiomarsh.example",
+    "subject": "Invoice INV-25854 is overdue",
+    "body": "Hi Rhys,\n\nA quick note that invoice INV-25854 for $1,410 was due on Oct 13, 2026 and is still open on our side.\n\nIf you've already paid, thank you, and please ignore this. If anything on the invoice looks wrong, like the seat count or plan, just reply and we'll fix it before you pay.\n\nThanks,\nPriya Nair\nLedgerline Billing",
+    "tone": "standard"
+   },
+   "reminderStage": "First reminder (7 days)",
+   "reviewReason": "a billing ticket from Oct 29, 2026 is marked solved: check it was really fixed"
   },
   {
    "id": "INV-25926",
@@ -1648,9 +1526,16 @@
    "agingBucket": "1-30",
    "verdict": "send",
    "cause": "card_failed",
-   "confidence": "high",
+   "confidence": "low",
    "headline": "Card failed: send the update-card note",
    "reasons": [
+    {
+     "text": "A billing ticket from Oct 21, 2026 is closed. Mentioned for context; it doesn't block the reminder.",
+     "evidenceIds": [
+      "ticket:T880960"
+     ],
+     "policyRef": null
+    },
     {
      "text": "The card failed and Stripe's retries are over. A person asks for a new card: nobody has followed this up yet.",
      "evidenceIds": [
@@ -1734,7 +1619,7 @@
     }
    ],
    "policyRef": "billing_engine_rewrite_2026.md: Stripe retries failed cards three times over seven days, emailing each time",
-   "needsReview": false,
+   "needsReview": true,
    "draft": {
     "to": "clara.hollis@ruizwhitfieldcpas.example",
     "subject": "Card payment for invoice INV-25926 didn't go through",
@@ -1742,23 +1627,7 @@
     "tone": "card_update"
    },
    "reminderStage": "Second reminder (21 days)",
-   "agreement": {
-    "agree": true,
-    "votes": [
-     {
-      "judge": "rules",
-      "answer": "not_a_complaint"
-     },
-     {
-      "judge": "gpt-oss-20b (prompt A)",
-      "answer": "not_a_complaint"
-     },
-     {
-      "judge": "qwen3.8-27b (prompt B)",
-      "answer": "not_a_complaint"
-     }
-    ]
-   }
+   "reviewReason": "a billing ticket from Oct 21, 2026 is marked solved: check it was really fixed; ticket tagged account change on Oct 21, 2026, after this bill was issued: a person reads it before anyone chases"
   },
   {
    "id": "INV-25912",
@@ -1775,6 +1644,13 @@
    "confidence": "high",
    "headline": "Card failed: send the update-card note",
    "reasons": [
+    {
+     "text": "A billing ticket from Sep 7, 2026 is closed. Mentioned for context; it doesn't block the reminder.",
+     "evidenceIds": [
+      "ticket:T880581"
+     ],
+     "policyRef": null
+    },
     {
      "text": "The card failed and Stripe's retries are over. A person asks for a new card: nobody has followed this up yet.",
      "evidenceIds": [
@@ -1840,24 +1716,7 @@
     "body": "Hi Signe,\n\nThe card on file for Ellery Achebe Chartered Accountants didn't go through for invoice INV-25912 ($799), and the automatic retries have now finished. Could you update the card, or reply and we'll send bank details instead?\n\nThanks,\nPriya Nair\nLedgerline Billing",
     "tone": "card_update"
    },
-   "reminderStage": "Second reminder (21 days)",
-   "agreement": {
-    "agree": true,
-    "votes": [
-     {
-      "judge": "rules",
-      "answer": "other_complaint"
-     },
-     {
-      "judge": "gpt-oss-20b (prompt A)",
-      "answer": "other_complaint"
-     },
-     {
-      "judge": "qwen3.8-27b (prompt B)",
-      "answer": "other_complaint"
-     }
-    ]
-   }
+   "reminderStage": "Second reminder (21 days)"
   },
   {
    "id": "INV-25897",
@@ -1871,7 +1730,7 @@
    "agingBucket": "1-30",
    "verdict": "send",
    "cause": "unhappy",
-   "confidence": "low",
+   "confidence": "high",
    "headline": "Send a softer reminder (open product complaint)",
    "reasons": [
     {
@@ -1918,32 +1777,14 @@
     }
    ],
    "policyRef": "collections_policy.md: tell the account manager before finance contacts one of their accounts",
-   "needsReview": true,
+   "needsReview": false,
    "draft": {
     "to": "tomas.castellano@ambroselowelladvisory.example",
     "subject": "Invoice INV-25897: a quick note",
     "body": "Hi Tomas,\n\nI know your team has an open request with our support team, and they're on it. Separately, invoice INV-25897 for $658 was due on Oct 21, 2026. When you get a moment, could you check where it is? If anything about the invoice looks wrong, just reply and we'll put it right.\n\nThanks,\nPriya Nair\nLedgerline Billing",
     "tone": "soft"
    },
-   "reminderStage": "First reminder (7 days)",
-   "reviewReason": "the AI wasn't sure what this ticket means",
-   "agreement": {
-    "agree": false,
-    "votes": [
-     {
-      "judge": "rules",
-      "answer": "not_a_complaint"
-     },
-     {
-      "judge": "gpt-oss-20b (prompt A)",
-      "answer": "other_complaint"
-     },
-     {
-      "judge": "qwen3.8-27b (prompt B)",
-      "answer": "not_a_complaint"
-     }
-    ]
-   }
+   "reminderStage": "First reminder (7 days)"
   },
   {
    "id": "INV-25928",
@@ -1957,9 +1798,16 @@
    "agingBucket": "1-30",
    "verdict": "send",
    "cause": "card_failed",
-   "confidence": "high",
+   "confidence": "low",
    "headline": "Card failed: send the update-card note",
    "reasons": [
+    {
+     "text": "A billing ticket from Oct 13, 2026 is closed. Mentioned for context; it doesn't block the reminder.",
+     "evidenceIds": [
+      "ticket:T880896"
+     ],
+     "policyRef": null
+    },
     {
      "text": "The card failed and Stripe's retries are over. A person asks for a new card: nobody has followed this up yet.",
      "evidenceIds": [
@@ -2013,7 +1861,7 @@
     }
    ],
    "policyRef": "billing_engine_rewrite_2026.md: Stripe retries failed cards three times over seven days, emailing each time",
-   "needsReview": false,
+   "needsReview": true,
    "draft": {
     "to": "kofi.glover@tanaccounting.example",
     "subject": "Card payment for invoice INV-25928 didn't go through",
@@ -2021,23 +1869,7 @@
     "tone": "card_update"
    },
    "reminderStage": "Second reminder (21 days)",
-   "agreement": {
-    "agree": true,
-    "votes": [
-     {
-      "judge": "rules",
-      "answer": "not_a_complaint"
-     },
-     {
-      "judge": "gpt-oss-20b (prompt A)",
-      "answer": "not_a_complaint"
-     },
-     {
-      "judge": "qwen3.8-27b (prompt B)",
-      "answer": "not_a_complaint"
-     }
-    ]
-   }
+   "reviewReason": "a billing ticket from Oct 13, 2026 is marked solved: check it was really fixed; ticket tagged account change on Oct 13, 2026, after this bill was issued: a person reads it before anyone chases"
   },
   {
    "id": "INV-25969",
@@ -2119,24 +1951,7 @@
     "body": "Hi Mateo,\n\nThe card on file for Bramwell Sinclair Chartered Accountants didn't go through for invoice INV-25969 ($611), and the automatic retries have now finished. Could you update the card, or reply and we'll send bank details instead?\n\nThanks,\nPriya Nair\nLedgerline Billing",
     "tone": "card_update"
    },
-   "reminderStage": "Second reminder (21 days)",
-   "agreement": {
-    "agree": true,
-    "votes": [
-     {
-      "judge": "rules",
-      "answer": "not_a_complaint"
-     },
-     {
-      "judge": "gpt-oss-20b (prompt A)",
-      "answer": "not_a_complaint"
-     },
-     {
-      "judge": "qwen3.8-27b (prompt B)",
-      "answer": "not_a_complaint"
-     }
-    ]
-   }
+   "reminderStage": "Second reminder (21 days)"
   },
   {
    "id": "INV-26005",
@@ -2203,24 +2018,7 @@
     "body": "Hi Layla,\n\nThe card on file for Hume Accounting didn't go through for invoice INV-26005 ($282), and the automatic retries have now finished. Could you update the card, or reply and we'll send bank details instead?\n\nThanks,\nPriya Nair\nLedgerline Billing",
     "tone": "card_update"
    },
-   "reminderStage": "First reminder (7 days)",
-   "agreement": {
-    "agree": true,
-    "votes": [
-     {
-      "judge": "rules",
-      "answer": "other_complaint"
-     },
-     {
-      "judge": "gpt-oss-20b (prompt A)",
-      "answer": "other_complaint"
-     },
-     {
-      "judge": "qwen3.8-27b (prompt B)",
-      "answer": "other_complaint"
-     }
-    ]
-   }
+   "reminderStage": "First reminder (7 days)"
   },
   {
    "id": "INV-25787",
@@ -2243,6 +2041,13 @@
       "ticket:T880886"
      ],
      "policyRef": "collections_policy.md: do not chase an invoice the customer has disputed"
+    },
+    {
+     "text": "A billing ticket from Aug 14, 2026 is closed. Mentioned for context; it doesn't block the reminder.",
+     "evidenceIds": [
+      "ticket:T880399"
+     ],
+     "policyRef": null
     },
     {
      "text": "Raised Oct 12, 2026: 15 working days without a fix, 10 past the 5-day target.",
@@ -2288,23 +2093,6 @@
     "body": "",
     "tone": "none"
    },
-   "agreement": {
-    "agree": false,
-    "votes": [
-     {
-      "judge": "rules",
-      "answer": "billing_complaint"
-     },
-     {
-      "judge": "gpt-oss-20b (prompt A)",
-      "answer": "billing_complaint"
-     },
-     {
-      "judge": "qwen3.8-27b (prompt B)",
-      "answer": "not_a_complaint"
-     }
-    ]
-   },
    "hold": {
     "owner": "Priya Nair",
     "ownerRole": "Finance (AR), with Nadia Upton for the customer's agreement",
@@ -2324,7 +2112,7 @@
    "agingBucket": "31-60",
    "verdict": "hold",
    "cause": "wrong_bill",
-   "confidence": "low",
+   "confidence": "high",
    "headline": "The customer disputes this exact invoice in a support ticket and says they're holding payment until it's fixed. The ticket is still open.",
    "reasons": [
     {
@@ -2335,11 +2123,18 @@
      "policyRef": "collections_policy.md: do not chase an invoice the customer has disputed"
     },
     {
-     "text": "The AI wasn't sure whether this open ticket is about money or a serious problem (its two checks disagreed). We don't chase until a person reads it.",
+     "text": "Open billing complaint: chasing payment now would make it worse.",
      "evidenceIds": [
       "ticket:T880180"
      ],
-     "policyRef": "sla_policy.md: legal action, regulator, chargeback or cancellation goes to the Head of Support"
+     "policyRef": "collections_policy.md: don't chase a dispute or open escalation until the account manager says so"
+    },
+    {
+     "text": "A billing ticket from Jul 16, 2026 is closed. Mentioned for context; it doesn't block the reminder.",
+     "evidenceIds": [
+      "ticket:T880149"
+     ],
+     "policyRef": null
     },
     {
      "text": "Raised Sep 22, 2026: 29 working days without a fix, 24 past the 5-day target.",
@@ -2418,30 +2213,12 @@
     }
    ],
    "policyRef": "collections_policy.md: do not chase an invoice the customer has disputed",
-   "needsReview": true,
+   "needsReview": false,
    "draft": {
     "to": "chloe.sterling@westbrookengineeringgr.example",
     "subject": "",
     "body": "",
     "tone": "none"
-   },
-   "reviewReason": "the AI wasn't sure what this ticket means",
-   "agreement": {
-    "agree": false,
-    "votes": [
-     {
-      "judge": "rules",
-      "answer": "billing_complaint"
-     },
-     {
-      "judge": "gpt-oss-20b (prompt A)",
-      "answer": "billing_complaint"
-     },
-     {
-      "judge": "qwen3.8-27b (prompt B)",
-      "answer": "other_complaint"
-     }
-    ]
    },
    "hold": {
     "owner": "Priya Nair",
@@ -2536,128 +2313,11 @@
     "body": "",
     "tone": "none"
    },
-   "agreement": {
-    "agree": false,
-    "votes": [
-     {
-      "judge": "rules",
-      "answer": "serious_escalation"
-     },
-     {
-      "judge": "gpt-oss-20b (prompt A)",
-      "answer": "not_a_complaint"
-     },
-     {
-      "judge": "qwen3.8-27b (prompt B)",
-      "answer": "serious_escalation"
-     }
-    ]
-   },
    "hold": {
     "owner": "Priya Nair",
     "ownerRole": "Finance (AR), with Nadia Sinclair for the customer's agreement",
     "deadline": "2026-10-31",
     "action": "Send a corrected invoice or a clear answer to the customer, agreeing seats or price with Nadia Sinclair first. Target: 5 working days from when they raised it."
-   }
-  },
-  {
-   "id": "INV-25662",
-   "customerId": "C1254",
-   "customerName": "Upton & Bell Advisory",
-   "amount": 44064.0,
-   "currency": "USD",
-   "issueDate": "2026-07-27",
-   "dueDate": "2026-08-26",
-   "daysOverdue": 66,
-   "agingBucket": "61-90",
-   "verdict": "hold",
-   "cause": "wrong_bill",
-   "confidence": "high",
-   "headline": "The customer disputes this exact invoice in a support ticket. The ticket is marked solved in Zendesk, but the bill was never corrected or reissued.",
-   "reasons": [
-    {
-     "text": "The customer disputes this exact invoice in a support ticket. The ticket is marked solved in Zendesk, but the bill was never corrected or reissued.",
-     "evidenceIds": [
-      "ticket:T880582"
-     ],
-     "policyRef": "collections_policy.md: do not chase an invoice the customer has disputed"
-    },
-    {
-     "text": "Raised Sep 7, 2026: 40 working days without a fix, 35 past the 5-day target.",
-     "evidenceIds": [],
-     "policyRef": "Maya (COO): corrected invoice or clear answer within 5 working days"
-    }
-   ],
-   "evidence": [
-    {
-     "id": "ticket:T880949",
-     "kind": "ticket",
-     "file": "tickets.csv",
-     "recordId": "T880949",
-     "date": "2026-10-20",
-     "status": "solved",
-     "title": "Not working?",
-     "detail": "Changed my language to German in profile settings, it switches for a moment then goes back to English on the next page load."
-    },
-    {
-     "id": "ticket:T880587",
-     "kind": "ticket",
-     "file": "tickets.csv",
-     "recordId": "T880587",
-     "date": "2026-09-08",
-     "status": "solved",
-     "title": "Before we renew",
-     "detail": "Hello,\n\nWe use Net 30 on our standard template but the portal is telling clients they have 29 days. Did something change in how terms are worked out?"
-    },
-    {
-     "id": "ticket:T880582",
-     "kind": "ticket",
-     "file": "tickets.csv",
-     "recordId": "T880582",
-     "date": "2026-09-07",
-     "status": "solved",
-     "title": "Late fee should not be there",
-     "detail": "The card charge failed last month because of an outage on your payment side, not ours. Your support agent told us at the time the late fee would be waived. It's on INV-25662 anyway. I'm not authorising payment while that fee is included.\n\nNoah"
-    },
-    {
-     "id": "contract:C1254:2026-07-27",
-     "kind": "contract",
-     "file": "contracts.csv",
-     "recordId": "C1254:2026-07-27",
-     "date": "2026-07-27",
-     "title": "Contract: 54 seats \u00d7 $68.00, Jul 27, 2026 to Jul 26, 2027"
-    }
-   ],
-   "policyRef": "collections_policy.md: do not chase an invoice the customer has disputed",
-   "needsReview": false,
-   "draft": {
-    "to": "noah.mbeki@uptonbelladvisory.example",
-    "subject": "",
-    "body": "",
-    "tone": "none"
-   },
-   "agreement": {
-    "agree": true,
-    "votes": [
-     {
-      "judge": "rules",
-      "answer": "serious_escalation"
-     },
-     {
-      "judge": "gpt-oss-20b (prompt A)",
-      "answer": "billing_complaint"
-     },
-     {
-      "judge": "qwen3.8-27b (prompt B)",
-      "answer": "billing_complaint"
-     }
-    ]
-   },
-   "hold": {
-    "owner": "Priya Nair",
-    "ownerRole": "Finance (AR)",
-    "deadline": "2026-10-31",
-    "action": "Send a corrected invoice or a clear answer to the customer. Target: 5 working days from when they raised it."
    }
   },
   {
@@ -2672,7 +2332,7 @@
    "agingBucket": "1-30",
    "verdict": "hold",
    "cause": "wrong_bill",
-   "confidence": "high",
+   "confidence": "low",
    "headline": "The customer disputes this exact invoice in a support ticket and says they're holding payment until it's fixed. The ticket is marked solved in Zendesk, but the bill was never corrected or reissued.",
    "reasons": [
     {
@@ -2686,6 +2346,20 @@
      "text": "Open product complaint (not about money): send, but in a softer tone, and tell the account manager.",
      "evidenceIds": [
       "ticket:T880996"
+     ],
+     "policyRef": null
+    },
+    {
+     "text": "A billing ticket from Sep 11, 2026 is closed. Mentioned for context; it doesn't block the reminder.",
+     "evidenceIds": [
+      "ticket:T880638"
+     ],
+     "policyRef": null
+    },
+    {
+     "text": "A billing ticket from Jul 16, 2026 is closed. Mentioned for context; it doesn't block the reminder.",
+     "evidenceIds": [
+      "ticket:T880136"
      ],
      "policyRef": null
     },
@@ -2776,30 +2450,14 @@
     }
    ],
    "policyRef": "collections_policy.md: do not chase an invoice the customer has disputed",
-   "needsReview": false,
+   "needsReview": true,
    "draft": {
     "to": "ethan.whitfield@delacroixjessopco.example",
     "subject": "",
     "body": "",
     "tone": "none"
    },
-   "agreement": {
-    "agree": true,
-    "votes": [
-     {
-      "judge": "rules",
-      "answer": "not_a_complaint"
-     },
-     {
-      "judge": "gpt-oss-20b (prompt A)",
-      "answer": "not_a_complaint"
-     },
-     {
-      "judge": "qwen3.8-27b (prompt B)",
-      "answer": "not_a_complaint"
-     }
-    ]
-   },
+   "reviewReason": "a billing ticket from Sep 11, 2026 is marked solved: check it was really fixed",
    "hold": {
     "owner": "Priya Nair",
     "ownerRole": "Finance (AR), with Maria Yardley for the customer's agreement",
@@ -2828,6 +2486,13 @@
       "ticket:T881024"
      ],
      "policyRef": "collections_policy.md: do not chase an invoice the customer has disputed"
+    },
+    {
+     "text": "A billing ticket from Jul 17, 2026 is closed. Mentioned for context; it doesn't block the reminder.",
+     "evidenceIds": [
+      "ticket:T880161"
+     ],
+     "policyRef": null
     },
     {
      "text": "Raised Oct 29, 2026: 2 working days so far, target 5.",
@@ -2913,23 +2578,6 @@
     "body": "",
     "tone": "none"
    },
-   "agreement": {
-    "agree": true,
-    "votes": [
-     {
-      "judge": "rules",
-      "answer": "billing_complaint"
-     },
-     {
-      "judge": "gpt-oss-20b (prompt A)",
-      "answer": "not_a_complaint"
-     },
-     {
-      "judge": "qwen3.8-27b (prompt B)",
-      "answer": "not_a_complaint"
-     }
-    ]
-   },
    "hold": {
     "owner": "Priya Nair",
     "ownerRole": "Finance (AR), with Hannah Drummond for the customer's agreement",
@@ -2949,7 +2597,7 @@
    "agingBucket": "31-60",
    "verdict": "hold",
    "cause": "wrong_bill",
-   "confidence": "high",
+   "confidence": "low",
    "headline": "The customer disputes this exact invoice in a support ticket and says they're holding payment until it's fixed. The ticket is marked solved in Zendesk, but the bill was never corrected or reissued.",
    "reasons": [
     {
@@ -2958,6 +2606,13 @@
       "ticket:T880738"
      ],
      "policyRef": "collections_policy.md: do not chase an invoice the customer has disputed"
+    },
+    {
+     "text": "A billing ticket from Sep 9, 2026 is closed. Mentioned for context; it doesn't block the reminder.",
+     "evidenceIds": [
+      "ticket:T880602"
+     ],
+     "policyRef": null
     },
     {
      "text": "A billing ticket from Jul 21, 2026 is closed. Mentioned for context; it doesn't block the reminder.",
@@ -3033,30 +2688,14 @@
     }
    ],
    "policyRef": "collections_policy.md: do not chase an invoice the customer has disputed",
-   "needsReview": false,
+   "needsReview": true,
    "draft": {
     "to": "emma.orwell@elleryconsulting.example",
     "subject": "",
     "body": "",
     "tone": "none"
    },
-   "agreement": {
-    "agree": false,
-    "votes": [
-     {
-      "judge": "rules",
-      "answer": "not_a_complaint"
-     },
-     {
-      "judge": "gpt-oss-20b (prompt A)",
-      "answer": "other_complaint"
-     },
-     {
-      "judge": "qwen3.8-27b (prompt B)",
-      "answer": "not_a_complaint"
-     }
-    ]
-   },
+   "reviewReason": "a billing ticket from Sep 9, 2026 is marked solved: check it was really fixed",
    "hold": {
     "owner": "Priya Nair",
     "ownerRole": "Finance (AR)",
@@ -3129,23 +2768,6 @@
     "subject": "",
     "body": "",
     "tone": "none"
-   },
-   "agreement": {
-    "agree": true,
-    "votes": [
-     {
-      "judge": "rules",
-      "answer": "not_a_complaint"
-     },
-     {
-      "judge": "gpt-oss-20b (prompt A)",
-      "answer": "not_a_complaint"
-     },
-     {
-      "judge": "qwen3.8-27b (prompt B)",
-      "answer": "not_a_complaint"
-     }
-    ]
    },
    "hold": {
     "owner": "Priya Nair",
@@ -3220,124 +2842,11 @@
     "body": "",
     "tone": "none"
    },
-   "agreement": {
-    "agree": true,
-    "votes": [
-     {
-      "judge": "rules",
-      "answer": "billing_complaint"
-     },
-     {
-      "judge": "gpt-oss-20b (prompt A)",
-      "answer": "billing_complaint"
-     },
-     {
-      "judge": "qwen3.8-27b (prompt B)",
-      "answer": "billing_complaint"
-     }
-    ]
-   },
    "hold": {
     "owner": "Priya Nair",
     "ownerRole": "Finance (AR), with Hannah Drummond for the customer's agreement",
     "deadline": "2026-10-31",
     "action": "Send a corrected invoice or a clear answer to the customer, agreeing seats or price with Hannah Drummond first. Target: 5 working days from when they raised it."
-   }
-  },
-  {
-   "id": "INV-25852",
-   "customerId": "C1469",
-   "customerName": "Kingsway Engineering Group",
-   "amount": 5100.0,
-   "currency": "USD",
-   "issueDate": "2026-09-12",
-   "dueDate": "2026-10-12",
-   "daysOverdue": 19,
-   "agingBucket": "1-30",
-   "verdict": "hold",
-   "cause": "unhappy",
-   "confidence": "low",
-   "headline": "The AI wasn't sure whether this open ticket is about money or a serious problem (its two checks disagreed). We don't chase until a person reads it.",
-   "reasons": [
-    {
-     "text": "The AI wasn't sure whether this open ticket is about money or a serious problem (its two checks disagreed). We don't chase until a person reads it.",
-     "evidenceIds": [
-      "ticket:T880184"
-     ],
-     "policyRef": "sla_policy.md: legal action, regulator, chargeback or cancellation goes to the Head of Support"
-    }
-   ],
-   "evidence": [
-    {
-     "id": "ticket:T880284",
-     "kind": "ticket",
-     "file": "tickets.csv",
-     "recordId": "T880284",
-     "date": "2026-07-31",
-     "status": "solved",
-     "title": "Query regarding our setup",
-     "detail": "Does the CRM integration bring in the company owner field? We use it to assign the account lead."
-    },
-    {
-     "id": "ticket:T880184",
-     "kind": "ticket",
-     "file": "tickets.csv",
-     "recordId": "T880184",
-     "date": "2026-07-20",
-     "status": "pending",
-     "title": "Can you check something for me",
-     "detail": "Hi there - The amount the client sees in the portal is 1,950.00 AUD but the PDF they downloaded says 1,949.99. Which one is right? They want to pay today.\n\nSigne"
-    },
-    {
-     "id": "ticket:T880078",
-     "kind": "ticket",
-     "file": "tickets.csv",
-     "recordId": "T880078",
-     "date": "2026-07-09",
-     "status": "solved",
-     "title": "Not working?",
-     "detail": "If I void an invoice, is that number gone for good or does it get reused?\n\nOscar"
-    },
-    {
-     "id": "contract:C1469:2025-12-12",
-     "kind": "contract",
-     "file": "contracts.csv",
-     "recordId": "C1469:2025-12-12",
-     "date": "2025-12-12",
-     "title": "Contract: 25 seats \u00d7 $68.00, Dec 12, 2025 to Dec 11, 2026"
-    }
-   ],
-   "policyRef": "sla_policy.md: legal action, regulator, chargeback or cancellation goes to the Head of Support",
-   "needsReview": true,
-   "draft": {
-    "to": "marcus.tan@kingswayengineeringgro.example",
-    "subject": "",
-    "body": "",
-    "tone": "none"
-   },
-   "reviewReason": "the AI wasn't sure what this ticket means",
-   "agreement": {
-    "agree": false,
-    "votes": [
-     {
-      "judge": "rules",
-      "answer": "billing_complaint"
-     },
-     {
-      "judge": "gpt-oss-20b (prompt A)",
-      "answer": "not_a_complaint"
-     },
-     {
-      "judge": "qwen3.8-27b (prompt B)",
-      "answer": "other_complaint"
-     }
-    ]
-   },
-   "hold": {
-    "owner": "Nadia Sinclair",
-    "ownerRole": "Account manager",
-    "deadline": "2026-11-09",
-    "action": "Talk to the customer about the open issue, then release or keep the hold. If nobody acts by the deadline, it returns to finance."
    }
   },
   {
@@ -3423,24 +2932,7 @@
     "body": "",
     "tone": "none"
    },
-   "reviewReason": "a billing ticket from Oct 20, 2026 is marked solved: check it was really fixed",
-   "agreement": {
-    "agree": false,
-    "votes": [
-     {
-      "judge": "rules",
-      "answer": "not_a_complaint"
-     },
-     {
-      "judge": "gpt-oss-20b (prompt A)",
-      "answer": "not_a_complaint"
-     },
-     {
-      "judge": "qwen3.8-27b (prompt B)",
-      "answer": "other_complaint"
-     }
-    ]
-   },
+   "reviewReason": "a billing ticket from Oct 20, 2026 is marked solved: check it was really fixed; ticket tagged billing on Oct 20, 2026, after this bill was issued: a person reads it before anyone chases",
    "hold": {
     "owner": "Priya Nair",
     "ownerRole": "Finance (AR), with Nadia Upton for the customer's agreement",
@@ -3460,7 +2952,7 @@
    "agingBucket": "31-60",
    "verdict": "hold",
    "cause": "wrong_bill",
-   "confidence": "high",
+   "confidence": "low",
    "headline": "The customer disputes this exact invoice in a support ticket and says they're holding payment until it's fixed. The ticket is marked solved in Zendesk, but the bill was never corrected or reissued.",
    "reasons": [
     {
@@ -3469,6 +2961,13 @@
       "ticket:T880648"
      ],
      "policyRef": "collections_policy.md: do not chase an invoice the customer has disputed"
+    },
+    {
+     "text": "A billing ticket from Aug 29, 2026 is closed. Mentioned for context; it doesn't block the reminder.",
+     "evidenceIds": [
+      "ticket:T880514"
+     ],
+     "policyRef": null
     },
     {
      "text": "Raised Sep 13, 2026: 35 working days without a fix, 30 past the 5-day target.",
@@ -3517,35 +3016,87 @@
     }
    ],
    "policyRef": "collections_policy.md: do not chase an invoice the customer has disputed",
-   "needsReview": false,
+   "needsReview": true,
    "draft": {
     "to": "caleb.holloway@mercerbanerjeellp.example",
     "subject": "",
     "body": "",
     "tone": "none"
    },
-   "agreement": {
-    "agree": true,
-    "votes": [
-     {
-      "judge": "rules",
-      "answer": "other_complaint"
-     },
-     {
-      "judge": "gpt-oss-20b (prompt A)",
-      "answer": "other_complaint"
-     },
-     {
-      "judge": "qwen3.8-27b (prompt B)",
-      "answer": "other_complaint"
-     }
-    ]
-   },
+   "reviewReason": "a billing ticket from Aug 29, 2026 is marked solved: check it was really fixed",
    "hold": {
     "owner": "Priya Nair",
     "ownerRole": "Finance (AR)",
     "deadline": "2026-10-31",
     "action": "Send a corrected invoice or a clear answer to the customer. Target: 5 working days from when they raised it."
+   }
+  },
+  {
+   "id": "INV-25902",
+   "customerId": "C1063",
+   "customerName": "Crane IT Partners",
+   "amount": 3060.0,
+   "currency": "USD",
+   "issueDate": "2026-09-24",
+   "dueDate": "2026-10-24",
+   "daysOverdue": 7,
+   "agingBucket": "1-30",
+   "verdict": "hold",
+   "cause": "unhappy",
+   "confidence": "high",
+   "headline": "Serious open escalation with support. Money talk waits until it's resolved.",
+   "reasons": [
+    {
+     "text": "Serious open escalation with support. Money talk waits until it's resolved.",
+     "evidenceIds": [
+      "ticket:T880058"
+     ],
+     "policyRef": "sla_policy.md: legal action, regulator, chargeback or cancellation goes to the Head of Support"
+    }
+   ],
+   "evidence": [
+    {
+     "id": "ticket:T880332",
+     "kind": "ticket",
+     "file": "tickets.csv",
+     "recordId": "T880332",
+     "date": "2026-08-06",
+     "status": "solved",
+     "title": "Important - please read",
+     "detail": "Hi team,\n\nI'd like an email to myself whenever a reminder goes out to a client, so I'm not caught off guard if they ring. Is that a thing?\n\nAisha"
+    },
+    {
+     "id": "ticket:T880058",
+     "kind": "ticket",
+     "file": "tickets.csv",
+     "recordId": "T880058",
+     "date": "2026-07-07",
+     "status": "pending",
+     "title": "Accounting sync wiped our tax codes",
+     "detail": "Hello,\n\nTax codes are back and the last two months reconciled cleanly against the ledger. Our bookkeeper double-checked every line. Closing this out."
+    },
+    {
+     "id": "contract:C1063:2026-06-24",
+     "kind": "contract",
+     "file": "contracts.csv",
+     "recordId": "C1063:2026-06-24",
+     "date": "2026-06-24",
+     "title": "Contract: 15 seats \u00d7 $68.00, Jun 24, 2026 to Jun 23, 2027"
+    }
+   ],
+   "policyRef": "sla_policy.md: legal action, regulator, chargeback or cancellation goes to the Head of Support",
+   "needsReview": false,
+   "draft": {
+    "to": "ian.achebe@craneitpartners.example",
+    "subject": "",
+    "body": "",
+    "tone": "none"
+   },
+   "hold": {
+    "owner": "Maria Yardley",
+    "ownerRole": "Account manager",
+    "deadline": "2026-11-09",
+    "action": "Talk to the customer about the open issue, then release or keep the hold. If nobody acts by the deadline, it returns to finance."
    }
   },
   {
@@ -3574,6 +3125,20 @@
      "text": "A billing ticket from Sep 10, 2026 is closed. Mentioned for context; it doesn't block the reminder.",
      "evidenceIds": [
       "ticket:T880625"
+     ],
+     "policyRef": null
+    },
+    {
+     "text": "A billing ticket from Jul 27, 2026 is closed. Mentioned for context; it doesn't block the reminder.",
+     "evidenceIds": [
+      "ticket:T880241"
+     ],
+     "policyRef": null
+    },
+    {
+     "text": "A billing ticket from Jul 9, 2026 is closed. Mentioned for context; it doesn't block the reminder.",
+     "evidenceIds": [
+      "ticket:T880079"
      ],
      "policyRef": null
     },
@@ -3652,231 +3217,11 @@
     "tone": "none"
    },
    "reviewReason": "a billing ticket from Sep 10, 2026 is marked solved: check it was really fixed",
-   "agreement": {
-    "agree": true,
-    "votes": [
-     {
-      "judge": "rules",
-      "answer": "billing_complaint"
-     },
-     {
-      "judge": "gpt-oss-20b (prompt A)",
-      "answer": "not_a_complaint"
-     },
-     {
-      "judge": "qwen3.8-27b (prompt B)",
-      "answer": "not_a_complaint"
-     }
-    ]
-   },
    "hold": {
     "owner": "Priya Nair",
     "ownerRole": "Finance (AR)",
     "deadline": "2026-10-31",
     "action": "Send a corrected invoice or a clear answer to the customer. Target: 5 working days from when they raised it."
-   }
-  },
-  {
-   "id": "INV-25539",
-   "customerId": "C1439",
-   "customerName": "Banerjee Petrov Engineers",
-   "amount": 2652.0,
-   "currency": "USD",
-   "issueDate": "2026-07-01",
-   "dueDate": "2026-07-31",
-   "daysOverdue": 92,
-   "agingBucket": "90+",
-   "verdict": "hold",
-   "cause": "wrong_bill",
-   "confidence": "high",
-   "headline": "The customer disputes this exact invoice in a support ticket. The ticket is marked solved in Zendesk, but the bill was never corrected or reissued.",
-   "reasons": [
-    {
-     "text": "The customer disputes this exact invoice in a support ticket. The ticket is marked solved in Zendesk, but the bill was never corrected or reissued.",
-     "evidenceIds": [
-      "ticket:T880432"
-     ],
-     "policyRef": "collections_policy.md: do not chase an invoice the customer has disputed"
-    },
-    {
-     "text": "Raised Aug 19, 2026: 53 working days without a fix, 48 past the 5-day target.",
-     "evidenceIds": [],
-     "policyRef": "Maya (COO): corrected invoice or clear answer within 5 working days"
-    }
-   ],
-   "evidence": [
-    {
-     "id": "ticket:T880432",
-     "kind": "ticket",
-     "file": "tickets.csv",
-     "recordId": "T880432",
-     "date": "2026-08-19",
-     "status": "solved",
-     "title": "Client portal cancellation ignored",
-     "detail": "We switched off the client portal in August because, frankly, our clients weren't logging into it. Your team confirmed the cancellation by email. INV-25539 not only still charges the monthly portal fee, it seems to have the setup line on it again?? Two partners signed off on dropping this module and neither of them is going to sign off on paying for it. Please correct and resend."
-    },
-    {
-     "id": "contract:C1439:2026-04-01",
-     "kind": "contract",
-     "file": "contracts.csv",
-     "recordId": "C1439:2026-04-01",
-     "date": "2026-04-01",
-     "title": "Contract: 13 seats \u00d7 $68.00, Apr 1, 2026 to Mar 31, 2027"
-    }
-   ],
-   "policyRef": "collections_policy.md: do not chase an invoice the customer has disputed",
-   "needsReview": false,
-   "draft": {
-    "to": "marcus.glover@banerjeepetrovengineer.example",
-    "subject": "",
-    "body": "",
-    "tone": "none"
-   },
-   "agreement": {
-    "agree": true,
-    "votes": [
-     {
-      "judge": "rules",
-      "answer": "serious_escalation"
-     },
-     {
-      "judge": "gpt-oss-20b (prompt A)",
-      "answer": "billing_complaint"
-     },
-     {
-      "judge": "qwen3.8-27b (prompt B)",
-      "answer": "billing_complaint"
-     }
-    ]
-   },
-   "hold": {
-    "owner": "Priya Nair",
-    "ownerRole": "Finance (AR)",
-    "deadline": "2026-10-31",
-    "action": "Send a corrected invoice or a clear answer to the customer. Target: 5 working days from when they raised it."
-   }
-  },
-  {
-   "id": "INV-25854",
-   "customerId": "C1022",
-   "customerName": "Studio Marsh",
-   "amount": 1410.0,
-   "currency": "USD",
-   "issueDate": "2026-09-13",
-   "dueDate": "2026-10-13",
-   "daysOverdue": 18,
-   "agingBucket": "1-30",
-   "verdict": "hold",
-   "cause": "unhappy",
-   "confidence": "low",
-   "headline": "The AI wasn't sure whether this open ticket is about money or a serious problem (its two checks disagreed). We don't chase until a person reads it.",
-   "reasons": [
-    {
-     "text": "A billing ticket from Oct 29, 2026 is closed. Mentioned for context; it doesn't block the reminder.",
-     "evidenceIds": [
-      "ticket:T881021"
-     ],
-     "policyRef": null
-    },
-    {
-     "text": "The AI wasn't sure whether this open ticket is about money or a serious problem (its two checks disagreed). We don't chase until a person reads it.",
-     "evidenceIds": [
-      "ticket:T880643"
-     ],
-     "policyRef": "sla_policy.md: legal action, regulator, chargeback or cancellation goes to the Head of Support"
-    }
-   ],
-   "evidence": [
-    {
-     "id": "ticket:T881021",
-     "kind": "ticket",
-     "file": "tickets.csv",
-     "recordId": "T881021",
-     "date": "2026-10-29",
-     "status": "solved",
-     "title": "Second attempt",
-     "detail": "Morning,\n\nsorry to bother you again about this. you said last week the duplicate refund was approved but i still don't see it and my manager keeps asking. is there a reference number i can give our bank?"
-    },
-    {
-     "id": "ticket:T880643",
-     "kind": "ticket",
-     "file": "tickets.csv",
-     "recordId": "T880643",
-     "date": "2026-09-12",
-     "status": "pending",
-     "title": "Support",
-     "detail": "Morning,\n\nmy colleague noticed the invoice email says due the 14th, i definitely typed 15th. retyped it, saved, same thing in the email preview\n\nRhys"
-    },
-    {
-     "id": "ticket:T880375",
-     "kind": "ticket",
-     "file": "tickets.csv",
-     "recordId": "T880375",
-     "date": "2026-08-12",
-     "status": "solved",
-     "title": "ticket",
-     "detail": "Hi,\n\nIs there a way to preview the prorated amount before confirming a plan change? I'd have held off if I'd known it would be charged immediately."
-    },
-    {
-     "id": "ticket:T880316",
-     "kind": "ticket",
-     "file": "tickets.csv",
-     "recordId": "T880316",
-     "date": "2026-08-05",
-     "status": "solved",
-     "title": "please advise",
-     "detail": "Hi,\n\nIs there a setting to force people to change their password every 90 days? Our professional indemnity insurer has asked whether we have something like that in place."
-    },
-    {
-     "id": "ticket:T880056",
-     "kind": "ticket",
-     "file": "tickets.csv",
-     "recordId": "T880056",
-     "date": "2026-07-07",
-     "status": "solved",
-     "title": "FYI",
-     "detail": "Is the reminder schedule set per invoice or globally? I'd like to tweak it for one large invoice without affecting the rest."
-    },
-    {
-     "id": "contract:C1022:2026-09-13",
-     "kind": "contract",
-     "file": "contracts.csv",
-     "recordId": "C1022:2026-09-13",
-     "date": "2026-09-13",
-     "title": "Contract: 10 seats \u00d7 $47.00, Sep 13, 2026 to Sep 12, 2027"
-    }
-   ],
-   "policyRef": "sla_policy.md: legal action, regulator, chargeback or cancellation goes to the Head of Support",
-   "needsReview": true,
-   "draft": {
-    "to": "rhys.underhill@studiomarsh.example",
-    "subject": "",
-    "body": "",
-    "tone": "none"
-   },
-   "reviewReason": "a billing ticket from Oct 29, 2026 is marked solved: check it was really fixed; the AI wasn't sure what this ticket means",
-   "agreement": {
-    "agree": true,
-    "votes": [
-     {
-      "judge": "rules",
-      "answer": "not_a_complaint"
-     },
-     {
-      "judge": "gpt-oss-20b (prompt A)",
-      "answer": "not_a_complaint"
-     },
-     {
-      "judge": "qwen3.8-27b (prompt B)",
-      "answer": "not_a_complaint"
-     }
-    ]
-   },
-   "hold": {
-    "owner": "Nadia Sinclair",
-    "ownerRole": "Account manager",
-    "deadline": "2026-11-09",
-    "action": "Talk to the customer about the open issue, then release or keep the hold. If nobody acts by the deadline, it returns to finance."
    }
   },
   {
@@ -3955,23 +3300,6 @@
     "body": "",
     "tone": "none"
    },
-   "agreement": {
-    "agree": true,
-    "votes": [
-     {
-      "judge": "rules",
-      "answer": "other_complaint"
-     },
-     {
-      "judge": "gpt-oss-20b (prompt A)",
-      "answer": "other_complaint"
-     },
-     {
-      "judge": "qwen3.8-27b (prompt B)",
-      "answer": "other_complaint"
-     }
-    ]
-   },
    "hold": {
     "owner": "Priya Nair",
     "ownerRole": "Finance (AR), with Hannah Drummond for the customer's agreement",
@@ -3991,7 +3319,7 @@
    "agingBucket": "31-60",
    "verdict": "paid",
    "cause": "paid",
-   "confidence": "high",
+   "confidence": "low",
    "headline": "An unmatched bank payment from this customer equals this bill. It was probably paid but never matched.",
    "reasons": [
     {
@@ -4000,6 +3328,13 @@
       "payment:PAY-65750"
      ],
      "policyRef": "collections_policy.md: bank transfers take three to five working days to show as paid"
+    },
+    {
+     "text": "A billing ticket from Oct 2, 2026 is closed. Mentioned for context; it doesn't block the reminder.",
+     "evidenceIds": [
+      "ticket:T880829"
+     ],
+     "policyRef": null
     }
    ],
    "evidence": [
@@ -4052,30 +3387,14 @@
     }
    ],
    "policyRef": "collections_policy.md: bank transfers take three to five working days to show as paid",
-   "needsReview": false,
+   "needsReview": true,
    "draft": {
     "to": "joel.okafor@jessoporwellagency.example",
     "subject": "",
     "body": "",
     "tone": "none"
    },
-   "agreement": {
-    "agree": true,
-    "votes": [
-     {
-      "judge": "rules",
-      "answer": "other_complaint"
-     },
-     {
-      "judge": "gpt-oss-20b (prompt A)",
-      "answer": "other_complaint"
-     },
-     {
-      "judge": "qwen3.8-27b (prompt B)",
-      "answer": "other_complaint"
-     }
-    ]
-   }
+   "reviewReason": "a billing ticket from Oct 2, 2026 is marked solved: check it was really fixed; ticket tagged account change on Oct 2, 2026, after this bill was issued: a person reads it before anyone chases"
   },
   {
    "id": "INV-25806",
@@ -4156,23 +3475,6 @@
     "subject": "",
     "body": "",
     "tone": "none"
-   },
-   "agreement": {
-    "agree": true,
-    "votes": [
-     {
-      "judge": "rules",
-      "answer": "not_a_complaint"
-     },
-     {
-      "judge": "gpt-oss-20b (prompt A)",
-      "answer": "not_a_complaint"
-     },
-     {
-      "judge": "qwen3.8-27b (prompt B)",
-      "answer": "not_a_complaint"
-     }
-    ]
    }
   },
   {
@@ -4198,11 +3500,11 @@
      "policyRef": "collections_policy.md: bank transfers take three to five working days to show as paid"
     },
     {
-     "text": "The AI wasn't sure whether this open ticket is about money or a serious problem (its two checks disagreed). We don't chase until a person reads it.",
+     "text": "A billing ticket from Jul 9, 2026 is closed. Mentioned for context; it doesn't block the reminder.",
      "evidenceIds": [
-      "ticket:T880184"
+      "ticket:T880078"
      ],
-     "policyRef": "sla_policy.md: legal action, regulator, chargeback or cancellation goes to the Head of Support"
+     "policyRef": null
     }
    ],
    "evidence": [
@@ -4262,24 +3564,7 @@
     "body": "",
     "tone": "none"
    },
-   "reviewReason": "2 overdue bills have this amount; we matched the payment to the oldest. A person confirms which bill it pays; the AI wasn't sure what this ticket means",
-   "agreement": {
-    "agree": false,
-    "votes": [
-     {
-      "judge": "rules",
-      "answer": "billing_complaint"
-     },
-     {
-      "judge": "gpt-oss-20b (prompt A)",
-      "answer": "not_a_complaint"
-     },
-     {
-      "judge": "qwen3.8-27b (prompt B)",
-      "answer": "other_complaint"
-     }
-    ]
-   }
+   "reviewReason": "2 overdue bills have this amount; we matched the payment to the oldest. A person confirms which bill it pays; a billing ticket from Jul 9, 2026 is marked solved: check it was really fixed; ticket tagged billing on Jul 9, 2026, after this bill was issued: a person reads it before anyone chases"
   },
   {
    "id": "INV-25845",
@@ -4340,23 +3625,6 @@
     "subject": "",
     "body": "",
     "tone": "none"
-   },
-   "agreement": {
-    "agree": true,
-    "votes": [
-     {
-      "judge": "rules",
-      "answer": "not_a_complaint"
-     },
-     {
-      "judge": "gpt-oss-20b (prompt A)",
-      "answer": "not_a_complaint"
-     },
-     {
-      "judge": "qwen3.8-27b (prompt B)",
-      "answer": "not_a_complaint"
-     }
-    ]
    }
   },
   {
@@ -4418,23 +3686,147 @@
     "subject": "",
     "body": "",
     "tone": "none"
+   }
+  },
+  {
+   "id": "INV-25662",
+   "customerId": "C1254",
+   "customerName": "Upton & Bell Advisory",
+   "amount": 44064.0,
+   "currency": "USD",
+   "issueDate": "2026-07-27",
+   "dueDate": "2026-08-26",
+   "daysOverdue": 66,
+   "agingBucket": "61-90",
+   "verdict": "call",
+   "cause": "simply_late",
+   "confidence": "low",
+   "headline": "Call: 66 days overdue",
+   "reasons": [
+    {
+     "text": "66 days overdue: a person should call rather than email.",
+     "evidenceIds": [],
+     "policyRef": "process_maps.md FIN-1: not paid after the reminders, phone and offer a payment plan"
+    },
+    {
+     "text": "One of the 50 largest accounts: nothing goes out until a person has read it.",
+     "evidenceIds": [],
+     "policyRef": "collections_policy.md: nothing goes to one of the 50 largest accounts without a person reading it first"
+    },
+    {
+     "text": "Tell Hannah Drummond (account manager) before this goes out.",
+     "evidenceIds": [],
+     "policyRef": "collections_policy.md: tell the account manager before finance contacts one of their accounts"
+    }
+   ],
+   "evidence": [
+    {
+     "id": "ticket:T880949",
+     "kind": "ticket",
+     "file": "tickets.csv",
+     "recordId": "T880949",
+     "date": "2026-10-20",
+     "status": "solved",
+     "title": "Not working?",
+     "detail": "Changed my language to German in profile settings, it switches for a moment then goes back to English on the next page load."
+    },
+    {
+     "id": "ticket:T880587",
+     "kind": "ticket",
+     "file": "tickets.csv",
+     "recordId": "T880587",
+     "date": "2026-09-08",
+     "status": "solved",
+     "title": "Before we renew",
+     "detail": "Hello,\n\nWe use Net 30 on our standard template but the portal is telling clients they have 29 days. Did something change in how terms are worked out?"
+    },
+    {
+     "id": "ticket:T880582",
+     "kind": "ticket",
+     "file": "tickets.csv",
+     "recordId": "T880582",
+     "date": "2026-09-07",
+     "status": "solved",
+     "title": "Late fee should not be there",
+     "detail": "The card charge failed last month because of an outage on your payment side, not ours. Your support agent told us at the time the late fee would be waived. It's on INV-25662 anyway. I'm not authorising payment while that fee is included.\n\nNoah"
+    },
+    {
+     "id": "contract:C1254:2026-07-27",
+     "kind": "contract",
+     "file": "contracts.csv",
+     "recordId": "C1254:2026-07-27",
+     "date": "2026-07-27",
+     "title": "Contract: 54 seats \u00d7 $68.00, Jul 27, 2026 to Jul 26, 2027"
+    }
+   ],
+   "policyRef": "process_maps.md FIN-1: not paid after the reminders, phone and offer a payment plan",
+   "needsReview": true,
+   "draft": {
+    "to": "noah.mbeki@uptonbelladvisory.example",
+    "subject": "",
+    "body": "",
+    "tone": "none"
    },
-   "agreement": {
-    "agree": true,
-    "votes": [
-     {
-      "judge": "rules",
-      "answer": "not_a_complaint"
-     },
-     {
-      "judge": "gpt-oss-20b (prompt A)",
-      "answer": "not_a_complaint"
-     },
-     {
-      "judge": "qwen3.8-27b (prompt B)",
-      "answer": "not_a_complaint"
-     }
-    ]
+   "reviewReason": "ticket tagged billing on Sep 7, 2026, after this bill was issued: a person reads it before anyone chases; one of the 50 largest accounts: a person reads or writes this one personally"
+  },
+  {
+   "id": "INV-25539",
+   "customerId": "C1439",
+   "customerName": "Banerjee Petrov Engineers",
+   "amount": 2652.0,
+   "currency": "USD",
+   "issueDate": "2026-07-01",
+   "dueDate": "2026-07-31",
+   "daysOverdue": 92,
+   "agingBucket": "90+",
+   "verdict": "call",
+   "cause": "simply_late",
+   "confidence": "high",
+   "headline": "Call: 92 days overdue",
+   "reasons": [
+    {
+     "text": "92 days overdue: a person should call rather than email.",
+     "evidenceIds": [],
+     "policyRef": "process_maps.md FIN-1: not paid after the reminders, phone and offer a payment plan"
+    },
+    {
+     "text": "Over 90 days: escalate to Dana Ruiz (VP Finance).",
+     "evidenceIds": [],
+     "policyRef": "process_maps.md FIN-1: still unpaid at 90 days, escalate to the VP Finance"
+    },
+    {
+     "text": "Tell Nadia Sinclair (account manager) before this goes out.",
+     "evidenceIds": [],
+     "policyRef": "collections_policy.md: tell the account manager before finance contacts one of their accounts"
+    }
+   ],
+   "evidence": [
+    {
+     "id": "ticket:T880432",
+     "kind": "ticket",
+     "file": "tickets.csv",
+     "recordId": "T880432",
+     "date": "2026-08-19",
+     "status": "solved",
+     "title": "Client portal cancellation ignored",
+     "detail": "We switched off the client portal in August because, frankly, our clients weren't logging into it. Your team confirmed the cancellation by email. INV-25539 not only still charges the monthly portal fee, it seems to have the setup line on it again?? Two partners signed off on dropping this module and neither of them is going to sign off on paying for it. Please correct and resend."
+    },
+    {
+     "id": "contract:C1439:2026-04-01",
+     "kind": "contract",
+     "file": "contracts.csv",
+     "recordId": "C1439:2026-04-01",
+     "date": "2026-04-01",
+     "title": "Contract: 13 seats \u00d7 $68.00, Apr 1, 2026 to Mar 31, 2027"
+    }
+   ],
+   "policyRef": "process_maps.md FIN-1: not paid after the reminders, phone and offer a payment plan",
+   "needsReview": false,
+   "draft": {
+    "to": "marcus.glover@banerjeepetrovengineer.example",
+    "subject": "",
+    "body": "",
+    "tone": "none"
    }
   },
   {
@@ -4449,9 +3841,16 @@
    "agingBucket": "31-60",
    "verdict": "call",
    "cause": "card_failed",
-   "confidence": "high",
+   "confidence": "low",
    "headline": "Call: 59 days overdue",
    "reasons": [
+    {
+     "text": "A billing ticket from Sep 22, 2026 is closed. Mentioned for context; it doesn't block the reminder.",
+     "evidenceIds": [
+      "ticket:T880736"
+     ],
+     "policyRef": null
+    },
     {
      "text": "A billing ticket from Jul 14, 2026 is closed. Mentioned for context; it doesn't block the reminder.",
      "evidenceIds": [
@@ -4527,30 +3926,14 @@
     }
    ],
    "policyRef": "billing_engine_rewrite_2026.md: Stripe retries failed cards three times over seven days, emailing each time",
-   "needsReview": false,
+   "needsReview": true,
    "draft": {
     "to": "kofi.glover@gloverengineering.example",
     "subject": "",
     "body": "",
     "tone": "none"
    },
-   "agreement": {
-    "agree": true,
-    "votes": [
-     {
-      "judge": "rules",
-      "answer": "billing_complaint"
-     },
-     {
-      "judge": "gpt-oss-20b (prompt A)",
-      "answer": "billing_complaint"
-     },
-     {
-      "judge": "qwen3.8-27b (prompt B)",
-      "answer": "billing_complaint"
-     }
-    ]
-   }
+   "reviewReason": "a billing ticket from Sep 22, 2026 is marked solved: check it was really fixed; ticket tagged account change on Sep 22, 2026, after this bill was issued: a person reads it before anyone chases"
   },
   {
    "id": "INV-25708",
@@ -4564,9 +3947,16 @@
    "agingBucket": "61-90",
    "verdict": "call",
    "cause": "card_failed",
-   "confidence": "high",
+   "confidence": "low",
    "headline": "Call: 83 days overdue",
    "reasons": [
+    {
+     "text": "A billing ticket from Sep 22, 2026 is closed. Mentioned for context; it doesn't block the reminder.",
+     "evidenceIds": [
+      "ticket:T880731"
+     ],
+     "policyRef": null
+    },
     {
      "text": "The card failed and Stripe's retries are over. A person asks for a new card: nobody has followed this up yet.",
      "evidenceIds": [
@@ -4615,30 +4005,14 @@
     }
    ],
    "policyRef": "billing_engine_rewrite_2026.md: Stripe retries failed cards three times over seven days, emailing each time",
-   "needsReview": false,
+   "needsReview": true,
    "draft": {
     "to": "emma.stanhope@quillmottco.example",
     "subject": "",
     "body": "",
     "tone": "none"
    },
-   "agreement": {
-    "agree": false,
-    "votes": [
-     {
-      "judge": "rules",
-      "answer": "billing_complaint"
-     },
-     {
-      "judge": "gpt-oss-20b (prompt A)",
-      "answer": "other_complaint"
-     },
-     {
-      "judge": "qwen3.8-27b (prompt B)",
-      "answer": "billing_complaint"
-     }
-    ]
-   }
+   "reviewReason": "a billing ticket from Sep 22, 2026 is marked solved: check it was really fixed"
   },
   {
    "id": "INV-25793",
@@ -4652,9 +4026,16 @@
    "agingBucket": "61-90",
    "verdict": "call",
    "cause": "card_failed",
-   "confidence": "high",
+   "confidence": "low",
    "headline": "Call: 64 days overdue",
    "reasons": [
+    {
+     "text": "A billing ticket from Oct 3, 2026 is closed. Mentioned for context; it doesn't block the reminder.",
+     "evidenceIds": [
+      "ticket:T880830"
+     ],
+     "policyRef": null
+    },
     {
      "text": "The card failed and Stripe's retries are over. A person asks for a new card: nobody has followed this up yet.",
      "evidenceIds": [
@@ -4733,30 +4114,14 @@
     }
    ],
    "policyRef": "billing_engine_rewrite_2026.md: Stripe retries failed cards three times over seven days, emailing each time",
-   "needsReview": false,
+   "needsReview": true,
    "draft": {
     "to": "nadia.marsh@ashgrovepartners.example",
     "subject": "",
     "body": "",
     "tone": "none"
    },
-   "agreement": {
-    "agree": true,
-    "votes": [
-     {
-      "judge": "rules",
-      "answer": "serious_escalation"
-     },
-     {
-      "judge": "gpt-oss-20b (prompt A)",
-      "answer": "not_a_complaint"
-     },
-     {
-      "judge": "qwen3.8-27b (prompt B)",
-      "answer": "not_a_complaint"
-     }
-    ]
-   }
+   "reviewReason": "a billing ticket from Oct 3, 2026 is marked solved: check it was really fixed; ticket tagged billing on Oct 3, 2026, after this bill was issued: a person reads it before anyone chases"
   },
   {
    "id": "INV-25433",
@@ -4773,6 +4138,13 @@
    "confidence": "low",
    "headline": "Call: 149 days overdue",
    "reasons": [
+    {
+     "text": "A billing ticket from Oct 20, 2026 is closed. Mentioned for context; it doesn't block the reminder.",
+     "evidenceIds": [
+      "ticket:T880944"
+     ],
+     "policyRef": null
+    },
     {
      "text": "The card failed and Stripe's retries are over. A person asks for a new card: nobody has followed this up yet.",
      "evidenceIds": [
@@ -4840,24 +4212,7 @@
     "body": "",
     "tone": "none"
    },
-   "reviewReason": "automatic write-off in 1 days: decide today",
-   "agreement": {
-    "agree": true,
-    "votes": [
-     {
-      "judge": "rules",
-      "answer": "billing_complaint"
-     },
-     {
-      "judge": "gpt-oss-20b (prompt A)",
-      "answer": "not_a_complaint"
-     },
-     {
-      "judge": "qwen3.8-27b (prompt B)",
-      "answer": "not_a_complaint"
-     }
-    ]
-   }
+   "reviewReason": "a billing ticket from Oct 20, 2026 is marked solved: check it was really fixed; ticket tagged account change on Oct 20, 2026, after this bill was issued: a person reads it before anyone chases; automatic write-off in 1 days: decide today"
   },
   {
    "id": "INV-25825",
@@ -4955,23 +4310,6 @@
     "subject": "",
     "body": "",
     "tone": "none"
-   },
-   "agreement": {
-    "agree": true,
-    "votes": [
-     {
-      "judge": "rules",
-      "answer": "billing_complaint"
-     },
-     {
-      "judge": "gpt-oss-20b (prompt A)",
-      "answer": "billing_complaint"
-     },
-     {
-      "judge": "qwen3.8-27b (prompt B)",
-      "answer": "billing_complaint"
-     }
-    ]
    }
   },
   {
@@ -5043,23 +4381,6 @@
     "subject": "",
     "body": "",
     "tone": "none"
-   },
-   "agreement": {
-    "agree": false,
-    "votes": [
-     {
-      "judge": "rules",
-      "answer": "not_a_complaint"
-     },
-     {
-      "judge": "gpt-oss-20b (prompt A)",
-      "answer": "not_a_complaint"
-     },
-     {
-      "judge": "qwen3.8-27b (prompt B)",
-      "answer": "other_complaint"
-     }
-    ]
    }
   },
   {
@@ -13987,7 +13308,7 @@
    }
   ],
   "accuracy": null,
-  "agreementRate": 0.7557,
+  "agreementRate": null,
   "verifiedNumbers": [
    {
     "label": "Total overdue",
@@ -14008,9 +13329,9 @@
    {
     "label": "Shouldn't chase today",
     "methodA": "Sum of Hold + Probably paid verdicts",
-    "valueA": 393858.0,
+    "valueA": 343692.0,
     "methodB": "Recounted from the raw evidence flags",
-    "valueB": 393858.0,
+    "valueB": 343692.0,
     "ok": true
    },
    {
@@ -14031,17 +13352,17 @@
    }
   ],
   "failures": [],
-  "runtimeSeconds": 0.82
+  "runtimeSeconds": 0.41
  },
  "morningSummary": {
   "title": "Collections check, 2026-10-31",
   "bullets": [
-   "24 reminders ready to send ($230,977). Approve all in one click.",
-   "16 on hold ($315,510): owners have until 2026-10-31.",
+   "25 reminders ready to send ($234,427). Approve all in one click.",
+   "13 on hold ($265,344): owners have until 2026-10-31.",
    "5 probably paid already ($78,348): confirm and close.",
-   "9 need a phone call ($8,410).",
-   "10 need a second look before anything goes out."
+   "11 need a phone call ($55,126).",
+   "18 need a second look before anything goes out."
   ],
-  "text": "Good morning. $387,348 of $633,245 overdue (61%) sits with customers we shouldn't chase today: they've probably paid, they're unhappy, or the bill is wrong. Another $6,510 is paused until a person reads a ticket the AI wasn't sure about. Today: 24 reminders ready to send ($230,977). Approve all in one click. 16 on hold ($315,510): owners have until 2026-10-31. 5 probably paid already ($78,348): confirm and close. 9 need a phone call ($8,410). 10 need a second look before anything goes out."
+  "text": "Good morning. $343,692 of $633,245 overdue (54%) sits with customers we shouldn't chase today: they've probably paid, they're unhappy, or the bill is wrong. Today: 25 reminders ready to send ($234,427). Approve all in one click. 13 on hold ($265,344): owners have until 2026-10-31. 5 probably paid already ($78,348): confirm and close. 11 need a phone call ($55,126). 18 need a second look before anything goes out."
  }
 }

@@ -360,6 +360,12 @@ class Engine:
                     continue
                 if not open_ and after_issue and label == "billing_complaint":
                     row.needs_review.append(f"a billing ticket from {nice(t['created'])} is marked {t.get('status')}: check it was really fixed")
+                # No-vendor mode (Maya, until legal approves an AI provider): a ticket TAGGED billing or account change
+                # since this bill was issued, that the local rules didn't read as a dispute, goes to a person.
+                if not (self.ai and self.ai.enabled) and after_issue and (t.get("category") or "") in self.v["ticket_billing_category"] \
+                        and not row.flags.get("dispute_hold"):
+                    row.needs_review.append(f"ticket tagged {t.get('category')} on {nice(t['created'])}, after this bill was issued: a person reads it before anyone chases")
+                    row.flags["tag_check"] = True
                 if not open_:
                     if label == "billing_complaint":
                         rs.append({"text": f"A billing ticket from {nice(t['created'])} is closed. Mentioned for context; it doesn't block the reminder.",

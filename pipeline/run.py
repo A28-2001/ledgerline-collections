@@ -187,7 +187,11 @@ def main() -> None:
                "text": f"Good morning. {headline} Today: " + " ".join(bullets)}
 
     notes = list(dict.fromkeys(data.notes))
-    if not ai.enabled:
+    if str(cfg["ai"].get("ticket_text")).lower() in ("off", "false", "no"):
+        notes.append("No-vendor mode (Maya, 23 Nov): no AI provider is approved yet, so tickets are read with tags, status and simple rules "
+                     "run locally; nothing leaves Ledgerline's systems. On the same data the AI judges (redacted text) held all 14 disputed bills; "
+                     "this mode holds 12, sends 1 to a person and the last is a 92-day phone call anyway. No disputed bill gets an unchecked reminder.")
+    elif not ai.enabled:
         why = ai.error or "no key"
         notes.append(f"AI judges were off for this run ({why}): ticket reading used rules only, and borderline names went to a person.")
     if not data.has("payments", "status"):

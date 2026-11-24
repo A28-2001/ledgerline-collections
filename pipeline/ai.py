@@ -69,7 +69,7 @@ class AI:
         self.params = cfg["ai"].get("params") or {}
         self.max_tokens = int(cfg["ai"].get("max_tokens", 300))
         self.enabled = bool(os.environ.get("GROQ_API_KEY")) and os.environ.get("AI_OFF") != "1" \
-            and str(cfg["ai"].get("ticket_text", "redacted")) != "off"
+            and str(cfg["ai"].get("ticket_text", "redacted")).lower() not in ("off", "false", "no")  # YAML reads a bare off as False
         self.cache: dict[str, str] = json.loads(CACHE.read_text()) if CACHE.exists() else {}
         self.calls = 0
         self.judgments = 0

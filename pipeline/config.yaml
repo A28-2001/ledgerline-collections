@@ -94,9 +94,11 @@ ai:
     openai/gpt-oss-120b: {reasoning_effort: low}
   max_tokens: 300
   # sla_policy.md: ticket content must not go to a new vendor without a data processing agreement.
-  # Ledgerline is fictional, so the demo sends redacted ticket text to Groq; in production this stays
-  # "off" (rules only, unsure tickets to a person) until legal approves a vendor.
-  ticket_text: redacted          # redacted | off
+  # Maya (23 Nov): no AI provider is approved; run on rules until legal signs off.
+  #   off      = no vendor. Ticket tags and status, plus simple rules run locally on the text (nothing leaves
+  #              Ledgerline's systems). Billing-tagged tickets the rules don't read as disputes go to a person.
+  #   redacted = AI judges read redacted ticket text (switch on only once legal approves the provider).
+  ticket_text: "off"
 
 trend_markers:
   - {month: "2026-03", label: Billing engine rewrite (16 Mar)}
