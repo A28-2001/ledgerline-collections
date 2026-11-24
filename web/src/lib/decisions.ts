@@ -14,7 +14,8 @@ export type Decision = {
 };
 export type Decisions = Record<string, Decision>;
 
-const KEY = `collections-check:decisions:${results.meta.asOf}:${results.meta.generatedAt}`;
+// One list per data date: re-running the same morning's data keeps the decisions already made.
+const KEY = `collections-check:decisions:${results.meta.asOf}`;
 const EMPTY: Decisions = {};
 const listeners = new Set<() => void>();
 let cache: Decisions | null = null;

@@ -1,6 +1,6 @@
 {
  "meta": {
-  "generatedAt": "2026-11-24T18:32:41+00:00",
+  "generatedAt": "2026-11-24T18:39:36+00:00",
   "asOf": "2026-10-31",
   "dataSource": "real",
   "companyName": "Ledgerline",
@@ -14045,7 +14045,7 @@
      "foundBy": "Independent review, first pass",
      "why": "The \"pending\" ticket's last message from the customer was \"Closing this out\".",
      "change": "When the customer says it's resolved, the ticket stops blocking.",
-     "status": "confirm"
+     "status": "fixed"
     },
     {
      "invoice": "INV-25852",
@@ -14056,7 +14056,7 @@
      "foundBy": "Independent review, first pass",
      "why": "A normal-priority question, pending since July: support is waiting on the customer.",
      "change": "My call, for Maya to confirm: a pending ticket pauses the reminder only if it's about money, urgent, or waiting on us. Otherwise a softer reminder, and the account manager is told.",
-     "status": "fixed"
+     "status": "confirm"
     },
     {
      "invoice": "INV-25898",
@@ -14078,7 +14078,8 @@
      "foundBy": "Independent review, first pass",
      "why": "The reviewer would send: the open ticket is a product question. The tool holds because it's open and waiting on Ledgerline.",
      "change": "Kept on purpose: a ticket waiting on us still pauses the reminder, and it's a top-50 account, so a person reads it anyway.",
-     "status": "deliberate"
+     "status": "deliberate",
+     "differsBecause": "a ticket waiting on us still pauses the reminder, and it's a top-50 account, so a person reads it anyway."
     },
     {
      "invoice": "INV-25852",
@@ -14088,8 +14089,9 @@
      "shouldBe": "wait for Marcus",
      "foundBy": "Second look at the hand check",
      "why": "One $5,100 payment with a blank memo, two $5,100 bills. The tool assumed it paid the older one, so the newer one would have got a reminder. My hand check passed it.",
-     "change": "The second bill now waits for Marcus, who is asked which bill the payment covers. The label was updated to match.",
-     "status": "fixed"
+     "change": "The second bill now waits for Marcus, who is asked which bill the payment covers. The reviewer assumed the payment paid the older bill, so this is one of the 2 bills where we differ from it on purpose.",
+     "status": "fixed",
+     "differsBecause": "one $5,100 payment could pay either of two bills, so Marcus confirms which before anyone is chased."
     },
     {
      "invoice": "-",

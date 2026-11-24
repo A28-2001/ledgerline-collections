@@ -66,10 +66,7 @@ export default function StoryPage() {
       total: acc?.sampleSize ?? invoices.length,
       firstAgreed,
       nowAgreed: acc?.agreed ?? null,
-      keptWhy: (() => {
-        const t = entries.find((e) => e.status === "deliberate")?.change.replace(/^Kept on purpose:\s*/i, "");
-        return t ? t.charAt(0).toUpperCase() + t.slice(1) : null;
-      })(),
+      differs: entries.filter((e) => e.differsBecause).map((e) => ({ customer: e.customer, text: e.differsBecause ?? "" })),
     },
     checks: checks.map((c) => ({ label: c.label.replace(/\s*\(.*\)$/, ""), value: c.valueA })),
     heldMaybePaid: maybePaid.length
@@ -144,7 +141,7 @@ export default function StoryPage() {
       number: fmt(decisions),
       numberNote: `decisions sort the morning, built to take about 5 minutes. Then ${allMine} disputes to fix, oldest first: the day's work.`,
       text: [
-        "Five questions decide each bill: already paid? a reason to hold? under 7 days late? 45+ days late? If none, a reminder.",
+        "Five questions decide each bill, in order: already paid? a reason to hold? under 7 days late? 45+ days late? nothing in the way? The first yes gives the answer.",
         `**${formatMoney(summary.shouldNotChaseAmount)} isn't chased today.** ${count("send")} bills get a reminder, in ${emails} emails, once Priya approves.`,
       ],
       source: `This run, all ${invoices.length} bills (Today and How it works pages)`,

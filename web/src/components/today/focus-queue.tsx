@@ -157,7 +157,7 @@ export function FocusQueue({
                 >
                   <span className="size-2 shrink-0 rounded-full" style={{ background: VERDICT_META[verdictOf(b)].chart }} aria-hidden="true" />
                   <span className="min-w-0 flex-1 truncate">{b.customerName}</span>
-                  <span className="tabular shrink-0 text-xs text-muted-foreground">{formatMoney(sumAmount(it.bills), b.currency, true)}</span>
+                  <span className="tabular shrink-0 text-xs text-muted-foreground">{formatMoney(Math.round(sumAmount(it.bills)), b.currency)}</span>
                 </button>
               </li>
             );

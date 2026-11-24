@@ -24,7 +24,7 @@ export interface StoryData {
   sources: { name: string; detail: string; locked: boolean }[];
   causes: { key: string; label: string; color: string; amountText: string; count: number; share: number }[];
   verdicts: { key: "send" | "hold" | "paid" | "call"; label: string; count: number; amountText: string }[];
-  review: { total: number; firstAgreed: number | null; nowAgreed: number | null; keptWhy: string | null };
+  review: { total: number; firstAgreed: number | null; nowAgreed: number | null; differs: { customer: string; text: string }[] };
   checks: { label: string; value: number }[];
   heldMaybePaid: { count: number; amountText: string } | null;
   // One real disputed bill, the way Priya sees it.
@@ -310,7 +310,15 @@ function ReviewPicture({ data }: { data: StoryData }) {
           <p className="font-semibold">
             {r.total - r.nowAgreed} still {r.total - r.nowAgreed === 1 ? "differs" : "differ"}, on purpose
           </p>
-          {r.keptWhy && <p className="mt-1 text-xs leading-relaxed text-muted-foreground">{r.keptWhy}</p>}
+          {r.differs.length > 0 && (
+            <ul className="mt-1 space-y-1 text-xs leading-relaxed text-muted-foreground">
+              {r.differs.map((d) => (
+                <li key={d.customer}>
+                  <span className="font-medium text-foreground">{d.customer}:</span> {d.text}
+                </li>
+              ))}
+            </ul>
+          )}
         </div>
       )}
       <Link
