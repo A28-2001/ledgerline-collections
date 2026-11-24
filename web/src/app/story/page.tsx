@@ -109,7 +109,7 @@ export default function StoryPage() {
           : `That's ${pct(last.overdueShare)} of what customers owe.`,
         "Finance chases it by hand: about 16 hours a week across the team.",
       ],
-      source: "QuickBooks AR aging; trend from invoices and payments; processes.md (FIN-1)",
+      source: "QuickBooks AR aging; trend from invoices and payments; Ledgerline's process notes (FIN-1)",
     },
     {
       id: "wall",
@@ -120,7 +120,7 @@ export default function StoryPage() {
         "Finance has **no access to Zendesk**, where complaints live, so before chasing they ask around.",
         "Miss one, and a reminder lands on a customer who is waiting for a fix.",
       ],
-      source: "Zendesk export (tickets.csv); tool_stack.md; processes.md (FIN-1)",
+      source: "Zendesk export; Ledgerline's tool list and process notes (FIN-1)",
     },
     {
       id: "finding",

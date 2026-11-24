@@ -285,7 +285,7 @@ def main() -> None:
                                   + [f"{i['customerName']}, {money(i['amount'])}" for i in paid_bills])[:3],
                         "more": max(0, len(twin_bills) + len(paid_bills) - 3),
                         "by": pd.Timestamp(np.busday_offset(as_of.date(), int(cfg["policy"].get("paid_match_days", 2)), roll="forward")).strftime("%b %-d"),
-                        "intro": f"{len(paid_bills)} bills look already paid. Please match them; no reminders go out meanwhile."
+                        "intro": f"{len(paid_bills)} {'bill is' if len(paid_bills) == 1 else 'bills are'} probably paid. Please match them; no reminders go out meanwhile."
                                  + (f" One payment could pay either of two bills: tell {priya} which." if twin_bills else "")})
     by_am: dict[str, list] = {}
     for i in invoices:

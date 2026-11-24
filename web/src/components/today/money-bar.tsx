@@ -47,7 +47,7 @@ export function MoneyBar({ invoices, onSelect }: { invoices: Invoice[]; onSelect
       </div>
 
       {/* The bar itself: each part opens its step */}
-      <div className="mt-1 flex h-5 w-full gap-0.5 overflow-hidden rounded-md">
+      <div className="mt-1 flex h-6 w-full gap-0.5 overflow-hidden rounded-lg">
         {ORDER.map((v) => {
           const { amount, count } = s.byVerdict[v];
           if (!amount) return null;
@@ -60,7 +60,7 @@ export function MoneyBar({ invoices, onSelect }: { invoices: Invoice[]; onSelect
               title={label}
               aria-label={`${label}. Go to this step.`}
               style={{ width: pct(amount), background: VERDICT_META[v].chart }}
-              className="relative h-full min-w-1 outline-none transition-opacity hover:opacity-85 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-inset"
+              className="gloss-bar relative h-full min-w-1 outline-none transition-opacity hover:opacity-85 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-inset"
             >
               {v === "hold" && s.unsureAmount > 0 && (
                 <span className="absolute inset-y-0 right-0" style={{ width: `${(s.unsureAmount / amount) * 100}%`, ...HATCH }} />

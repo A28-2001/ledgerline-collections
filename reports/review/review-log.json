@@ -129,7 +129,7 @@
       "amount": 5100,
       "toolSaid": "send (soft) on INV-25852",
       "shouldBe": "wait for Marcus",
-      "foundBy": "Second look at the hand check",
+      "foundBy": "A second check by hand",
       "why": "One $5,100 payment with a blank memo, two $5,100 bills. The tool assumed it paid the older one, so the newer one would have got a reminder. My hand check passed it.",
       "change": "The second bill now waits for Marcus, who is asked which bill the payment covers. The reviewer assumed the payment paid the older bill, so this is one of the 2 bills where we differ from it on purpose.",
       "status": "fixed",
@@ -141,7 +141,7 @@
       "amount": 0,
       "toolSaid": "-",
       "shouldBe": "-",
-      "foundBy": "Reading the data room",
+      "foundBy": "Disputes sent to billing@ by email",
       "why": "Customers also email billing@ in Gmail. Disputes sent there are invisible to the tool.",
       "change": "Next: read the billing@ inbox (Google is already a vendor).",
       "status": "open"

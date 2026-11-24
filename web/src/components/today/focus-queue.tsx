@@ -14,6 +14,7 @@ import { cn } from "@/lib/utils";
 export type FocusItem = { key: string; bills: Invoice[]; why: string };
 
 const QUEUE_SHOWN = 8;
+const SHORT_ANSWER: Record<Verdict, string> = { paid: "Paid", hold: "Hold", send: "Send", call: "Call" };
 
 export function FocusQueue({
   items,
@@ -91,52 +92,54 @@ export function FocusQueue({
         tabIndex={0}
         onKeyDown={onKey}
         aria-label={`${inv.customerName}, ${formatMoney(total, inv.currency)}. Enter: ${primaryLabel(active)}. C: change. Down arrow: next.`}
-        className="rounded-xl border bg-background p-4 shadow-sm outline-none focus-visible:ring-2 focus-visible:ring-ring/50 sm:p-5"
+        className="glass-card rounded-2xl border bg-background p-4 outline-none focus-visible:ring-2 focus-visible:ring-ring/50 sm:p-5"
         style={{ borderTopWidth: 4, borderTopColor: VERDICT_META[verdict].chart }}
       >
-        <div className="flex items-center justify-between gap-2 text-xs text-muted-foreground">
-          <span className="tabular font-medium">
-            {idx + 1} of {items.length}
-          </span>
-          <VerdictBadge verdict={verdict} />
-        </div>
-        <h4 className="mt-2 text-xl leading-tight font-semibold tracking-tight">{inv.customerName}</h4>
-        <p className="tabular mt-1 text-sm text-muted-foreground">
-          <span className="text-2xl font-semibold text-foreground">{formatMoney(total, inv.currency)}</span>
-          {active.bills.length > 1 ? ` · ${active.bills.length} bills` : ""} · {inv.daysOverdue} days late
-        </p>
-
-        <p className="mt-4 text-[15px] leading-relaxed font-medium">{active.why}</p>
-
-        {proof && (
-          <div className="mt-3 rounded-lg border-l-4 bg-muted/40 px-3 py-2.5 text-sm" style={{ borderLeftColor: VERDICT_META[verdict].chart }}>
-            <p className="text-[11px] font-semibold tracking-wide text-muted-foreground uppercase">{proof.label}</p>
-            <p className="mt-0.5 font-medium">{proof.title}</p>
-            {proof.detail && <p className="mt-1 line-clamp-3 text-xs leading-relaxed text-muted-foreground">{proof.detail}</p>}
+        <div key={active.key} className="animate-in fade-in-0 slide-in-from-right-3 duration-200 motion-reduce:animate-none">
+          <div className="flex items-center justify-between gap-2 text-xs text-muted-foreground">
+            <span className="tabular font-medium">
+              {idx + 1} of {items.length}
+            </span>
+            <VerdictBadge verdict={verdict} />
           </div>
-        )}
+          <h4 className="mt-2 text-xl leading-tight font-semibold tracking-tight">{inv.customerName}</h4>
+          <p className="tabular mt-1 text-sm text-muted-foreground">
+            <span className="text-2xl font-semibold text-foreground">{formatMoney(total, inv.currency)}</span>
+            {active.bills.length > 1 ? ` · ${active.bills.length} bills` : ""} · {inv.daysOverdue} days late
+          </p>
 
-        <p className="mt-3 text-sm text-muted-foreground">{answerLine(inv, verdict)}</p>
+          <p className="mt-4 text-[15px] leading-relaxed font-medium">{active.why}</p>
 
-        <div className="mt-4 flex flex-wrap items-center gap-2">
-          <Button onClick={decide}>
-            <Check />
-            {primaryLabel(active)}
-          </Button>
-          {extra?.(active)}
-          <Button variant="outline" onClick={() => onChange(active)}>
-            <PencilLine />
-            Change
-          </Button>
-          <Button variant="ghost" onClick={() => onOpen(active)}>
-            Full details
-            <ArrowRight />
-          </Button>
+          {proof && (
+            <div className="mt-3 rounded-lg border-l-4 bg-muted/40 px-3 py-2.5 text-sm" style={{ borderLeftColor: VERDICT_META[verdict].chart }}>
+              <p className="text-[11px] font-semibold tracking-wide text-muted-foreground uppercase">{proof.label}</p>
+              <p className="mt-0.5 font-medium">{proof.title}</p>
+              {proof.detail && <p className="mt-1 line-clamp-3 text-xs leading-relaxed text-muted-foreground">{proof.detail}</p>}
+            </div>
+          )}
+
+          <p className="mt-3 text-sm text-muted-foreground">{answerLine(inv, verdict)}</p>
+
+          <div className="mt-4 flex flex-wrap items-center gap-2">
+            <Button onClick={decide}>
+              <Check />
+              {primaryLabel(active)}
+            </Button>
+            {extra?.(active)}
+            <Button variant="outline" onClick={() => onChange(active)}>
+              <PencilLine />
+              Change
+            </Button>
+            <Button variant="ghost" onClick={() => onOpen(active)}>
+              Full details
+              <ArrowRight />
+            </Button>
+          </div>
+          <p className="mt-3 hidden text-[11px] text-muted-foreground sm:block">
+            Keys: <kbd className="rounded border px-1">Enter</kbd> {primaryLabel(active).toLowerCase()} · <kbd className="rounded border px-1">C</kbd>{" "}
+            change · <kbd className="rounded border px-1">↓</kbd> next
+          </p>
         </div>
-        <p className="mt-3 hidden text-[11px] text-muted-foreground sm:block">
-          Keys: <kbd className="rounded border px-1">Enter</kbd> {primaryLabel(active).toLowerCase()} · <kbd className="rounded border px-1">C</kbd>{" "}
-          change · <kbd className="rounded border px-1">↓</kbd> next
-        </p>
       </div>
 
       <div className="min-w-0">
@@ -157,6 +160,7 @@ export function FocusQueue({
                 >
                   <span className="size-2 shrink-0 rounded-full" style={{ background: VERDICT_META[verdictOf(b)].chart }} aria-hidden="true" />
                   <span className="min-w-0 flex-1 truncate">{b.customerName}</span>
+                  <span className="shrink-0 text-[11px] text-muted-foreground">{SHORT_ANSWER[verdictOf(b)]}</span>
                   <span className="tabular shrink-0 text-xs text-muted-foreground">{formatMoney(Math.round(sumAmount(it.bills)), b.currency)}</span>
                 </button>
               </li>

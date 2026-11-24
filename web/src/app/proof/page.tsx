@@ -28,6 +28,9 @@ function MissItem({ e }: { e: Entry }) {
         >
           {e.status === "fixed" ? "Fixed" : e.status === "confirm" ? "Changed, for Maya to confirm" : e.status === "deliberate" ? "Kept on purpose" : "Still open"}
         </span>
+        {e.differsBecause && e.status !== "deliberate" && (
+          <span className="rounded-full border px-2 text-[11px] text-muted-foreground">Differs from the reviewer on purpose</span>
+        )}
         {e.toolSaid !== "-" && (
           <span className="text-xs text-muted-foreground">
             said {e.toolSaid}, should be {e.shouldBe}
@@ -48,6 +51,7 @@ export default function ProofPage() {
   const crossOk = cross.filter((v) => v.ok).length;
   const up = proof.aiUplift;
 
+  const differNames = (log?.entries ?? []).filter((e) => e.differsBecause).map((e) => e.customer);
   const sources = (log?.entries ?? []).reduce<{ by: string; n: number; fixed: number; confirm: number; kept: number; open: number }[]>((acc, e) => {
     let row = acc.find((r) => r.by === e.foundBy);
     if (!row) {
@@ -99,7 +103,7 @@ export default function ProofPage() {
           <CardHeader>
             <CardTitle className="leading-snug">How often it agrees with an independent review, and every miss</CardTitle>
             <CardDescription>
-              A separate AI model (Claude, in its own session) reviewed all 54 bills from fact files we built, without the tool&apos;s
+              A separate AI model (Claude, in its own session) reviewed all 54 bills from a summary of each bill&apos;s records, without the tool&apos;s
               answers. A person checked the 11 contested bills, not the other 43.
             </CardDescription>
           </CardHeader>
@@ -117,7 +121,9 @@ export default function ProofPage() {
                   {proof.accuracy
                     ? `${proof.accuracy.agreed} of ${proof.accuracy.sampleSize}.${
                         proof.accuracy.agreed < proof.accuracy.sampleSize
-                          ? ` The other ${proof.accuracy.sampleSize - proof.accuracy.agreed} differ on purpose, explained below.`
+                          ? ` The other ${proof.accuracy.sampleSize - proof.accuracy.agreed} differ on purpose${
+                              differNames.length ? `: ${differNames.join(" and ")}` : ""
+                            }.`
                           : ""
                       }${
                         proof.accuracy.agreedOriginal != null && proof.accuracy.agreedOriginal !== proof.accuracy.agreed

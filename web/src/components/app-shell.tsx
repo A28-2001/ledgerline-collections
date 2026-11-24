@@ -54,7 +54,7 @@ function NavLinks({ onNavigate }: { onNavigate?: () => void }) {
       >
         <BookOpen className="size-4 text-hold-ink" aria-hidden="true" />
         <span className="flex-1">The story</span>
-        <span className="text-[11px] text-muted-foreground">2 min</span>
+        <span className="text-[11px] text-muted-foreground">6 chapters</span>
       </Link>
       {NAV.map(({ href, label, icon: Icon }) => {
         const active = isActive(pathname, href);
@@ -114,7 +114,7 @@ export function AppShell({
       </aside>
 
       <div className="flex min-w-0 flex-1 flex-col">
-        <header className="sticky top-0 z-30 flex h-14 items-center justify-between border-b bg-background/85 px-4 backdrop-blur md:hidden">
+        <header className="glass-bar sticky top-0 z-30 flex h-14 items-center justify-between border-b px-4 md:hidden">
           <Brand companyName={companyName} />
           <div className="flex items-center gap-1">
             <GlossaryButton compact />

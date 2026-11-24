@@ -4,7 +4,7 @@
 
 Every morning it reads the overdue bills, bank and Stripe payments, support tickets and contracts, and gives each bill one answer with its reason, the records behind it and the policy line. A person approves everything before anything reaches a customer.
 
-- **Live tool:** https://ledgerline-collections.vercel.app/story (start with the story, about two minutes)
+- **Live tool:** https://ledgerline-collections.vercel.app/story (start with the story)
 - **One-page description:** [`docs/one-pager.md`](docs/one-pager.md)
 - **What was built before the clock started:** [`docs/disclosure.md`](docs/disclosure.md); the git history shows the rest
 

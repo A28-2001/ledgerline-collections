@@ -29,7 +29,7 @@ Before recording: open the site in a private window, so no earlier clicks show a
 
 **Say and do:**
 1. "Her morning is 11 decisions, and nothing is sent until she approves." Open **Check first**: "One customer at a time, with the record that matters beside it. Crane IT has a support ticket still pending, though it isn't about money, and the customer says it's resolved." Click **Approve this reminder**: "Decided bills join their step, and the next one moves in."
-2. "The other bills are four steps, in this order: paid, hold, send, call." Open **Already paid**: "5 bills look paid. Marcus matches each payment, so nobody who paid gets chased." Click **Hand 5 bills to Marcus**.
+2. "The other bills are four steps, in this order: paid, hold, send, call." Open **Probably paid**: "5 bills look paid. Marcus matches each payment, so nobody who paid gets chased." Click **Hand 5 bills to Marcus**.
 3. Open **Hand off holds**: "Each of these 7 goes to its owner with a deadline: the account manager, or Marcus for a payment that could pay either of two Kingsway bills. If nobody acts, the bill comes back to her."
 4. Open **Send reminders**, then Rosales Engineering: show the **reminder schedule**, the **timeline** and the **draft**: "Ledgerline's own template, without the old 45-day suspension threat. Two Rosales bills go in one email." Close it and click **Approve 14 reminders**: "Approving doesn't send. Nothing goes out on its own."
 5. Open **Make calls**: "Every call today is a failed card past 45 days: call for a new card." Click **Add 7 calls to the list**.

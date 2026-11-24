@@ -53,7 +53,7 @@ type StepDef = {
 const STEPS: StepDef[] = [
   {
     verdict: "paid",
-    title: "Already paid",
+    title: "Probably paid",
     explain: "A payment seems to cover each of these bills. Marcus matches them within 2 working days and you're copied. No reminder goes out.",
     icon: Wallet,
     button: (n) => `Hand ${pluralize(n, "bill")} to Marcus`,
@@ -250,7 +250,7 @@ export function MorningView({ data }: { data: Pick<Results, "invoices" | "summar
             href="/story"
             className="whitespace-nowrap underline decoration-border underline-offset-4 hover:text-foreground hover:decoration-foreground"
           >
-            New here? The 2-minute story
+            New here? Start with the story
           </Link>
         </p>
         <h1 className="mt-0.5 text-2xl font-semibold tracking-tight sm:text-3xl">Good morning</h1>
@@ -497,7 +497,7 @@ export function MorningView({ data }: { data: Pick<Results, "invoices" | "summar
       <div className="h-20 md:hidden" aria-hidden="true" />
 
       {/* Phone: the current step's one action, always in reach */}
-      <div className="fixed inset-x-0 bottom-0 z-30 border-t bg-background/95 px-4 pt-3 pb-[calc(env(safe-area-inset-bottom,0px)+0.75rem)] backdrop-blur md:hidden">
+      <div className="glass-bar fixed inset-x-0 bottom-0 z-30 border-t px-4 pt-3 pb-[calc(env(safe-area-inset-bottom,0px)+0.75rem)] md:hidden">
         {current === "check" ? (
           <Button className="w-full" onClick={() => flaggedOpen[0] && openBill(flaggedOpen[0].id)}>
             <Flag />

@@ -386,7 +386,7 @@ export function StoryScroll({ chapters, data, asOf }: { chapters: Chapter[]; dat
           Should we chase this invoice today?
         </h1>
         <p className="mt-5 max-w-xl text-lg leading-relaxed text-muted-foreground">
-          Six short chapters, about two minutes. Every number comes from the same run as the rest of the tool, as of {asOf}.
+          Six short chapters. Every number comes from the same run as the rest of the tool, as of {asOf}.
         </p>
         <a
           href={`#ch-${chapters[0].id}`}

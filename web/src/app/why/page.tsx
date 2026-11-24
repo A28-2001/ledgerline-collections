@@ -32,6 +32,7 @@ export default function WhyPage() {
   const tenths = total ? Math.round((summary.shouldNotChaseAmount / total) * 10) : 0;
   const disputed = invoices.filter((i) => i.cause === "wrong_bill");
   const solved = disputed.filter((i) => /marked solved/i.test(i.headline)).length;
+  const twinHeld = invoices.filter((i) => i.cause === "paid" && i.verdict !== "paid" && i.hold?.twinOf);
   const otherCards = invoices.filter(
     (i) => i.cause !== "card_failed" && i.reasons.some((r) => /stripe|card (payment )?(failed|didn't go through)|failed card/i.test(r.text)),
   ).length;
@@ -95,6 +96,9 @@ export default function WhyPage() {
                   {first && <p className="mt-1 text-[11px] font-semibold tracking-wide text-muted-foreground uppercase">Biggest reason</p>}
                   <p className="mt-1 text-xs leading-relaxed text-muted-foreground">
                     {m?.description}
+                    {s.cause === "paid" &&
+                      twinHeld.length > 0 &&
+                      ` ${twinHeld.length} of these (${formatMoney(twinHeld.reduce((t, i) => t + i.amount, 0))}) ${twinHeld.length === 1 ? "is" : "are"} on hold instead, until Marcus confirms which bill the payment covers.`}
                     {s.cause === "card_failed" && otherCards > 0 &&
                       ` ${otherCards} more failed-card ${otherCards === 1 ? "bill is" : "bills are"} counted under another reason (a complaint or threat comes first).`}
                   </p>

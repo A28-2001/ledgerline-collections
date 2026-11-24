@@ -36,7 +36,7 @@ export function ThemeSwitch({ className }: { className?: string }) {
             onClick={() => setTheme(value)}
             className={cn(
               "inline-flex flex-1 items-center justify-center gap-1.5 rounded-md px-2 py-1 text-xs font-medium outline-none transition-colors focus-visible:ring-2 focus-visible:ring-ring/50",
-              on ? "bg-foreground text-background" : "text-muted-foreground hover:text-foreground",
+              on ? "glass-pill" : "text-muted-foreground hover:text-foreground",
             )}
           >
             <Icon className="size-3.5" aria-hidden="true" />
