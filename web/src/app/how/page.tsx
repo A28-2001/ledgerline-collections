@@ -1,4 +1,4 @@
-import { ArrowDown, ArrowRight, Database, ShieldCheck, Sparkles } from "lucide-react";
+import { ArrowDown, ArrowRight, Bot, Database, ScanSearch, ShieldCheck, Sparkles, Tags } from "lucide-react";
 import type { Metadata } from "next";
 import { PageHeader } from "@/components/shared/page-header";
 import { formatDate, results } from "@/lib/data";
@@ -108,10 +108,16 @@ export default function HowPage() {
           <ShieldCheck className="size-4 text-muted-foreground" aria-hidden="true" />
           Always a person
         </p>
-        <p className="mt-1 text-sm leading-relaxed text-muted-foreground">
-          Top-50 accounts, disputed or probably-paid bills, anything firmer than a friendly nudge, and every phone call. Nothing is sent
-          without a person. These lines come from the COO: chasing someone who has paid, someone with an open complaint, a top-50 account or
-          anything that reads like a threat would get the tool switched off.
+        <div className="mt-2.5 flex flex-wrap gap-1.5">
+          {["Top-50 accounts", "Disputed bills", "Probably-paid bills", "Anything firmer than a nudge", "Every phone call"].map((c) => (
+            <span key={c} className="rounded-full border bg-background px-2.5 py-0.5 text-xs font-medium">
+              {c}
+            </span>
+          ))}
+        </div>
+        <p className="mt-2.5 text-xs leading-relaxed text-muted-foreground">
+          The COO&apos;s switch-off lines: chasing someone who has paid, someone with an open complaint, a top-50 account, or anything that reads
+          like a threat.
         </p>
       </section>
 
@@ -120,39 +126,42 @@ export default function HowPage() {
           <Sparkles className="size-4 text-muted-foreground" aria-hidden="true" />
           What AI does, and what it doesn&apos;t
         </p>
-        <div className="mt-3 grid gap-4 text-sm sm:grid-cols-3">
-          <div>
-            <p className="text-xs font-semibold text-muted-foreground uppercase">AI as the auditor</p>
-            <p className="mt-1 leading-relaxed">
-              A separate AI model reviewed all 54 bills without the tool&apos;s answers. Its first pass disagreed on 8: 5 rule errors (fixed),
-              2 judgment calls, since confirmed by Maya, and 1 kept on purpose. Proposed: run it weekly once legal approves a vendor.
+        <div className="mt-3 grid gap-3 text-sm sm:grid-cols-3">
+          <div className="rounded-lg border bg-background p-3.5">
+            <ScanSearch className="size-5 text-brand" aria-hidden="true" />
+            <p className="mt-2 font-semibold">AI as the auditor</p>
+            <p className="mt-1 text-xs leading-relaxed text-muted-foreground">
+              A separate model checked all 54 bills blind. First pass: 8 disagreements, which became 5 fixes, 2 rules Maya confirmed and 1 kept on
+              purpose. Proposed: run it weekly.
             </p>
           </div>
-          <div>
-            <p className="text-xs font-semibold text-muted-foreground uppercase">AI reading tickets</p>
-            <p className="mt-1 leading-relaxed">
-              Two models from different families read the masked text; if they disagree, a person decides.
+          <div className="rounded-lg border bg-background p-3.5">
+            <Bot className="size-5 text-brand" aria-hidden="true" />
+            <p className="mt-2 font-semibold">AI reading tickets</p>
+            <p className="mt-1 text-xs leading-relaxed text-muted-foreground">
+              Two models must agree, or a person decides.
               {up && up.cacheMisses === 0 && (
                 <>
                   {" "}
-                  Measured on these {up.bills} bills: it changed {up.verdictsChanged.length === 0 ? "no answers" : `${up.verdictsChanged.length} answers`}; it would only change which{" "}
-                  {up.checkFirstChanged} bills a person checks first.
+                  On these {up.bills} bills it changed {up.verdictsChanged.length === 0 ? "no answers" : `${up.verdictsChanged.length} answers`}; it
+                  would only change which {up.checkFirstChanged} bills a person checks first.
                 </>
               )}
             </p>
           </div>
-          <div>
-            <p className="text-xs font-semibold text-muted-foreground uppercase">Why rules aren&apos;t enough</p>
-            <p className="mt-1 leading-relaxed">
+          <div className="rounded-lg border bg-background p-3.5">
+            <Tags className="size-5 text-brand" aria-hidden="true" />
+            <p className="mt-2 font-semibold">Why rules aren&apos;t enough</p>
+            <p className="mt-1 text-xs leading-relaxed text-muted-foreground">
               {tk
-                ? `${tk.fromOverdueUntagged ?? tk.relevantUntagged} of the ${tk.fromOverdue} tickets from customers who owe money have no tag, and tags can be wrong (a timer bug was tagged How-to). Rules catch a dispute when it quotes the invoice number; AI is for the complaints that don't.`
+                ? `${tk.fromOverdueUntagged ?? tk.relevantUntagged} of the ${tk.fromOverdue} tickets from customers who owe money have no tag, and tags can be wrong. Rules catch a dispute that quotes the invoice; AI is for the ones that don't.`
                 : "Tags are often missing or wrong. Only reading the text catches those."}
             </p>
           </div>
         </div>
         <p className="mt-3 text-xs leading-relaxed text-muted-foreground">
-          At Ledgerline today, no AI touches customer data until legal approves a vendor (Amazon Bedrock, in the existing AWS account, is
-          proposed). Never AI: the decision to send. AI redraft is switched off until legal approves a vendor.
+          No AI touches customer data until legal approves a vendor (Amazon Bedrock, in the AWS account Ledgerline already has, is proposed).
+          Never AI: the decision to send.
         </p>
       </section>
 

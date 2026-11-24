@@ -35,7 +35,7 @@ Crane IT Partners appears on its own as the first card on Today (Maya's pending-
 - 6:05 **Why overdue:** "Seven in ten overdue dollars shouldn't be chased today. Disputes are the biggest reason, in red; the rest are grey. The reason decides the fix."
 - 6:30 **Customers:** search "Banerjee", open the customer. "Every bill, ticket and payment for one customer, in one place."
 - 6:55 **Morning message:** "One short message each morning. This week only Priya's is used; after it, Marcus is asked which bill the Kingsway payment covers."
-- 7:20 **How sure are we:** "85% on the first pass, 96% now, on the same bills. The 2 that still differ are shown first, Kingsway is one of them. The COO's two tests read 0. The daily tool uses no AI until legal approves a vendor."
+- 7:20 **How sure are we** (the 54 squares, one per bill): "85% on the first pass, 96% now, on the same bills. The 2 that still differ are shown first, Kingsway is one of them. The COO's two tests read 0. The daily tool uses no AI until legal approves a vendor."
 
 ## 8:05 to 8:50 · Polish, limits and next
 

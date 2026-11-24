@@ -1,9 +1,10 @@
-import { CircleCheck, CircleX, ShieldCheck } from "lucide-react";
+import { ArrowRight, BotOff, CircleCheck, CircleX, Gauge, MessageSquareText, ShieldCheck, UserCheck } from "lucide-react";
 import type { Metadata } from "next";
 import { TrustLadder } from "@/components/shared/trust-ladder";
 import { PageHeader } from "@/components/shared/page-header";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { formatMoney, results } from "@/lib/data";
 import type { Results } from "@/lib/types";
 
@@ -11,23 +12,40 @@ export const metadata: Metadata = { title: "How sure are we" };
 
 type Entry = NonNullable<Results["proof"]["reviewLog"]>["entries"][number];
 
+function StatusBadge({ status }: { status: Entry["status"] }) {
+  return (
+    <span
+      className={
+        status === "fixed" || status === "confirm"
+          ? "w-fit rounded-full border border-foreground/30 px-2 text-[11px] whitespace-nowrap text-foreground"
+          : status === "deliberate"
+            ? "w-fit rounded-full border px-2 text-[11px] whitespace-nowrap text-muted-foreground"
+            : "w-fit rounded-full border border-hold/60 px-2 text-[11px] whitespace-nowrap text-hold-ink"
+      }
+    >
+      {status === "fixed" ? "Fixed" : status === "confirm" ? "Changed, for Maya to confirm" : status === "deliberate" ? "Kept on purpose" : "Still open"}
+    </span>
+  );
+}
+
+// One line per miss: who, what happened to it, and what changed.
+function MissRow({ e }: { e: Entry }) {
+  return (
+    <li className="grid gap-1 px-3 py-2.5 text-sm sm:grid-cols-[minmax(0,13rem)_8.5rem_minmax(0,1fr)] sm:items-baseline sm:gap-3">
+      <span className="truncate font-medium">{e.customer}</span>
+      <StatusBadge status={e.status} />
+      <span className="text-xs leading-relaxed text-muted-foreground">{e.change}</span>
+    </li>
+  );
+}
+
 function MissItem({ e }: { e: Entry }) {
   return (
     <li className="rounded-lg border p-3 text-sm">
       <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
         <span className="font-medium">{e.customer}</span>
         {e.amount > 0 && <span className="tabular text-xs text-muted-foreground">{formatMoney(e.amount)}</span>}
-        <span
-          className={
-            e.status === "fixed" || e.status === "confirm"
-              ? "rounded-full border border-foreground/30 px-2 text-[11px] text-foreground"
-              : e.status === "deliberate"
-                ? "rounded-full border px-2 text-[11px] text-muted-foreground"
-                : "rounded-full border border-hold/60 px-2 text-[11px] text-hold-ink"
-          }
-        >
-          {e.status === "fixed" ? "Fixed" : e.status === "confirm" ? "Changed, for Maya to confirm" : e.status === "deliberate" ? "Kept on purpose" : "Still open"}
-        </span>
+        <StatusBadge status={e.status} />
         {e.differsBecause && e.status !== "deliberate" && (
           <span className="rounded-full border px-2 text-[11px] text-muted-foreground">Differs from the reviewer on purpose</span>
         )}
@@ -81,21 +99,41 @@ export default function ProofPage() {
     { fixed: 0, confirm: 0, kept: 0, open: 0 },
   );
 
-  const guards: { lead: string; rest: string }[] = [
+  const guards = [
     {
-      lead: "A person approves everything.",
-      rest: "Top-50 accounts, disputes, probably-paid bills and every call always stay with a person; auto-send stays off until a month of approvals is on record.",
+      icon: UserCheck,
+      lead: "A person approves everything",
+      rest: "Top-50 accounts, disputes, probably-paid bills and every call always stay with a person. Auto-send stays off until a month of approvals is on record.",
     },
     {
-      lead: "The daily tool uses no AI.",
-      rest: "It runs on rules until legal approves an AI vendor, and AI redraft is switched off. In testing only, Claude reviewed the bills and Groq read masked tickets.",
+      icon: BotOff,
+      lead: "The daily tool uses no AI",
+      rest: "Rules only, until legal approves an AI vendor; AI redraft is off. In testing only, Claude reviewed the bills and Groq read masked tickets.",
     },
     {
-      lead: "AI is measured before it's allowed:",
-      rest: up && up.cacheMisses === 0 ? `on these bills it changed ${up.verdictsChanged.length === 0 ? "no answers" : `${up.verdictsChanged.length} answers`}; it would only change which ${up.checkFirstChanged} bills a person checks first. Once allowed, two models must agree or a person decides.` : "once allowed, two models must agree or a person decides.",
+      icon: Gauge,
+      lead: "AI is measured before it's allowed",
+      rest:
+        up && up.cacheMisses === 0
+          ? `On these bills it changed ${up.verdictsChanged.length === 0 ? "no answers" : `${up.verdictsChanged.length} answers`}; it would only change which ${up.checkFirstChanged} bills a person checks first. Once allowed, two models must agree or a person decides.`
+          : "Once allowed, two models must agree or a person decides.",
     },
-    { lead: "No threats, no invented facts:", rest: "emails come from Ledgerline's templates, checked for threat words." },
+    { icon: MessageSquareText, lead: "No threats, no invented facts", rest: "Emails come from Ledgerline's own templates, checked for threat words." },
   ];
+
+  // The 54 bills as squares: agreed from the start, agree after a fix, differ on purpose.
+  const total = proof.accuracy?.sampleSize ?? 0;
+  const now = proof.accuracy?.agreed ?? 0;
+  const agreedFirst = Math.max(0, total - firstPass);
+  const fixedLater = Math.max(0, now - agreedFirst);
+  const differ = Math.max(0, total - now);
+  const pct = (n: number) => (total ? Math.round((n / total) * 100) : 0);
+  const KIND = [
+    { key: "first", n: agreedFirst, label: "agreed from the start", cls: "bg-foreground/25" },
+    { key: "fixed", n: fixedLater, label: "agree after a fix", cls: "bg-brand" },
+    { key: "differ", n: differ, label: "differ on purpose", cls: "bg-hold" },
+  ];
+  const squares = KIND.flatMap((k) => Array.from({ length: k.n }, () => k.cls));
 
   return (
     <>
@@ -104,64 +142,74 @@ export default function ProofPage() {
       {log && (
         <Card className="mb-6 border-foreground/20">
           <CardHeader>
-            <CardTitle className="leading-snug">How often it agrees with an independent review, and every miss</CardTitle>
+            <CardTitle className="leading-snug">How often it agrees with an independent review</CardTitle>
             <CardDescription>
-              A separate AI model (Claude, in its own session) reviewed all 54 bills from a summary of each bill&apos;s records, without the tool&apos;s
-              answers. A person then checked the bills in doubt, not the others.
+              A separate AI model (Claude, in its own session) checked all {total} bills without seeing the tool&apos;s answers. A person then
+              checked the bills in doubt.
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <div className="grid gap-2 sm:grid-cols-3">
-              <div className="rounded-lg border p-3">
-                <p className="text-xs text-muted-foreground">First pass</p>
-                <p className="tabular text-2xl font-semibold">85%</p>
-                <p className="text-xs text-muted-foreground">46 of 54 bills agreed</p>
+            <div className="grid gap-6 md:grid-cols-[auto_minmax(0,1fr)] md:items-center">
+              <div className="flex items-end gap-3">
+                <div>
+                  <p className="text-xs text-muted-foreground">First pass</p>
+                  <p className="tabular text-3xl font-semibold text-muted-foreground">{pct(agreedFirst)}%</p>
+                </div>
+                <ArrowRight className="mb-2 size-5 text-muted-foreground" aria-hidden="true" />
+                <div>
+                  <p className="text-xs font-medium text-brand">After the fixes</p>
+                  <p className="tabular text-5xl leading-none font-semibold text-brand">{pct(now)}%</p>
+                </div>
               </div>
-              <div className="rounded-lg border border-brand/40 bg-brand/10 p-3">
-                <p className="text-xs font-medium text-brand">After the fixes</p>
-                <p className="tabular text-3xl font-semibold text-brand">{proof.accuracy ? `${Math.round(proof.accuracy.rate * 100)}%` : "-"}</p>
-                <p className="text-xs text-muted-foreground">
-                  {proof.accuracy
-                    ? `${proof.accuracy.agreed} of ${proof.accuracy.sampleSize}.${
-                        proof.accuracy.agreed < proof.accuracy.sampleSize
-                          ? ` The other ${proof.accuracy.sampleSize - proof.accuracy.agreed} differ on purpose, shown first below.`
-                          : ""
-                      }${
-                        proof.accuracy.agreedOriginal != null && proof.accuracy.agreedOriginal !== proof.accuracy.agreed
-                          ? ` Against the reviewer's own labels: ${proof.accuracy.agreedOriginal}.`
-                          : ""
-                      }`
-                    : "not measured"}
-                </p>
-              </div>
-              <div className="rounded-lg border border-dashed p-3">
-                <p className="text-xs text-muted-foreground">The fresh test</p>
-                <p className="text-xl font-semibold">Shadow week</p>
-                <p className="text-xs text-muted-foreground">New bills, not the 54 the rules were fixed on. Priya works as usual and compares her calls with the tool&apos;s; nothing goes out from it that week.</p>
+              <div className="min-w-0">
+                <div
+                  className="flex flex-wrap gap-1.5"
+                  role="img"
+                  aria-label={`${total} bills: ${agreedFirst} agreed from the start, ${fixedLater} agree after a fix, ${differ} differ on purpose`}
+                >
+                  {squares.map((cls, i) => (
+                    <span key={i} className={`size-4 rounded-[4px] ${cls}`} />
+                  ))}
+                </div>
+                <div className="mt-3 flex flex-wrap gap-x-4 gap-y-1 text-xs">
+                  {KIND.map((k) => (
+                    <span key={k.key} className="inline-flex items-center gap-1.5">
+                      <span className={`size-2.5 rounded-[3px] ${k.cls}`} aria-hidden="true" />
+                      <span className="tabular font-semibold">{k.n}</span>
+                      <span className="text-muted-foreground">{k.label}</span>
+                    </span>
+                  ))}
+                </div>
               </div>
             </div>
+            <p className="mt-5 w-fit rounded-full border border-dashed px-3 py-1 text-xs text-muted-foreground">
+              Same {total} bills the rules were fixed on. The fresh test is the shadow week: new bills, and nothing goes out from the tool.
+            </p>
 
-            <ol className="mt-5 space-y-3">
-              {ordered.slice(0, 2).map((e, idx) => (
-                <MissItem key={`${e.invoice}-${idx}`} e={e} />
-              ))}
-            </ol>
-            {log.entries.length > 2 && (
-              <details className="group mt-3">
-                <summary className="cursor-pointer text-sm font-medium text-muted-foreground hover:text-foreground">
-                  <span className="group-open:hidden">
-                    Show all {log.entries.length} misses: {firstPass} from the review, {log.entries.length - firstPass} found another way
-                  </span>
-                  <span className="hidden group-open:inline">Hide them</span>
-                </summary>
-                <p className="mt-3 flex flex-wrap items-baseline justify-between gap-x-4 gap-y-0.5 rounded-lg border bg-muted/40 px-3 py-2 text-sm font-medium">
-                  <span>Every miss</span>
-                  <span className="tabular">
-                    {log.entries.length}: {firstPass} from the review&apos;s first pass, {log.entries.length - firstPass} found other ways ·{" "}
-                    {split(totals)}
-                  </span>
-                </p>
-                <ul className="mt-3 divide-y rounded-lg border text-sm" aria-label="Where every miss came from">
+            <Tabs defaultValue="differ" className="mt-5">
+              <TabsList className="h-auto flex-wrap group-data-horizontal/tabs:h-auto">
+                <TabsTrigger value="differ">{differ} still differ</TabsTrigger>
+                <TabsTrigger value="all">All {log.entries.length} misses</TabsTrigger>
+                <TabsTrigger value="source">Where they came from</TabsTrigger>
+              </TabsList>
+              <TabsContent value="differ">
+                <ol className="space-y-3">
+                  {ordered
+                    .filter((e) => e.differsBecause)
+                    .map((e, idx) => (
+                      <MissItem key={`${e.invoice}-${idx}`} e={e} />
+                    ))}
+                </ol>
+              </TabsContent>
+              <TabsContent value="all">
+                <ul className="divide-y rounded-lg border">
+                  {ordered.map((e, idx) => (
+                    <MissRow key={`${e.invoice}-${idx}`} e={e} />
+                  ))}
+                </ul>
+              </TabsContent>
+              <TabsContent value="source">
+                <ul className="divide-y rounded-lg border text-sm" aria-label="Where every miss came from">
                   {sources.map((r) => (
                     <li key={r.by} className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-0.5 px-3 py-2">
                       <span>{r.by}</span>
@@ -170,14 +218,15 @@ export default function ProofPage() {
                       </span>
                     </li>
                   ))}
+                  <li className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-0.5 bg-muted/40 px-3 py-2 font-medium">
+                    <span>Every miss</span>
+                    <span className="tabular">
+                      {log.entries.length} · {split(totals)}
+                    </span>
+                  </li>
                 </ul>
-                <ol className="mt-3 space-y-3">
-                  {ordered.slice(2).map((e, idx) => (
-                    <MissItem key={`${e.invoice}-${idx + 2}`} e={e} />
-                  ))}
-                </ol>
-              </details>
-            )}
+              </TabsContent>
+            </Tabs>
           </CardContent>
         </Card>
       )}
@@ -196,7 +245,7 @@ export default function ProofPage() {
               <div key={v.label} className="rounded-lg border p-3">
                 <div className="flex items-baseline justify-between gap-2">
                   <p className="font-medium">{v.label}</p>
-                  <p className={v.ok ? "tabular text-2xl font-semibold text-foreground" : "tabular text-2xl font-semibold text-alert-ink"}>{v.valueA}</p>
+                  <p className={v.ok ? "tabular text-4xl leading-none font-semibold text-brand" : "tabular text-4xl leading-none font-semibold text-alert-ink"}>{v.valueA}</p>
                 </div>
                 {v.strictValue !== undefined && v.strictValue > 0 && (
                   <p className="mt-1 text-xs font-medium text-hold-ink">
@@ -219,13 +268,12 @@ export default function ProofPage() {
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <ul className="space-y-2.5 text-sm">
+          <ul className="grid gap-3 sm:grid-cols-2">
             {guards.map((g) => (
-              <li key={g.lead} className="flex gap-2.5">
-                <CircleCheck className="mt-0.5 size-4 shrink-0 text-foreground" aria-hidden="true" />
-                <span className="leading-relaxed">
-                  <span className="font-semibold">{g.lead}</span> <span className="text-muted-foreground">{g.rest}</span>
-                </span>
+              <li key={g.lead} className="rounded-lg border p-3.5">
+                <g.icon className="size-5 text-brand" aria-hidden="true" />
+                <p className="mt-2 text-sm font-semibold">{g.lead}</p>
+                <p className="mt-1 text-xs leading-relaxed text-muted-foreground">{g.rest}</p>
               </li>
             ))}
           </ul>
@@ -253,16 +301,21 @@ export default function ProofPage() {
         </Card>
       )}
 
-      <details className="group mt-8 rounded-xl border bg-card/50 p-4 sm:p-5">
-        <summary className="cursor-pointer list-none text-sm font-semibold">
-          For reviewers: auto-send rules, every setting, data sources and the two-way checks
-          <span className="ml-2 text-xs font-normal text-muted-foreground group-open:hidden">Show</span>
-        </summary>
-        <div className="-mt-2">
-          {results.autoSend && <TrustLadder data={results.autoSend} invoices={invoices} />}
+      <section className="mt-8" aria-label="For reviewers">
+        <h2 className="text-base font-semibold tracking-tight">For reviewers</h2>
+        <p className="mt-0.5 text-sm text-muted-foreground">The auto-send rules, every setting, where the data comes from, and the two-way checks.</p>
+        <Tabs defaultValue="autosend" className="mt-3">
+          <TabsList className="h-auto flex-wrap group-data-horizontal/tabs:h-auto">
+            <TabsTrigger value="autosend">Auto-send</TabsTrigger>
+            <TabsTrigger value="settings">Settings</TabsTrigger>
+            <TabsTrigger value="sources">Data sources</TabsTrigger>
+            <TabsTrigger value="checks">Two-way checks</TabsTrigger>
+          </TabsList>
+          <TabsContent value="autosend">{results.autoSend && <TrustLadder data={results.autoSend} invoices={invoices} />}</TabsContent>
+          <TabsContent value="settings">
 
           {results.settings && results.settings.length > 0 && (
-            <Card className="mt-6">
+            <Card>
               <CardHeader>
                 <CardTitle className="leading-snug">Every number the COO set, and who can change it</CardTitle>
               </CardHeader>
@@ -290,9 +343,10 @@ export default function ProofPage() {
               </CardContent>
             </Card>
           )}
-
+          </TabsContent>
+          <TabsContent value="sources">
           {meta.sources && meta.sources.length > 0 && (
-            <Card className="mt-6">
+            <Card>
               <CardHeader>
                 <CardTitle className="leading-snug">Where the data comes from (read-only)</CardTitle>
               </CardHeader>
@@ -320,9 +374,10 @@ export default function ProofPage() {
               </CardContent>
             </Card>
           )}
-
+          </TabsContent>
+          <TabsContent value="checks">
           {cross.length > 0 && (
-            <Card className="mt-6">
+            <Card>
               <CardHeader>
                 <CardTitle className="leading-snug">
                   {crossOk} of {cross.length} headline figures agree when worked out two ways
@@ -361,8 +416,9 @@ export default function ProofPage() {
               </CardContent>
             </Card>
           )}
-        </div>
-      </details>
+          </TabsContent>
+        </Tabs>
+      </section>
     </>
   );
 }
