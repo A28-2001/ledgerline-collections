@@ -93,3 +93,16 @@ I'd switch yours off for the same kind of thing: chasing someone who's paid, or 
 - Nudges: one Slack direct message a day per account manager, listing all their paused bills, never a channel post.
 - Probably paid: goes to Marcus Bell to match, with Priya copied; if not matched within 2 working days, it comes back to Priya.
 - The morning message page shows who gets what each day. Timings are Maya's starting point, for Dana to confirm.
+
+## 9. Failed cards, Priya's leave, and who approves corrections
+
+**Us:** Three practical ones to close the loop: 1. There are 16 failed card payments where Stripe's retries have finished, and two will be written off automatically within nine days. Who should follow those up, and should Dana be flagged before an automatic write-off happens? 2. When Priya's on leave in March, who should own the morning list, Dana, or someone else? 3. Fixing a disputed bill often means lowering it (Riverside was billed 62 seats for 38 people). Can Priya issue a corrected invoice or credit herself, or does Dana approve above a certain amount?
+
+**Maya:** Priya should own the failed card payments, since it's a polite "your card didn't go through, here's the link to update it" email, and the same top-50 and open-ticket checks apply before anything goes out. And yes, Dana should be flagged at least five working days before any automatic write-off so someone can decide whether to chase it or let it go. For March, Dana owns the morning list, with Marcus covering the "probably paid" side as he does now, though I'll confirm with Dana that she can give it twenty minutes a day. On credits, I'd let Priya issue corrections up to about $2,500 herself and have Dana approve anything above that, or anything on a top-50 account. Dana may want a different line, so make it a setting rather than hard-coding it. Riverside would go to Dana either way.
+
+**What it changes:**
+- Failed cards: Priya owns them; a polite update-your-card email with the link; the top-50 and open-ticket checks still apply.
+- Automatic write-offs: Dana gets a direct message at least five working days before, to decide whether to chase or let it go.
+- March: Dana owns the morning list while Priya is on leave; Marcus keeps the probably-paid list. (Maya to confirm Dana's twenty minutes a day.)
+- Corrections: Priya up to $2,500; Dana above that or on any top-50 account. A setting, not code.
+- All of Maya's numbers now sit on one Settings card, each with who can change it.

@@ -443,7 +443,9 @@ class Engine:
                                "evidenceIds": [eid], "policyRef": self.p["card_ref"]})
                 left = self.p.get("card_writeoff_days", 0) - row.days
                 if self.p.get("card_writeoff_days") and left <= 30:
-                    rs.append({"text": f"This card invoice is written off automatically in {max(left, 0)} days unless someone acts.",
+                    row.flags["writeoff_days_left"] = max(left, 0)
+                    rs.append({"text": f"This card invoice is written off automatically in {max(left, 0)} days unless someone acts. "
+                                       f"{str(self.cfg['people'].get('vp_finance', 'The VP Finance')).split(' (')[0]} decides whether to chase it or let it go.",
                                "evidenceIds": [eid], "policyRef": self.p["card_writeoff_ref"]})
                     row.needs_review.append(f"automatic write-off in {max(left, 0)} days: decide today")
             fails = [p for p in linked_failed.get(row.key, []) if not row.flags.get("paid_linked") and not row.flags.get("card_failed")]
@@ -457,6 +459,17 @@ class Engine:
                 rs.append({"text": "The card payment failed. Ask them to update the card (or let the billing tool's own retry email do it).",
                            "evidenceIds": [eid], "policyRef": self.p["card_ref"]})
 
+        # A customer disputing one bill: their other overdue bills go to a person first (a seat or price error often repeats).
+        disputed: dict[str, list[str]] = {}
+        for r in rows:
+            if r.flags.get("dispute_hold") and r.match.ok:
+                disputed.setdefault(r.match.customer_id, []).append(r.display_id)
+        for r in rows:
+            others = [x for x in disputed.get(r.match.customer_id, []) if x != r.display_id]
+            if others and not r.flags.get("dispute_hold"):
+                r.needs_review.append(f"they dispute invoice {', '.join(others)}: check this bill isn't affected by the same error before chasing")
+                r.reasons.insert(0, {"text": f"The same customer disputes invoice {', '.join(others)}. A seat or price error often repeats, so a person checks this bill first.",
+                                     "evidenceIds": [], "policyRef": "collections_policy.md: do not chase an invoice the customer has disputed"})
         return self._assemble(rows, tickets, customers, contacts)
 
     # ---------------------------------------------------------------- verdicts + output
@@ -510,8 +523,8 @@ class Engine:
             return {"to": to, "subject": "", "body": "", "tone": "none"}
         if tone == "card_update":
             subj = f"Card payment for invoice {inv} didn't go through"
-            body = (f"{hi}\n\nThe card on file for {name} didn't go through for invoice {inv} ({amt}), and the automatic retries have now finished. "
-                    f"Could you update the card, or reply and we'll send bank details instead?\n\n{sign}")
+            body = (f"{hi}\n\nYour card didn't go through for invoice {inv} ({amt}). You can update it here: [update-card link]. "
+                    f"If you'd rather pay by bank transfer, just reply and we'll send the details.\n\n{sign}")
         elif tone == "soft":
             subj = f"Invoice {inv}: a quick note"
             body = (f"{hi}\n\nI know your team has an open request with our support team, and they're on it. "
@@ -615,7 +628,7 @@ class Engine:
                     hold = {"owner": owner.split(" (")[0], "ownerRole": "Finance (AR)" + (f", with {am} for the customer's agreement" if with_am else ""),
                             "deadline": iso(add_business_days(self.as_of, max(1, days_fix - (open_days or 0))) if (open_days or 0) < days_fix else self.as_of),
                             "action": (f"Send a corrected invoice or a clear answer to the customer" + (f", agreeing seats or price with {am} first" if with_am else "")
-                                       + f". Target: {days_fix} working days from when they raised it.")}
+                                       + f". Target: {days_fix} working days from when they raised it. " + self._approver(cid, row.amount))}
                     if open_days is not None:
                         late = open_days - days_fix
                         row.reasons.append({"text": (f"Raised {nice(since)}: {open_days} working days without a fix, {late} past the {days_fix}-day target."
@@ -658,6 +671,19 @@ class Engine:
                     al.append({"system": system, "name": raw, "matchedBy": m.method, "score": round(float(m.score), 3)})
         self._attach_payments(cust_out)
         return {"invoices": invoices_out, "customers": cust_out, "rows": rows}
+
+    def _approver(self, cid, amount: float) -> str:
+        """Maya: Priya corrects up to the limit herself; Dana approves above it or on any top-50 account."""
+        limit = float(self.p.get("credit_self_approve_max", 0) or 0)
+        vp = str(self.cfg["people"].get("vp_finance", "the VP Finance")).split(" (")[0]
+        me = str(self.cfg["people"].get("finance_owner", "Finance")).split(" (")[0]
+        if cid in self.top_accounts:
+            return f"Top-50 account, so {vp} approves any correction."
+        if not limit:
+            return ""
+        if amount <= limit:
+            return f"{me} can correct it herself (the whole bill is under {money(limit)})."
+        return f"{me} can correct up to {money(limit)} herself; {vp} approves anything bigger."
 
     def _auto_send(self, row: Row, verdict: str, tone: str, cid, tickets) -> dict:
         """Maya's trust ladder. Whether this bill could ever go out without Priya clicking, and if not, why not.

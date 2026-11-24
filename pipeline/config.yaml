@@ -66,9 +66,11 @@ policy:
   escalate_after_days: 90
   escalate_ref: "process_maps.md FIN-1: still unpaid at 90 days, escalate to the VP Finance"
   hold_business_days: 5          # Maya: five working days (VP Finance to confirm)
-  dispute_fix_days: 5
+  dispute_fix_days: 5            # Maya: corrected invoice or clear answer within five working days
   am_pause_days: 3               # Maya: account manager gets 3 working days on an open-ticket pause
-  paid_match_days: 2             # Maya: Marcus matches probably-paid bills within 2 working days            # Maya: corrected invoice or clear answer within five working days
+  paid_match_days: 2             # Maya: Marcus matches probably-paid bills within 2 working days
+  credit_self_approve_max: 2500  # Maya: Priya corrects up to about $2,500; Dana above that or any top-50 account (Dana may change it)
+  write_off_flag_working_days: 5 # Maya: flag Dana at least five working days before an automatic write-off
   hold_ref: "collections_policy.md: don't chase a dispute or open escalation until the account manager says so"
   card_ref: "billing_engine_rewrite_2026.md: Stripe retries failed cards three times over seven days, emailing each time"
   card_writeoff_days: 150
@@ -115,6 +117,15 @@ sources:
   - {name: Zendesk, what: "Tickets from customers with an overdue bill; finance sees masked excerpts only", how: "Read-only service account", signOff: "Head of Support sets it up; COO signs off", status: "Planned. This run: fallback export"}
   - {name: Stripe and bank receipts, what: "Unmatched payments", how: "Read-only (Stripe is a finance tool already)", signOff: "VP Finance", status: "Planned. This run: fallback export"}
   - {name: Export upload, what: "Same files, dropped in by hand", how: "Fallback if a connection breaks", signOff: "None needed", status: "In use for this run (data room files)"}
+
+# Maya (24 Nov): while Priya is on leave in March, Dana owns the morning list and Marcus keeps the
+# probably-paid list. Set on_leave: true for those weeks. (Maya to confirm Dana's twenty minutes a day.)
+leave_cover:
+  person: Priya Nair
+  when: March (dates to confirm)
+  cover: Dana Ruiz
+  paid_cover: Marcus Bell
+  on_leave: false
 
 trend_markers:
   - {month: "2026-03", label: Billing engine rewrite (16 Mar)}

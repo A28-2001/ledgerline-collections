@@ -73,6 +73,8 @@ policy:
   stale_contact_days: 180
   am_pause_days: 3
   paid_match_days: 2
+  credit_self_approve_max: 2500  # Maya: Priya corrects up to about $2,500; Dana above that or any top-50 account (Dana may change it)
+  write_off_flag_working_days: 5 # Maya: flag Dana at least five working days before an automatic write-off
 
 matching:
   fuzzy_high: 92      # at or above: match

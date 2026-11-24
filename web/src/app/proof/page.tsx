@@ -136,6 +136,39 @@ export default function ProofPage() {
         </Card>
       )}
 
+      {results.settings && results.settings.length > 0 && (
+        <Card className="mt-6">
+          <CardHeader>
+            <CardTitle className="leading-snug">Settings, not code: every number the COO set, and who can change it</CardTitle>
+            <CardDescription>Starting points from the conversation with the COO. The VP Finance may move them.</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="overflow-x-auto">
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead>Setting</TableHead>
+                    <TableHead>Value</TableHead>
+                    <TableHead>Who changes it</TableHead>
+                    <TableHead>From</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {results.settings.map((st) => (
+                    <TableRow key={st.name}>
+                      <TableCell className="min-w-48 whitespace-normal font-medium">{st.name}</TableCell>
+                      <TableCell className="whitespace-normal">{st.value}</TableCell>
+                      <TableCell className="whitespace-normal text-muted-foreground">{st.who}</TableCell>
+                      <TableCell className="whitespace-nowrap text-muted-foreground">{st.source}</TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </div>
+          </CardContent>
+        </Card>
+      )}
+
       {meta.sources && meta.sources.length > 0 && (
         <Card className="mt-6">
           <CardHeader>

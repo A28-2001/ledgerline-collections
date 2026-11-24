@@ -1,6 +1,6 @@
 {
  "meta": {
-  "generatedAt": "2026-11-24T06:25:08+00:00",
+  "generatedAt": "2026-11-24T06:29:48+00:00",
   "asOf": "2026-10-31",
   "dataSource": "real",
   "companyName": "Ledgerline",
@@ -1040,7 +1040,7 @@
    "draft": {
     "to": "ivy.abara@eastmanengineering.example",
     "subject": "Card payment for invoice INV-25973 didn't go through",
-    "body": "Hi Ivy,\n\nThe card on file for Eastman Engineering didn't go through for invoice INV-25973 ($3,264), and the automatic retries have now finished. Could you update the card, or reply and we'll send bank details instead?\n\nThanks,\nPriya Nair\nLedgerline Billing",
+    "body": "Hi Ivy,\n\nYour card didn't go through for invoice INV-25973 ($3,264). You can update it here: [update-card link]. If you'd rather pay by bank transfer, just reply and we'll send the details.\n\nThanks,\nPriya Nair\nLedgerline Billing",
     "tone": "card_update"
    },
    "reminderStage": "Second reminder (21 days)",
@@ -1253,7 +1253,7 @@
    "draft": {
     "to": "emma.stanhope@quillmottco.example",
     "subject": "Card payment for invoice INV-25975 didn't go through",
-    "body": "Hi Emma,\n\nThe card on file for Quill, Mott & Co didn't go through for invoice INV-25975 ($1,632), and the automatic retries have now finished. Could you update the card, or reply and we'll send bank details instead?\n\nThanks,\nPriya Nair\nLedgerline Billing",
+    "body": "Hi Emma,\n\nYour card didn't go through for invoice INV-25975 ($1,632). You can update it here: [update-card link]. If you'd rather pay by bank transfer, just reply and we'll send the details.\n\nThanks,\nPriya Nair\nLedgerline Billing",
     "tone": "card_update"
    },
    "reminderStage": "Second reminder (21 days)",
@@ -1372,7 +1372,7 @@
    "draft": {
     "to": "clara.hollis@ruizwhitfieldcpas.example",
     "subject": "Card payment for invoice INV-25926 didn't go through",
-    "body": "Hi Clara,\n\nThe card on file for Ruiz & Whitfield CPAs didn't go through for invoice INV-25926 ($846), and the automatic retries have now finished. Could you update the card, or reply and we'll send bank details instead?\n\nThanks,\nPriya Nair\nLedgerline Billing",
+    "body": "Hi Clara,\n\nYour card didn't go through for invoice INV-25926 ($846). You can update it here: [update-card link]. If you'd rather pay by bank transfer, just reply and we'll send the details.\n\nThanks,\nPriya Nair\nLedgerline Billing",
     "tone": "card_update"
    },
    "reminderStage": "Second reminder (21 days)",
@@ -1467,7 +1467,7 @@
    "draft": {
     "to": "signe.abbott@elleryachebechartereda.example",
     "subject": "Card payment for invoice INV-25912 didn't go through",
-    "body": "Hi Signe,\n\nThe card on file for Ellery Achebe Chartered Accountants didn't go through for invoice INV-25912 ($799), and the automatic retries have now finished. Could you update the card, or reply and we'll send bank details instead?\n\nThanks,\nPriya Nair\nLedgerline Billing",
+    "body": "Hi Signe,\n\nYour card didn't go through for invoice INV-25912 ($799). You can update it here: [update-card link]. If you'd rather pay by bank transfer, just reply and we'll send the details.\n\nThanks,\nPriya Nair\nLedgerline Billing",
     "tone": "card_update"
    },
    "reminderStage": "Second reminder (21 days)",
@@ -1556,7 +1556,7 @@
    "draft": {
     "to": "kofi.glover@tanaccounting.example",
     "subject": "Card payment for invoice INV-25928 didn't go through",
-    "body": "Hi Kofi,\n\nThe card on file for Tan Accounting didn't go through for invoice INV-25928 ($611), and the automatic retries have now finished. Could you update the card, or reply and we'll send bank details instead?\n\nThanks,\nPriya Nair\nLedgerline Billing",
+    "body": "Hi Kofi,\n\nYour card didn't go through for invoice INV-25928 ($611). You can update it here: [update-card link]. If you'd rather pay by bank transfer, just reply and we'll send the details.\n\nThanks,\nPriya Nair\nLedgerline Billing",
     "tone": "card_update"
    },
    "reminderStage": "Second reminder (21 days)",
@@ -1644,7 +1644,7 @@
    "draft": {
     "to": "mateo.abbott@bramwellsinclaircharte.example",
     "subject": "Card payment for invoice INV-25969 didn't go through",
-    "body": "Hi Mateo,\n\nThe card on file for Bramwell Sinclair Chartered Accountants didn't go through for invoice INV-25969 ($611), and the automatic retries have now finished. Could you update the card, or reply and we'll send bank details instead?\n\nThanks,\nPriya Nair\nLedgerline Billing",
+    "body": "Hi Mateo,\n\nYour card didn't go through for invoice INV-25969 ($611). You can update it here: [update-card link]. If you'd rather pay by bank transfer, just reply and we'll send the details.\n\nThanks,\nPriya Nair\nLedgerline Billing",
     "tone": "card_update"
    },
    "reminderStage": "Second reminder (21 days)",
@@ -1716,7 +1716,7 @@
    "draft": {
     "to": "layla.zeller@humeaccounting.example",
     "subject": "Card payment for invoice INV-26005 didn't go through",
-    "body": "Hi Layla,\n\nThe card on file for Hume Accounting didn't go through for invoice INV-26005 ($282), and the automatic retries have now finished. Could you update the card, or reply and we'll send bank details instead?\n\nThanks,\nPriya Nair\nLedgerline Billing",
+    "body": "Hi Layla,\n\nYour card didn't go through for invoice INV-26005 ($282). You can update it here: [update-card link]. If you'd rather pay by bank transfer, just reply and we'll send the details.\n\nThanks,\nPriya Nair\nLedgerline Billing",
     "tone": "card_update"
    },
    "reminderStage": "First reminder (7 days)",
@@ -1803,7 +1803,7 @@
     "owner": "Priya Nair",
     "ownerRole": "Finance (AR), with Nadia Upton for the customer's agreement",
     "deadline": "2026-10-31",
-    "action": "Send a corrected invoice or a clear answer to the customer, agreeing seats or price with Nadia Upton first. Target: 5 working days from when they raised it."
+    "action": "Send a corrected invoice or a clear answer to the customer, agreeing seats or price with Nadia Upton first. Target: 5 working days from when they raised it. Top-50 account, so Dana Ruiz approves any correction."
    },
    "autoSend": {
     "eligible": false,
@@ -1935,7 +1935,7 @@
     "owner": "Priya Nair",
     "ownerRole": "Finance (AR)",
     "deadline": "2026-10-31",
-    "action": "Send a corrected invoice or a clear answer to the customer. Target: 5 working days from when they raised it."
+    "action": "Send a corrected invoice or a clear answer to the customer. Target: 5 working days from when they raised it. Top-50 account, so Dana Ruiz approves any correction."
    },
    "autoSend": {
     "eligible": false,
@@ -2033,7 +2033,7 @@
     "owner": "Priya Nair",
     "ownerRole": "Finance (AR), with Nadia Sinclair for the customer's agreement",
     "deadline": "2026-10-31",
-    "action": "Send a corrected invoice or a clear answer to the customer, agreeing seats or price with Nadia Sinclair first. Target: 5 working days from when they raised it."
+    "action": "Send a corrected invoice or a clear answer to the customer, agreeing seats or price with Nadia Sinclair first. Target: 5 working days from when they raised it. Top-50 account, so Dana Ruiz approves any correction."
    },
    "autoSend": {
     "eligible": false,
@@ -2283,7 +2283,7 @@
     "owner": "Priya Nair",
     "ownerRole": "Finance (AR), with Maria Yardley for the customer's agreement",
     "deadline": "2026-11-09",
-    "action": "Send a corrected invoice or a clear answer to the customer, agreeing seats or price with Maria Yardley first. Target: 5 working days from when they raised it."
+    "action": "Send a corrected invoice or a clear answer to the customer, agreeing seats or price with Maria Yardley first. Target: 5 working days from when they raised it. Priya Nair can correct up to $2,500 herself; Dana Ruiz approves anything bigger."
    },
    "autoSend": {
     "eligible": false,
@@ -2408,7 +2408,7 @@
     "owner": "Priya Nair",
     "ownerRole": "Finance (AR), with Hannah Drummond for the customer's agreement",
     "deadline": "2026-11-05",
-    "action": "Send a corrected invoice or a clear answer to the customer, agreeing seats or price with Hannah Drummond first. Target: 5 working days from when they raised it."
+    "action": "Send a corrected invoice or a clear answer to the customer, agreeing seats or price with Hannah Drummond first. Target: 5 working days from when they raised it. Priya Nair can correct up to $2,500 herself; Dana Ruiz approves anything bigger."
    },
    "autoSend": {
     "eligible": false,
@@ -2531,7 +2531,7 @@
     "owner": "Priya Nair",
     "ownerRole": "Finance (AR)",
     "deadline": "2026-10-31",
-    "action": "Send a corrected invoice or a clear answer to the customer. Target: 5 working days from when they raised it."
+    "action": "Send a corrected invoice or a clear answer to the customer. Target: 5 working days from when they raised it. Priya Nair can correct up to $2,500 herself; Dana Ruiz approves anything bigger."
    },
    "autoSend": {
     "eligible": false,
@@ -2609,7 +2609,7 @@
     "owner": "Priya Nair",
     "ownerRole": "Finance (AR)",
     "deadline": "2026-10-31",
-    "action": "Send a corrected invoice or a clear answer to the customer. Target: 5 working days from when they raised it."
+    "action": "Send a corrected invoice or a clear answer to the customer. Target: 5 working days from when they raised it. Priya Nair can correct up to $2,500 herself; Dana Ruiz approves anything bigger."
    },
    "autoSend": {
     "eligible": false,
@@ -2687,7 +2687,7 @@
     "owner": "Priya Nair",
     "ownerRole": "Finance (AR), with Hannah Drummond for the customer's agreement",
     "deadline": "2026-10-31",
-    "action": "Send a corrected invoice or a clear answer to the customer, agreeing seats or price with Hannah Drummond first. Target: 5 working days from when they raised it."
+    "action": "Send a corrected invoice or a clear answer to the customer, agreeing seats or price with Hannah Drummond first. Target: 5 working days from when they raised it. Priya Nair can correct up to $2,500 herself; Dana Ruiz approves anything bigger."
    },
    "autoSend": {
     "eligible": false,
@@ -2873,7 +2873,7 @@
     "owner": "Priya Nair",
     "ownerRole": "Finance (AR), with Nadia Upton for the customer's agreement",
     "deadline": "2026-10-31",
-    "action": "Send a corrected invoice or a clear answer to the customer, agreeing seats or price with Nadia Upton first. Target: 5 working days from when they raised it."
+    "action": "Send a corrected invoice or a clear answer to the customer, agreeing seats or price with Nadia Upton first. Target: 5 working days from when they raised it. Priya Nair can correct up to $2,500 herself; Dana Ruiz approves anything bigger."
    },
    "autoSend": {
     "eligible": false,
@@ -2969,7 +2969,7 @@
     "owner": "Priya Nair",
     "ownerRole": "Finance (AR)",
     "deadline": "2026-10-31",
-    "action": "Send a corrected invoice or a clear answer to the customer. Target: 5 working days from when they raised it."
+    "action": "Send a corrected invoice or a clear answer to the customer. Target: 5 working days from when they raised it. Priya Nair can correct up to $2,500 herself; Dana Ruiz approves anything bigger."
    },
    "autoSend": {
     "eligible": false,
@@ -3172,7 +3172,7 @@
     "owner": "Priya Nair",
     "ownerRole": "Finance (AR)",
     "deadline": "2026-10-31",
-    "action": "Send a corrected invoice or a clear answer to the customer. Target: 5 working days from when they raised it."
+    "action": "Send a corrected invoice or a clear answer to the customer. Target: 5 working days from when they raised it. Priya Nair can correct up to $2,500 herself; Dana Ruiz approves anything bigger."
    },
    "autoSend": {
     "eligible": false,
@@ -3468,7 +3468,7 @@
     "owner": "Priya Nair",
     "ownerRole": "Finance (AR), with Hannah Drummond for the customer's agreement",
     "deadline": "2026-10-31",
-    "action": "Send a corrected invoice or a clear answer to the customer, agreeing seats or price with Hannah Drummond first. Target: 5 working days from when they raised it."
+    "action": "Send a corrected invoice or a clear answer to the customer, agreeing seats or price with Hannah Drummond first. Target: 5 working days from when they raised it. Priya Nair can correct it herself (the whole bill is under $2,500)."
    },
    "autoSend": {
     "eligible": false,
@@ -4484,7 +4484,7 @@
      "policyRef": "billing_engine_rewrite_2026.md: Stripe retries failed cards three times over seven days, emailing each time"
     },
     {
-     "text": "This card invoice is written off automatically in 1 days unless someone acts.",
+     "text": "This card invoice is written off automatically in 1 days unless someone acts. Dana Ruiz decides whether to chase it or let it go.",
      "evidenceIds": [
       "invoice:INV-25433"
      ],
@@ -4818,7 +4818,7 @@
      "policyRef": "billing_engine_rewrite_2026.md: Stripe retries failed cards three times over seven days, emailing each time"
     },
     {
-     "text": "This card invoice is written off automatically in 9 days unless someone acts.",
+     "text": "This card invoice is written off automatically in 9 days unless someone acts. Dana Ruiz decides whether to chase it or let it go.",
      "evidenceIds": [
       "invoice:INV-25470"
      ],
@@ -13721,7 +13721,7 @@
    }
   ],
   "failures": [],
-  "runtimeSeconds": 0.41
+  "runtimeSeconds": 0.42
  },
  "morningSummary": {
   "title": "Collections check, 2026-10-31",
@@ -13733,6 +13733,7 @@
    "17 need a second look before anything goes out."
   ],
   "text": "Good morning. $396,373 of $633,245 overdue (63%) sits with customers we shouldn't chase today: they've probably paid, they're unhappy, or the bill is wrong. Today: 20 reminders ready to send ($181,746). Approve all in one click. 18 on hold ($318,025): owners have until 2026-10-31. 5 probably paid already ($78,348): confirm and close. 11 need a phone call ($55,126). 17 need a second look before anything goes out.",
+  "cover": "While Priya Nair is on leave (March (dates to confirm)), Dana Ruiz owns this morning list and Marcus Bell keeps the probably-paid list. Cover is off today.",
   "routing": [
    {
     "to": "Priya Nair",
@@ -13815,9 +13816,77 @@
     ],
     "by": "Nov 5",
     "intro": "2 of your accounts have a reminder paused. Get each issue moving or tell Priya Nair the reminder can go; after 3 working days it comes back to Priya Nair."
+   },
+   {
+    "to": "Dana Ruiz",
+    "role": "VP Finance",
+    "channel": "Slack direct message",
+    "cc": "Priya Nair",
+    "lines": [
+     "Northgate Creative: invoice INV-25433, $799, written off automatically in 1 days",
+     "Hollis Nair Engineers: invoice INV-25470, $517, written off automatically in 9 days"
+    ],
+    "by": null,
+    "intro": "2 card invoices will be written off automatically soon. Chase them or let them go?"
    }
   ]
  },
+ "settings": [
+  {
+   "name": "Small reminder (auto-send limit)",
+   "value": "$5,000",
+   "who": "Priya, on this page",
+   "source": "Maya, 24 Nov"
+  },
+  {
+   "name": "Correction Priya can make herself",
+   "value": "up to $2,500; Dana above that or any top-50 account",
+   "who": "Dana",
+   "source": "Maya, 24 Nov"
+  },
+  {
+   "name": "Disputed bill: corrected invoice or clear answer",
+   "value": "5 working days",
+   "who": "Dana to confirm",
+   "source": "Maya, 24 Nov"
+  },
+  {
+   "name": "Account manager pause before it comes back to Priya",
+   "value": "3 working days",
+   "who": "Dana to confirm",
+   "source": "Maya, 24 Nov"
+  },
+  {
+   "name": "Marcus matches a probably-paid bill",
+   "value": "2 working days",
+   "who": "Dana to confirm",
+   "source": "Maya, 24 Nov"
+  },
+  {
+   "name": "Flag Dana before an automatic write-off",
+   "value": "at least 5 working days before",
+   "who": "Dana",
+   "source": "Maya, 24 Nov"
+  },
+  {
+   "name": "Auto-send unlocks after",
+   "value": "30 days of approvals on record",
+   "who": "Maya",
+   "source": "Maya, 24 Nov"
+  },
+  {
+   "name": "March cover",
+   "value": "Dana Ruiz owns the list; Marcus Bell keeps probably paid",
+   "who": "Dana to confirm her 20 minutes a day",
+   "source": "Maya, 24 Nov"
+  },
+  {
+   "name": "AI reading tickets",
+   "value": "Off (no vendor) until legal approves a provider",
+   "who": "Legal, via Maya",
+   "source": "Maya, 23 Nov"
+  }
+ ],
  "monthOne": {
   "source": "Maya (COO), 24 Nov: the one number to watch, and her real test behind it",
   "measures": [

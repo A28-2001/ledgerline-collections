@@ -217,6 +217,20 @@ def main() -> None:
                         "by": pd.Timestamp(np.busday_offset(as_of.date(), int(cfg["policy"].get("am_pause_days", 3)), roll="forward")).strftime("%b %-d"),
                         "intro": f"{len(bills)} of your accounts have a reminder paused. Get each issue moving or tell {priya} the reminder can go; "
                                  f"after {cfg['policy'].get('am_pause_days', 3)} working days it comes back to {priya}."})
+    # Dana: automatic write-offs coming (Maya: flag her at least five working days before)
+    wo = [(r, i) for r in engine._rows for i in invoices if i["id"] == r.display_id and r.flags.get("writeoff_days_left") is not None]
+    if wo and dana:
+        routing.append({"to": dana, "role": "VP Finance", "channel": "Slack direct message", "cc": priya,
+                        "lines": [f"{i['customerName']}: invoice {i['id']}, {money(i['amount'])}, written off automatically in {r.flags['writeoff_days_left']} days"
+                                  for r, i in sorted(wo, key=lambda x: x[0].flags["writeoff_days_left"])],
+                        "by": None,
+                        "intro": f"{len(wo)} card invoices will be written off automatically soon. Chase them or let them go?"})
+    lc = cfg.get("leave_cover") or {}
+    if lc:
+        morning["cover"] = (f"While {lc.get('person')} is on leave ({lc.get('when')}), {first(lc.get('cover', ''))} owns this morning list and "
+                            f"{first(lc.get('paid_cover', ''))} keeps the probably-paid list. " + ("Cover is ON today." if lc.get("on_leave") else "Cover is off today."))
+        if lc.get("on_leave") and routing:
+            routing[0]["to"], routing[0]["cc"] = first(lc.get("cover")), None
     morning["routing"] = routing
 
     notes = list(dict.fromkeys(data.notes))
@@ -248,6 +262,17 @@ def main() -> None:
                   "accuracy": acc, "agreementRate": round(ai.agreements / ai.judgments, 4) if ai.judgments else None,
                   "verifiedNumbers": vn, "failures": failures[:12], "runtimeSeconds": round(time.time() - t0, 2)},
         "morningSummary": morning,
+        "settings": [
+            {"name": "Small reminder (auto-send limit)", "value": money(float(cfg.get("auto_send", {}).get("max_amount") or 0)), "who": "Priya, on this page", "source": "Maya, 24 Nov"},
+            {"name": "Correction Priya can make herself", "value": f"up to {money(float(cfg['policy'].get('credit_self_approve_max', 0) or 0))}; Dana above that or any top-50 account", "who": "Dana", "source": "Maya, 24 Nov"},
+            {"name": "Disputed bill: corrected invoice or clear answer", "value": f"{cfg['policy'].get('dispute_fix_days', 5)} working days", "who": "Dana to confirm", "source": "Maya, 24 Nov"},
+            {"name": "Account manager pause before it comes back to Priya", "value": f"{cfg['policy'].get('am_pause_days', 3)} working days", "who": "Dana to confirm", "source": "Maya, 24 Nov"},
+            {"name": "Marcus matches a probably-paid bill", "value": f"{cfg['policy'].get('paid_match_days', 2)} working days", "who": "Dana to confirm", "source": "Maya, 24 Nov"},
+            {"name": "Flag Dana before an automatic write-off", "value": f"at least {cfg['policy'].get('write_off_flag_working_days', 5)} working days before", "who": "Dana", "source": "Maya, 24 Nov"},
+            {"name": "Auto-send unlocks after", "value": f"{cfg.get('auto_send', {}).get('days_on_record', 30)} days of approvals on record", "who": "Maya", "source": "Maya, 24 Nov"},
+            {"name": "March cover", "value": f"{(cfg.get('leave_cover') or {}).get('cover', '-')} owns the list; {(cfg.get('leave_cover') or {}).get('paid_cover', '-')} keeps probably paid", "who": "Dana to confirm her 20 minutes a day", "source": "Maya, 24 Nov"},
+            {"name": "AI reading tickets", "value": "Off (no vendor) until legal approves a provider", "who": "Legal, via Maya", "source": "Maya, 23 Nov"},
+        ],
         "monthOne": {
             "source": "Maya (COO), 24 Nov: the one number to watch, and her real test behind it",
             "measures": [

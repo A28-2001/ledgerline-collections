@@ -52,6 +52,8 @@ export default function SummaryPage() {
           </div>
         </div>
 
+        {s.cover && <p className="mt-4 rounded-lg border bg-muted/40 px-4 py-3 text-sm text-muted-foreground">{s.cover}</p>}
+
         {s.routing && s.routing.length > 1 && (
           <section className="mt-8" aria-label="Who gets what this morning">
             <h2 className="text-lg font-semibold tracking-tight">Who gets what this morning</h2>
