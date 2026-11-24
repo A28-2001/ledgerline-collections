@@ -35,11 +35,11 @@ export default function HowPage() {
   ];
 
   const toneClass: Record<string, string> = {
-    paid: "border-[color:var(--verdict-paid)] bg-[color:var(--verdict-paid)]/10",
-    hold: "border-[color:var(--verdict-hold)] bg-[color:var(--verdict-hold)]/10",
+    paid: "border-paid bg-paid-soft",
+    hold: "border-hold bg-hold-soft",
     wait: "border-border bg-muted/50",
-    call: "border-[color:var(--verdict-call)] bg-[color:var(--verdict-call)]/10",
-    send: "border-[color:var(--verdict-send)] bg-[color:var(--verdict-send)]/10",
+    call: "border-call bg-call-soft",
+    send: "border-send bg-send-soft",
   };
 
   return (

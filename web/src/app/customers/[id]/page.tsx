@@ -1,15 +1,17 @@
-import { ArrowLeft, CreditCard, MessageSquareWarning, Receipt, ScrollText } from "lucide-react";
+import { ArrowLeft, CreditCard, History, MessageSquareWarning, Receipt, ScrollText } from "lucide-react";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Suspense, type ReactNode } from "react";
+import { CustomerTimeline } from "@/components/shared/customer-timeline";
 import { EmptyState } from "@/components/shared/empty-state";
 import { VerdictBadge } from "@/components/shared/verdict-badge";
 import { Badge } from "@/components/ui/badge";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { formatDate, formatMoney, results } from "@/lib/data";
+import { customerTimeline } from "@/lib/timeline";
 import type { Customer, Evidence } from "@/lib/types";
 
 const PLACEHOLDER_ID = "__none__";
@@ -123,6 +125,9 @@ async function CustomerBody({ params }: { params: PageProps<"/customers/[id]">["
     .map((invId) => results.invoices.find((i) => i.id === invId))
     .filter((i) => i !== undefined);
   const overdue = invoices.reduce((sum, i) => sum + i.amount, 0);
+  const { asOf } = results.meta;
+  const events = customerTimeline(customer, invoices, asOf);
+  const yearBefore = `${Number(asOf.slice(0, 4)) - 1}${asOf.slice(4)}`;
 
   return (
     <>
@@ -157,37 +162,18 @@ async function CustomerBody({ params }: { params: PageProps<"/customers/[id]">["
 
       <Card className="mt-6 gap-3">
         <CardHeader>
-          <CardTitle className="text-sm">How this customer was matched across systems</CardTitle>
+          <CardTitle className="flex items-center gap-2 text-sm">
+            <History className="size-4 text-muted-foreground" aria-hidden="true" />
+            What happened, in order
+          </CardTitle>
+          <CardDescription>
+            Contracts, bills, payments and tickets on file, oldest first, ending with today&rsquo;s suggestion.
+          </CardDescription>
         </CardHeader>
-        <CardContent className="px-0">
-          {customer.aliases.length === 0 ? (
-            <div className="px-6">
-              <EmptyState title="No other names found" />
-            </div>
-          ) : (
-            <Table>
-              <TableHeader>
-                <TableRow className="hover:bg-transparent">
-                  <TableHead className="pl-6">System</TableHead>
-                  <TableHead>Name there</TableHead>
-                  <TableHead className="hidden sm:table-cell">Matched by</TableHead>
-                  <TableHead className="pr-6 text-right">How sure</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {customer.aliases.map((a, i) => (
-                  <TableRow key={`${a.system}-${i}`}>
-                    <TableCell className="pl-6 font-mono text-xs">{a.system}</TableCell>
-                    <TableCell className="max-w-56 truncate">{a.name}</TableCell>
-                    <TableCell className="hidden text-muted-foreground sm:table-cell">{MATCH_LABEL[a.matchedBy] ?? a.matchedBy}</TableCell>
-                    <TableCell className={`tabular pr-6 text-right ${a.score < 0.85 ? "font-medium text-rose-600 dark:text-rose-400" : ""}`}>
-                      {a.score.toFixed(2)}
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          )}
+        <CardContent>
+          <div className="max-w-2xl">
+            <CustomerTimeline events={events} earlierBefore={yearBefore} />
+          </div>
         </CardContent>
       </Card>
 
@@ -226,6 +212,42 @@ async function CustomerBody({ params }: { params: PageProps<"/customers/[id]">["
         <EvidenceColumn title="Tickets" icon={MessageSquareWarning} items={customer.tickets} empty="No tickets in the export" />
         <EvidenceColumn title="Contracts" icon={ScrollText} items={customer.contracts} empty="No contracts found" />
       </div>
+
+      <Card className="mt-6 gap-3">
+        <CardHeader>
+          <CardTitle className="text-sm">How this customer was matched across systems</CardTitle>
+        </CardHeader>
+        <CardContent className="px-0">
+          {customer.aliases.length === 0 ? (
+            <div className="px-6">
+              <EmptyState title="No other names found" />
+            </div>
+          ) : (
+            <Table>
+              <TableHeader>
+                <TableRow className="hover:bg-transparent">
+                  <TableHead className="pl-6">System</TableHead>
+                  <TableHead>Name there</TableHead>
+                  <TableHead className="hidden sm:table-cell">Matched by</TableHead>
+                  <TableHead className="pr-6 text-right">How sure</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {customer.aliases.map((a, i) => (
+                  <TableRow key={`${a.system}-${i}`}>
+                    <TableCell className="pl-6 font-mono text-xs">{a.system}</TableCell>
+                    <TableCell className="max-w-56 truncate">{a.name}</TableCell>
+                    <TableCell className="hidden text-muted-foreground sm:table-cell">{MATCH_LABEL[a.matchedBy] ?? a.matchedBy}</TableCell>
+                    <TableCell className={`tabular pr-6 text-right ${a.score < 0.85 ? "font-medium text-alert-ink" : ""}`}>
+                      {a.score.toFixed(2)}
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          )}
+        </CardContent>
+      </Card>
     </>
   );
 }

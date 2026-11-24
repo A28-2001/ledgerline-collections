@@ -4,9 +4,11 @@ import {
   ArrowUpRight,
   BadgeCheck,
   CalendarClock,
+  CalendarRange,
   CreditCard,
   FileText,
   Flag,
+  History,
   Loader2,
   Mail,
   MessageSquareWarning,
@@ -22,6 +24,8 @@ import Link from "next/link";
 import { useState } from "react";
 import { toast } from "sonner";
 import { CopyButton } from "@/components/shared/copy-button";
+import { CustomerTimeline } from "@/components/shared/customer-timeline";
+import { ReminderStepper } from "@/components/shared/reminder-stepper";
 import { VerdictBadge } from "@/components/shared/verdict-badge";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Badge } from "@/components/ui/badge";
@@ -56,6 +60,7 @@ import {
   VOTE_LABEL,
   results,
 } from "@/lib/data";
+import { invoiceTimeline } from "@/lib/timeline";
 import type { Evidence, Invoice, Tone, Verdict } from "@/lib/types";
 import { cn } from "@/lib/utils";
 
@@ -182,7 +187,7 @@ function InvoiceDetail({
               variant="outline"
               className={cn(
                 "font-normal",
-                inv.confidence === "low" && "border-rose-500/40 text-rose-700 dark:text-rose-300",
+                inv.confidence === "low" && "border-alert/45 text-alert-ink",
               )}
             >
               {CONFIDENCE_LABEL[inv.confidence]}
@@ -212,17 +217,17 @@ function InvoiceDetail({
       <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain">
         <div className="space-y-6 p-5">
           {inv.needsReview && !decision && (
-            <Alert className="border-rose-500/30 bg-rose-50 text-rose-900 dark:bg-rose-400/10 dark:text-rose-100">
+            <Alert className="border-alert/35 bg-alert-soft text-alert-ink">
               <Flag aria-hidden="true" />
               <AlertTitle>Check first</AlertTitle>
-              <AlertDescription className="text-rose-900/80 dark:text-rose-100/80">
+              <AlertDescription className="text-foreground/80">
                 {plainReview(inv)}
               </AlertDescription>
             </Alert>
           )}
 
           {decision && (
-            <Alert className="border-emerald-500/30 bg-emerald-50 text-emerald-900 dark:bg-emerald-400/10 dark:text-emerald-100">
+            <Alert className="border-paid/35 bg-paid-soft text-paid-ink">
               <BadgeCheck aria-hidden="true" />
               <AlertTitle>
                 {decision.status === "approved"
@@ -230,7 +235,7 @@ function InvoiceDetail({
                   : `Changed to ${VERDICT_META[decision.verdict].label}`}
               </AlertTitle>
               {decision.reason && (
-                <AlertDescription className="text-emerald-900/80 dark:text-emerald-100/80">
+                <AlertDescription className="text-foreground/80">
                   Reason: {decision.reason}
                 </AlertDescription>
               )}
@@ -269,6 +274,10 @@ function InvoiceDetail({
             </p>
           </section>
 
+          <Section title="Reminder schedule" icon={CalendarRange}>
+            <ReminderStepper invoice={inv} verdict={verdict} />
+          </Section>
+
           <Section title="Why the tool suggests this" icon={FileText}>
             <ol className="space-y-2.5">
               {inv.reasons.map((r, i) => (
@@ -277,7 +286,7 @@ function InvoiceDetail({
                   {(r.policyRef || r.evidenceIds.length > 0) && (
                     <div className="mt-2 flex flex-wrap items-center gap-1.5">
                       {r.policyRef && (
-                        <Badge variant="outline" className="text-[11px] font-normal">
+                        <Badge variant="outline" className="h-auto max-w-full text-left text-[11px] font-normal whitespace-normal">
                           Policy: {r.policyRef}
                         </Badge>
                       )}
@@ -301,9 +310,13 @@ function InvoiceDetail({
             </ol>
           </Section>
 
+          <Section title="What happened, in order" icon={History}>
+            <CustomerTimeline events={invoiceTimeline(inv, verdict, asOf)} compact />
+          </Section>
+
           {inv.hold && (
             <Section title="Hold: pause and hand to the owner" icon={CalendarClock}>
-              <div className="rounded-lg border border-amber-500/30 bg-amber-50/60 p-3 text-sm dark:bg-amber-400/5">
+              <div className="rounded-lg border border-hold/40 bg-hold-soft/70 p-3 text-sm">
                 <div className="flex flex-wrap items-center justify-between gap-2">
                   <span className="flex items-center gap-2 font-medium">
                     <Users className="size-4 text-muted-foreground" aria-hidden="true" />
@@ -361,8 +374,8 @@ function InvoiceDetail({
                     className={cn(
                       "ring-1 ring-inset",
                       inv.agreement.agree
-                        ? "bg-emerald-50 text-emerald-700 ring-emerald-600/20 dark:bg-emerald-400/10 dark:text-emerald-300"
-                        : "bg-rose-50 text-rose-700 ring-rose-600/20 dark:bg-rose-400/10 dark:text-rose-300",
+                        ? "bg-paid-soft text-paid-ink ring-paid/35"
+                        : "bg-alert-soft text-alert-ink ring-alert/35",
                     )}
                   >
                     {inv.agreement.agree ? "AI agrees" : "The AI wasn't sure"}

@@ -21,6 +21,7 @@ import { useMemo, useState } from "react";
 import { toast } from "sonner";
 import { CopyButton } from "@/components/shared/copy-button";
 import { VerdictBadge } from "@/components/shared/verdict-badge";
+import { ReminderDots } from "@/components/shared/reminder-stepper";
 import { AllBills, effectiveVerdict } from "@/components/today/all-bills";
 import { InvoiceSheet } from "@/components/today/invoice-sheet";
 import { MoneyBar } from "@/components/today/money-bar";
@@ -292,7 +293,7 @@ export function MorningView({ data }: { data: Pick<Results, "invoices" | "summar
                     <kbd className="rounded border px-1">Enter</kbd> looks right · <kbd className="rounded border px-1">C</kbd> change
                   </p>
                   {flaggedOpen.length === 0 ? (
-                    <p className="mt-3 flex items-center gap-1.5 text-sm font-medium text-emerald-700 dark:text-emerald-400">
+                    <p className="mt-3 flex items-center gap-1.5 text-sm font-medium text-paid-ink">
                       <CircleCheck className="size-4" aria-hidden="true" />
                       All checked
                     </p>
@@ -408,6 +409,7 @@ export function MorningView({ data }: { data: Pick<Results, "invoices" | "summar
                               key={inv.id}
                               inv={inv}
                               decided={Boolean(d)}
+                              verdict={key}
                               detail={d?.status === "overridden" ? `Changed by you: ${d.reason ?? ""}` : rowDetail(inv, key)}
                               onOpen={() => openBill(inv.id)}
                             />
@@ -429,7 +431,7 @@ export function MorningView({ data }: { data: Pick<Results, "invoices" | "summar
                           {s.def.button(s.undecided.length)}
                         </Button>
                       ) : s.items.length > 0 ? (
-                        <p className="flex items-center gap-1.5 text-sm font-medium text-emerald-700 dark:text-emerald-400">
+                        <p className="flex items-center gap-1.5 text-sm font-medium text-paid-ink">
                           <CircleCheck className="size-4" aria-hidden="true" />
                           Step done
                         </p>
@@ -444,13 +446,13 @@ export function MorningView({ data }: { data: Pick<Results, "invoices" | "summar
           {/* Finish line */}
           <li
             id="step-card-finish"
-            className={cn("scroll-mt-20 rounded-xl border p-4", allDone ? "border-emerald-600/30 bg-emerald-50/50 dark:border-emerald-400/25 dark:bg-emerald-400/5" : "border-dashed bg-card")}
+            className={cn("scroll-mt-20 rounded-xl border p-4", allDone ? "border-paid/40 bg-paid-soft/60" : "border-dashed bg-card")}
           >
             <div className={cn("flex items-start gap-3", !allDone && "opacity-60")}>
               <span
                 className={cn(
                   "grid size-7 shrink-0 place-items-center rounded-full",
-                  allDone ? "bg-emerald-600 text-white dark:bg-emerald-500" : "border text-muted-foreground",
+                  allDone ? "bg-paid text-paid-contrast" : "border text-muted-foreground",
                 )}
                 aria-hidden="true"
               >
@@ -635,7 +637,7 @@ function StepHeader({
 function StepStatus({ n, done, current, label, flag = false }: { n?: number; done: boolean; current: boolean; label: string; flag?: boolean }) {
   if (done)
     return (
-      <span className="grid size-7 shrink-0 place-items-center rounded-full bg-emerald-600 text-white dark:bg-emerald-500" aria-label={`${label}: done`}>
+      <span className="grid size-7 shrink-0 place-items-center rounded-full bg-paid text-paid-contrast" aria-label={`${label}: done`}>
         <Check className="size-4" aria-hidden="true" />
       </span>
     );
@@ -645,8 +647,8 @@ function StepStatus({ n, done, current, label, flag = false }: { n?: number; don
         "tabular grid size-7 shrink-0 place-items-center rounded-full text-sm font-semibold",
         flag
           ? current
-            ? "bg-rose-600 text-white dark:bg-rose-500"
-            : "border border-rose-500/40 text-rose-600 dark:text-rose-400"
+            ? "bg-alert text-alert-contrast"
+            : "border border-alert/45 text-alert-ink"
           : current
             ? "bg-foreground text-background"
             : "border text-muted-foreground",
@@ -658,7 +660,19 @@ function StepStatus({ n, done, current, label, flag = false }: { n?: number; don
   );
 }
 
-function BillRow({ inv, decided, detail, onOpen }: { inv: Invoice; decided: boolean; detail: string; onOpen: () => void }) {
+function BillRow({
+  inv,
+  decided,
+  verdict,
+  detail,
+  onOpen,
+}: {
+  inv: Invoice;
+  decided: boolean;
+  verdict: Verdict;
+  detail: string;
+  onOpen: () => void;
+}) {
   return (
     <li>
       <button
@@ -671,13 +685,14 @@ function BillRow({ inv, decided, detail, onOpen }: { inv: Invoice; decided: bool
       >
         <div className="min-w-0 flex-1">
           <div className="flex items-center gap-1.5">
-            {decided && <CircleCheck className="size-3.5 shrink-0 text-emerald-600 dark:text-emerald-400" aria-label="Decided" />}
+            {decided && <CircleCheck className="size-3.5 shrink-0 text-paid-ink" aria-label="Decided" />}
             <span className="truncate text-sm font-medium">{inv.customerName}</span>
           </div>
           <p className="truncate text-xs text-muted-foreground" title={detail}>
             {detail}
           </p>
         </div>
+        <ReminderDots invoice={inv} verdict={verdict} className="hidden shrink-0 sm:flex" />
         <div className="shrink-0 text-right">
           <p className="tabular text-sm font-medium">{formatMoney(inv.amount, inv.currency)}</p>
           <p className="tabular text-xs text-muted-foreground">{inv.daysOverdue}d late</p>

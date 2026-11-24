@@ -15,8 +15,8 @@ export const VERDICT_META: Record<
     short: "Send",
     description: "Nothing is blocking: a reminder email can go out today.",
     badge:
-      "bg-blue-50 text-blue-700 ring-blue-600/20 dark:bg-blue-400/10 dark:text-blue-300 dark:ring-blue-400/30",
-    dot: "bg-blue-500",
+      "bg-send-soft text-send-ink ring-send/35",
+    dot: "bg-send",
     chart: "var(--verdict-send)",
   },
   hold: {
@@ -24,8 +24,8 @@ export const VERDICT_META: Record<
     short: "Hold",
     description: "Pause and hand to the owner. Don't chase until they act, by a deadline.",
     badge:
-      "bg-amber-50 text-amber-800 ring-amber-600/25 dark:bg-amber-400/10 dark:text-amber-300 dark:ring-amber-400/30",
-    dot: "bg-amber-500",
+      "bg-hold-soft text-hold-ink ring-hold/45",
+    dot: "bg-hold",
     chart: "var(--verdict-hold)",
   },
   paid: {
@@ -33,8 +33,8 @@ export const VERDICT_META: Record<
     short: "Paid?",
     description: "A payment seems to cover it. Check the payment and close the bill. No reminder.",
     badge:
-      "bg-emerald-50 text-emerald-700 ring-emerald-600/20 dark:bg-emerald-400/10 dark:text-emerald-300 dark:ring-emerald-400/30",
-    dot: "bg-emerald-500",
+      "bg-paid-soft text-paid-ink ring-paid/35",
+    dot: "bg-paid",
     chart: "var(--verdict-paid)",
   },
   call: {
@@ -42,8 +42,8 @@ export const VERDICT_META: Record<
     short: "Call",
     description: "Too late, too large or too unclear for an email. A person calls.",
     badge:
-      "bg-violet-50 text-violet-700 ring-violet-600/20 dark:bg-violet-400/10 dark:text-violet-300 dark:ring-violet-400/30",
-    dot: "bg-violet-500",
+      "bg-call-soft text-call-ink ring-call/35",
+    dot: "bg-call",
     chart: "var(--verdict-call)",
   },
 };

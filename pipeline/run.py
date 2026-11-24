@@ -91,7 +91,7 @@ def verified_numbers(engine: Engine, invoices: list[dict], by_cause: list[dict])
     # 3. Should-not-chase: from verdicts vs straight from the flags
     a = sum(i["amount"] for i in invoices if i["verdict"] in ("paid", "hold"))
     b = sum(r.amount for r in engine._rows if r.flags.get("paid_linked") or r.flags.get("paid_unmatched")
-            or r.flags.get("complaint_hold") or r.flags.get("disputed_hold") or r.flags.get("dispute_hold") or r.flags.get("open_ticket_hold") or r.flags.get("wrong_bill"))
+            or r.flags.get("complaint_hold") or r.flags.get("disputed_hold") or r.flags.get("dispute_hold") or r.flags.get("open_ticket_hold") or r.flags.get("grave_hold") or r.flags.get("too_early") or r.flags.get("wrong_bill"))
     out.append({"label": "Shouldn't chase today", "methodA": "Sum of Hold + Probably paid verdicts", "valueA": round(a, 2),
                 "methodB": "Recounted from the raw evidence flags", "valueB": round(b, 2), "ok": abs(a - b) < 0.5})
     # 4. The Paidly case: a bill with a matching or recent unmatched payment must never get a reminder

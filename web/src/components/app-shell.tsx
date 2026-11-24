@@ -1,6 +1,6 @@
 "use client";
 
-import { BarChart3, Building2, Inbox, Menu, MessageSquareText, ShieldCheck, TriangleAlert, Workflow } from "lucide-react";
+import { BarChart3, BookOpen, Building2, Inbox, Menu, MessageSquareText, ShieldCheck, TriangleAlert, Workflow } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState, type ReactNode } from "react";
@@ -26,7 +26,7 @@ function isActive(pathname: string, href: string) {
 function Brand({ companyName }: { companyName: string }) {
   return (
     <Link href="/" className="flex items-center gap-2.5 rounded-md outline-none focus-visible:ring-3 focus-visible:ring-ring/50">
-      <span className="grid size-7 place-items-center rounded-lg bg-foreground text-background">
+      <span className="grid size-7 place-items-center rounded-lg bg-send text-send-contrast">
         <svg viewBox="0 0 16 16" className="size-4" aria-hidden="true">
           <path d="M3 8.5 6.5 12 13 4.5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
         </svg>
@@ -43,6 +43,19 @@ function NavLinks({ onNavigate }: { onNavigate?: () => void }) {
   const pathname = usePathname() ?? "/";
   return (
     <nav aria-label="Main" className="flex flex-col gap-0.5">
+      <Link
+        href="/story"
+        onClick={onNavigate}
+        aria-current={isActive(pathname, "/story") ? "page" : undefined}
+        className={cn(
+          "mb-3 flex items-center gap-2.5 rounded-md border border-hold/40 px-2.5 py-2 text-sm outline-none transition-colors focus-visible:ring-3 focus-visible:ring-ring/50",
+          isActive(pathname, "/story") ? "bg-hold-soft font-medium text-foreground" : "text-foreground hover:bg-hold-soft",
+        )}
+      >
+        <BookOpen className="size-4 text-hold-ink" aria-hidden="true" />
+        <span className="flex-1">The story</span>
+        <span className="text-[11px] text-muted-foreground">2 min</span>
+      </Link>
       {NAV.map(({ href, label, icon: Icon }) => {
         const active = isActive(pathname, href);
         return (
@@ -84,7 +97,7 @@ export function AppShell({
 
   return (
     <div className="flex min-h-dvh w-full">
-      <aside className="sticky top-0 hidden h-dvh w-60 shrink-0 flex-col border-r bg-sidebar px-3 py-4 md:flex">
+      <aside className="dark sticky top-0 hidden h-dvh w-60 shrink-0 flex-col border-r bg-sidebar px-3 py-4 text-sidebar-foreground md:flex">
         <div className="px-1.5 pb-5">
           <Brand companyName={companyName} />
         </div>
@@ -124,7 +137,7 @@ export function AppShell({
         {dataSource === "sample" && (
           <div
             role="note"
-            className="flex items-center justify-center gap-2 border-b border-amber-500/30 bg-amber-50 px-4 py-1.5 text-center text-xs font-medium text-amber-900 dark:bg-amber-400/10 dark:text-amber-200"
+            className="flex items-center justify-center gap-2 border-b border-hold/40 bg-hold-soft px-4 py-1.5 text-center text-xs font-medium text-hold-ink"
           >
             <TriangleAlert className="size-3.5 shrink-0" aria-hidden="true" />
             Sample data — not real figures

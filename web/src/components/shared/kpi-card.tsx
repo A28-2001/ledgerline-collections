@@ -23,8 +23,8 @@ export function KpiCard({
           <Icon
             className={cn(
               "size-4 text-muted-foreground",
-              tone === "warning" && "text-amber-600 dark:text-amber-400",
-              tone === "attention" && "text-rose-600 dark:text-rose-400",
+              tone === "warning" && "text-hold-ink",
+              tone === "attention" && "text-alert-ink",
             )}
             aria-hidden="true"
           />

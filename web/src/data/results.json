@@ -1,6 +1,6 @@
 {
  "meta": {
-  "generatedAt": "2026-11-24T06:57:46+00:00",
+  "generatedAt": "2026-11-24T07:39:31+00:00",
   "asOf": "2026-10-31",
   "dataSource": "real",
   "companyName": "Ledgerline",
@@ -13761,8 +13761,8 @@
     "methodA": "Sum of Hold + Probably paid verdicts",
     "valueA": 441710.0,
     "methodB": "Recounted from the raw evidence flags",
-    "valueB": 433096.0,
-    "ok": false
+    "valueB": 441710.0,
+    "ok": true
    },
    {
     "label": "Paid but chased (the Paidly case)",
@@ -13797,7 +13797,7 @@
     "why": "Correct answer: TOP-50 account 15 days late with no dispute; open T881016 is a normal-priority product bug about a client's send log, so a person should write a personal reminder after telling the account manager.. Tool's reason: They have a ticket open in Zendesk since Oct 28, 2026 (3 days). Chasing payment while their question is unanswered is what gets the tool switched off; the account manager decides when to resume."
    }
   ],
-  "runtimeSeconds": 0.45,
+  "runtimeSeconds": 0.44,
   "reviewLog": {
    "summary": "First pass against an independent review of all 54 real bills (the reviewer never saw the tool's answers): 46 agreed (85%). Every contested call below was then checked and confirmed by hand. We fixed each rule error the misses exposed; after the fixes 53 of 54 agree (98%). That second figure is on the same bills the rules were fixed against, so it is not a fresh-data result: the shadow week measures that.",
    "entries": [

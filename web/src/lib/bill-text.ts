@@ -1,7 +1,7 @@
 // Plain-words text for one bill: what makes this bill different from the others in its step,
 // why the tool isn't sure about it, and the one record that proves the suggestion.
 // Everything is read from the bill's own reasons and evidence, so it works on any data set.
-import { formatDate, formatMoney } from "@/lib/data";
+import { formatDate, formatMoney, results } from "@/lib/data";
 import type { Evidence, Invoice, Verdict } from "@/lib/types";
 
 const CLOSED = /^(closed|resolved|solved)$/i;
@@ -100,7 +100,10 @@ export function answerLine(inv: Invoice, verdict: Verdict): string {
     case "paid":
       return "Probably paid. Confirm the payment, then close the bill. No reminder.";
     case "hold":
-      return inv.hold ? `Hold. Pause and hand to ${inv.hold.owner} by ${shortDate(inv.hold.deadline)}.` : "Hold. Pause and hand to the owner.";
+      if (!inv.hold) return "Hold. Pause and hand to the owner.";
+      return inv.hold.deadline <= results.meta.asOf
+        ? `Hold. Hand to ${inv.hold.owner} today: the target date has passed.`
+        : `Hold. Pause and hand to ${inv.hold.owner} by ${shortDate(inv.hold.deadline)}.`;
     case "send":
       if (inv.draft?.tone === "card_update") return "Send the update-card note, not a payment reminder.";
       if (inv.draft?.tone === "soft") return "Send a reminder, in a softer tone, and tell the account manager.";

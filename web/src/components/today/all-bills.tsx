@@ -3,6 +3,7 @@
 import { ArrowDown, ArrowUp, CircleCheck, Flag, Search } from "lucide-react";
 import { useMemo, useState } from "react";
 import { EmptyState } from "@/components/shared/empty-state";
+import { ReminderDots } from "@/components/shared/reminder-stepper";
 import { VerdictBadge } from "@/components/shared/verdict-badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -145,7 +146,12 @@ export function AllBills({
                       <div className="font-mono text-xs text-muted-foreground">{inv.id}</div>
                     </TableCell>
                     <TableCell className="tabular text-right font-medium">{formatMoney(inv.amount, inv.currency)}</TableCell>
-                    <TableCell className="tabular hidden text-right text-muted-foreground sm:table-cell">{inv.daysOverdue}d</TableCell>
+                    <TableCell className="tabular hidden text-right text-muted-foreground sm:table-cell">
+                      <span className="inline-flex items-center gap-2">
+                        <ReminderDots invoice={inv} verdict={verdict} className="hidden md:inline-flex" />
+                        {inv.daysOverdue}d
+                      </span>
+                    </TableCell>
                     <TableCell>
                       <VerdictBadge verdict={verdict} />
                     </TableCell>
@@ -156,8 +162,8 @@ export function AllBills({
                     </TableCell>
                     <TableCell className="pr-4">
                       <div className="flex items-center justify-end gap-1.5">
-                        {inv.needsReview && !decision && <Flag className="size-4 text-rose-600 dark:text-rose-400" aria-label="Check first" />}
-                        {decision && <CircleCheck className="size-4 text-emerald-600 dark:text-emerald-400" aria-label="Decided" />}
+                        {inv.needsReview && !decision && <Flag className="size-4 text-alert-ink" aria-label="Check first" />}
+                        {decision && <CircleCheck className="size-4 text-paid-ink" aria-label="Decided" />}
                       </div>
                     </TableCell>
                   </TableRow>

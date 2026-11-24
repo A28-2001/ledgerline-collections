@@ -16,7 +16,7 @@ const MATCH_COLOR: Record<string, string> = {
   exact_name: "var(--verdict-paid)",
   fuzzy: "var(--verdict-send)",
   ai: "var(--verdict-call)",
-  unmatched: "var(--cause-wrong-bill)",
+  unmatched: "var(--alert)",
 };
 
 export default function ProofPage() {
@@ -55,10 +55,10 @@ export default function ProofPage() {
                         <span
                           className={
                             e.status === "fixed"
-                              ? "rounded-full border border-emerald-600/40 px-2 text-[11px] text-emerald-700 dark:text-emerald-400"
+                              ? "rounded-full border border-paid/45 px-2 text-[11px] text-paid-ink"
                               : e.status === "deliberate"
                                 ? "rounded-full border px-2 text-[11px] text-muted-foreground"
-                                : "rounded-full border border-amber-600/40 px-2 text-[11px] text-amber-700 dark:text-amber-400"
+                                : "rounded-full border border-hold/60 px-2 text-[11px] text-hold-ink"
                           }
                         >
                           {e.status === "fixed" ? "Fixed" : e.status === "deliberate" ? "Kept on purpose" : "Still open"}
@@ -182,8 +182,8 @@ export default function ProofPage() {
                 <SplitBar
                   ariaLabel={`Judges agreed ${formatPercent(proof.agreementRate!)}`}
                   parts={[
-                    { label: "Agreed", value: proof.agreementRate!, className: "bg-emerald-500" },
-                    { label: "Disagreed", value: 1 - proof.agreementRate!, className: "bg-rose-500" },
+                    { label: "Agreed", value: proof.agreementRate!, className: "bg-paid" },
+                    { label: "Disagreed", value: 1 - proof.agreementRate!, className: "bg-alert" },
                   ]}
                 />
                 <p className="mt-4 text-sm">
@@ -236,7 +236,7 @@ export default function ProofPage() {
                       <TableCell className="pl-6 align-top whitespace-normal">
                         <span className="font-medium">{v.label}</span>
                         {!v.ok && (
-                          <p className="tabular mt-0.5 text-xs font-medium text-rose-700 dark:text-rose-300">
+                          <p className="tabular mt-0.5 text-xs font-medium text-alert-ink">
                             Gap: {fmt(Math.abs(v.valueA - v.valueB))}
                           </p>
                         )}
@@ -248,9 +248,9 @@ export default function ProofPage() {
                       <TableCell className="tabular text-right align-top">{fmt(v.valueB)}</TableCell>
                       <TableCell className="pr-6 text-right align-top">
                         {v.ok ? (
-                          <CircleCheck className="ml-auto size-4 text-emerald-600 dark:text-emerald-400" aria-label="Agrees" />
+                          <CircleCheck className="ml-auto size-4 text-paid-ink" aria-label="Agrees" />
                         ) : (
-                          <CircleX className="ml-auto size-4 text-rose-600 dark:text-rose-400" aria-label="Disagrees" />
+                          <CircleX className="ml-auto size-4 text-alert-ink" aria-label="Disagrees" />
                         )}
                       </TableCell>
                     </TableRow>
