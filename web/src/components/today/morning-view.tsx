@@ -121,6 +121,15 @@ export function MorningView({ data }: { data: Pick<Results, "invoices" | "summar
   // Bills the tool isn't sure about go to "Check first" until a person has decided them.
   const flagged = useMemo(() => invoices.filter((i) => i.needsReview), [invoices]);
   const flaggedOpen = flagged.filter((i) => !decisions[i.id]);
+  // Same customer + same reason (e.g. one ticket holding three bills) = one decision.
+  const groupKey = (i: Invoice) => `${i.customerId ?? i.customerName}|${i.verdict}|${plainReview(i)}`;
+  const groupBills = (list: Invoice[]) => {
+    const m = new Map<string, Invoice[]>();
+    list.forEach((i) => m.set(groupKey(i), [...(m.get(groupKey(i)) ?? []), i]));
+    return [...m.values()];
+  };
+  const allGroups = useMemo(() => groupBills(flagged), [flagged]); // eslint-disable-line react-hooks/exhaustive-deps
+  const openGroups = groupBills(flaggedOpen);
 
   const steps = useMemo(
     () =>
@@ -137,10 +146,32 @@ export function MorningView({ data }: { data: Pick<Results, "invoices" | "summar
 
   // Decisions: one per bill to check first, plus one click per step that has bills. Never minutes.
   const totalDecisions = useMemo(
-    () => flagged.length + STEPS.filter((d) => invoices.some((i) => i.verdict === d.verdict && !i.needsReview)).length,
-    [invoices, flagged],
+    () => allGroups.length + STEPS.filter((d) => invoices.some((i) => i.verdict === d.verdict && !i.needsReview)).length,
+    [invoices, allGroups],
   );
-  const decisionsLeft = flaggedOpen.length + steps.filter((s) => s.undecided.length > 0).length;
+  const decisionsLeft = openGroups.length + steps.filter((s) => s.undecided.length > 0).length;
+
+  function keepGroup(group: Invoice[]) {
+    approve(group.map((i) => ({ id: i.id, verdict: i.verdict })));
+    toast.success(`Kept: ${VERDICT_META[group[0].verdict].label}`, {
+      description: group.length > 1 ? `${group[0].customerName} · ${group.length} bills` : group[0].customerName,
+    });
+  }
+
+  // Keyboard: arrows or J/K move, Enter keeps the suggestion, C changes it.
+  function onRowKey(e: React.KeyboardEvent<HTMLLIElement>, group: Invoice[]) {
+    if (e.target !== e.currentTarget) return;
+    const rows = Array.from(e.currentTarget.parentElement?.querySelectorAll<HTMLLIElement>("li[data-row]") ?? []);
+    const at = rows.indexOf(e.currentTarget);
+    const k = e.key.toLowerCase();
+    if (k === "arrowdown" || k === "j") { e.preventDefault(); rows[Math.min(at + 1, rows.length - 1)]?.focus(); }
+    else if (k === "arrowup" || k === "k") { e.preventDefault(); rows[Math.max(at - 1, 0)]?.focus(); }
+    else if (k === "enter") {
+      e.preventDefault();
+      keepGroup(group);
+      window.requestAnimationFrame(() => (rows[at + 1] ?? rows[at - 1])?.focus());
+    } else if (k === "c") { e.preventDefault(); openBill(group[0].id, true); }
+  }
 
   const current: StepKey =
     flaggedOpen.length > 0 ? "check" : (steps.find((s) => s.undecided.length > 0)?.def.verdict ?? "finish");
@@ -241,7 +272,7 @@ export function MorningView({ data }: { data: Pick<Results, "invoices" | "summar
                 sub={
                   flaggedOpen.length === 0
                     ? `All ${pluralize(flagged.length, "bill")} checked`
-                    : `${pluralize(flaggedOpen.length, "bill")} the tool isn't sure about · one decision each`
+                    : `${pluralize(flaggedOpen.length, "bill")} the tool isn't sure about · ${pluralize(openGroups.length, "decision")}`
                 }
                 open={expanded === "check"}
                 onToggle={() => {
@@ -254,7 +285,11 @@ export function MorningView({ data }: { data: Pick<Results, "invoices" | "summar
                 <div id="step-check" className="border-t px-4 pt-3 pb-4">
                   <p className="text-sm leading-relaxed text-muted-foreground">
                     Read why the tool isn&apos;t sure. If its suggestion looks right, say so; if not, change it. Then these bills
-                    join their step, already decided.
+                    join their step, already decided. Bills from one customer with the same reason are one decision.
+                  </p>
+                  <p className="mt-1.5 hidden text-xs text-muted-foreground sm:block">
+                    Keys: <kbd className="rounded border px-1">↑</kbd> <kbd className="rounded border px-1">↓</kbd> to move ·{" "}
+                    <kbd className="rounded border px-1">Enter</kbd> looks right · <kbd className="rounded border px-1">C</kbd> change
                   </p>
                   {flaggedOpen.length === 0 ? (
                     <p className="mt-3 flex items-center gap-1.5 text-sm font-medium text-emerald-700 dark:text-emerald-400">
@@ -263,8 +298,17 @@ export function MorningView({ data }: { data: Pick<Results, "invoices" | "summar
                     </p>
                   ) : (
                     <ul className="mt-3 divide-y overflow-hidden rounded-lg border">
-                      {(showAll ? flaggedOpen : flaggedOpen.slice(0, ROWS_SHOWN)).map((inv) => (
-                        <li key={inv.id} className="flex flex-col gap-2 px-3 py-2.5 sm:flex-row sm:items-center sm:gap-3">
+                      {(showAll ? openGroups : openGroups.slice(0, ROWS_SHOWN)).map((group) => {
+                        const inv = group[0];
+                        return (
+                        <li
+                          key={inv.id}
+                          data-row
+                          tabIndex={0}
+                          onKeyDown={(e) => onRowKey(e, group)}
+                          aria-label={`${inv.customerName}, ${pluralize(group.length, "bill")}, ${VERDICT_META[inv.verdict].label}. Enter keeps it, C changes it.`}
+                          className="flex flex-col gap-2 px-3 py-2.5 outline-none focus-visible:bg-muted/60 focus-visible:ring-2 focus-visible:ring-ring/50 sm:flex-row sm:items-center sm:gap-3"
+                        >
                           <button
                             type="button"
                             onClick={() => openBill(inv.id)}
@@ -273,7 +317,10 @@ export function MorningView({ data }: { data: Pick<Results, "invoices" | "summar
                             <span className="flex flex-wrap items-center gap-x-2 gap-y-1">
                               <span className="truncate text-sm font-medium">{inv.customerName}</span>
                               <VerdictBadge verdict={inv.verdict} className="text-[11px]" />
-                              <span className="tabular text-xs text-muted-foreground">{formatMoney(inv.amount, inv.currency)}</span>
+                              <span className="tabular text-xs text-muted-foreground">
+                                {formatMoney(sumAmount(group), inv.currency)}
+                                {group.length > 1 ? ` · ${group.length} bills` : ""}
+                              </span>
                             </span>
                             <span className="mt-0.5 block text-xs leading-snug text-muted-foreground">{plainReview(inv)}</span>
                           </button>
@@ -281,10 +328,7 @@ export function MorningView({ data }: { data: Pick<Results, "invoices" | "summar
                             <Button
                               size="sm"
                               variant="outline"
-                              onClick={() => {
-                                approve([{ id: inv.id, verdict: inv.verdict }]);
-                                toast.success(`Kept: ${VERDICT_META[inv.verdict].label}`, { description: inv.customerName });
-                              }}
+                              onClick={() => keepGroup(group)}
                             >
                               <Check />
                               Looks right
@@ -295,12 +339,13 @@ export function MorningView({ data }: { data: Pick<Results, "invoices" | "summar
                             </Button>
                           </div>
                         </li>
-                      ))}
+                        );
+                      })}
                     </ul>
                   )}
-                  {flaggedOpen.length > ROWS_SHOWN && (
+                  {openGroups.length > ROWS_SHOWN && (
                     <Button variant="ghost" size="sm" className="mt-2" onClick={() => setShowAll((v) => !v)}>
-                      {showAll ? "Show fewer" : `Show all ${flaggedOpen.length}`}
+                      {showAll ? "Show fewer" : `Show all ${openGroups.length}`}
                     </Button>
                   )}
                 </div>
@@ -461,7 +506,7 @@ export function MorningView({ data }: { data: Pick<Results, "invoices" | "summar
         {current === "check" ? (
           <Button className="w-full" onClick={() => flaggedOpen[0] && openBill(flaggedOpen[0].id)}>
             <Flag />
-            Check the next bill ({flaggedOpen.length} left)
+            Check the next bill ({pluralize(openGroups.length, "decision")} left)
           </Button>
         ) : current !== "finish" && currentStep ? (
           <Button className="w-full" onClick={() => setConfirmStep(currentStep.def)}>

@@ -7,7 +7,7 @@ import type { Tone } from "@/lib/types";
 const TONES: Tone[] = ["standard", "soft", "card_update"];
 const TONE_GUIDE: Record<string, string> = {
   standard: "Friendly, brief and professional. A plain payment reminder.",
-  soft: "Warm and understanding. Acknowledge any open issue first, then a gentle reminder. No pressure.",
+  soft: "Warm and understanding, a gentle reminder with no pressure. Only acknowledge an open request if the current draft already mentions one; never suggest a dispute or discussion that the draft doesn't mention.",
   card_update: "Explain that the card on file failed and ask them to update it. Do not ask for payment any other way.",
 };
 
@@ -113,7 +113,7 @@ export async function POST(request: Request) {
     // Guard: a customer email must never reveal internal context. If the rewrite mentions
     // something the original draft didn't, keep the original and say why.
     const original = `${invoice.draft.subject} ${invoice.draft.body}`.toLowerCase();
-    const leaked = ["ticket", "complaint", "dispute", "escalat", " ai ", "internal", "flagged"].filter(
+    const leaked = ["ticket", "complaint", "dispute", "discussion", "escalat", " ai ", "internal", "flagged"].filter(
       (w) => ` ${subject} ${body} `.toLowerCase().includes(w) && !original.includes(w.trim()),
     );
     if (leaked.length) {
