@@ -1,6 +1,6 @@
 # Collections check: configuration
 #
-# After Begin: run `python pipeline/profile.py data/raw`, read reports/data-profile.md,
+# After Begin: run `python pipeline/profile_data.py data/raw`, read reports/data-profile.md,
 # then change the column names under `files:` to match the real files.
 # Every logical field on the left stays the same; only the right side changes.
 # Optional columns can be set to null. The check that needs them is then skipped

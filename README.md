@@ -29,7 +29,7 @@ data files ──► pipeline/ (Python)                                    ─�
 - `pipeline/ai.py`: the only place that calls an AI model (Groq). Two judges per decision; disagreement goes to a person. Cached, and optional.
 - `pipeline/engine.py`: the verdict logic.
 - `pipeline/run.py`: runs everything and writes `web/src/data/results.json`.
-- `pipeline/profile.py` and `pipeline/plan_check.py`: profile new data, and test the plan's assumptions against it.
+- `pipeline/profile_data.py` and `pipeline/plan_check.py`: profile new data, and test the plan's assumptions against it.
 
 ## Run it
 

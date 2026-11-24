@@ -1,0 +1,173 @@
+# Suggested by pipeline/profile_data.py. Check it, then copy what's right into pipeline/config.yaml.
+company_name: Demo Co
+as_of: auto
+currency: USD
+overdue_source: ar_aging
+files:
+  customers:
+    file: customers.csv
+    cols:
+      id: customer_id
+      name: name
+      segment: segment
+      plan: plan
+      arr: arr
+      account_manager: account_manager
+      renewal_date: renewal_date
+      billing_email: billing_email
+  contacts:
+    file: contacts.csv
+    cols:
+      id: contact_id
+      customer_id: customer_id
+      name: name
+      email: email
+      role: role
+      last_active: last_active
+  contracts:
+    file: contracts.csv
+    cols:
+      id: contract_id
+      customer_id: customer_id
+      start: start_date
+      end: end_date
+      seats: seats
+      unit_price: price_per_seat
+      status: status
+  invoices:
+    file: invoices.csv
+    cols:
+      id: invoice_id
+      customer_id: customer_id
+      customer_name: customer_name
+      issue_date: issue_date
+      due_date: due_date
+      amount: amount
+      status: status
+      paid_date: paid_date
+      method: payment_method
+      seats: seats_billed
+      unit_price: unit_price
+  payments:
+    file: payments.csv
+    cols:
+      id: payment_id
+      invoice_id: invoice_id
+      payer: payer_name
+      amount: amount
+      date: payment_date
+      method: method
+      status: status
+  ar_aging:
+    file: ar_aging.csv
+    cols:
+      invoice_id: invoice_number
+      customer_name: customer
+      issue_date: invoice_date
+      due_date: due_date
+      amount: open_balance
+      days_overdue: days_past_due
+  tickets:
+    file: tickets.csv
+    cols:
+      id: ticket_id
+      customer_id: null
+      customer_name: company
+      created: created_at
+      status: status
+      priority: priority
+      category: category
+      subject: subject
+      body: body
+values:
+  invoice_open_status:
+  - open
+  - overdue
+  - unpaid
+  - past_due
+  - partially_paid
+  - sent
+  invoice_void_status:
+  - void
+  - voided
+  - cancelled
+  - canceled
+  - written_off
+  payment_failed_status:
+  - failed
+  - declined
+  - returned
+  - bounced
+  ticket_closed_status:
+  - closed
+  - resolved
+  - solved
+  ticket_serious_priority:
+  - urgent
+  - p1
+  - critical
+  - sev1
+  ticket_open_status:
+  - open
+  - pending
+  - new
+  - on-hold
+  - on_hold
+  - hold
+  - waiting
+  ticket_billing_category:
+  - billing
+  - invoice
+  - payments
+  - account & billing
+  ticket_question_category:
+  - how-to
+  - question
+  - feature request
+  - feature_request
+  - onboarding
+policy:
+  doc: collections_policy.md
+  reminders:
+  - from_days: 1
+    stage: First reminder
+    ref: collections_policy.md §2
+  - from_days: 15
+    stage: Second reminder
+    ref: collections_policy.md §2
+  - from_days: 30
+    stage: Final reminder
+    ref: collections_policy.md §2
+  call_after_days: 45
+  call_amount: 25000
+  call_ref: collections_policy.md §3
+  hold_business_days: 5
+  hold_ref: collections_policy.md §4
+  card_ref: collections_policy.md §5
+  sensitive_ref: sla_policy.md §2
+  complaint_lookback_days: 30
+  paid_match_tolerance: 0.01
+  paid_match_window_days: 60
+  wrong_bill_tolerance: 0.02
+  stale_contact_days: 180
+matching:
+  fuzzy_high: 92
+  fuzzy_low: 80
+  min_gap: 4
+ai:
+  judges:
+  - openai/gpt-oss-20b
+  - qwen/qwen3.8-27b
+  drafter: openai/gpt-oss-120b
+  params:
+    openai/gpt-oss-20b:
+      reasoning_effort: low
+    openai/gpt-oss-120b:
+      reasoning_effort: low
+  max_tokens: 300
+trend_markers:
+- month: 2026-03
+  label: Billing engine rewrite
+people:
+  finance_owner: Finance team
+  billing_owner: Billing team

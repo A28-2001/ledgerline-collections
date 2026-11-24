@@ -14,11 +14,12 @@ ls -R data/raw | head -80
 ## 0:10 to 0:25 — Profile the files
 
 ```bash
-.venv/bin/python pipeline/profile.py data/raw
+.venv/bin/python pipeline/profile_data.py data/raw
 ```
 
 Open `reports/data-profile-raw.md`:
-- The top section suggests which real column fits each field. Copy the right names into `pipeline/config.yaml` under `files:`.
+- The top section suggests which real column fits each field. It only picks columns of the right type (amounts must be numbers, dates must be dates). Rehearsed on renamed columns: every field right.
+- The same suggestions are in `reports/config-suggested-raw.yaml`. If they look right, copy that file over `pipeline/config.yaml`; otherwise fix the few wrong lines first.
 - Set any column that doesn't exist to `null`. The check that needs it is skipped, and the run says so.
 - Set `company_name: Ledgerline`.
 

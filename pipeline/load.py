@@ -19,7 +19,10 @@ NUM_FIELDS = {"amount", "arr", "seats", "unit_price", "days_overdue"}
 
 
 def load_config(path: Path | None = None) -> dict:
-    return yaml.safe_load((path or ROOT / "pipeline" / "config.yaml").read_text())
+    """pipeline/config.yaml, or the file named in COLLECTIONS_CONFIG (used for rehearsals)."""
+    import os
+    path = path or Path(os.environ.get("COLLECTIONS_CONFIG") or ROOT / "pipeline" / "config.yaml")
+    return yaml.safe_load(Path(path).read_text())
 
 
 def norm_id(x) -> str:

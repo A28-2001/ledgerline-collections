@@ -1,12 +1,12 @@
 # Data profile: sample
 
-Made by `pipeline/profile.py`. Facts about the files only, no conclusions.
+Made by `pipeline/profile_data.py`. Facts about the files only, no conclusions.
 
 **8 CSV files, 5 Markdown files.**
 
 ## Suggested column mapping
 
-Check each line, then copy it into pipeline/config.yaml. `?` means no good match: map by hand or set null.
+Each field shows the column picked (✓ = same as config.yaml, a number = how close the name is). `?` means nothing of the right type fits: map it by hand or leave it null. The same mapping is written to `reports/config-suggested-sample.yaml`.
 
 - **customers** (`customers.csv`): id: customer_id ✓, name: name ✓, segment: segment ✓, plan: plan ✓, arr: arr ✓, account_manager: account_manager ✓, renewal_date: renewal_date ✓, billing_email: billing_email ✓
 - **contacts** (`contacts.csv`): id: contact_id ✓, customer_id: customer_id ✓, name: name ✓, email: email ✓, role: role ✓, last_active: last_active ✓

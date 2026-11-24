@@ -47,6 +47,51 @@ def run(with_ai: bool):
     return {i["id"]: i for i in res["invoices"]}, a
 
 
+RENAMED = {  # how the data room might name things differently from our sample
+    "invoices.csv": {"invoice_id": "invoice_number", "customer_id": "account_id", "customer_name": "account_name",
+                     "issue_date": "invoice_date", "amount": "total_usd", "status": "invoice_status", "paid_date": "paid_at",
+                     "seats_billed": "quantity", "unit_price": "unit_price_usd"},
+    "payments.csv": {"payment_id": "id", "invoice_id": "invoice_number", "payer_name": "remitter", "amount": "amount_usd",
+                     "payment_date": "received_at", "status": "result"},
+    "ar_aging.csv": {"invoice_number": "Num", "customer": "Customer", "invoice_date": "Date", "due_date": "Due Date",
+                     "open_balance": "Open Balance", "days_past_due": "Past Due"},
+    "tickets.csv": {"ticket_id": "id", "company": "organization", "created_at": "created", "status": "state",
+                    "category": "type", "body": "description"},
+    "customers.csv": {"customer_id": "account_id", "name": "account_name", "arr": "arr_usd", "account_manager": "owner",
+                      "renewal_date": "renews_at"},
+    "contracts.csv": {"contract_id": "id", "customer_id": "account_id", "price_per_seat": "price_per_seat_usd"},
+    "contacts.csv": {"contact_id": "id", "customer_id": "account_id", "last_active": "last_login"},
+}
+
+
+def rehearsal_check(baseline: dict):
+    """Hour 1 rehearsal: rename every column, put files in subfolders, let profile_data.py suggest the
+    mapping, run the engine on it, and expect the same verdicts as the sample."""
+    import copy
+    import tempfile
+    import pandas as pd
+    import profile_data as prof
+    cfg = load_config()
+    with tempfile.TemporaryDirectory() as tmp:
+        tmp = Path(tmp)
+        for f, ren in RENAMED.items():
+            (tmp / "sub").mkdir(exist_ok=True)
+            pd.read_csv(ROOT / "data/sample" / f, dtype=str, keep_default_na=False).rename(columns=ren).to_csv(tmp / "sub" / f, index=False)
+        sug = copy.deepcopy(cfg)
+        for table, spec in cfg["files"].items():
+            _, kinds = prof.profile_csv(tmp / "sub" / spec["file"])
+            for logical, (col, _) in prof.suggest_table(table, spec, kinds).items():
+                sug["files"][table]["cols"][logical] = col
+        data = load(tmp, sug)
+        a = ai_mod.AI(sug)
+        a.enabled = False
+        res = Engine(data, as_of_date(data), a).run()
+    got = {i["id"]: i["verdict"] for i in res["invoices"]}
+    want = {k: v["verdict"] for k, v in baseline.items()}
+    assert got == want, f"rehearsal verdicts differ on {sum(got.get(k) != v for k, v in want.items())} bills"
+    print(f"Rehearsal with renamed columns and subfolders: mapping suggested, {len(got)} verdicts identical.")
+
+
 def main():
     assert norm_id("INV-001043") == "1043" and norm_id("1043.0") == "1043" and norm_id(" 1043 ") == "1043"
     assert clean("Northwind Logistics, Inc.") == clean("NORTHWIND LOGISTICS INC") == "northwind logistics"
@@ -76,6 +121,7 @@ def main():
     disputed = [i for i in withai.values() if i.get("agreement") and not i["agreement"]["agree"]]
     for i in disputed:
         assert i["needsReview"] and i["verdict"] != "send", "when judges disagree we must not chase"
+    rehearsal_check(rules)
     print(f"{len(withai)} bills, {len(disputed)} with judges disagreeing (all held for a person). All checks passed.")
 
 
