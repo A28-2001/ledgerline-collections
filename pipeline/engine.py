@@ -40,6 +40,10 @@ HOLDING_RX = re.compile(  # the customer says they're not paying until something
 THREAT_WORDS = ["suspend", "suspension", "collections agency", "collection agency", "legal action", "final notice",
                 "late fee", "costs of collection", "refer the balance", "court"]
 PRICING_RX = re.compile(r"seat|price|pricing|plan\b|discount|renewal|downgrad|upgrad|tier|per user|users", re.I)
+# sla_policy.md: legal action, a regulator, a chargeback or cancellation go to the Head of Support. A customer who has
+# threatened any of these is not chased by finance until someone confirms it is settled, whatever Zendesk says.
+GRAVE_RX = re.compile(r"chargeback|charge ?back|contest(ing)? the charge|disput\w* (the )?charges? with (my|our) bank|consumer affairs|"
+                      r"attorney general|better business bureau|\bBBB\b|ombudsman|regulator|small claims|legal action|lawyer|attorney|solicitor", re.I)
 INVOICE_REF_RX = re.compile(r"\binv[-\s#]?(\d{4,7})\b", re.I)
 NEGATIVE_RX = re.compile(r"broken|fail|error|frustrat|not working|issue|problem|bug|slow|spins|lost|blocking", re.I)
 CAUSE_LABEL = {"unhappy": "Unhappy customer", "paid": "Already paid", "wrong_bill": "Customer says the bill is wrong",
@@ -394,6 +398,24 @@ class Engine:
                     rs.append({"text": "Open product complaint (not about money): send, but in a softer tone, and tell the account manager.",
                                "evidenceIds": [eid], "policyRef": None})
 
+            # A chargeback, regulator or legal threat in the last four months stops chasing, whenever it was raised.
+            grave = [t for t in tickets.get(cid, []) if pd.notna(t.get("created"))
+                     and (self.as_of - t["created"]).days <= int(self.p.get("grave_lookback_days", 180))
+                     and GRAVE_RX.search(f"{t.get('subject') or ''} {t.get('body') or ''}")]
+            if grave and not row.flags.get("dispute_hold"):
+                t = sorted(grave, key=lambda t: t["created"])[-1]
+                eid = f"ticket:{t['id']}"
+                if not any(e["id"] == eid for e in ev):
+                    body = t.get("body") or ""
+                    ev.append({"id": eid, "kind": "ticket", "file": self.cfg["files"]["tickets"]["file"], "recordId": str(t["id"]),
+                               "date": iso(t.get("created")), "status": t.get("status") or "", "title": redact(t.get("subject") or "(no subject)"),
+                               "detail": redact(body)[:400] + ("…" if len(body) > 400 else "")})
+                what = GRAVE_RX.search(f"{t.get('subject') or ''} {t.get('body') or ''}").group(0).lower()
+                row.flags["grave_hold"] = True
+                rs.insert(0, {"text": f"On {nice(t['created'])} they threatened or started a {what} (ticket marked {t.get('status') or 'open'}). "
+                                      "Nothing shows it was settled, so finance doesn't chase until the account manager and Head of Support confirm it is.",
+                              "evidenceIds": [eid], "policyRef": self.p["sensitive_ref"]})
+
             # Maya's real test: nobody chased who had a complaint open. Zendesk tags are often wrong (a bug tagged How-to,
             # 23% untagged), so ANY open or pending ticket pauses the reminder and the account manager decides (process_maps FIN-1).
             if not (row.flags.get("dispute_hold") or row.flags.get("complaint_hold") or row.flags.get("disputed_hold")
@@ -563,12 +585,18 @@ class Engine:
                 matcher_name = str(self.cfg["people"].get("cash_owner", "Finance team")).split(" (")[0]
                 back_to = self.cfg["people"]["finance_owner"].split(" (")[0]
                 by = nice(add_business_days(self.as_of, int(self.p.get("paid_match_days", 2))))
+                pe = next((e for e in row.evidence if e["kind"] == "payment" and e.get("date")), None)
+                if pe:
+                    waited = int(np.busday_count(pd.Timestamp(pe["date"]).date(), self.as_of.date()))
+                    if waited > 5:
+                        row.reasons.insert(1, {"text": f"This payment has sat unmatched for {waited} working days, longer than the 3 to 5 days cash application normally takes.",
+                                               "evidenceIds": [pe["id"]], "policyRef": "processes.md FIN-2: matching lags three to five days"})
                 row.reasons.append({"text": f"Goes to {matcher_name} to match the payment, with {back_to} copied so she knows it's on hold. "
                                             f"If it isn't matched by {by}, it comes back to {back_to}.",
                                     "evidenceIds": [], "policyRef": "Maya (COO): matching is Marcus's job; back to Priya after two working days"})
             elif f.get("dispute_hold"):
                 verdict, cause = "hold", "wrong_bill"
-            elif f.get("complaint_hold") or f.get("disputed_hold") or f.get("open_ticket_hold"):
+            elif f.get("complaint_hold") or f.get("disputed_hold") or f.get("open_ticket_hold") or f.get("grave_hold"):
                 verdict, cause = "hold", "unhappy"
             elif f.get("wrong_bill"):
                 verdict, cause = "hold", "wrong_bill"
@@ -596,6 +624,12 @@ class Engine:
                 if self.p.get("escalate_after_days") and row.days >= self.p["escalate_after_days"]:
                     row.reasons.append({"text": f"Over {self.p['escalate_after_days']} days: escalate to {self.cfg['people'].get('vp_finance', 'the VP Finance')}.",
                                         "evidenceIds": [], "policyRef": self.p["escalate_ref"]})
+            elif row.days < int(self.p["reminders"][0]["from_days"]) and not f.get("card_failed"):
+                verdict, cause = "hold", "simply_late"
+                first_day = nice(row.due + pd.Timedelta(days=int(self.p["reminders"][0]["from_days"]))) if row.due is not None and pd.notna(row.due) else "day 7"
+                row.reasons.insert(0, {"text": f"Too early: {row.days} days late, and the policy's first reminder goes at {self.p['reminders'][0]['from_days']} days ({first_day}). Nothing goes out today.",
+                                       "evidenceIds": [], "policyRef": self.p["reminders"][0]["ref"]})
+                row.flags["too_early"] = True
             else:
                 verdict = "send"
                 cause = "card_failed" if f.get("card_failed") else "unhappy" if f.get("soft") else "simply_late"
@@ -615,7 +649,9 @@ class Engine:
                 row.reasons.append({"text": contact_note.capitalize() + ".", "evidenceIds": [], "policyRef": None})
 
             headline = row.reasons[0]["text"] if row.reasons else ""
-            if verdict == "hold":
+            if verdict == "hold" and f.get("too_early"):
+                headline = row.reasons[0]["text"]
+            elif verdict == "hold":
                 headline = next((r["text"] for r in row.reasons if "dispute" in r["text"] or "complaint" in r["text"].lower()
                                  or "wasn't sure" in r["text"] or "escalation" in r["text"].lower()), headline)
             if verdict == "send":
@@ -625,7 +661,11 @@ class Engine:
                 headline = f"Call: {row.days} days overdue" + (f", {money(row.amount)}" if big else "")
             conf = "low" if row.needs_review else "high" if row.match.method in ("exact_id", "exact_name") else "medium"
             hold = None
-            if verdict == "hold":
+            if verdict == "hold" and f.get("too_early"):
+                me = self.cfg["people"]["finance_owner"].split(" (")[0]
+                hold = {"owner": me, "ownerRole": "Finance (AR)", "deadline": iso(row.due + pd.Timedelta(days=int(self.p["reminders"][0]["from_days"]))),
+                        "action": "Nothing today. The first reminder comes back on day 7 if it's still unpaid."}
+            elif verdict == "hold":
                 deadline = iso(add_business_days(self.as_of, hold_days))
                 if cause == "wrong_bill":
                     am = str(c["account_manager"]) if c is not None and pd.notna(c.get("account_manager")) else "the account manager"
@@ -672,6 +712,25 @@ class Engine:
             if cid:
                 co = cust_out.setdefault(cid, self._customer(cid, customers, tickets))
                 co["invoiceIds"].append(row.display_id)
+        calls = {}
+        for o in invoices_out:
+            if o["verdict"] == "call" and o.get("customerId"):
+                calls.setdefault(o["customerId"], o["id"])
+        for o in invoices_out:
+            cid2 = o.get("customerId")
+            if o["verdict"] == "send" and cid2 in calls:
+                o["verdict"] = "call"
+                o["headline"] = f"Cover it on the same call as invoice {calls[cid2]}"
+                o["reasons"].insert(0, {"text": f"The same customer already gets a call about invoice {calls[cid2]}. One conversation, not an email and a call on the same day.",
+                                        "evidenceIds": [], "policyRef": "process_maps.md FIN-1: phone the customer"})
+                o["draft"] = {"to": o["draft"].get("to", ""), "subject": "", "body": "", "tone": "none"}
+                o["reminderStage"] = None
+                o.pop("reminderStage", None)
+                o["autoSend"] = {"eligible": False, "why": "Every phone call stays with a person", "permanent": True}
+                for r in rows:
+                    if r.display_id == o["id"]:
+                        r.verdict = "call"
+
         # aliases for each customer
         for system, raw, m in self.matcher.log:
             if m.customer_id in cust_out and raw:

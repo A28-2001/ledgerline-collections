@@ -58,7 +58,7 @@ values:
 policy:
   doc: collections_policy.md
   reminders:
-    - {from_days: 1, stage: "First reminder (7 days)", ref: "collections_policy.md: reminders at 7, 21 and 45 days"}
+    - {from_days: 7, stage: "First reminder (7 days)", ref: "collections_policy.md: reminders at 7, 21 and 45 days"}
     - {from_days: 21, stage: "Second reminder (21 days)", ref: "collections_policy.md: reminders at 7, 21 and 45 days"}
   call_after_days: 45            # the 45-day template threatens suspension, which needs VP Finance sign-off: a person calls instead
   call_amount: 1000000000        # no amount threshold in the policy; large accounts are covered by the top-50 rule
@@ -79,6 +79,7 @@ policy:
   top_ref: "collections_policy.md: nothing goes to one of the 50 largest accounts without a person reading it first"
   sensitive_ref: "sla_policy.md: legal action, regulator, chargeback or cancellation goes to the Head of Support"
   complaint_lookback_days: 30
+  grave_lookback_days: 180       # a chargeback, regulator or legal threat stays live this long unless someone confirms it is settled
   paid_match_tolerance: 0.01
   paid_match_window_days: 60
   recent_payment_days: 21       # payments.csv: matching can lag up to ~3 weeks (wire/cheque); Maya: Paidly chased a paid customer

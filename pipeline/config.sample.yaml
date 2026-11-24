@@ -67,6 +67,7 @@ policy:
   card_ref: "collections_policy.md §5"
   sensitive_ref: "sla_policy.md §2"
   complaint_lookback_days: 30
+  grave_lookback_days: 180       # a chargeback, regulator or legal threat stays live this long unless someone confirms it is settled
   paid_match_tolerance: 0.01      # unmatched payment within 1% of the bill counts as a match
   paid_match_window_days: 60
   wrong_bill_tolerance: 0.02      # bill differs from contract by more than 2%

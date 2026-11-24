@@ -176,7 +176,8 @@ def main() -> None:
                 + (f" Another {money(unsure)} is paused until a person reads a ticket the AI wasn't sure about." if unsure else ""))
 
     labels_path = (ROOT / "data" / "labels.csv") if args.data != "sample" else folder / "labels.csv"
-    acc, failures = accuracy(invoices, labels_path, "planted answers in the sample data" if args.data == "sample" else "hand-checked by me")
+    acc, failures = accuracy(invoices, labels_path, "planted answers in the sample data" if args.data == "sample" else
+                                      "an independent review of all 54 bills by a reviewer who never saw the tool's answers (first pass; a person confirms)")
     ms = engine.matcher.stats()
     vn = verified_numbers(engine, invoices, by_cause)
     review = [i for i in invoices if i["needsReview"]]
@@ -246,6 +247,11 @@ def main() -> None:
         notes.append("Payment status not recorded: failed card check skipped.")
     if args.data == "sample":
         notes.insert(0, "Sample data: made-up company and numbers, used to build and test the tool.")
+    elif acc:
+        notes.insert(0, "Honest accuracy: on first review the tool agreed with the independent reviewer on 46 of 54 bills (85%). "
+                        "The review exposed four rule errors (a regulator complaint and a chargeback raised before the bill, a reminder sent before day 7, "
+                        "and an email plus a call to one customer on the same day). They were fixed after seeing the review, so the current figure is "
+                        "not a fresh-data result; the shadow week measures that.")
 
     results = {
         "meta": {"generatedAt": datetime.now(timezone.utc).isoformat(timespec="seconds"), "asOf": as_of.date().isoformat(),
