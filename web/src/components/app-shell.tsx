@@ -5,7 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState, type ReactNode } from "react";
 import { GlossaryButton } from "@/components/shared/info-tip";
-import { ThemeToggle } from "@/components/theme-toggle";
+import { ThemeSwitch, ThemeToggle } from "@/components/theme-toggle";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
@@ -104,9 +104,9 @@ export function AppShell({
         <NavLinks />
         <div className="mt-auto space-y-2 px-1.5 pt-4 text-xs text-muted-foreground">
           <GlossaryButton />
-          <div className="flex items-center justify-between gap-2 border-t pt-3">
+          <ThemeSwitch />
+          <div className="border-t pt-3">
             <span>Data as of {asOf}</span>
-            <ThemeToggle />
           </div>
         </div>
       </aside>
@@ -129,6 +129,10 @@ export function AppShell({
                   <Brand companyName={companyName} />
                 </SheetHeader>
                 <NavLinks onNavigate={() => setOpen(false)} />
+                <div className="mt-6 px-1.5">
+                  <p className="mb-1.5 text-xs text-muted-foreground">Theme</p>
+                  <ThemeSwitch />
+                </div>
               </SheetContent>
             </Sheet>
           </div>
