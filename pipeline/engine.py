@@ -310,6 +310,12 @@ class Engine:
                     twins = [o for o in self._rows_by_cust.get(cid, []) if o is not row and abs(o.amount - row.amount) <= row.amount * tol]
                     if twins:
                         row.needs_review.append(f"{len(twins) + 1} overdue bills have this amount; we matched the payment to the oldest. A person confirms which bill it pays")
+                        for o in twins:  # the payment could just as well cover a twin: never remind it until that's confirmed (the Paidly case)
+                            o.flags["twin_payment"] = True
+                            o.needs_review.append(f"a {money(best['amount'])} payment from them is unmatched and could cover this bill instead: confirm before any reminder")
+                            o.reasons.insert(0, {"text": f"A {money(best['amount'])} payment from them (received {nice(best.get('date'))}) is unmatched. The tool assumed it pays invoice {row.display_id}, "
+                                                         "but it could just as well pay this one. Marcus confirms which before anyone sends a reminder.",
+                                                 "evidenceIds": [], "policyRef": "Maya (COO): chasing someone who's paid gets the tool switched off"})
             if paid_ev is None and cid:
                 lag = self.p.get("recent_payment_days", 21)
                 recent = [p for p in unmatched.get(cid, []) if p["id"] not in used_payments and pd.notna(p.get("date"))

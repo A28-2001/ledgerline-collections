@@ -1,6 +1,6 @@
 {
  "meta": {
-  "generatedAt": "2026-11-24T06:55:53+00:00",
+  "generatedAt": "2026-11-24T06:57:46+00:00",
   "asOf": "2026-10-31",
   "dataSource": "real",
   "companyName": "Ledgerline",
@@ -756,9 +756,14 @@
    "agingBucket": "1-30",
    "verdict": "send",
    "cause": "unhappy",
-   "confidence": "high",
+   "confidence": "low",
    "headline": "Send a softer reminder (open product complaint)",
    "reasons": [
+    {
+     "text": "A $5,100 payment from them (received Oct 29, 2026) is unmatched. The tool assumed it pays invoice INV-25469, but it could just as well pay this one. Marcus confirms which before anyone sends a reminder.",
+     "evidenceIds": [],
+     "policyRef": "Maya (COO): chasing someone who's paid gets the tool switched off"
+    },
     {
      "text": "A billing ticket from Jul 9, 2026 is closed. Mentioned for context; it doesn't block the reminder.",
      "evidenceIds": [
@@ -819,8 +824,8 @@
      "title": "Contract: 25 seats \u00d7 $68.00, Dec 12, 2025 to Dec 11, 2026"
     }
    ],
-   "policyRef": "collections_policy.md: tell the account manager before finance contacts one of their accounts",
-   "needsReview": false,
+   "policyRef": "Maya (COO): chasing someone who's paid gets the tool switched off",
+   "needsReview": true,
    "draft": {
     "to": "marcus.tan@kingswayengineeringgro.example",
     "subject": "Invoice INV-25852: a quick note",
@@ -828,6 +833,7 @@
     "tone": "soft"
    },
    "reminderStage": "First reminder (7 days)",
+   "reviewReason": "a $5,100 payment from them is unmatched and could cover this bill instead: confirm before any reminder",
    "autoSend": {
     "eligible": false,
     "why": "Customer has an open ticket",
@@ -13791,7 +13797,7 @@
     "why": "Correct answer: TOP-50 account 15 days late with no dispute; open T881016 is a normal-priority product bug about a client's send log, so a person should write a personal reminder after telling the account manager.. Tool's reason: They have a ticket open in Zendesk since Oct 28, 2026 (3 days). Chasing payment while their question is unanswered is what gets the tool switched off; the account manager decides when to resume."
    }
   ],
-  "runtimeSeconds": 0.44,
+  "runtimeSeconds": 0.45,
   "reviewLog": {
    "summary": "First pass against an independent review of all 54 real bills (the reviewer never saw the tool's answers): 46 agreed (85%). Every contested call below was then checked and confirmed by hand. We fixed each rule error the misses exposed; after the fixes 53 of 54 agree (98%). That second figure is on the same bills the rules were fixed against, so it is not a fresh-data result: the shadow week measures that.",
    "entries": [
@@ -13920,12 +13926,12 @@
      "invoice": "INV-25852",
      "customer": "Kingsway Engineering Group",
      "amount": 5100,
-     "toolSaid": "paid (older bill)",
-     "shouldBe": "unclear",
-     "foundBy": "Both",
-     "why": "One $5,100 payment with a blank memo and two $5,100 bills. The tool assumes the older one; nobody can tell from the records.",
-     "change": "Goes to Check first; Marcus confirms with the customer.",
-     "status": "open"
+     "toolSaid": "send (soft) on INV-25852",
+     "shouldBe": "check first",
+     "foundBy": "Second look at the hand check",
+     "why": "One $5,100 payment with a blank memo and two $5,100 bills. The tool assumed it pays the older one, so the newer one would have got a reminder with no check. The reviewer's 'send' was conditional on that, and the hand check passed it. If the payment was for the newer bill, that's the Paidly case.",
+     "change": "When a payment could cover either of two same-amount bills, both go to Check first and Marcus confirms which before any reminder.",
+     "status": "fixed"
     },
     {
      "invoice": "-",
@@ -13948,9 +13954,9 @@
    "20 on hold ($363,362): owners have until 2026-10-31.",
    "5 probably paid already ($78,348): confirm and close.",
    "9 need a phone call ($9,384).",
-   "14 need a second look before anything goes out."
+   "15 need a second look before anything goes out."
   ],
-  "text": "Good morning. $441,710 of $633,245 overdue (70%) sits with customers we shouldn't chase today: they've probably paid, they're unhappy, or the bill is wrong. Today: 20 reminders ready to send ($182,151). Approve all in one click. 20 on hold ($363,362): owners have until 2026-10-31. 5 probably paid already ($78,348): confirm and close. 9 need a phone call ($9,384). 14 need a second look before anything goes out.",
+  "text": "Good morning. $441,710 of $633,245 overdue (70%) sits with customers we shouldn't chase today: they've probably paid, they're unhappy, or the bill is wrong. Today: 20 reminders ready to send ($182,151). Approve all in one click. 20 on hold ($363,362): owners have until 2026-10-31. 5 probably paid already ($78,348): confirm and close. 9 need a phone call ($9,384). 15 need a second look before anything goes out.",
   "cover": "While Priya Nair is on leave (March (dates to confirm)), Dana Ruiz owns this morning list and Marcus Bell keeps the probably-paid list. Cover is off today.",
   "routing": [
    {
@@ -13963,7 +13969,7 @@
      "20 on hold ($363,362): owners have until 2026-10-31.",
      "5 probably paid already ($78,348): confirm and close.",
      "9 need a phone call ($9,384).",
-     "14 need a second look before anything goes out."
+     "15 need a second look before anything goes out."
     ],
     "by": null
    },

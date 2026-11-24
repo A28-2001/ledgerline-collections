@@ -126,12 +126,12 @@
       "invoice": "INV-25852",
       "customer": "Kingsway Engineering Group",
       "amount": 5100,
-      "toolSaid": "paid (older bill)",
-      "shouldBe": "unclear",
-      "foundBy": "Both",
-      "why": "One $5,100 payment with a blank memo and two $5,100 bills. The tool assumes the older one; nobody can tell from the records.",
-      "change": "Goes to Check first; Marcus confirms with the customer.",
-      "status": "open"
+      "toolSaid": "send (soft) on INV-25852",
+      "shouldBe": "check first",
+      "foundBy": "Second look at the hand check",
+      "why": "One $5,100 payment with a blank memo and two $5,100 bills. The tool assumed it pays the older one, so the newer one would have got a reminder with no check. The reviewer's 'send' was conditional on that, and the hand check passed it. If the payment was for the newer bill, that's the Paidly case.",
+      "change": "When a payment could cover either of two same-amount bills, both go to Check first and Marcus confirms which before any reminder.",
+      "status": "fixed"
     },
     {
       "invoice": "-",

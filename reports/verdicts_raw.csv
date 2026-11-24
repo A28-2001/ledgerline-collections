@@ -7,7 +7,7 @@ INV-25883,Sinclair & Vance LLP,16320.0,13,send,simply_late,False,"First reminder
 INV-25906,Rosales Engineering,16320.0,7,send,simply_late,False,"First reminder (7 days): 7 days overdue, nothing blocking"
 INV-25859,Voss & Kowalczyk Agency,13056.0,18,send,simply_late,False,"First reminder (7 days): 18 days overdue, nothing blocking"
 INV-25858,Glover Strategy,9600.0,18,send,simply_late,False,"First reminder (7 days): 18 days overdue, nothing blocking"
-INV-25852,Kingsway Engineering Group,5100.0,19,send,unhappy,False,Send a softer reminder (open product complaint)
+INV-25852,Kingsway Engineering Group,5100.0,19,send,unhappy,True,Send a softer reminder (open product complaint)
 INV-25863,Banerjee Design Partnership,5100.0,17,send,simply_late,False,"First reminder (7 days): 17 days overdue, nothing blocking"
 INV-25890,Oyelaran Strategy,4692.0,12,send,simply_late,False,"First reminder (7 days): 12 days overdue, nothing blocking"
 INV-25902,Crane IT Partners,3060.0,7,send,simply_late,False,"First reminder (7 days): 7 days overdue, nothing blocking"
