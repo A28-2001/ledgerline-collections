@@ -14,8 +14,8 @@ import pandas as pd
 import yaml
 
 ROOT = Path(__file__).resolve().parents[1]
-DATE_FIELDS = {"issue_date", "due_date", "paid_date", "date", "created", "start", "end", "renewal_date", "last_active"}
-NUM_FIELDS = {"amount", "arr", "seats", "unit_price", "days_overdue"}
+DATE_FIELDS = {"issue_date", "due_date", "paid_date", "date", "created", "start", "end", "renewal_date", "last_active", "applied_date", "resolved"}
+NUM_FIELDS = {"amount", "arr", "seats", "unit_price", "days_overdue", "period_months", "platform_fee", "contract_arr"}
 
 
 def load_config(path: Path | None = None) -> dict:
@@ -77,7 +77,7 @@ def load(folder: Path, cfg: dict) -> Data:
                 out[c] = pd.to_datetime(out[c], errors="coerce", utc=True).dt.tz_localize(None).dt.normalize()
             elif c in NUM_FIELDS:
                 out[c] = pd.to_numeric(out[c].astype(str).str.replace(r"[$,\s]", "", regex=True), errors="coerce")
-        for c in ("status", "priority", "category", "role", "method"):
+        for c in ("status", "priority", "category", "role", "method", "type"):
             if c in out:
                 out[c] = out[c].astype("string").str.strip().str.lower()
         for c in ("id", "invoice_id", "customer_id"):

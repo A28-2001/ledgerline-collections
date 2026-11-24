@@ -1,95 +1,105 @@
-# Collections check: configuration
+# Collections check: configuration for Ledgerline's data room (as of 2026-10-31).
+# The made-up sample data uses pipeline/config.sample.yaml instead:
+#   COLLECTIONS_CONFIG=pipeline/config.sample.yaml .venv/bin/python pipeline/run.py --data sample
 #
-# After Begin: run `python pipeline/profile_data.py data/raw`, read reports/data-profile.md,
-# then change the column names under `files:` to match the real files.
-# Every logical field on the left stays the same; only the right side changes.
-# Optional columns can be set to null. The check that needs them is then skipped
-# and the run says so in its notes.
+# Column names were suggested by pipeline/profile_data.py and checked by hand.
+# Policy numbers come from docs/collections_policy.md, docs/sla_policy.md and docs/process_maps.md.
 
-company_name: Demo Co
-as_of: auto            # "auto" = latest due/issue date seen, or a date like "2026-10-31"
+company_name: Ledgerline
+as_of: "2026-10-31"            # the data room's "today"
 currency: USD
-overdue_source: ar_aging   # ar_aging (the accounting export) or invoices
+overdue_source: ar_aging       # the QuickBooks AR aging export finance works from
 
 files:
   customers:
     file: customers.csv
-    cols: {id: customer_id, name: name, segment: segment, plan: plan, arr: arr,
-           account_manager: account_manager, renewal_date: renewal_date, billing_email: billing_email}
+    cols: {id: customer_id, name: name, segment: plan, plan: plan, arr: current_arr, account_manager: account_manager,
+           renewal_date: renewal_date, billing_email: null, status: status, payment_method: payment_method}
   contacts:
     file: contacts.csv
-    cols: {id: contact_id, customer_id: customer_id, name: name, email: email, role: role, last_active: last_active}
+    cols: {id: contact_id, customer_id: customer_id, name: null, first_name: first_name, last_name: last_name,
+           email: email, role: role, last_active: null, status: status}
   contracts:
     file: contracts.csv
-    cols: {id: contract_id, customer_id: customer_id, start: start_date, end: end_date,
-           seats: seats, unit_price: price_per_seat, status: status}
+    cols: {id: null, customer_id: customer_id, start: term_start, end: term_end, seats: seats,
+           unit_price: price_per_seat_per_month, status: null, contract_arr: arr, platform_fee: platform_fee}
   invoices:
     file: invoices.csv
     cols: {id: invoice_id, customer_id: customer_id, customer_name: customer_name, issue_date: issue_date,
            due_date: due_date, amount: amount, status: status, paid_date: paid_date, method: payment_method,
-           seats: seats_billed, unit_price: unit_price}
+           seats: null, unit_price: null, period_months: service_period_months, type: type}
   payments:
     file: payments.csv
-    cols: {id: payment_id, invoice_id: invoice_id, payer: payer_name, amount: amount, date: payment_date,
-           method: method, status: status}
+    cols: {id: payment_id, invoice_id: invoice_id, payer: payer_name, amount: amount, date: received_date,
+           method: method, status: null, memo: memo, applied_date: applied_date}
   ar_aging:
     file: ar_aging.csv
-    cols: {invoice_id: invoice_number, customer_name: customer, issue_date: invoice_date, due_date: due_date,
-           amount: open_balance, days_overdue: days_past_due}
+    cols: {invoice_id: invoice_id, customer_id: customer_id, customer_name: customer_name, issue_date: issue_date,
+           due_date: due_date, amount: amount, days_overdue: days_past_due, status: status}
   tickets:
     file: tickets.csv
-    cols: {id: ticket_id, customer_id: null, customer_name: company, created: created_at, status: status,
-           priority: priority, category: category, subject: subject, body: body}
+    cols: {id: ticket_id, customer_id: customer_id, customer_name: customer_name, created: created_at, status: status,
+           priority: priority, category: category, subject: subject, body: body, resolved: resolved_at}
 
 values:
-  invoice_open_status: [open, overdue, unpaid, past_due, partially_paid, sent]
+  invoice_open_status: [open, overdue, payment_failed]
   invoice_void_status: [void, voided, cancelled, canceled, written_off]
+  invoice_failed_status: [payment_failed]
   payment_failed_status: [failed, declined, returned, bounced]
-  ticket_closed_status: [closed, resolved, solved]
-  ticket_serious_priority: [urgent, p1, critical, sev1]
-  ticket_open_status: [open, pending, new, on-hold, on_hold, hold, waiting]
-  ticket_billing_category: [billing, invoice, payments, account & billing]
-  ticket_question_category: [how-to, question, feature request, feature_request, onboarding]
+  ticket_closed_status: [solved, closed, resolved]
+  ticket_serious_priority: [urgent]
+  ticket_open_status: [open, pending, new, on-hold, hold]
+  ticket_billing_category: [billing, account change]
+  ticket_question_category: [how-to]
+  contact_left_status: left the firm
 
-# Every rule cites the policy section it comes from. Fill the refs after reading
-# collections_policy.md and sla_policy.md. The numbers here are placeholders.
+# Every rule cites where it comes from. collections_policy.md has no numbered sections,
+# so refs name the rule.
 policy:
   doc: collections_policy.md
   reminders:
-    - {from_days: 1, stage: First reminder, ref: "collections_policy.md §2"}
-    - {from_days: 15, stage: Second reminder, ref: "collections_policy.md §2"}
-    - {from_days: 30, stage: Final reminder, ref: "collections_policy.md §2"}
-  call_after_days: 45
-  call_amount: 25000
-  call_ref: "collections_policy.md §3"
-  hold_business_days: 5
-  hold_ref: "collections_policy.md §4"
-  card_ref: "collections_policy.md §5"
-  sensitive_ref: "sla_policy.md §2"
+    - {from_days: 1, stage: "First reminder (7 days)", ref: "collections_policy.md: reminders at 7, 21 and 45 days"}
+    - {from_days: 21, stage: "Second reminder (21 days)", ref: "collections_policy.md: reminders at 7, 21 and 45 days"}
+  call_after_days: 45            # the 45-day template threatens suspension, which needs VP Finance sign-off: a person calls instead
+  call_amount: 1000000000        # no amount threshold in the policy; large accounts are covered by the top-50 rule
+  call_ref: "process_maps.md FIN-1: not paid after the reminders, phone and offer a payment plan"
+  escalate_after_days: 90
+  escalate_ref: "process_maps.md FIN-1: still unpaid at 90 days, escalate to the VP Finance"
+  hold_business_days: 3
+  hold_ref: "collections_policy.md: don't chase a dispute or open escalation until the account manager says so"
+  card_ref: "billing_engine_rewrite_2026.md: Stripe retries failed cards three times over seven days, emailing each time"
+  card_writeoff_days: 150
+  card_writeoff_ref: "collections_policy.md: card invoices unpaid after 150 days are written off automatically"
+  top_accounts: 50
+  top_ref: "collections_policy.md: nothing goes to one of the 50 largest accounts without a person reading it first"
+  sensitive_ref: "sla_policy.md: legal action, regulator, chargeback or cancellation goes to the Head of Support"
   complaint_lookback_days: 30
-  paid_match_tolerance: 0.01      # unmatched payment within 1% of the bill counts as a match
+  paid_match_tolerance: 0.01
   paid_match_window_days: 60
-  wrong_bill_tolerance: 0.02      # bill differs from contract by more than 2%
+  wrong_bill_tolerance: 0.02
   stale_contact_days: 180
 
 matching:
-  fuzzy_high: 92      # at or above: match
-  fuzzy_low: 80       # between low and high: ask the AI judges, or flag for a person
-  min_gap: 4          # best match must beat the runner-up by this much
+  fuzzy_high: 92
+  fuzzy_low: 80
+  min_gap: 4
 
 ai:
-  # Two judges from different model families, so their mistakes are less likely to overlap.
-  # Checked against this key's model list on 23 Nov 2026 (scripts/model_probe.py).
   judges: [openai/gpt-oss-20b, qwen/qwen3.8-27b]
   drafter: openai/gpt-oss-120b
-  params:            # extra settings per model
+  params:
     openai/gpt-oss-20b: {reasoning_effort: low}
     openai/gpt-oss-120b: {reasoning_effort: low}
-  max_tokens: 300    # room for the model's hidden reasoning; the answer itself is one word
+  max_tokens: 300
+  # sla_policy.md: ticket content must not go to a new vendor without a data processing agreement.
+  # Ledgerline is fictional, so the demo sends redacted ticket text to Groq; in production this stays
+  # "off" (rules only, unsure tickets to a person) until legal approves a vendor.
+  ticket_text: redacted          # redacted | off
 
 trend_markers:
-  - {month: "2026-03", label: Billing engine rewrite}
+  - {month: "2026-03", label: Billing engine rewrite (16 Mar)}
 
 people:
-  finance_owner: Finance team
-  billing_owner: Billing team
+  finance_owner: Priya Nair (AR Specialist)
+  billing_owner: Ana Duarte (Billing Support Specialist)
+  vp_finance: Dana Ruiz (VP Finance)

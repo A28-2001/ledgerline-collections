@@ -20,9 +20,9 @@ CACHE = ROOT / "data" / "cache" / "ai_cache.json"
 
 TICKET_LABELS = ["billing_complaint", "serious_escalation", "other_complaint", "not_a_complaint"]
 
-PROMPT_A = """You help a finance team decide whether to send a payment reminder.
-Read this support ticket and answer with exactly one label:
-- billing_complaint: the customer disputes or questions a bill, price, charge, seats, refund or credit (even in vague words)
+PROMPT_A = """You help a finance team at a billing-software company decide whether to send a payment reminder.
+Read this support ticket from a customer and answer with exactly one label:
+- billing_complaint: the customer disputes or questions what WE charged THEM for our software: their subscription invoice, price, seats, plan, renewal, discount, fees, refund or credit (even in vague words). Questions about using billing features for their own clients are NOT billing complaints
 - serious_escalation: the customer is blocked, angry about outages, or threatening to leave
 - other_complaint: the customer reports a problem that is not about money
 - not_a_complaint: a question, request or feedback
@@ -32,7 +32,9 @@ Label:"""
 
 PROMPT_B = """Classify the customer's message for a collections team. Reply with one of:
 billing_complaint, serious_escalation, other_complaint, not_a_complaint.
-Rules: anything questioning how much they pay counts as billing_complaint.
+Context: we sell billing software, so customers often mention invoices about THEIR clients; that is not a complaint about us.
+Rules: anything questioning what they pay us (subscription, seats, plan, renewal, discount, fees) counts as billing_complaint.
+Legal action, regulators, chargebacks, cancellation, data loss or whole-team outages count as serious_escalation.
 Whole-team outages or churn threats count as serious_escalation.
 Message: "{subject}. {body}"
 Answer:"""
@@ -46,13 +48,28 @@ SAME_B = """A bank or accounting system wrote a customer name as "{a}". Our cust
 Is it the same business (ignore Inc/LLC, capitals, abbreviations and small typos)? Reply yes or no only."""
 
 
+import re as _re
+
+
+def redact(text: str) -> str:
+    """Mask what sla_policy.md says tickets contain: card fragments, bank details, emails, phone numbers."""
+    t = _re.sub(r"[\w.+-]+@[\w-]+\.[\w.]+", "[email]", text)
+    t = _re.sub(r"\b(?:\d[ -]?){13,19}\b", "[card]", t)
+    t = _re.sub(r"\b(?:ending|last four|last 4)\D{0,10}\d{4}\b", "[card ending]", t, flags=_re.I)
+    t = _re.sub(r"\b[A-Z]{2}\d{2}[A-Z0-9]{10,30}\b", "[iban]", t)
+    t = _re.sub(r"\b\d{8,}\b", "[number]", t)
+    t = _re.sub(r"\+?\d[\d ().-]{8,}\d", "[phone]", t)
+    return t
+
+
 class AI:
     def __init__(self, cfg: dict):
         self.models = cfg["ai"]["judges"]
         self.drafter = cfg["ai"]["drafter"]
         self.params = cfg["ai"].get("params") or {}
         self.max_tokens = int(cfg["ai"].get("max_tokens", 300))
-        self.enabled = bool(os.environ.get("GROQ_API_KEY")) and os.environ.get("AI_OFF") != "1"
+        self.enabled = bool(os.environ.get("GROQ_API_KEY")) and os.environ.get("AI_OFF") != "1" \
+            and str(cfg["ai"].get("ticket_text", "redacted")) != "off"
         self.cache: dict[str, str] = json.loads(CACHE.read_text()) if CACHE.exists() else {}
         self.calls = 0
         self.judgments = 0
@@ -128,7 +145,9 @@ class AI:
         return {"answer": votes[0]["answer"] if agree else "disagree", "agree": agree, "votes": votes}
 
     def classify_ticket(self, subject: str, body: str) -> dict:
-        body = (body or "")[:1500]
+        # sla_policy.md: tickets hold card fragments, bank details and clients' lists, and ticket content
+        # must not reach a new vendor without a DPA. Redact first; "off" sends nothing.
+        subject, body = redact(subject or ""), redact((body or "")[:1500])
         return self._judge([PROMPT_A.format(subject=subject, body=body), PROMPT_B.format(subject=subject, body=body)],
                            TICKET_LABELS)
 

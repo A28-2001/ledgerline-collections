@@ -1,0 +1,95 @@
+# Collections check: configuration
+#
+# After Begin: run `python pipeline/profile_data.py data/raw`, read reports/data-profile.md,
+# then change the column names under `files:` to match the real files.
+# Every logical field on the left stays the same; only the right side changes.
+# Optional columns can be set to null. The check that needs them is then skipped
+# and the run says so in its notes.
+
+company_name: Demo Co
+as_of: auto            # "auto" = latest due/issue date seen, or a date like "2026-10-31"
+currency: USD
+overdue_source: ar_aging   # ar_aging (the accounting export) or invoices
+
+files:
+  customers:
+    file: customers.csv
+    cols: {id: customer_id, name: name, segment: segment, plan: plan, arr: arr,
+           account_manager: account_manager, renewal_date: renewal_date, billing_email: billing_email}
+  contacts:
+    file: contacts.csv
+    cols: {id: contact_id, customer_id: customer_id, name: name, email: email, role: role, last_active: last_active}
+  contracts:
+    file: contracts.csv
+    cols: {id: contract_id, customer_id: customer_id, start: start_date, end: end_date,
+           seats: seats, unit_price: price_per_seat, status: status}
+  invoices:
+    file: invoices.csv
+    cols: {id: invoice_id, customer_id: customer_id, customer_name: customer_name, issue_date: issue_date,
+           due_date: due_date, amount: amount, status: status, paid_date: paid_date, method: payment_method,
+           seats: seats_billed, unit_price: unit_price}
+  payments:
+    file: payments.csv
+    cols: {id: payment_id, invoice_id: invoice_id, payer: payer_name, amount: amount, date: payment_date,
+           method: method, status: status}
+  ar_aging:
+    file: ar_aging.csv
+    cols: {invoice_id: invoice_number, customer_name: customer, issue_date: invoice_date, due_date: due_date,
+           amount: open_balance, days_overdue: days_past_due}
+  tickets:
+    file: tickets.csv
+    cols: {id: ticket_id, customer_id: null, customer_name: company, created: created_at, status: status,
+           priority: priority, category: category, subject: subject, body: body}
+
+values:
+  invoice_open_status: [open, overdue, unpaid, past_due, partially_paid, sent]
+  invoice_void_status: [void, voided, cancelled, canceled, written_off]
+  payment_failed_status: [failed, declined, returned, bounced]
+  ticket_closed_status: [closed, resolved, solved]
+  ticket_serious_priority: [urgent, p1, critical, sev1]
+  ticket_open_status: [open, pending, new, on-hold, on_hold, hold, waiting]
+  ticket_billing_category: [billing, invoice, payments, account & billing]
+  ticket_question_category: [how-to, question, feature request, feature_request, onboarding]
+
+# Every rule cites the policy section it comes from. Fill the refs after reading
+# collections_policy.md and sla_policy.md. The numbers here are placeholders.
+policy:
+  doc: collections_policy.md
+  reminders:
+    - {from_days: 1, stage: First reminder, ref: "collections_policy.md §2"}
+    - {from_days: 15, stage: Second reminder, ref: "collections_policy.md §2"}
+    - {from_days: 30, stage: Final reminder, ref: "collections_policy.md §2"}
+  call_after_days: 45
+  call_amount: 25000
+  call_ref: "collections_policy.md §3"
+  hold_business_days: 5
+  hold_ref: "collections_policy.md §4"
+  card_ref: "collections_policy.md §5"
+  sensitive_ref: "sla_policy.md §2"
+  complaint_lookback_days: 30
+  paid_match_tolerance: 0.01      # unmatched payment within 1% of the bill counts as a match
+  paid_match_window_days: 60
+  wrong_bill_tolerance: 0.02      # bill differs from contract by more than 2%
+  stale_contact_days: 180
+
+matching:
+  fuzzy_high: 92      # at or above: match
+  fuzzy_low: 80       # between low and high: ask the AI judges, or flag for a person
+  min_gap: 4          # best match must beat the runner-up by this much
+
+ai:
+  # Two judges from different model families, so their mistakes are less likely to overlap.
+  # Checked against this key's model list on 23 Nov 2026 (scripts/model_probe.py).
+  judges: [openai/gpt-oss-20b, qwen/qwen3.8-27b]
+  drafter: openai/gpt-oss-120b
+  params:            # extra settings per model
+    openai/gpt-oss-20b: {reasoning_effort: low}
+    openai/gpt-oss-120b: {reasoning_effort: low}
+  max_tokens: 300    # room for the model's hidden reasoning; the answer itself is one word
+
+trend_markers:
+  - {month: "2026-03", label: Billing engine rewrite}
+
+people:
+  finance_owner: Finance team
+  billing_owner: Billing team

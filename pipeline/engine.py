@@ -21,15 +21,22 @@ import pandas as pd
 from load import Data
 from match import Matcher
 
-BILLING_RX = re.compile(
-    r"invoice|\bbill(ed|ing|s)?\b|charg(e|ed|es|ing)|overcharg|refund|\bcredit\b|pric(e|ing)|per seat|"
-    r"seats? (we|but)|double|twice|dispute|discount|cancel(l)?ed the|wrong amount|pay more|paying more",
+BILLING_RX = re.compile(  # about what WE charged THEM (the product itself is billing software)
+    r"(over)?charged (us|me|twice)|billed (us|me|twice|annual|for)|your invoice|ledgerline invoice|our (subscription|renewal|invoice from)|"
+    r"refund|credit note|dispute|discount (not|wasn)|not reflected|waived|implementation fee|wrong (amount|seat|plan|price)|"
+    r"seat count|pay more|paying more|double[- ]charg|price increase",
     re.I)
-SERIOUS_RX = re.compile(r"outage|system down|is down|can.?t log ?in|cannot log ?in|whole team|churn|"
+SERIOUS_RX = re.compile(r"legal action|lawyer|attorney|regulator|chargeback|cancellation|cancel (our|the|my)|terminate|"
+                        r"outage|system down|is down|can.?t log ?in|cannot log ?in|whole team|churn|data loss|wiped|"
                         r"cancel (our|the) (account|subscription|contract)|reviewing whether to stay|"
                         r"switch(ing)? to|escalat|legal|lawyer", re.I)
+HOLDING_RX = re.compile(  # the customer says they're not paying until something is fixed
+    r"hold(ing)? off pay|won.?t pay|will not pay|not (be )?pay(ing)?|paused (the )?payment|on hold until|settle once|pay once|"
+    r"until (a |the )?(corrected|revised|new) (invoice|version)|cancel and reissue|corrected (invoice|version)|pending a corrected",
+    re.I)
+INVOICE_REF_RX = re.compile(r"\binv[-\s#]?(\d{4,7})\b", re.I)
 NEGATIVE_RX = re.compile(r"broken|fail|error|frustrat|not working|issue|problem|bug|slow|spins|lost|blocking", re.I)
-CAUSE_LABEL = {"unhappy": "Unhappy customer", "paid": "Already paid", "wrong_bill": "Bill doesn't match contract",
+CAUSE_LABEL = {"unhappy": "Unhappy customer", "paid": "Already paid", "wrong_bill": "Customer says the bill is wrong",
                "card_failed": "Card payment failed", "simply_late": "Simply late"}
 
 
@@ -83,6 +90,13 @@ class Engine:
         self.matcher = Matcher(data.tables["customers"], self.cfg, ai)
         self.t = data.tables
         self.ticket_labels: dict[str, dict] = {}
+        cu = self.t["customers"]
+        n = int(self.p.get("top_accounts") or 0)
+        if n and len(cu) and cu["arr"].notna().any():
+            live = cu[cu["status"].fillna("active").str.lower().ne("churned")] if "status" in cu else cu
+            self.top_accounts = set(live.sort_values("arr", ascending=False).head(n)["id"].astype(str))
+        else:
+            self.top_accounts = set()
 
     # ---------------------------------------------------------------- overdue list
     def overdue_rows(self) -> list[Row]:
@@ -134,7 +148,7 @@ class Engine:
             return "other_complaint"
         return "not_a_complaint"
 
-    def tickets_by_customer(self, overdue_customers: set[str]) -> dict[str, list[dict]]:
+    def tickets_by_customer(self, overdue_customers: set[str], since: dict[str, pd.Timestamp] | None = None) -> dict[str, list[dict]]:
         tk = self.t["tickets"]
         out: dict[str, list[dict]] = {}
         if not len(tk):
@@ -151,11 +165,15 @@ class Engine:
             created = t.get("created")
             is_open = (t.get("status") or "") not in self.v["ticket_closed_status"]
             t["is_open"] = is_open
-            # Open tickets always count; closed ones only if recent enough to mention.
-            t["relevant"] = m.customer_id in overdue_customers and pd.notna(created) and (is_open or created >= mention_from)
+            # Open tickets always count. Closed ones count from the day the customer's oldest overdue bill was
+            # issued: at Ledgerline a "solved" ticket can still be an unresolved dispute about that bill.
+            start = (since or {}).get(m.customer_id, mention_from)
+            t["relevant"] = m.customer_id in overdue_customers and pd.notna(created) and (is_open or created >= min(start, mention_from))
+            t["holding"] = bool(HOLDING_RX.search(f"{t.get('subject') or ''} {t.get('body') or ''}"))
+            t["invoice_refs"] = {n.lstrip("0") for n in INVOICE_REF_RX.findall(f"{t.get('subject') or ''} {t.get('body') or ''}")}
             t["recent"] = pd.notna(created) and created >= lookback
             t["label"], t["agreement"] = t["rules_label"], None
-            if t["relevant"] and is_open and self.ai and self.ai.enabled:
+            if t["relevant"] and self.ai and self.ai.enabled:
                 j = self.ai.classify_ticket(t.get("subject") or "", t.get("body") or "")
                 votes = [{"judge": "rules", "answer": t["rules_label"]}] + j["votes"]
                 t["agreement"] = {"agree": j["agree"], "votes": votes}
@@ -168,6 +186,7 @@ class Engine:
         linked_ok: dict[str, list[dict]] = {}
         linked_failed: dict[str, list[dict]] = {}
         unmatched_by_cust: dict[str, list[dict]] = {}
+        self.memo_hits: dict[str, dict] = {}
         if not len(pay):
             return linked_ok, linked_failed, unmatched_by_cust
         failed = pay["status"].isin(self.v["payment_failed_status"]) if self.d.has("payments", "status") else pd.Series(False, index=pay.index)
@@ -176,6 +195,8 @@ class Engine:
             if k:
                 (linked_failed if f else linked_ok).setdefault(k, []).append(r)
             elif not f:
+                for num in re.findall(r"(?:inv(?:oice)?[\s#:-]*)?(\d{4,7})", str(r.get("memo") or ""), re.I):
+                    self.memo_hits.setdefault(num.lstrip("0"), r)  # "INV-25845", "Invoice 25937", "inv25867"
                 m = self.matcher.match(r.get("payer"), "bank payments")
                 if m.ok:
                     unmatched_by_cust.setdefault(m.customer_id, []).append(r)
@@ -199,6 +220,13 @@ class Engine:
         if pd.notna(inv.get("unit_price")) and pd.notna(k.get("unit_price")) and k["unit_price"]:
             if abs(inv["unit_price"] - k["unit_price"]) / k["unit_price"] > tol:
                 return False, f"price per seat {money(inv['unit_price'])}, contract says {money(k['unit_price'])}"
+        if (inv.get("type") or "subscription") != "subscription":
+            return None  # implementation fees etc. aren't in the contract's annual value
+        if pd.notna(k.get("contract_arr")) and pd.notna(inv.get("period_months")) and inv.get("amount"):
+            expected = k["contract_arr"] * inv["period_months"] / 12
+            if expected and abs(inv["amount"] - expected) / expected > tol:
+                return False, f"bill {money(inv['amount'])} vs contract {money(expected)} for {int(inv['period_months'])} months"
+            return True, "matches the contract"
         if pd.notna(k.get("seats")) and pd.notna(k.get("unit_price")) and inv.get("amount"):
             base = k["seats"] * k["unit_price"]
             if base and not any(abs(inv["amount"] - base * f) / (base * f) <= tol for f in (1, 3, 6, 12)):
@@ -210,7 +238,11 @@ class Engine:
     def run(self) -> dict:
         rows = self.overdue_rows()
         overdue_customers = {r.match.customer_id for r in rows if r.match.ok}
-        tickets = self.tickets_by_customer(overdue_customers)
+        since: dict[str, pd.Timestamp] = {}
+        for r in rows:
+            if r.match.ok and r.issue is not None and pd.notna(r.issue):
+                since[r.match.customer_id] = min(since.get(r.match.customer_id, r.issue), r.issue)
+        tickets = self.tickets_by_customer(overdue_customers, since)
         linked_ok, linked_failed, unmatched = self.payment_indexes()
         used_payments: set[str] = set()
         customers = self.t["customers"].set_index(self.t["customers"]["id"].astype(str), drop=False)
@@ -240,6 +272,13 @@ class Engine:
                     paid_ev = p
                     row.flags["paid_linked"] = True
                     break
+            memo_p = getattr(self, "memo_hits", {}).get(row.key)
+            if paid_ev is None and memo_p is not None and memo_p["id"] not in used_payments and memo_p.get("amount") \
+                    and abs(memo_p["amount"] - row.amount) <= row.amount * tol:
+                paid_ev = memo_p
+                used_payments.add(memo_p["id"])
+                row.flags["paid_unmatched"] = True
+                row.flags["paid_memo"] = True
             if paid_ev is None and cid:
                 best = None
                 for p in unmatched.get(cid, []):
@@ -261,10 +300,13 @@ class Engine:
                 ev.append({"id": eid, "kind": "payment", "file": self.cfg["files"]["payments"]["file"], "recordId": str(paid_ev["id"]),
                            "date": iso(paid_ev.get("date")), "status": "succeeded",
                            "title": f"{money(paid_ev['amount'])} received on {nice(paid_ev.get('date'))} from \"{paid_ev.get('payer') or ''}\""})
+                memo = str(paid_ev.get("memo") or "").strip()
                 rs.append({"text": ("A payment linked to this bill was received, but the accounting export still shows it open."
                                     if row.flags.get("paid_linked") else
+                                    f"An unmatched bank payment names this invoice in its memo (\"{memo}\") and equals the bill. It's paid; it just hasn't been matched yet."
+                                    if row.flags.get("paid_memo") else
                                     "An unmatched bank payment from this customer equals this bill. It was probably paid but never matched."),
-                           "evidenceIds": [eid], "policyRef": None})
+                           "evidenceIds": [eid], "policyRef": "collections_policy.md: bank transfers take three to five working days to show as paid"})
 
             # 2. Tickets
             for t in sorted(tickets.get(cid, []), key=lambda t: t.get("created") or self.as_of, reverse=True):
@@ -279,6 +321,22 @@ class Engine:
                            "title": t.get("subject") or "(no subject)", "detail": body[:400] + ("…" if len(body) > 400 else "")})
                 if t.get("agreement"):
                     row.votes = t["agreement"]["votes"]
+                names_bill = row.key and row.key in t.get("invoice_refs", set())
+                after_issue = row.issue is None or pd.isna(row.issue) or t["created"] >= row.issue - pd.Timedelta(days=3)
+                if names_bill and after_issue and (t.get("holding") or label in ("billing_complaint", "disagree")):
+                    row.flags["dispute_hold"] = True
+                    state = "is still open" if open_ else f"is marked {t.get('status') or 'closed'} in Zendesk, but the bill was never corrected or reissued"
+                    said = " and says they're holding payment until it's fixed" if t.get("holding") else ""
+                    rs.insert(0, {"text": f"The customer disputes this exact invoice in a support ticket{said}. The ticket {state}.",
+                                  "evidenceIds": [eid], "policyRef": "collections_policy.md: do not chase an invoice the customer has disputed"})
+                    continue
+                if not open_ and after_issue and label == "billing_complaint" and t.get("holding"):
+                    row.flags["dispute_hold"] = True
+                    rs.insert(0, {"text": f"A billing ticket from {nice(t['created'])} says they're holding payment. Zendesk marks it {t.get('status')}, but nothing shows it was fixed.",
+                                  "evidenceIds": [eid], "policyRef": "collections_policy.md: do not chase an invoice the customer has disputed"})
+                    continue
+                if not open_ and after_issue and label == "billing_complaint":
+                    row.needs_review.append(f"a billing ticket from {nice(t['created'])} is marked {t.get('status')}: check it was really fixed")
                 if not open_:
                     if label == "billing_complaint":
                         rs.append({"text": f"A billing ticket from {nice(t['created'])} is closed. Mentioned for context; it doesn't block the reminder.",
@@ -310,8 +368,9 @@ class Engine:
                 k = self.contract_for(cid, row.issue)
                 chk = self.bill_matches_contract(row.inv, k) if k else None
                 if k:
-                    keid = f"contract:{k['id']}"
-                    ev.append({"id": keid, "kind": "contract", "file": self.cfg["files"]["contracts"]["file"], "recordId": str(k["id"]),
+                    kid = k.get("id") or f"{cid}:{iso(k.get('start'))}"
+                    keid = f"contract:{kid}"
+                    ev.append({"id": keid, "kind": "contract", "file": self.cfg["files"]["contracts"]["file"], "recordId": str(kid),
                                "date": iso(k.get("start")),
                                "title": f"Contract: {int(k['seats']) if pd.notna(k.get('seats')) else '?'} seats × "
                                         f"{money(k['unit_price']) if pd.notna(k.get('unit_price')) else '?'}"
@@ -321,8 +380,25 @@ class Engine:
                         rs.append({"text": f"The bill doesn't match the contract: {chk[1]}. Fix the bill before asking for money.",
                                    "evidenceIds": [keid], "policyRef": self.p["hold_ref"]})
 
-            # 4. Failed card payment
-            fails = [p for p in linked_failed.get(row.key, []) if not row.flags.get("paid_linked")]
+            # 4. Failed card payment (recorded on the invoice at Ledgerline)
+            inv_status = str((row.inv or {}).get("status") or "")
+            if inv_status in self.v.get("invoice_failed_status", []) and not row.flags.get("paid_linked"):
+                row.flags["card_failed"] = True
+                eid = f"invoice:{row.display_id}"
+                ev.append({"id": eid, "kind": "invoice", "file": self.cfg["files"]["invoices"]["file"], "recordId": row.display_id,
+                           "date": iso(row.due), "status": "payment_failed", "title": f"Card payment for {money(row.amount)} failed"})
+                if row.days <= 7:
+                    rs.append({"text": "The card payment failed, but Stripe is still retrying and emailing them. No extra email yet.",
+                               "evidenceIds": [eid], "policyRef": self.p["card_ref"]})
+                else:
+                    rs.append({"text": "The card failed and Stripe's retries are over. A person asks for a new card: nobody has followed this up yet.",
+                               "evidenceIds": [eid], "policyRef": self.p["card_ref"]})
+                left = self.p.get("card_writeoff_days", 0) - row.days
+                if self.p.get("card_writeoff_days") and left <= 30:
+                    rs.append({"text": f"This card invoice is written off automatically in {max(left, 0)} days unless someone acts.",
+                               "evidenceIds": [eid], "policyRef": self.p["card_writeoff_ref"]})
+                    row.needs_review.append(f"automatic write-off in {max(left, 0)} days: decide today")
+            fails = [p for p in linked_failed.get(row.key, []) if not row.flags.get("paid_linked") and not row.flags.get("card_failed")]
             if fails:
                 f = fails[-1]
                 eid = f"payment:{f['id']}"
@@ -339,7 +415,19 @@ class Engine:
     def _contact(self, cid, contacts, customers) -> tuple[str, str | None]:
         if cid and len(contacts):
             mine = contacts[contacts["customer_id"].astype(str) == str(cid)]
-            bill = mine[mine["role"].fillna("").str.contains("bill|finance|accounts", regex=True)] if len(mine) else mine
+            bill = mine[mine["role"].fillna("").str.contains("bill|finance|accounts", case=False, regex=True)] if len(mine) else mine
+            left_word = self.v.get("contact_left_status")
+            if left_word and "status" in mine and len(bill):
+                gone = bill[bill["status"].fillna("").str.contains(left_word, case=False)]
+                active = bill[~bill.index.isin(gone.index)]
+                if len(gone):
+                    g = gone.iloc[0]
+                    who = " ".join(str(x) for x in (g.get("first_name"), g.get("last_name")) if x and pd.notna(x)) or str(g.get("email"))
+                    if len(active):
+                        a = active.iloc[0]
+                        return str(a.get("email") or ""), f"invoice emails still go to {who}, who has left the firm: remove them from the invoice list"
+                    return str(g.get("email") or ""), f"the only billing contact, {who}, has left the firm: find the new one before sending"
+                bill = active
             pick = bill if len(bill) else mine
             if len(pick):
                 c = pick.sort_values("last_active", ascending=False).iloc[0] if "last_active" in pick else pick.iloc[0]
@@ -392,6 +480,8 @@ class Engine:
             long_ = row.days >= self.p["call_after_days"]
             if f.get("paid_linked") or f.get("paid_unmatched"):
                 verdict, cause = "paid", "paid"
+            elif f.get("dispute_hold"):
+                verdict, cause = "hold", "wrong_bill"
             elif f.get("complaint_hold") or f.get("disputed_hold"):
                 verdict, cause = "hold", "unhappy"
             elif f.get("wrong_bill"):
@@ -410,18 +500,31 @@ class Engine:
                 if not row.match.ok:
                     row.reasons.append({"text": "We couldn't confirm who this customer is, so a person handles it.",
                                         "evidenceIds": [], "policyRef": None})
+                if self.p.get("escalate_after_days") and row.days >= self.p["escalate_after_days"]:
+                    row.reasons.append({"text": f"Over {self.p['escalate_after_days']} days: escalate to {self.cfg['people'].get('vp_finance', 'the VP Finance')}.",
+                                        "evidenceIds": [], "policyRef": self.p["escalate_ref"]})
             else:
                 verdict = "send"
                 cause = "card_failed" if f.get("card_failed") else "unhappy" if f.get("soft") else "simply_late"
             tone = "card_update" if f.get("card_failed") else "soft" if f.get("soft") else "standard"
+            if cid in self.top_accounts and verdict in ("send", "call"):
+                row.needs_review.append("one of the 50 largest accounts: a person reads or writes this one personally")
+                row.reasons.append({"text": "One of the 50 largest accounts: nothing goes out until a person has read it.",
+                                    "evidenceIds": [], "policyRef": self.p["top_ref"]})
+            if verdict in ("send", "call") and c is not None and pd.notna(c.get("account_manager")) and str(c.get("account_manager")):
+                row.reasons.append({"text": f"Tell {c['account_manager']} (account manager) before this goes out.",
+                                    "evidenceIds": [], "policyRef": "collections_policy.md: tell the account manager before finance contacts one of their accounts"})
             stage, stage_ref = self._stage(row.days)
-            if verdict == "send" and not row.reasons:
-                row.reasons.append({"text": f"{row.days} days overdue, no open complaint, no payment found, bill matches the contract.",
-                                    "evidenceIds": [e["id"] for e in row.evidence], "policyRef": stage_ref})
+            if verdict == "send" and not [r for r in row.reasons if not r["text"].startswith("Tell ")]:
+                row.reasons.insert(0, {"text": f"{row.days} days overdue, no open complaint, no payment found, bill matches the contract.",
+                                       "evidenceIds": [e["id"] for e in row.evidence], "policyRef": stage_ref})
             if contact_note and verdict == "send":
                 row.reasons.append({"text": contact_note.capitalize() + ".", "evidenceIds": [], "policyRef": None})
 
             headline = row.reasons[0]["text"] if row.reasons else ""
+            if verdict == "hold":
+                headline = next((r["text"] for r in row.reasons if "dispute" in r["text"] or "complaint" in r["text"].lower()
+                                 or "wasn't sure" in r["text"] or "escalation" in r["text"].lower()), headline)
             if verdict == "send":
                 headline = {"card_update": "Card failed: send the update-card note", "soft": "Send a softer reminder (open product complaint)"}.get(
                     tone, f"{stage}: {row.days} days overdue, nothing blocking")
@@ -432,8 +535,9 @@ class Engine:
             if verdict == "hold":
                 deadline = iso(add_business_days(self.as_of, hold_days))
                 if cause == "wrong_bill":
-                    hold = {"owner": self.cfg["people"]["billing_owner"], "ownerRole": "Billing", "deadline": deadline,
-                            "action": "Check the bill against the contract; reissue or confirm it. If nobody acts by the deadline, it returns to finance."}
+                    am = str(c["account_manager"]) if c is not None and pd.notna(c.get("account_manager")) else "the account manager"
+                    hold = {"owner": self.cfg["people"]["billing_owner"], "ownerRole": f"Billing, with {am}", "deadline": deadline,
+                            "action": f"Agree with {am} whether the customer is right, then reissue or confirm the bill and tell them. If nobody acts by the deadline, it returns to finance."}
                 else:
                     am = str(c["account_manager"]) if c is not None and pd.notna(c.get("account_manager")) else "Account manager"
                     hold = {"owner": am, "ownerRole": "Account manager", "deadline": deadline,

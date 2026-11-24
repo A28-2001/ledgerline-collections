@@ -37,3 +37,17 @@ Times before 2:30 pm are approximate: the decisions were made in one long prep c
 | [ ] | Hour 2: asked Maya. What changed: [ ] | |
 | [ ] | Critic round 3 (scope lock): [score] | |
 | [ ] | | |
+
+## After Begin (Monday 23 Nov 2026, CST)
+
+| Time | What | Why / what it changed |
+|---|---|---|
+| 8:40 pm | Pressed Begin. Deadline 8:40 pm Tuesday | |
+| 8:41 pm | Data room zip: all 51 files present, unpacked to data/raw (not in the repo) | |
+| 8:45 pm | Read README, collections policy, SLA policy, billing rewrite, tool stack, org chart, board update, FIN-1/2/6, process maps, templates | Board: "collections ... now the main risk to cash". FIN-1 owner is the AR Specialist (Priya Nair), 16 h/week |
+| 8:55 pm | Profiled the files; type-aware mapping suggested every column; set config.yaml | Rehearsal paid off: hour 1 took minutes |
+| 9:00 pm | Found: invoices match contracts exactly (0 of 5,938 off), so a bill-vs-contract check finds nothing | Dropped that check; wrong bills show up only in tickets |
+| 9:05 pm | Found: SLA policy forbids sending ticket content to a new vendor without a DPA | AI reads redacted ticket text for this fictional demo; production setting is "off" until legal approves a vendor. Question for Maya |
+| 9:10 pm | Adapted engine: memo invoice numbers, failed cards on invoice status, top-50 rule, departed billing contacts, 90-day escalation, 150-day card write-off | Each rule cites the policy line |
+| 9:20 pm | Key finding: 14 overdue bills ($309,000, 49%) are disputed in tickets naming that exact invoice; 11 of those tickets are marked solved/pending while the bill was never fixed | New rule: a ticket naming an unpaid invoice, raised after it was issued, is a dispute whatever Zendesk says |
+| 9:35 pm | Real run with AI judges (232 calls, ~4 min, cached). Published to the app | |

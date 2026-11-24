@@ -1,31 +1,31 @@
 invoice_id,customer,tool_verdict,true_verdict,note,why_tool_said_it
-1790,Summit Outfitters Co,hold,,,Open billing complaint: chasing payment now would make it worse.
-1277,Northstar Builders Co,hold,,,The AI wasn't sure whether this open ticket is about money or a serious problem (its two checks disagreed). We don't chase until a person reads it.
-1656,Foxglove Outfitters,hold,,,Open billing complaint: chasing payment now would make it worse.
-1655,Foxglove Outfitters,hold,,,Open billing complaint: chasing payment now would make it worse.
-1398,Cedar Studios Inc,hold,,,Open billing complaint: chasing payment now would make it worse.
-1023,Highland Health LLC,hold,,,"The bill doesn't match the contract: billed for 30 seats, contract says 20. Fix the bill before asking for money."
-1337,Meridian Dental Group,hold,,,"The bill doesn't match the contract: billed for 51 seats, contract says 45. Fix the bill before asking for money."
-2082,Tidewater Foods Inc,hold,,,"A billing ticket from Jul 5, 2026 is closed. Mentioned for context; it doesn't block the reminder."
-1061,Clearwater Freight Inc,hold,,,Open billing complaint: chasing payment now would make it worse.
-1060,Clearwater Freight Inc,hold,,,Open billing complaint: chasing payment now would make it worse.
-1816,Vantage Builders Inc,hold,,,Serious open escalation with support. Money talk waits until it's resolved.
-1605,Ironwood Software Inc,hold,,,Serious open escalation with support. Money talk waits until it's resolved.
-1604,Ironwood Software Inc,hold,,,Serious open escalation with support. Money talk waits until it's resolved.
-1853,Vantage Partners LLC,hold,,,Open billing complaint: chasing payment now would make it worse.
-1852,Vantage Partners LLC,hold,,,Open billing complaint: chasing payment now would make it worse.
-2095,Redstone Freight Group,hold,,,"The bill doesn't match the contract: billed for 28 seats, contract says 24. Fix the bill before asking for money."
-2142,Maple Foods LLC,hold,,,Serious open escalation with support. Money talk waits until it's resolved.
-1618,Tidewater Studios Inc,hold,,,Open billing complaint: chasing payment now would make it worse.
-1617,Tidewater Studios Inc,hold,,,Open billing complaint: chasing payment now would make it worse.
-1616,Tidewater Studios Inc,hold,,,Open billing complaint: chasing payment now would make it worse.
-1802,Pinecrest Foods Inc,send,,,"Second reminder: 15 days overdue, nothing blocking"
-1509,Harbor Foods Inc,send,,,"Second reminder: 15 days overdue, nothing blocking"
-1205,Redstone Builders Co,send,,,Card failed: send the update-card note
-1036,Maple Realty Inc,send,,,"Second reminder: 15 days overdue, nothing blocking"
-1924,Foxglove Supply Co,send,,,"Final reminder: 30 days overdue, nothing blocking"
-1630,Upland Partners Co,send,,,Send a softer reminder (open product complaint)
-1496,Vantage Freight Inc,send,,,Card failed: send the update-card note
-1569,Willow Labs Inc,send,,,Send a softer reminder (open product complaint)
-1766,Brightway Software,send,,,"Second reminder: 15 days overdue, nothing blocking"
-2130,Silverline Clinics Co,send,,,"Final reminder: 30 days overdue, nothing blocking"
+INV-25787,Riverside Partners,hold,,,"The customer disputes this exact invoice in a support ticket and says they're holding payment until it's fixed. The ticket is marked solved in Zendesk, but the bill was never corrected or reissued."
+INV-25730,Westbrook Engineering Group,hold,,,The customer disputes this exact invoice in a support ticket and says they're holding payment until it's fixed. The ticket is still open.
+INV-25765,Okafor & Nakamura LLP,hold,,,"The customer disputes this exact invoice in a support ticket and says they're holding payment until it's fixed. The ticket is marked solved in Zendesk, but the bill was never corrected or reissued."
+INV-25662,Upton & Bell Advisory,hold,,,"The customer disputes this exact invoice in a support ticket. The ticket is marked solved in Zendesk, but the bill was never corrected or reissued."
+INV-25834,"Delacroix, Jessop & Co",hold,,,"The customer disputes this exact invoice in a support ticket and says they're holding payment until it's fixed. The ticket is marked solved in Zendesk, but the bill was never corrected or reissued."
+INV-25822,Brandt Ashby IT,hold,,,The customer disputes this exact invoice in a support ticket and says they're holding payment until it's fixed. The ticket is still open.
+INV-25757,Ellery Consulting,hold,,,"The customer disputes this exact invoice in a support ticket and says they're holding payment until it's fixed. The ticket is marked solved in Zendesk, but the bill was never corrected or reissued."
+INV-25750,Thackeray Accounting,hold,,,"The customer disputes this exact invoice in a support ticket and says they're holding payment until it's fixed. The ticket is marked solved in Zendesk, but the bill was never corrected or reissued."
+INV-25764,Castell Engineering,hold,,,"The customer disputes this exact invoice in a support ticket. The ticket is marked solved in Zendesk, but the bill was never corrected or reissued."
+INV-25852,Kingsway Engineering Group,hold,,,The AI wasn't sure whether this open ticket is about money or a serious problem (its two checks disagreed). We don't chase until a person reads it.
+INV-25712,Wexler & Hume Advisory,hold,,,"The customer disputes this exact invoice in a support ticket. The ticket is marked solved in Zendesk, but the bill was never corrected or reissued."
+INV-25718,Mercer & Banerjee LLP,hold,,,"The customer disputes this exact invoice in a support ticket and says they're holding payment until it's fixed. The ticket is marked solved in Zendesk, but the bill was never corrected or reissued."
+INV-25711,Oyelaran Devlin Engineers,hold,,,"The customer disputes this exact invoice in a support ticket. The ticket is marked solved in Zendesk, but the bill was never corrected or reissued."
+INV-25539,Banerjee Petrov Engineers,hold,,,"The customer disputes this exact invoice in a support ticket. The ticket is marked solved in Zendesk, but the bill was never corrected or reissued."
+INV-25854,Studio Marsh,hold,,,The AI wasn't sure whether this open ticket is about money or a serious problem (its two checks disagreed). We don't chase until a person reads it.
+INV-25811,Wexler Media,hold,,,The customer disputes this exact invoice in a support ticket. The ticket is still open.
+INV-25784,Jessop & Orwell Agency,paid,,,An unmatched bank payment from this customer equals this bill. It was probably paid but never matched.
+INV-25806,Brandt & Lowell CPAs,paid,,,An unmatched bank payment from this customer equals this bill. It was probably paid but never matched.
+INV-25469,Kingsway Engineering Group,paid,,,An unmatched bank payment from this customer equals this bill. It was probably paid but never matched.
+INV-25845,"Castellano, Crane & Co",paid,,,"An unmatched bank payment names this invoice in its memo (""INV-25845"") and equals the bill. It's paid; it just hasn't been matched yet."
+INV-25873,Eastman & Wexler CPAs,send,,,"First reminder (7 days): 15 days overdue, nothing blocking"
+INV-25862,Thornfield Consulting Group,send,,,"First reminder (7 days): 17 days overdue, nothing blocking"
+INV-25869,Hollis & Stanhope Advisory,send,,,"First reminder (7 days): 16 days overdue, nothing blocking"
+INV-25848,Okafor Legal,send,,,"First reminder (7 days): 20 days overdue, nothing blocking"
+INV-25885,Riverside Consulting Group,send,,,"First reminder (7 days): 12 days overdue, nothing blocking"
+INV-25883,Sinclair & Vance LLP,send,,,"First reminder (7 days): 13 days overdue, nothing blocking"
+INV-25906,Rosales Engineering,send,,,"First reminder (7 days): 7 days overdue, nothing blocking"
+INV-25859,Voss & Kowalczyk Agency,send,,,"First reminder (7 days): 18 days overdue, nothing blocking"
+INV-25858,Glover Strategy,send,,,"First reminder (7 days): 18 days overdue, nothing blocking"
+INV-25863,Banerjee Design Partnership,send,,,"First reminder (7 days): 17 days overdue, nothing blocking"
