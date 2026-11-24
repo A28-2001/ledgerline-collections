@@ -65,7 +65,8 @@ policy:
   call_ref: "process_maps.md FIN-1: not paid after the reminders, phone and offer a payment plan"
   escalate_after_days: 90
   escalate_ref: "process_maps.md FIN-1: still unpaid at 90 days, escalate to the VP Finance"
-  hold_business_days: 3
+  hold_business_days: 5          # Maya: five working days (VP Finance to confirm)
+  dispute_fix_days: 5            # Maya: corrected invoice or clear answer within five working days
   hold_ref: "collections_policy.md: don't chase a dispute or open escalation until the account manager says so"
   card_ref: "billing_engine_rewrite_2026.md: Stripe retries failed cards three times over seven days, emailing each time"
   card_writeoff_days: 150
@@ -76,6 +77,7 @@ policy:
   complaint_lookback_days: 30
   paid_match_tolerance: 0.01
   paid_match_window_days: 60
+  recent_payment_days: 21       # payments.csv: matching can lag up to ~3 weeks (wire/cheque); Maya: Paidly chased a paid customer
   wrong_bill_tolerance: 0.02
   stale_contact_days: 180
 

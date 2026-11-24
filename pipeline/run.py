@@ -90,10 +90,16 @@ def verified_numbers(engine: Engine, invoices: list[dict], by_cause: list[dict])
     # 3. Should-not-chase: from verdicts vs straight from the flags
     a = sum(i["amount"] for i in invoices if i["verdict"] in ("paid", "hold"))
     b = sum(r.amount for r in engine._rows if r.flags.get("paid_linked") or r.flags.get("paid_unmatched")
-            or r.flags.get("complaint_hold") or r.flags.get("disputed_hold") or r.flags.get("wrong_bill"))
+            or r.flags.get("complaint_hold") or r.flags.get("disputed_hold") or r.flags.get("dispute_hold") or r.flags.get("wrong_bill"))
     out.append({"label": "Shouldn't chase today", "methodA": "Sum of Hold + Probably paid verdicts", "valueA": round(a, 2),
                 "methodB": "Recounted from the raw evidence flags", "valueB": round(b, 2), "ok": abs(a - b) < 0.5})
-    # 4. Count
+    # 4. The Paidly case: a bill with a matching or recent unmatched payment must never get a reminder
+    chased = [r for r in engine._rows if (r.flags.get("paid_unmatched") or r.flags.get("paid_linked") or r.flags.get("recent_payment"))
+              and getattr(r, "verdict", None) == "send" and not r.needs_review]
+    out.append({"label": "Paid but chased (the Paidly case)", "methodA": "Bills with a matching or recent unmatched payment that would get a reminder",
+                "valueA": len(chased), "methodB": "Allowed (Maya: chasing someone who has paid gets the tool switched off)", "valueB": 0,
+                "ok": len(chased) == 0})
+    # 5. Count
     out.append({"label": "Bills checked", "methodA": "Rows in the overdue list", "valueA": len(engine._rows),
                 "methodB": "Bills with a verdict", "valueB": len(invoices), "ok": len(engine._rows) == len(invoices)})
     return out
@@ -155,7 +161,7 @@ def main() -> None:
     no_chase = by_verdict["paid"]["amount"] + by_verdict["hold"]["amount"]
     pct = no_chase / total if total else 0
     # Holds that exist only because the AI wasn't sure are kept out of the headline: they're "unsure", not "found".
-    unsure = sum(r.amount for r in engine._rows if r.flags.get("disputed_hold") and not (
+    unsure = sum(r.amount for r in engine._rows if r.flags.get("disputed_hold") and not (r.flags.get("dispute_hold") or 
         r.flags.get("complaint_hold") or r.flags.get("wrong_bill") or r.flags.get("paid_linked") or r.flags.get("paid_unmatched")))
     sure = no_chase - unsure
     pct = sure / total if total else 0

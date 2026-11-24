@@ -1,6 +1,6 @@
 {
  "meta": {
-  "generatedAt": "2026-11-24T02:51:17+00:00",
+  "generatedAt": "2026-11-24T05:52:02+00:00",
   "asOf": "2026-10-31",
   "dataSource": "real",
   "companyName": "Ledgerline",
@@ -93,7 +93,7 @@
    }
   ],
   "shouldNotChaseAmount": 393858.0,
-  "headline": "$339,444 of $633,245 overdue (54%) sits with customers we shouldn't chase today: they've probably paid, they're unhappy, or the bill is wrong. Another $54,414 is paused until a person reads a ticket the AI wasn't sure about."
+  "headline": "$387,348 of $633,245 overdue (61%) sits with customers we shouldn't chase today: they've probably paid, they're unhappy, or the bill is wrong. Another $6,510 is paused until a person reads a ticket the AI wasn't sure about."
  },
  "invoices": [
   {
@@ -176,8 +176,8 @@
    "needsReview": true,
    "draft": {
     "to": "anika.langford@eastmanwexlercpas.example",
-    "subject": "First reminder (7 days): invoice INV-25873 ($43,680) was due Oct 16, 2026",
-    "body": "Hi Eastman & Wexler CPAs team,\n\nThis is a reminder that invoice INV-25873 for $43,680 was due on Oct 16, 2026 and is now 15 days overdue. Could you let us know when we can expect payment? If it's already on its way, thank you, and please ignore this note.\n\nThanks,\nFinance team",
+    "subject": "Invoice INV-25873 is overdue",
+    "body": "Hi Anika,\n\nA quick note that invoice INV-25873 for $43,680 was due on Oct 16, 2026 and is still open on our side.\n\nIf you've already paid, thank you, and please ignore this. If anything on the invoice looks wrong, like the seat count or plan, just reply and we'll fix it before you pay.\n\nThanks,\nPriya Nair\nLedgerline Billing",
     "tone": "standard"
    },
    "reminderStage": "First reminder (7 days)",
@@ -264,8 +264,8 @@
    "needsReview": false,
    "draft": {
     "to": "nadia.vance@thornfieldconsultinggr.example",
-    "subject": "First reminder (7 days): invoice INV-25862 ($39,456) was due Oct 14, 2026",
-    "body": "Hi Thornfield Consulting Group team,\n\nThis is a reminder that invoice INV-25862 for $39,456 was due on Oct 14, 2026 and is now 17 days overdue. Could you let us know when we can expect payment? If it's already on its way, thank you, and please ignore this note.\n\nThanks,\nFinance team",
+    "subject": "Invoice INV-25862 is overdue",
+    "body": "Hi Nadia,\n\nA quick note that invoice INV-25862 for $39,456 was due on Oct 14, 2026 and is still open on our side.\n\nIf you've already paid, thank you, and please ignore this. If anything on the invoice looks wrong, like the seat count or plan, just reply and we'll fix it before you pay.\n\nThanks,\nPriya Nair\nLedgerline Billing",
     "tone": "standard"
    },
    "reminderStage": "First reminder (7 days)",
@@ -373,8 +373,8 @@
    "needsReview": false,
    "draft": {
     "to": "daniel.whitfield@hollisstanhopeadvisory.example",
-    "subject": "First reminder (7 days): invoice INV-25869 ($22,848) was due Oct 15, 2026",
-    "body": "Hi Hollis & Stanhope Advisory team,\n\nThis is a reminder that invoice INV-25869 for $22,848 was due on Oct 15, 2026 and is now 16 days overdue. Could you let us know when we can expect payment? If it's already on its way, thank you, and please ignore this note.\n\nThanks,\nFinance team",
+    "subject": "Invoice INV-25869 is overdue",
+    "body": "Hi Daniel,\n\nA quick note that invoice INV-25869 for $22,848 was due on Oct 15, 2026 and is still open on our side.\n\nIf you've already paid, thank you, and please ignore this. If anything on the invoice looks wrong, like the seat count or plan, just reply and we'll fix it before you pay.\n\nThanks,\nPriya Nair\nLedgerline Billing",
     "tone": "standard"
    },
    "reminderStage": "First reminder (7 days)",
@@ -460,8 +460,8 @@
    "needsReview": false,
    "draft": {
     "to": "lucia.kessler@okaforlegal.example",
-    "subject": "First reminder (7 days): invoice INV-25848 ($19,584) was due Oct 11, 2026",
-    "body": "Hi Okafor Legal team,\n\nThis is a reminder that invoice INV-25848 for $19,584 was due on Oct 11, 2026 and is now 20 days overdue. Could you let us know when we can expect payment? If it's already on its way, thank you, and please ignore this note.\n\nThanks,\nFinance team",
+    "subject": "Invoice INV-25848 is overdue",
+    "body": "Hi Lucia,\n\nA quick note that invoice INV-25848 for $19,584 was due on Oct 11, 2026 and is still open on our side.\n\nIf you've already paid, thank you, and please ignore this. If anything on the invoice looks wrong, like the seat count or plan, just reply and we'll fix it before you pay.\n\nThanks,\nPriya Nair\nLedgerline Billing",
     "tone": "standard"
    },
    "reminderStage": "First reminder (7 days)",
@@ -575,8 +575,8 @@
    "needsReview": false,
    "draft": {
     "to": "quentin.bramwell@riversideconsultinggro.example",
-    "subject": "First reminder (7 days): invoice INV-25885 ($17,136) was due Oct 19, 2026",
-    "body": "Hi Riverside Consulting Group team,\n\nThis is a reminder that invoice INV-25885 for $17,136 was due on Oct 19, 2026 and is now 12 days overdue. Could you let us know when we can expect payment? If it's already on its way, thank you, and please ignore this note.\n\nThanks,\nFinance team",
+    "subject": "Invoice INV-25885 is overdue",
+    "body": "Hi Quentin,\n\nA quick note that invoice INV-25885 for $17,136 was due on Oct 19, 2026 and is still open on our side.\n\nIf you've already paid, thank you, and please ignore this. If anything on the invoice looks wrong, like the seat count or plan, just reply and we'll fix it before you pay.\n\nThanks,\nPriya Nair\nLedgerline Billing",
     "tone": "standard"
    },
    "reminderStage": "First reminder (7 days)",
@@ -662,8 +662,8 @@
    "needsReview": false,
    "draft": {
     "to": "tessa.bell@sinclairvancellp.example",
-    "subject": "First reminder (7 days): invoice INV-25883 ($16,320) was due Oct 18, 2026",
-    "body": "Hi Sinclair & Vance LLP team,\n\nThis is a reminder that invoice INV-25883 for $16,320 was due on Oct 18, 2026 and is now 13 days overdue. Could you let us know when we can expect payment? If it's already on its way, thank you, and please ignore this note.\n\nThanks,\nFinance team",
+    "subject": "Invoice INV-25883 is overdue",
+    "body": "Hi Tessa,\n\nA quick note that invoice INV-25883 for $16,320 was due on Oct 18, 2026 and is still open on our side.\n\nIf you've already paid, thank you, and please ignore this. If anything on the invoice looks wrong, like the seat count or plan, just reply and we'll fix it before you pay.\n\nThanks,\nPriya Nair\nLedgerline Billing",
     "tone": "standard"
    },
    "reminderStage": "First reminder (7 days)",
@@ -727,8 +727,8 @@
    "needsReview": false,
    "draft": {
     "to": "quentin.castell@rosalesengineering.example",
-    "subject": "First reminder (7 days): invoice INV-25906 ($16,320) was due Oct 24, 2026",
-    "body": "Hi Rosales Engineering team,\n\nThis is a reminder that invoice INV-25906 for $16,320 was due on Oct 24, 2026 and is now 7 days overdue. Could you let us know when we can expect payment? If it's already on its way, thank you, and please ignore this note.\n\nThanks,\nFinance team",
+    "subject": "Invoice INV-25906 is overdue",
+    "body": "Hi Quentin,\n\nA quick note that invoice INV-25906 for $16,320 was due on Oct 24, 2026 and is still open on our side.\n\nIf you've already paid, thank you, and please ignore this. If anything on the invoice looks wrong, like the seat count or plan, just reply and we'll fix it before you pay.\n\nThanks,\nPriya Nair\nLedgerline Billing",
     "tone": "standard"
    },
    "reminderStage": "First reminder (7 days)"
@@ -797,8 +797,8 @@
    "needsReview": false,
    "draft": {
     "to": "quentin.moreau@vosskowalczykagency.example",
-    "subject": "First reminder (7 days): invoice INV-25859 ($13,056) was due Oct 13, 2026",
-    "body": "Hi Voss & Kowalczyk Agency team,\n\nThis is a reminder that invoice INV-25859 for $13,056 was due on Oct 13, 2026 and is now 18 days overdue. Could you let us know when we can expect payment? If it's already on its way, thank you, and please ignore this note.\n\nThanks,\nFinance team",
+    "subject": "Invoice INV-25859 is overdue",
+    "body": "Hi Quentin,\n\nA quick note that invoice INV-25859 for $13,056 was due on Oct 13, 2026 and is still open on our side.\n\nIf you've already paid, thank you, and please ignore this. If anything on the invoice looks wrong, like the seat count or plan, just reply and we'll fix it before you pay.\n\nThanks,\nPriya Nair\nLedgerline Billing",
     "tone": "standard"
    },
    "reminderStage": "First reminder (7 days)",
@@ -873,8 +873,8 @@
    "needsReview": false,
    "draft": {
     "to": "anika.abara@gloverstrategy.example",
-    "subject": "First reminder (7 days): invoice INV-25858 ($9,600) was due Oct 13, 2026",
-    "body": "Hi Glover Strategy team,\n\nThis is a reminder that invoice INV-25858 for $9,600 was due on Oct 13, 2026 and is now 18 days overdue. Could you let us know when we can expect payment? If it's already on its way, thank you, and please ignore this note.\n\nThanks,\nFinance team",
+    "subject": "Invoice INV-25858 is overdue",
+    "body": "Hi Anika,\n\nA quick note that invoice INV-25858 for $9,600 was due on Oct 13, 2026 and is still open on our side.\n\nIf you've already paid, thank you, and please ignore this. If anything on the invoice looks wrong, like the seat count or plan, just reply and we'll fix it before you pay.\n\nThanks,\nPriya Nair\nLedgerline Billing",
     "tone": "standard"
    },
    "reminderStage": "First reminder (7 days)",
@@ -982,8 +982,8 @@
    "needsReview": false,
    "draft": {
     "to": "caleb.crane@banerjeedesignpartners.example",
-    "subject": "First reminder (7 days): invoice INV-25863 ($5,100) was due Oct 14, 2026",
-    "body": "Hi Banerjee Design Partnership team,\n\nThis is a reminder that invoice INV-25863 for $5,100 was due on Oct 14, 2026 and is now 17 days overdue. Could you let us know when we can expect payment? If it's already on its way, thank you, and please ignore this note.\n\nThanks,\nFinance team",
+    "subject": "Invoice INV-25863 is overdue",
+    "body": "Hi Caleb,\n\nA quick note that invoice INV-25863 for $5,100 was due on Oct 14, 2026 and is still open on our side.\n\nIf you've already paid, thank you, and please ignore this. If anything on the invoice looks wrong, like the seat count or plan, just reply and we'll fix it before you pay.\n\nThanks,\nPriya Nair\nLedgerline Billing",
     "tone": "standard"
    },
    "reminderStage": "First reminder (7 days)",
@@ -1052,8 +1052,8 @@
    "needsReview": false,
    "draft": {
     "to": "layla.garrick@oyelaranstrategy.example",
-    "subject": "First reminder (7 days): invoice INV-25890 ($4,692) was due Oct 19, 2026",
-    "body": "Hi Oyelaran Strategy team,\n\nThis is a reminder that invoice INV-25890 for $4,692 was due on Oct 19, 2026 and is now 12 days overdue. Could you let us know when we can expect payment? If it's already on its way, thank you, and please ignore this note.\n\nThanks,\nFinance team",
+    "subject": "Invoice INV-25890 is overdue",
+    "body": "Hi Layla,\n\nA quick note that invoice INV-25890 for $4,692 was due on Oct 19, 2026 and is still open on our side.\n\nIf you've already paid, thank you, and please ignore this. If anything on the invoice looks wrong, like the seat count or plan, just reply and we'll fix it before you pay.\n\nThanks,\nPriya Nair\nLedgerline Billing",
     "tone": "standard"
    },
    "reminderStage": "First reminder (7 days)"
@@ -1111,8 +1111,8 @@
    "needsReview": false,
    "draft": {
     "to": "dalia.wexler@abbottdesignpartnershi.example",
-    "subject": "First reminder (7 days): invoice INV-25923 ($4,692) was due Oct 27, 2026",
-    "body": "Hi Abbott Design Partnership team,\n\nThis is a reminder that invoice INV-25923 for $4,692 was due on Oct 27, 2026 and is now 4 days overdue. Could you let us know when we can expect payment? If it's already on its way, thank you, and please ignore this note.\n\nThanks,\nFinance team",
+    "subject": "Invoice INV-25923 is overdue",
+    "body": "Hi Dalia,\n\nA quick note that invoice INV-25923 for $4,692 was due on Oct 27, 2026 and is still open on our side.\n\nIf you've already paid, thank you, and please ignore this. If anything on the invoice looks wrong, like the seat count or plan, just reply and we'll fix it before you pay.\n\nThanks,\nPriya Nair\nLedgerline Billing",
     "tone": "standard"
    },
    "reminderStage": "First reminder (7 days)",
@@ -1205,8 +1205,8 @@
    "needsReview": false,
    "draft": {
     "to": "ivy.abara@eastmanengineering.example",
-    "subject": "Your card payment for invoice INV-25973 didn't go through",
-    "body": "Hi Eastman Engineering team,\n\nWe tried to charge your card for invoice INV-25973 ($3,264), but the payment didn't go through. Could you update the card on file? Once it's updated we'll retry automatically.\n\nThanks,\nFinance team",
+    "subject": "Card payment for invoice INV-25973 didn't go through",
+    "body": "Hi Ivy,\n\nThe card on file for Eastman Engineering didn't go through for invoice INV-25973 ($3,264), and the automatic retries have now finished. Could you update the card, or reply and we'll send bank details instead?\n\nThanks,\nPriya Nair\nLedgerline Billing",
     "tone": "card_update"
    },
    "reminderStage": "Second reminder (21 days)",
@@ -1292,8 +1292,8 @@
    "needsReview": false,
    "draft": {
     "to": "ian.achebe@craneitpartners.example",
-    "subject": "First reminder (7 days): invoice INV-25902 ($3,060) was due Oct 24, 2026",
-    "body": "Hi Crane IT Partners team,\n\nThis is a reminder that invoice INV-25902 for $3,060 was due on Oct 24, 2026 and is now 7 days overdue. Could you let us know when we can expect payment? If it's already on its way, thank you, and please ignore this note.\n\nThanks,\nFinance team",
+    "subject": "Invoice INV-25902 is overdue",
+    "body": "Hi Ian,\n\nA quick note that invoice INV-25902 for $3,060 was due on Oct 24, 2026 and is still open on our side.\n\nIf you've already paid, thank you, and please ignore this. If anything on the invoice looks wrong, like the seat count or plan, just reply and we'll fix it before you pay.\n\nThanks,\nPriya Nair\nLedgerline Billing",
     "tone": "standard"
    },
    "reminderStage": "First reminder (7 days)",
@@ -1357,8 +1357,8 @@
    "needsReview": false,
    "draft": {
     "to": "quentin.castell@rosalesengineering.example",
-    "subject": "First reminder (7 days): invoice INV-25907 ($2,500) was due Oct 24, 2026",
-    "body": "Hi Rosales Engineering team,\n\nThis is a reminder that invoice INV-25907 for $2,500 was due on Oct 24, 2026 and is now 7 days overdue. Could you let us know when we can expect payment? If it's already on its way, thank you, and please ignore this note.\n\nThanks,\nFinance team",
+    "subject": "Invoice INV-25907 is overdue",
+    "body": "Hi Quentin,\n\nA quick note that invoice INV-25907 for $2,500 was due on Oct 24, 2026 and is still open on our side.\n\nIf you've already paid, thank you, and please ignore this. If anything on the invoice looks wrong, like the seat count or plan, just reply and we'll fix it before you pay.\n\nThanks,\nPriya Nair\nLedgerline Billing",
     "tone": "standard"
    },
    "reminderStage": "First reminder (7 days)"
@@ -1427,8 +1427,8 @@
    "needsReview": false,
    "draft": {
     "to": "ethan.underhill@corbinmedia.example",
-    "subject": "First reminder (7 days): invoice INV-25881 ($2,397) was due Oct 18, 2026",
-    "body": "Hi Corbin Media team,\n\nThis is a reminder that invoice INV-25881 for $2,397 was due on Oct 18, 2026 and is now 13 days overdue. Could you let us know when we can expect payment? If it's already on its way, thank you, and please ignore this note.\n\nThanks,\nFinance team",
+    "subject": "Invoice INV-25881 is overdue",
+    "body": "Hi Ethan,\n\nA quick note that invoice INV-25881 for $2,397 was due on Oct 18, 2026 and is still open on our side.\n\nIf you've already paid, thank you, and please ignore this. If anything on the invoice looks wrong, like the seat count or plan, just reply and we'll fix it before you pay.\n\nThanks,\nPriya Nair\nLedgerline Billing",
     "tone": "standard"
    },
    "reminderStage": "First reminder (7 days)",
@@ -1529,8 +1529,8 @@
    "needsReview": false,
    "draft": {
     "to": "samuel.birch@harborengineeringgroup.example",
-    "subject": "Invoice INV-25898: a gentle reminder",
-    "body": "Hi Harbor Engineering Group team,\n\nWe know your team has an open request with our support team, and they're on it. Separately, invoice INV-25898 for $1,833 was due on Oct 21, 2026. Whenever you get a chance, could you check on it? If anything about the invoice looks off, just reply and we'll sort it out.\n\nThanks,\nFinance team",
+    "subject": "Invoice INV-25898: a quick note",
+    "body": "Hi Samuel,\n\nI know your team has an open request with our support team, and they're on it. Separately, invoice INV-25898 for $1,833 was due on Oct 21, 2026. When you get a moment, could you check where it is? If anything about the invoice looks wrong, just reply and we'll put it right.\n\nThanks,\nPriya Nair\nLedgerline Billing",
     "tone": "soft"
    },
    "reminderStage": "First reminder (7 days)",
@@ -1613,8 +1613,8 @@
    "needsReview": false,
    "draft": {
     "to": "emma.stanhope@quillmottco.example",
-    "subject": "Your card payment for invoice INV-25975 didn't go through",
-    "body": "Hi Quill, Mott & Co team,\n\nWe tried to charge your card for invoice INV-25975 ($1,632), but the payment didn't go through. Could you update the card on file? Once it's updated we'll retry automatically.\n\nThanks,\nFinance team",
+    "subject": "Card payment for invoice INV-25975 didn't go through",
+    "body": "Hi Emma,\n\nThe card on file for Quill, Mott & Co didn't go through for invoice INV-25975 ($1,632), and the automatic retries have now finished. Could you update the card, or reply and we'll send bank details instead?\n\nThanks,\nPriya Nair\nLedgerline Billing",
     "tone": "card_update"
    },
    "reminderStage": "Second reminder (21 days)",
@@ -1737,8 +1737,8 @@
    "needsReview": false,
    "draft": {
     "to": "clara.hollis@ruizwhitfieldcpas.example",
-    "subject": "Your card payment for invoice INV-25926 didn't go through",
-    "body": "Hi Ruiz & Whitfield CPAs team,\n\nWe tried to charge your card for invoice INV-25926 ($846), but the payment didn't go through. Could you update the card on file? Once it's updated we'll retry automatically.\n\nThanks,\nFinance team",
+    "subject": "Card payment for invoice INV-25926 didn't go through",
+    "body": "Hi Clara,\n\nThe card on file for Ruiz & Whitfield CPAs didn't go through for invoice INV-25926 ($846), and the automatic retries have now finished. Could you update the card, or reply and we'll send bank details instead?\n\nThanks,\nPriya Nair\nLedgerline Billing",
     "tone": "card_update"
    },
    "reminderStage": "Second reminder (21 days)",
@@ -1836,8 +1836,8 @@
    "needsReview": false,
    "draft": {
     "to": "signe.abbott@elleryachebechartereda.example",
-    "subject": "Your card payment for invoice INV-25912 didn't go through",
-    "body": "Hi Ellery Achebe Chartered Accountants team,\n\nWe tried to charge your card for invoice INV-25912 ($799), but the payment didn't go through. Could you update the card on file? Once it's updated we'll retry automatically.\n\nThanks,\nFinance team",
+    "subject": "Card payment for invoice INV-25912 didn't go through",
+    "body": "Hi Signe,\n\nThe card on file for Ellery Achebe Chartered Accountants didn't go through for invoice INV-25912 ($799), and the automatic retries have now finished. Could you update the card, or reply and we'll send bank details instead?\n\nThanks,\nPriya Nair\nLedgerline Billing",
     "tone": "card_update"
    },
    "reminderStage": "Second reminder (21 days)",
@@ -1921,8 +1921,8 @@
    "needsReview": true,
    "draft": {
     "to": "tomas.castellano@ambroselowelladvisory.example",
-    "subject": "Invoice INV-25897: a gentle reminder",
-    "body": "Hi Ambrose & Lowell Advisory team,\n\nWe know your team has an open request with our support team, and they're on it. Separately, invoice INV-25897 for $658 was due on Oct 21, 2026. Whenever you get a chance, could you check on it? If anything about the invoice looks off, just reply and we'll sort it out.\n\nThanks,\nFinance team",
+    "subject": "Invoice INV-25897: a quick note",
+    "body": "Hi Tomas,\n\nI know your team has an open request with our support team, and they're on it. Separately, invoice INV-25897 for $658 was due on Oct 21, 2026. When you get a moment, could you check where it is? If anything about the invoice looks wrong, just reply and we'll put it right.\n\nThanks,\nPriya Nair\nLedgerline Billing",
     "tone": "soft"
    },
    "reminderStage": "First reminder (7 days)",
@@ -2016,8 +2016,8 @@
    "needsReview": false,
    "draft": {
     "to": "kofi.glover@tanaccounting.example",
-    "subject": "Your card payment for invoice INV-25928 didn't go through",
-    "body": "Hi Tan Accounting team,\n\nWe tried to charge your card for invoice INV-25928 ($611), but the payment didn't go through. Could you update the card on file? Once it's updated we'll retry automatically.\n\nThanks,\nFinance team",
+    "subject": "Card payment for invoice INV-25928 didn't go through",
+    "body": "Hi Kofi,\n\nThe card on file for Tan Accounting didn't go through for invoice INV-25928 ($611), and the automatic retries have now finished. Could you update the card, or reply and we'll send bank details instead?\n\nThanks,\nPriya Nair\nLedgerline Billing",
     "tone": "card_update"
    },
    "reminderStage": "Second reminder (21 days)",
@@ -2115,8 +2115,8 @@
    "needsReview": false,
    "draft": {
     "to": "mateo.abbott@bramwellsinclaircharte.example",
-    "subject": "Your card payment for invoice INV-25969 didn't go through",
-    "body": "Hi Bramwell Sinclair Chartered Accountants team,\n\nWe tried to charge your card for invoice INV-25969 ($611), but the payment didn't go through. Could you update the card on file? Once it's updated we'll retry automatically.\n\nThanks,\nFinance team",
+    "subject": "Card payment for invoice INV-25969 didn't go through",
+    "body": "Hi Mateo,\n\nThe card on file for Bramwell Sinclair Chartered Accountants didn't go through for invoice INV-25969 ($611), and the automatic retries have now finished. Could you update the card, or reply and we'll send bank details instead?\n\nThanks,\nPriya Nair\nLedgerline Billing",
     "tone": "card_update"
    },
    "reminderStage": "Second reminder (21 days)",
@@ -2199,8 +2199,8 @@
    "needsReview": false,
    "draft": {
     "to": "layla.zeller@humeaccounting.example",
-    "subject": "Your card payment for invoice INV-26005 didn't go through",
-    "body": "Hi Hume Accounting team,\n\nWe tried to charge your card for invoice INV-26005 ($282), but the payment didn't go through. Could you update the card on file? Once it's updated we'll retry automatically.\n\nThanks,\nFinance team",
+    "subject": "Card payment for invoice INV-26005 didn't go through",
+    "body": "Hi Layla,\n\nThe card on file for Hume Accounting didn't go through for invoice INV-26005 ($282), and the automatic retries have now finished. Could you update the card, or reply and we'll send bank details instead?\n\nThanks,\nPriya Nair\nLedgerline Billing",
     "tone": "card_update"
    },
    "reminderStage": "First reminder (7 days)",
@@ -2243,6 +2243,11 @@
       "ticket:T880886"
      ],
      "policyRef": "collections_policy.md: do not chase an invoice the customer has disputed"
+    },
+    {
+     "text": "Raised Oct 12, 2026: 15 working days without a fix, 10 past the 5-day target.",
+     "evidenceIds": [],
+     "policyRef": "Maya (COO): corrected invoice or clear answer within 5 working days"
     }
    ],
    "evidence": [
@@ -2301,10 +2306,10 @@
     ]
    },
    "hold": {
-    "owner": "Ana Duarte (Billing Support Specialist)",
-    "ownerRole": "Billing, with Nadia Upton",
-    "deadline": "2026-11-05",
-    "action": "Agree with Nadia Upton whether the customer is right, then reissue or confirm the bill and tell them. If nobody acts by the deadline, it returns to finance."
+    "owner": "Priya Nair",
+    "ownerRole": "Finance (AR), with Nadia Upton for the customer's agreement",
+    "deadline": "2026-10-31",
+    "action": "Send a corrected invoice or a clear answer to the customer, agreeing seats or price with Nadia Upton first. Target: 5 working days from when they raised it."
    }
   },
   {
@@ -2335,6 +2340,11 @@
       "ticket:T880180"
      ],
      "policyRef": "sla_policy.md: legal action, regulator, chargeback or cancellation goes to the Head of Support"
+    },
+    {
+     "text": "Raised Sep 22, 2026: 29 working days without a fix, 24 past the 5-day target.",
+     "evidenceIds": [],
+     "policyRef": "Maya (COO): corrected invoice or clear answer within 5 working days"
     }
    ],
    "evidence": [
@@ -2434,10 +2444,10 @@
     ]
    },
    "hold": {
-    "owner": "Ana Duarte (Billing Support Specialist)",
-    "ownerRole": "Billing, with Nadia Upton",
-    "deadline": "2026-11-05",
-    "action": "Agree with Nadia Upton whether the customer is right, then reissue or confirm the bill and tell them. If nobody acts by the deadline, it returns to finance."
+    "owner": "Priya Nair",
+    "ownerRole": "Finance (AR)",
+    "deadline": "2026-10-31",
+    "action": "Send a corrected invoice or a clear answer to the customer. Target: 5 working days from when they raised it."
    }
   },
   {
@@ -2461,6 +2471,11 @@
       "ticket:T880816"
      ],
      "policyRef": "collections_policy.md: do not chase an invoice the customer has disputed"
+    },
+    {
+     "text": "Raised Oct 1, 2026: 22 working days without a fix, 17 past the 5-day target.",
+     "evidenceIds": [],
+     "policyRef": "Maya (COO): corrected invoice or clear answer within 5 working days"
     }
    ],
    "evidence": [
@@ -2539,10 +2554,10 @@
     ]
    },
    "hold": {
-    "owner": "Ana Duarte (Billing Support Specialist)",
-    "ownerRole": "Billing, with Nadia Sinclair",
-    "deadline": "2026-11-05",
-    "action": "Agree with Nadia Sinclair whether the customer is right, then reissue or confirm the bill and tell them. If nobody acts by the deadline, it returns to finance."
+    "owner": "Priya Nair",
+    "ownerRole": "Finance (AR), with Nadia Sinclair for the customer's agreement",
+    "deadline": "2026-10-31",
+    "action": "Send a corrected invoice or a clear answer to the customer, agreeing seats or price with Nadia Sinclair first. Target: 5 working days from when they raised it."
    }
   },
   {
@@ -2566,6 +2581,11 @@
       "ticket:T880582"
      ],
      "policyRef": "collections_policy.md: do not chase an invoice the customer has disputed"
+    },
+    {
+     "text": "Raised Sep 7, 2026: 40 working days without a fix, 35 past the 5-day target.",
+     "evidenceIds": [],
+     "policyRef": "Maya (COO): corrected invoice or clear answer within 5 working days"
     }
    ],
    "evidence": [
@@ -2634,10 +2654,10 @@
     ]
    },
    "hold": {
-    "owner": "Ana Duarte (Billing Support Specialist)",
-    "ownerRole": "Billing, with Hannah Drummond",
-    "deadline": "2026-11-05",
-    "action": "Agree with Hannah Drummond whether the customer is right, then reissue or confirm the bill and tell them. If nobody acts by the deadline, it returns to finance."
+    "owner": "Priya Nair",
+    "ownerRole": "Finance (AR)",
+    "deadline": "2026-10-31",
+    "action": "Send a corrected invoice or a clear answer to the customer. Target: 5 working days from when they raised it."
    }
   },
   {
@@ -2668,6 +2688,11 @@
       "ticket:T880996"
      ],
      "policyRef": null
+    },
+    {
+     "text": "Raised Oct 31, 2026: 0 working days so far, target 5.",
+     "evidenceIds": [],
+     "policyRef": "Maya (COO): corrected invoice or clear answer within 5 working days"
     }
    ],
    "evidence": [
@@ -2776,10 +2801,10 @@
     ]
    },
    "hold": {
-    "owner": "Ana Duarte (Billing Support Specialist)",
-    "ownerRole": "Billing, with Maria Yardley",
-    "deadline": "2026-11-05",
-    "action": "Agree with Maria Yardley whether the customer is right, then reissue or confirm the bill and tell them. If nobody acts by the deadline, it returns to finance."
+    "owner": "Priya Nair",
+    "ownerRole": "Finance (AR), with Maria Yardley for the customer's agreement",
+    "deadline": "2026-11-09",
+    "action": "Send a corrected invoice or a clear answer to the customer, agreeing seats or price with Maria Yardley first. Target: 5 working days from when they raised it."
    }
   },
   {
@@ -2803,6 +2828,11 @@
       "ticket:T881024"
      ],
      "policyRef": "collections_policy.md: do not chase an invoice the customer has disputed"
+    },
+    {
+     "text": "Raised Oct 29, 2026: 2 working days so far, target 5.",
+     "evidenceIds": [],
+     "policyRef": "Maya (COO): corrected invoice or clear answer within 5 working days"
     }
    ],
    "evidence": [
@@ -2901,10 +2931,10 @@
     ]
    },
    "hold": {
-    "owner": "Ana Duarte (Billing Support Specialist)",
-    "ownerRole": "Billing, with Hannah Drummond",
+    "owner": "Priya Nair",
+    "ownerRole": "Finance (AR), with Hannah Drummond for the customer's agreement",
     "deadline": "2026-11-05",
-    "action": "Agree with Hannah Drummond whether the customer is right, then reissue or confirm the bill and tell them. If nobody acts by the deadline, it returns to finance."
+    "action": "Send a corrected invoice or a clear answer to the customer, agreeing seats or price with Hannah Drummond first. Target: 5 working days from when they raised it."
    }
   },
   {
@@ -2935,6 +2965,11 @@
       "ticket:T880190"
      ],
      "policyRef": null
+    },
+    {
+     "text": "Raised Sep 22, 2026: 29 working days without a fix, 24 past the 5-day target.",
+     "evidenceIds": [],
+     "policyRef": "Maya (COO): corrected invoice or clear answer within 5 working days"
     }
    ],
    "evidence": [
@@ -3023,10 +3058,10 @@
     ]
    },
    "hold": {
-    "owner": "Ana Duarte (Billing Support Specialist)",
-    "ownerRole": "Billing, with Maria Yardley",
-    "deadline": "2026-11-05",
-    "action": "Agree with Maria Yardley whether the customer is right, then reissue or confirm the bill and tell them. If nobody acts by the deadline, it returns to finance."
+    "owner": "Priya Nair",
+    "ownerRole": "Finance (AR)",
+    "deadline": "2026-10-31",
+    "action": "Send a corrected invoice or a clear answer to the customer. Target: 5 working days from when they raised it."
    }
   },
   {
@@ -3050,6 +3085,11 @@
       "ticket:T880856"
      ],
      "policyRef": "collections_policy.md: do not chase an invoice the customer has disputed"
+    },
+    {
+     "text": "Raised Oct 7, 2026: 18 working days without a fix, 13 past the 5-day target.",
+     "evidenceIds": [],
+     "policyRef": "Maya (COO): corrected invoice or clear answer within 5 working days"
     }
    ],
    "evidence": [
@@ -3108,10 +3148,10 @@
     ]
    },
    "hold": {
-    "owner": "Ana Duarte (Billing Support Specialist)",
-    "ownerRole": "Billing, with Nadia Upton",
-    "deadline": "2026-11-05",
-    "action": "Agree with Nadia Upton whether the customer is right, then reissue or confirm the bill and tell them. If nobody acts by the deadline, it returns to finance."
+    "owner": "Priya Nair",
+    "ownerRole": "Finance (AR)",
+    "deadline": "2026-10-31",
+    "action": "Send a corrected invoice or a clear answer to the customer. Target: 5 working days from when they raised it."
    }
   },
   {
@@ -3135,6 +3175,11 @@
       "ticket:T880849"
      ],
      "policyRef": "collections_policy.md: do not chase an invoice the customer has disputed"
+    },
+    {
+     "text": "Raised Oct 6, 2026: 19 working days without a fix, 14 past the 5-day target.",
+     "evidenceIds": [],
+     "policyRef": "Maya (COO): corrected invoice or clear answer within 5 working days"
     }
    ],
    "evidence": [
@@ -3193,10 +3238,10 @@
     ]
    },
    "hold": {
-    "owner": "Ana Duarte (Billing Support Specialist)",
-    "ownerRole": "Billing, with Hannah Drummond",
-    "deadline": "2026-11-05",
-    "action": "Agree with Hannah Drummond whether the customer is right, then reissue or confirm the bill and tell them. If nobody acts by the deadline, it returns to finance."
+    "owner": "Priya Nair",
+    "ownerRole": "Finance (AR), with Hannah Drummond for the customer's agreement",
+    "deadline": "2026-10-31",
+    "action": "Send a corrected invoice or a clear answer to the customer, agreeing seats or price with Hannah Drummond first. Target: 5 working days from when they raised it."
    }
   },
   {
@@ -3291,7 +3336,7 @@
    "hold": {
     "owner": "Nadia Sinclair",
     "ownerRole": "Account manager",
-    "deadline": "2026-11-05",
+    "deadline": "2026-11-09",
     "action": "Talk to the customer about the open issue, then release or keep the hold. If nobody acts by the deadline, it returns to finance."
    }
   },
@@ -3323,6 +3368,11 @@
       "ticket:T880946"
      ],
      "policyRef": null
+    },
+    {
+     "text": "Raised Sep 24, 2026: 27 working days without a fix, 22 past the 5-day target.",
+     "evidenceIds": [],
+     "policyRef": "Maya (COO): corrected invoice or clear answer within 5 working days"
     }
    ],
    "evidence": [
@@ -3392,10 +3442,10 @@
     ]
    },
    "hold": {
-    "owner": "Ana Duarte (Billing Support Specialist)",
-    "ownerRole": "Billing, with Nadia Upton",
-    "deadline": "2026-11-05",
-    "action": "Agree with Nadia Upton whether the customer is right, then reissue or confirm the bill and tell them. If nobody acts by the deadline, it returns to finance."
+    "owner": "Priya Nair",
+    "ownerRole": "Finance (AR), with Nadia Upton for the customer's agreement",
+    "deadline": "2026-10-31",
+    "action": "Send a corrected invoice or a clear answer to the customer, agreeing seats or price with Nadia Upton first. Target: 5 working days from when they raised it."
    }
   },
   {
@@ -3419,6 +3469,11 @@
       "ticket:T880648"
      ],
      "policyRef": "collections_policy.md: do not chase an invoice the customer has disputed"
+    },
+    {
+     "text": "Raised Sep 13, 2026: 35 working days without a fix, 30 past the 5-day target.",
+     "evidenceIds": [],
+     "policyRef": "Maya (COO): corrected invoice or clear answer within 5 working days"
     }
    ],
    "evidence": [
@@ -3487,10 +3542,10 @@
     ]
    },
    "hold": {
-    "owner": "Ana Duarte (Billing Support Specialist)",
-    "ownerRole": "Billing, with Nadia Upton",
-    "deadline": "2026-11-05",
-    "action": "Agree with Nadia Upton whether the customer is right, then reissue or confirm the bill and tell them. If nobody acts by the deadline, it returns to finance."
+    "owner": "Priya Nair",
+    "ownerRole": "Finance (AR)",
+    "deadline": "2026-10-31",
+    "action": "Send a corrected invoice or a clear answer to the customer. Target: 5 working days from when they raised it."
    }
   },
   {
@@ -3521,6 +3576,11 @@
       "ticket:T880625"
      ],
      "policyRef": null
+    },
+    {
+     "text": "Raised Sep 14, 2026: 35 working days without a fix, 30 past the 5-day target.",
+     "evidenceIds": [],
+     "policyRef": "Maya (COO): corrected invoice or clear answer within 5 working days"
     }
    ],
    "evidence": [
@@ -3610,10 +3670,10 @@
     ]
    },
    "hold": {
-    "owner": "Ana Duarte (Billing Support Specialist)",
-    "ownerRole": "Billing, with Maria Yardley",
-    "deadline": "2026-11-05",
-    "action": "Agree with Maria Yardley whether the customer is right, then reissue or confirm the bill and tell them. If nobody acts by the deadline, it returns to finance."
+    "owner": "Priya Nair",
+    "ownerRole": "Finance (AR)",
+    "deadline": "2026-10-31",
+    "action": "Send a corrected invoice or a clear answer to the customer. Target: 5 working days from when they raised it."
    }
   },
   {
@@ -3637,6 +3697,11 @@
       "ticket:T880432"
      ],
      "policyRef": "collections_policy.md: do not chase an invoice the customer has disputed"
+    },
+    {
+     "text": "Raised Aug 19, 2026: 53 working days without a fix, 48 past the 5-day target.",
+     "evidenceIds": [],
+     "policyRef": "Maya (COO): corrected invoice or clear answer within 5 working days"
     }
    ],
    "evidence": [
@@ -3685,10 +3750,10 @@
     ]
    },
    "hold": {
-    "owner": "Ana Duarte (Billing Support Specialist)",
-    "ownerRole": "Billing, with Nadia Sinclair",
-    "deadline": "2026-11-05",
-    "action": "Agree with Nadia Sinclair whether the customer is right, then reissue or confirm the bill and tell them. If nobody acts by the deadline, it returns to finance."
+    "owner": "Priya Nair",
+    "ownerRole": "Finance (AR)",
+    "deadline": "2026-10-31",
+    "action": "Send a corrected invoice or a clear answer to the customer. Target: 5 working days from when they raised it."
    }
   },
   {
@@ -3810,7 +3875,7 @@
    "hold": {
     "owner": "Nadia Sinclair",
     "ownerRole": "Account manager",
-    "deadline": "2026-11-05",
+    "deadline": "2026-11-09",
     "action": "Talk to the customer about the open issue, then release or keep the hold. If nobody acts by the deadline, it returns to finance."
    }
   },
@@ -3835,6 +3900,11 @@
       "ticket:T880957"
      ],
      "policyRef": "collections_policy.md: do not chase an invoice the customer has disputed"
+    },
+    {
+     "text": "Raised Oct 21, 2026: 8 working days without a fix, 3 past the 5-day target.",
+     "evidenceIds": [],
+     "policyRef": "Maya (COO): corrected invoice or clear answer within 5 working days"
     }
    ],
    "evidence": [
@@ -3903,10 +3973,10 @@
     ]
    },
    "hold": {
-    "owner": "Ana Duarte (Billing Support Specialist)",
-    "ownerRole": "Billing, with Hannah Drummond",
-    "deadline": "2026-11-05",
-    "action": "Agree with Hannah Drummond whether the customer is right, then reissue or confirm the bill and tell them. If nobody acts by the deadline, it returns to finance."
+    "owner": "Priya Nair",
+    "ownerRole": "Finance (AR), with Hannah Drummond for the customer's agreement",
+    "deadline": "2026-10-31",
+    "action": "Send a corrected invoice or a clear answer to the customer, agreeing seats or price with Hannah Drummond first. Target: 5 working days from when they raised it."
    }
   },
   {
@@ -13940,8 +14010,16 @@
     "methodA": "Sum of Hold + Probably paid verdicts",
     "valueA": 393858.0,
     "methodB": "Recounted from the raw evidence flags",
-    "valueB": 132762.0,
-    "ok": false
+    "valueB": 393858.0,
+    "ok": true
+   },
+   {
+    "label": "Paid but chased (the Paidly case)",
+    "methodA": "Bills with a matching or recent unmatched payment that would get a reminder",
+    "valueA": 0,
+    "methodB": "Allowed (Maya: chasing someone who has paid gets the tool switched off)",
+    "valueB": 0,
+    "ok": true
    },
    {
     "label": "Bills checked",
@@ -13953,17 +14031,17 @@
    }
   ],
   "failures": [],
-  "runtimeSeconds": 0.76
+  "runtimeSeconds": 0.82
  },
  "morningSummary": {
   "title": "Collections check, 2026-10-31",
   "bullets": [
    "24 reminders ready to send ($230,977). Approve all in one click.",
-   "16 on hold ($315,510): owners have until 2026-11-05.",
+   "16 on hold ($315,510): owners have until 2026-10-31.",
    "5 probably paid already ($78,348): confirm and close.",
    "9 need a phone call ($8,410).",
    "10 need a second look before anything goes out."
   ],
-  "text": "Good morning. $339,444 of $633,245 overdue (54%) sits with customers we shouldn't chase today: they've probably paid, they're unhappy, or the bill is wrong. Another $54,414 is paused until a person reads a ticket the AI wasn't sure about. Today: 24 reminders ready to send ($230,977). Approve all in one click. 16 on hold ($315,510): owners have until 2026-11-05. 5 probably paid already ($78,348): confirm and close. 9 need a phone call ($8,410). 10 need a second look before anything goes out."
+  "text": "Good morning. $387,348 of $633,245 overdue (61%) sits with customers we shouldn't chase today: they've probably paid, they're unhappy, or the bill is wrong. Another $6,510 is paused until a person reads a ticket the AI wasn't sure about. Today: 24 reminders ready to send ($230,977). Approve all in one click. 16 on hold ($315,510): owners have until 2026-10-31. 5 probably paid already ($78,348): confirm and close. 9 need a phone call ($8,410). 10 need a second look before anything goes out."
  }
 }

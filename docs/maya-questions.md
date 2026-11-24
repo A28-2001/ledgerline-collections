@@ -2,6 +2,27 @@
 
 Maya Lindqvist is Ledgerline's COO, played by an AI in the challenge. Ask in hour 2, after reading the documents, so nothing we ask is already answered in a file. Rewrite any question the files already answer.
 
+## Ask these now (rewritten after reading the data room, Monday 9:50 pm)
+
+The files already answer the old questions 1 and 2: Priya Nair (AR Specialist) owns reminders, about 16 hours a week across the team (processes.md FIN-1), and the policy says disputes and open escalations wait for the account manager. These four ask what the files can't tell us. The challenge brief: "What matters, what has failed before, what would get it switched off."
+
+1. **"Paidly ran for six weeks last year and then got switched off. What went wrong? And what would make you switch this off too?"**
+   - Why: what failed before and what gets it switched off, in one question. The vendor bills show Paidly was paid for May and June 2025.
+   - What changes: if it chased disputed or unhappy customers, that's our headline and the reason Hold comes first. If it was noise or too many clicks, we lead with the decision count.
+2. **"I found 14 overdue invoices, about $309K, that customers disputed in Zendesk. Most of those tickets are marked solved, but none of the bills were fixed. Who should own getting a disputed bill fixed, and how fast?"**
+   - Why: sets the hold owner and the hold clock (now 3 business days, Ana Duarte with the account manager), and shows her the finding.
+   - What changes: her owner and days go into config.yaml and the one-pager word for word.
+3. **"The SLA policy says ticket content can't go to a new vendor without a data processing agreement. Is there an AI vendor legal has approved, or should the tool read tickets with rules only until there is?"**
+   - Why: the tool's AI reads ticket text. This is the line that could get it switched off on day one.
+   - What changes: an approved vendor goes into the swappable AI function; "rules only" becomes the production default, with unsure tickets sent to a person.
+4. **"Once the tool agrees with Priya most of the time, could small routine reminders go out on their own? What must always stay with a person?"**
+   - Why: stage 2 of the trust ladder.
+   - What changes: her bar goes into the one-pager. The policy already says the top 50 accounts and anything threatening always stay with a person.
+
+Backups: "Of Priya's collections time, how much is asking support and account managers about open issues?" (our time-saved baseline) · "Can we retire the 45-day 'final notice' template? It threatens suspension, which needs Dana's sign-off." · "For the 50 largest accounts, does Dana or Priya write?"
+
+## Original questions (written before Begin)
+
 Short and natural, one at a time. Write down her exact answer in `worklog.md`.
 
 ## Ask these first

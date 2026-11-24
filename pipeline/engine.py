@@ -34,6 +34,10 @@ HOLDING_RX = re.compile(  # the customer says they're not paying until something
     r"hold(ing)? off pay|won.?t pay|will not pay|not (be )?pay(ing)?|paused (the )?payment|on hold until|settle once|pay once|"
     r"until (a |the )?(corrected|revised|new) (invoice|version)|cancel and reissue|corrected (invoice|version)|pending a corrected",
     re.I)
+# Maya: "anything that reads like a threat" without a person checking gets the tool switched off.
+THREAT_WORDS = ["suspend", "suspension", "collections agency", "collection agency", "legal action", "final notice",
+                "late fee", "costs of collection", "refer the balance", "court"]
+PRICING_RX = re.compile(r"seat|price|pricing|plan\b|discount|renewal|downgrad|upgrad|tier|per user|users", re.I)
 INVOICE_REF_RX = re.compile(r"\binv[-\s#]?(\d{4,7})\b", re.I)
 NEGATIVE_RX = re.compile(r"broken|fail|error|frustrat|not working|issue|problem|bug|slow|spins|lost|blocking", re.I)
 CAUSE_LABEL = {"unhappy": "Unhappy customer", "paid": "Already paid", "wrong_bill": "Customer says the bill is wrong",
@@ -295,6 +299,21 @@ class Engine:
                     twins = [o for o in self._rows_by_cust.get(cid, []) if o is not row and abs(o.amount - row.amount) <= row.amount * tol]
                     if twins:
                         row.needs_review.append(f"{len(twins) + 1} overdue bills have this amount; we matched the payment to the oldest. A person confirms which bill it pays")
+            if paid_ev is None and cid:
+                lag = self.p.get("recent_payment_days", 21)
+                recent = [p for p in unmatched.get(cid, []) if p["id"] not in used_payments and pd.notna(p.get("date"))
+                          and (self.as_of - p["date"]).days <= lag]
+                if recent:
+                    p = recent[-1]
+                    eid = f"payment:{p['id']}"
+                    ev.append({"id": eid, "kind": "payment", "file": self.cfg["files"]["payments"]["file"], "recordId": str(p["id"]),
+                               "date": iso(p.get("date")), "status": "unmatched",
+                               "title": f"{money(p['amount'] or 0)} received on {nice(p.get('date'))} from \"{p.get('payer') or ''}\", not matched yet"})
+                    rs.append({"text": f"A {money(p['amount'] or 0)} payment from them arrived {nice(p.get('date'))} and isn't matched to a bill yet. "
+                                       "Confirm it doesn't cover this one before anyone chases (the case that got Paidly switched off).",
+                               "evidenceIds": [eid], "policyRef": "collections_policy.md: bank transfers take three to five working days to show as paid"})
+                    row.needs_review.append("a recent payment from this customer isn't matched yet: confirm before chasing")
+                    row.flags["recent_payment"] = True
             if paid_ev is not None:
                 eid = f"payment:{paid_ev['id']}"
                 ev.append({"id": eid, "kind": "payment", "file": self.cfg["files"]["payments"]["file"], "recordId": str(paid_ev["id"]),
@@ -325,6 +344,8 @@ class Engine:
                 after_issue = row.issue is None or pd.isna(row.issue) or t["created"] >= row.issue - pd.Timedelta(days=3)
                 if names_bill and after_issue and (t.get("holding") or label in ("billing_complaint", "disagree")):
                     row.flags["dispute_hold"] = True
+                    row.flags["dispute_since"] = t["created"]
+                    row.flags["dispute_pricing"] = bool(PRICING_RX.search(f"{t.get('subject') or ''} {t.get('body') or ''}"))
                     state = "is still open" if open_ else f"is marked {t.get('status') or 'closed'} in Zendesk, but the bill was never corrected or reissued"
                     said = " and says they're holding payment until it's fixed" if t.get("holding") else ""
                     rs.insert(0, {"text": f"The customer disputes this exact invoice in a support ticket{said}. The ticket {state}.",
@@ -332,6 +353,8 @@ class Engine:
                     continue
                 if not open_ and after_issue and label == "billing_complaint" and t.get("holding"):
                     row.flags["dispute_hold"] = True
+                    row.flags["dispute_since"] = t["created"]
+                    row.flags["dispute_pricing"] = bool(PRICING_RX.search(f"{t.get('subject') or ''} {t.get('body') or ''}"))
                     rs.insert(0, {"text": f"A billing ticket from {nice(t['created'])} says they're holding payment. Zendesk marks it {t.get('status')}, but nothing shows it was fixed.",
                                   "evidenceIds": [eid], "policyRef": "collections_policy.md: do not chase an invoice the customer has disputed"})
                     continue
@@ -413,6 +436,7 @@ class Engine:
 
     # ---------------------------------------------------------------- verdicts + output
     def _contact(self, cid, contacts, customers) -> tuple[str, str | None]:
+        self._first = ""
         if cid and len(contacts):
             mine = contacts[contacts["customer_id"].astype(str) == str(cid)]
             bill = mine[mine["role"].fillna("").str.contains("bill|finance|accounts", case=False, regex=True)] if len(mine) else mine
@@ -425,11 +449,14 @@ class Engine:
                     who = " ".join(str(x) for x in (g.get("first_name"), g.get("last_name")) if x and pd.notna(x)) or str(g.get("email"))
                     if len(active):
                         a = active.iloc[0]
+                        self._first = str(a.get("first_name") or "") if pd.notna(a.get("first_name")) else ""
                         return str(a.get("email") or ""), f"invoice emails still go to {who}, who has left the firm: remove them from the invoice list"
                     return str(g.get("email") or ""), f"the only billing contact, {who}, has left the firm: find the new one before sending"
                 bill = active
             pick = bill if len(bill) else mine
             if len(pick):
+                fn = pick.iloc[0].get("first_name") if "first_name" in pick else None
+                self._first = str(fn) if fn is not None and pd.notna(fn) else ""
                 c = pick.sort_values("last_active", ascending=False).iloc[0] if "last_active" in pick else pick.iloc[0]
                 stale = None
                 if pd.notna(c.get("last_active")) and (self.as_of - c["last_active"]).days > self.p["stale_contact_days"]:
@@ -447,24 +474,37 @@ class Engine:
         return stage, ref
 
     def _draft(self, row: Row, verdict: str, tone: str, to: str, name: str) -> dict:
+        """Ledgerline's templates (docs/templates/collections.md), fixed: the 7-day note rewritten in plain words,
+        the 21-day note kept without its payment-plan offer (plans need the VP Finance), and no 45-day "final notice"
+        (it threatens suspension and an agency; those bills go to a call instead)."""
         amt, inv, due = money(row.amount), row.display_id, nice(row.due)
+        hi = f"Hi {self._first}," if getattr(self, "_first", "") else f"Hi {name} team,"
+        sender = str(self.cfg.get("people", {}).get("finance_owner", "Finance team")).split(" (")[0]
+        sign = f"Thanks,\n{sender}\n{self.cfg.get('company_name', '')} Billing".rstrip()
         if verdict != "send":
             return {"to": to, "subject": "", "body": "", "tone": "none"}
         if tone == "card_update":
-            subj = f"Your card payment for invoice {inv} didn't go through"
-            body = (f"Hi {name} team,\n\nWe tried to charge your card for invoice {inv} ({amt}), but the payment didn't go through. "
-                    f"Could you update the card on file? Once it's updated we'll retry automatically.\n\nThanks,\nFinance team")
+            subj = f"Card payment for invoice {inv} didn't go through"
+            body = (f"{hi}\n\nThe card on file for {name} didn't go through for invoice {inv} ({amt}), and the automatic retries have now finished. "
+                    f"Could you update the card, or reply and we'll send bank details instead?\n\n{sign}")
         elif tone == "soft":
-            subj = f"Invoice {inv}: a gentle reminder"
-            body = (f"Hi {name} team,\n\nWe know your team has an open request with our support team, and they're on it. "
-                    f"Separately, invoice {inv} for {amt} was due on {due}. Whenever you get a chance, could you check on it? "
-                    f"If anything about the invoice looks off, just reply and we'll sort it out.\n\nThanks,\nFinance team")
+            subj = f"Invoice {inv}: a quick note"
+            body = (f"{hi}\n\nI know your team has an open request with our support team, and they're on it. "
+                    f"Separately, invoice {inv} for {amt} was due on {due}. When you get a moment, could you check where it is? "
+                    f"If anything about the invoice looks wrong, just reply and we'll put it right.\n\n{sign}")
+        elif row.days >= 21:
+            subj = f"Invoice {inv} is now {row.days} days overdue"
+            body = (f"{hi}\n\nI'm following up on invoice {inv} for {amt}, which was due on {due} and is still unpaid.\n\n"
+                    f"These sometimes get stuck in an approval queue or go to someone who's left. If that's what happened, let me know who should "
+                    f"be getting our invoices and I'll update the billing contact for {name}.\n\n"
+                    f"If there's a problem with the invoice itself, reply and we'll fix it. Otherwise you can pay using the link on the invoice.\n\n{sign}")
         else:
-            stage, _ = self._stage(row.days)
-            subj = f"{stage}: invoice {inv} ({amt}) was due {due}"
-            body = (f"Hi {name} team,\n\nThis is a reminder that invoice {inv} for {amt} was due on {due} "
-                    f"and is now {row.days} days overdue. Could you let us know when we can expect payment? "
-                    f"If it's already on its way, thank you, and please ignore this note.\n\nThanks,\nFinance team")
+            subj = f"Invoice {inv} is overdue"
+            body = (f"{hi}\n\nA quick note that invoice {inv} for {amt} was due on {due} and is still open on our side.\n\n"
+                    f"If you've already paid, thank you, and please ignore this. If anything on the invoice looks wrong, like the seat count or plan, "
+                    f"just reply and we'll fix it before you pay.\n\n{sign}")
+        for w in THREAT_WORDS:
+            assert w not in body.lower() and w not in subj.lower(), f"draft for {inv} contains '{w}'"
         return {"to": to, "subject": subj, "body": body, "tone": tone}
 
     def _assemble(self, rows, tickets, customers, contacts) -> dict:
@@ -536,8 +576,20 @@ class Engine:
                 deadline = iso(add_business_days(self.as_of, hold_days))
                 if cause == "wrong_bill":
                     am = str(c["account_manager"]) if c is not None and pd.notna(c.get("account_manager")) else "the account manager"
-                    hold = {"owner": self.cfg["people"]["billing_owner"], "ownerRole": f"Billing, with {am}", "deadline": deadline,
-                            "action": f"Agree with {am} whether the customer is right, then reissue or confirm the bill and tell them. If nobody acts by the deadline, it returns to finance."}
+                    days_fix = int(self.p.get("dispute_fix_days", 5))
+                    owner = self.cfg["people"]["finance_owner"]
+                    since = f.get("dispute_since")
+                    open_days = int(np.busday_count(pd.Timestamp(since).date(), self.as_of.date())) if since is not None and pd.notna(since) else None
+                    with_am = f.get("dispute_pricing")
+                    hold = {"owner": owner.split(" (")[0], "ownerRole": "Finance (AR)" + (f", with {am} for the customer's agreement" if with_am else ""),
+                            "deadline": iso(add_business_days(self.as_of, max(1, days_fix - (open_days or 0))) if (open_days or 0) < days_fix else self.as_of),
+                            "action": (f"Send a corrected invoice or a clear answer to the customer" + (f", agreeing seats or price with {am} first" if with_am else "")
+                                       + f". Target: {days_fix} working days from when they raised it.")}
+                    if open_days is not None:
+                        late = open_days - days_fix
+                        row.reasons.append({"text": (f"Raised {nice(since)}: {open_days} working days without a fix, {late} past the {days_fix}-day target."
+                                                     if late > 0 else f"Raised {nice(since)}: {open_days} working days so far, target {days_fix}."),
+                                            "evidenceIds": [], "policyRef": "Maya (COO): corrected invoice or clear answer within 5 working days"})
                 else:
                     am = str(c["account_manager"]) if c is not None and pd.notna(c.get("account_manager")) else "Account manager"
                     hold = {"owner": am, "ownerRole": "Account manager", "deadline": deadline,

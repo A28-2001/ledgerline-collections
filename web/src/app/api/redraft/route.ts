@@ -116,6 +116,12 @@ export async function POST(request: Request) {
     const leaked = ["ticket", "complaint", "dispute", "discussion", "escalat", " ai ", "internal", "flagged"].filter(
       (w) => ` ${subject} ${body} `.toLowerCase().includes(w) && !original.includes(w.trim()),
     );
+    // Maya: anything that reads like a threat without a person checking it gets the tool switched off.
+    const THREATS = ["suspend", "suspension", "collections agency", "collection agency", "legal action", "final notice", "late fee", "costs of collection", "court"];
+    const threat = THREATS.filter((w) => ` ${subject} ${body} `.toLowerCase().includes(w));
+    if (threat.length) {
+      return json({ error: "The AI rewrite sounded like a threat, so the original draft was kept. Threats need the VP Finance's sign-off." }, 422);
+    }
     if (leaked.length) {
       return json({ error: "The AI rewrite mentioned internal details, so the original draft was kept. Try again or edit by hand." }, 422);
     }

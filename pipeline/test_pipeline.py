@@ -34,7 +34,7 @@ def fake_call(self, model, prompt, max_tokens=8):
 
 
 def run(with_ai: bool):
-    cfg = load_config()
+    cfg = load_config(ROOT / "pipeline" / "config.sample.yaml")
     data = load(ROOT / "data" / "sample", cfg)
     os.environ.pop("AI_OFF", None)
     a = ai_mod.AI(cfg)
@@ -71,7 +71,7 @@ def rehearsal_check(baseline: dict):
     import tempfile
     import pandas as pd
     import profile_data as prof
-    cfg = load_config()
+    cfg = load_config(ROOT / "pipeline" / "config.sample.yaml")
     with tempfile.TemporaryDirectory() as tmp:
         tmp = Path(tmp)
         for f, ren in RENAMED.items():
@@ -121,6 +121,10 @@ def main():
     disputed = [i for i in withai.values() if i.get("agreement") and not i["agreement"]["agree"]]
     for i in disputed:
         assert i["needsReview"] and i["verdict"] != "send", "when judges disagree we must not chase"
+    notes = {norm_id(l.split(",")[0]): l for l in (ROOT / "data/sample/labels.csv").read_text().splitlines()[1:]}
+    paidly = [k for k, l in notes.items() if "unmatched bank payment" in l]
+    assert paidly and all(rules[k]["verdict"] == "paid" for k in rules if norm_id(k) in paidly), "Paidly case: a paid bill would be chased"
+    print(f"Paidly case: all {len(paidly)} bills paid by an unmatched bank payment are marked paid, none chased.")
     rehearsal_check(rules)
     print(f"{len(withai)} bills, {len(disputed)} with judges disagreeing (all held for a person). All checks passed.")
 
