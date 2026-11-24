@@ -26,6 +26,8 @@ export interface StoryData {
   verdicts: { key: "send" | "hold" | "paid" | "call"; label: string; count: number; amountText: string }[];
   review: { total: number; firstAgreed: number | null; nowAgreed: number | null; keptWhy: string | null };
   checks: { label: string; value: number }[];
+  // One real disputed bill, the way Priya sees it.
+  example: { customer: string; invoice: string; amountText: string; days: number; quote: string; status: string; href: string } | null;
 }
 
 const pct = (n: number) => `${Math.round(n * 100)}%`;
@@ -189,6 +191,25 @@ function SourcesPicture({ data }: { data: StoryData }) {
   );
 }
 
+function ExampleBill({ e, color }: { e: NonNullable<StoryData["example"]>; color?: string }) {
+  return (
+    <div className="mt-5 rounded-xl border border-l-4 bg-background/60 p-4" style={{ borderLeftColor: color }}>
+      <p className="text-[11px] font-semibold tracking-wide text-muted-foreground uppercase">One of them</p>
+      <p className="mt-1 text-sm font-semibold">
+        {e.customer} <span className="tabular font-normal text-muted-foreground">· {e.amountText} · {e.days} days late</span>
+      </p>
+      <blockquote className="mt-2 border-l-2 pl-3 text-sm leading-relaxed italic">&ldquo;{e.quote}&rdquo;</blockquote>
+      <p className="mt-2 text-xs leading-relaxed text-muted-foreground">
+        Zendesk: <span className="font-medium text-foreground">{e.status}</span>. The bill was never corrected. The tool holds it and gives it to
+        Priya to fix first.
+      </p>
+      <a href={e.href} className="mt-2 inline-block text-xs font-medium underline decoration-border underline-offset-4 hover:decoration-foreground">
+        See the bill and the ticket
+      </a>
+    </div>
+  );
+}
+
 function CausesPicture({ data }: { data: StoryData }) {
   return (
     <Frame title={`Why the ${data.totalText} is overdue`} note="Share of the money, by cause">
@@ -211,6 +232,7 @@ function CausesPicture({ data }: { data: StoryData }) {
           </li>
         ))}
       </ul>
+      {data.example && <ExampleBill e={data.example} color={data.causes.find((c) => c.key === "wrong_bill")?.color} />}
     </Frame>
   );
 }
@@ -380,7 +402,17 @@ export function StoryScroll({ chapters, data, asOf }: { chapters: Chapter[]; dat
                   <p className="mt-1 text-base text-muted-foreground">{ch.numberNote}</p>
                   <div className="mt-5 max-w-md space-y-2 text-lg leading-relaxed">
                     {ch.text.map((t) => (
-                      <p key={t}>{t}</p>
+                      <p key={t}>
+                        {t.split(/(\*\*[^*]+\*\*)/).map((part, k) =>
+                          part.startsWith("**") ? (
+                            <strong key={k} className="font-semibold text-foreground underline decoration-gold decoration-2 underline-offset-4">
+                              {part.slice(2, -2)}
+                            </strong>
+                          ) : (
+                            part
+                          ),
+                        )}
+                      </p>
                     ))}
                   </div>
                   <p className="mt-5 max-w-md text-xs leading-relaxed text-muted-foreground">

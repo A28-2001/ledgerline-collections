@@ -1,6 +1,6 @@
 {
  "meta": {
-  "generatedAt": "2026-11-24T17:01:54+00:00",
+  "generatedAt": "2026-11-24T17:09:14+00:00",
   "asOf": "2026-10-31",
   "dataSource": "real",
   "companyName": "Ledgerline",
@@ -14045,7 +14045,7 @@
    "5 bills look paid: Marcus is matching them"
   ],
   "link": "https://ledgerline-collections.vercel.app",
-  "text": "Good morning. Here's what needs you today:",
+  "text": "Good morning. Sorting today's list takes about 5 minutes; the disputes are the day's work.",
   "detail": [
    "16 reminders ready to approve ($173,197), and 3 more after a check.",
    "21 on hold ($368,462): 12 past their target date, so the owner acts today; the rest by Nov 3, 2026 at the earliest.",

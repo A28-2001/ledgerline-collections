@@ -64,6 +64,27 @@ export default function StoryPage() {
       })(),
     },
     checks: checks.map((c) => ({ label: c.label.replace(/\s*\(.*\)$/, ""), value: c.valueA })),
+    example: (() => {
+      // The disputed bill that has waited longest, with a ticket marked solved: the clearest case of the finding.
+      const pick = invoices
+        .filter((i) => i.cause === "wrong_bill" && /marked solved/i.test(i.headline))
+        .sort((a, b) => b.daysOverdue - a.daysOverdue)[0];
+      const t = pick?.evidence.find((e) => e.kind === "ticket" && e.detail);
+      if (!pick || !t?.detail) return null;
+      const sentences = t.detail.split(/(?<=[.!?])\s+/);
+      const hits = sentences.filter((x) => x.includes(pick.id) || /correct|resend|refund|waive|wrong/i.test(x));
+      let quote = (hits.length ? hits : sentences).slice(0, 2).join(" ").replace(/\s+/g, " ").trim();
+      if (quote.length > 200) quote = quote.slice(0, 197).replace(/\s+\S*$/, "") + "…";
+      return {
+        customer: pick.customerName,
+        invoice: pick.id,
+        amountText: formatMoney(pick.amount),
+        days: pick.daysOverdue,
+        quote,
+        status: `ticket marked ${t.status || "solved"}`,
+        href: pick.customerId ? `/customers/${pick.customerId}` : "/",
+      };
+    })(),
   };
 
   const chapters: Chapter[] = [
@@ -74,7 +95,7 @@ export default function StoryPage() {
       numberNote: `overdue, across ${summary.overdueCount} bills`,
       text: [
         highest
-          ? `The highest overdue total of any month-end in the last ${trend.length} months. It's ${pct(last.overdueShare)} of what customers owe.`
+          ? `The **highest overdue total** of any month-end in the last ${trend.length} months. It's ${pct(last.overdueShare)} of what customers owe.`
           : `That's ${pct(last.overdueShare)} of what customers owe.`,
         "Finance chases it by hand: about 16 hours a week across the team.",
       ],
@@ -86,7 +107,7 @@ export default function StoryPage() {
       number: fmt(tk?.fromOverdue ?? rows("tickets.csv")),
       numberNote: tk ? "support tickets from customers who owe money, and finance can't open any" : "support tickets finance can't open",
       text: [
-        "Finance has no access to Zendesk, where complaints live, so before chasing they ask around.",
+        "Finance has **no access to Zendesk**, where complaints live, so before chasing they ask around.",
         "Miss one, and a reminder lands on a customer who is waiting for a fix.",
       ],
       source: "Zendesk export (tickets.csv); tool_stack.md; processes.md (FIN-1)",
@@ -98,7 +119,7 @@ export default function StoryPage() {
       numberNote: disputed ? `${pct(disputed.amount / summary.overdueAmount)} of the overdue money is disputed` : "",
       text: [
         disputed
-          ? `${disputed.count} bills are disputed in support tickets that name the exact invoice: wrong seats, a missing discount, a fee meant to be waived.`
+          ? `${disputed.count} bills are disputed in support tickets that **name the exact invoice**: wrong seats, a missing discount, a fee meant to be waived.`
           : "",
         "A reminder on any of them chases someone who is waiting for a corrected bill.",
       ].filter(Boolean),
@@ -110,7 +131,7 @@ export default function StoryPage() {
       number: mine.length ? fmt(mine.length) : `${count("send")} of ${invoices.length}`,
       numberNote: mine.length ? "disputed bills Priya fixes first, all past the 5-day target" : "bills get a polite email today",
       text: [
-        `Five questions decide each bill. Disputes go to Priya to fix within 5 working days; ${count("send")} bills get a reminder she approves in one click.`,
+        `Five questions decide each bill. **Disputes go to Priya** to fix within 5 working days; ${count("send")} bills get a reminder she approves in one click.`,
         "Everything else waits with an owner and a deadline.",
       ],
       source: `This run, all ${invoices.length} bills (Today and How it works pages)`,
@@ -122,7 +143,7 @@ export default function StoryPage() {
       numberNote: "matched an independent review on the first pass",
       text: [
         `The reviewer, a separate AI model, never saw the tool's answers, and a person checked every disagreement. Each rule error became a new rule${acc ? `: ${acc.agreed} of ${acc.sampleSize} agree now` : ""}.`,
-        "That's on the same bills, not fresh data, so the shadow week is the real test.",
+        "That's on the same bills, not fresh data, so **the shadow week is the real test**.",
       ],
       source: "Review log (How sure are we page)",
     },
@@ -133,7 +154,7 @@ export default function StoryPage() {
       numberNote: "reminders to anyone who had paid or had a complaint open",
       text: [
         `The COO's two tests: both 0.${strict ? ` ${strict} customers with a pending question that isn't about money still get a reminder, for Maya to confirm.` : ""}`,
-        "Monday: a shadow week beside Priya. Nothing is sent without a person.",
+        "Monday: a shadow week beside Priya. **Nothing is sent without a person.**",
       ],
       source: "Checks on the How sure are we page; plan agreed with the COO",
     },

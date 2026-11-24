@@ -6,7 +6,19 @@ export type BarRow = { key: string; label: string; amount: number; count: number
 
 // Plain bars with the label above each one, so they read the same on a phone.
 // One row can be highlighted; the others step back.
-export function SimpleBars({ rows, total, highlight, label }: { rows: BarRow[]; total: number; highlight?: string; label: string }) {
+export function SimpleBars({
+  rows,
+  total,
+  highlight,
+  label,
+  unit = ["bill", "bills"],
+}: {
+  rows: BarRow[];
+  total: number;
+  highlight?: string;
+  label: string;
+  unit?: [string, string];
+}) {
   if (rows.length === 0) return null;
   const max = Math.max(...rows.map((r) => r.amount));
   return (
@@ -21,7 +33,7 @@ export function SimpleBars({ rows, total, highlight, label }: { rows: BarRow[]; 
                 <span className={cn("font-medium", !dim && "text-foreground")}>{formatMoney(r.amount, "USD", true)}</span>
                 <span className="text-muted-foreground">
                   {" "}
-                  · {r.count} {r.count === 1 ? "bill" : "bills"} · {formatPercent(total ? r.amount / total : 0)}
+                  · {r.count} {r.count === 1 ? unit[0] : unit[1]} · {formatPercent(total ? r.amount / total : 0)}
                 </span>
               </span>
             </div>

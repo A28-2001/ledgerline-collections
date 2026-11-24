@@ -258,7 +258,7 @@ def main() -> None:
     light = light_lines(invoices, cfg, as_of)
     app_url = cfg.get("app_url", "https://ledgerline-collections.vercel.app")
     morning = {"title": f"Collections check, {nice(as_of)}", "bullets": light, "link": app_url,
-               "text": "Good morning. Here's what needs you today:",
+               "text": "Good morning. Sorting today's list takes about 5 minutes; the disputes are the day's work.",
                "detail": bullets}
     # Who gets what (Maya, 24 Nov): Slack direct messages, one a day per person, never a channel post.
     ppl = cfg.get("people", {})

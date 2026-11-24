@@ -97,6 +97,13 @@ const STEPS: StepDef[] = [
 ];
 
 const ROWS_SHOWN = 6;
+// With hundreds of bills, a step opens 25 more at a time instead of all at once.
+const MORE_ROWS = 25;
+
+function moreLabel(shown: number, total: number): string {
+  if (shown >= total) return "Show fewer";
+  return total - shown <= MORE_ROWS ? `Show all ${total}` : `Show ${MORE_ROWS} more (${total - shown} left)`;
+}
 type StepKey = "check" | Verdict | "finish";
 
 function csvCell(value: string | number) {
@@ -120,7 +127,7 @@ export function MorningView({ data }: { data: Pick<Results, "invoices" | "summar
   const [startChange, setStartChange] = useState(false);
   const [openStep, setOpenStep] = useState<StepKey | null | "auto">("auto");
   const [confirmStep, setConfirmStep] = useState<StepDef | null>(null);
-  const [showAll, setShowAll] = useState(false);
+  const [shownRows, setShownRows] = useState(ROWS_SHOWN);
 
   // Bills the tool isn't sure about go to "Check first" until a person has decided them.
   const flagged = useMemo(() => invoices.filter((i) => i.needsReview), [invoices]);
@@ -189,7 +196,7 @@ export function MorningView({ data }: { data: Pick<Results, "invoices" | "summar
   }
 
   function goToStep(key: StepKey) {
-    setShowAll(false);
+    setShownRows(ROWS_SHOWN);
     setOpenStep(key);
     scrollToStep(key);
   }
@@ -298,7 +305,7 @@ export function MorningView({ data }: { data: Pick<Results, "invoices" | "summar
                 }
                 open={expanded === "check"}
                 onToggle={() => {
-                  setShowAll(false);
+                  setShownRows(ROWS_SHOWN);
                   setOpenStep(expanded === "check" ? null : "check");
                 }}
                 controls="step-check"
@@ -320,7 +327,7 @@ export function MorningView({ data }: { data: Pick<Results, "invoices" | "summar
                     </p>
                   ) : (
                     <ul className="mt-3 divide-y overflow-hidden rounded-lg border">
-                      {(showAll ? openGroups : openGroups.slice(0, ROWS_SHOWN)).map((group) => {
+                      {openGroups.slice(0, shownRows).map((group) => {
                         const inv = group[0];
                         return (
                         <li
@@ -366,8 +373,13 @@ export function MorningView({ data }: { data: Pick<Results, "invoices" | "summar
                     </ul>
                   )}
                   {openGroups.length > ROWS_SHOWN && (
-                    <Button variant="ghost" size="sm" className="mt-2" onClick={() => setShowAll((v) => !v)}>
-                      {showAll ? "Show fewer" : `Show all ${openGroups.length}`}
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      className="mt-2"
+                      onClick={() => setShownRows((n) => (n >= openGroups.length ? ROWS_SHOWN : n + MORE_ROWS))}
+                    >
+                      {moreLabel(shownRows, openGroups.length)}
                     </Button>
                   )}
                 </div>
@@ -382,7 +394,7 @@ export function MorningView({ data }: { data: Pick<Results, "invoices" | "summar
             const Icon = s.def.icon;
             const amount = sumAmount(s.items);
             const ordered = [...s.undecided, ...s.items.filter((i) => decisions[i.id])];
-            const visible = showAll && isOpen ? ordered : ordered.slice(0, ROWS_SHOWN);
+            const visible = ordered.slice(0, isOpen ? shownRows : ROWS_SHOWN);
             const sub =
               s.items.length === 0 && s.waiting === 0
                 ? "Nothing today"
@@ -406,7 +418,7 @@ export function MorningView({ data }: { data: Pick<Results, "invoices" | "summar
                   amount={s.items.length ? formatMoney(amount) : undefined}
                   open={isOpen}
                   onToggle={() => {
-                    setShowAll(false);
+                    setShownRows(ROWS_SHOWN);
                     setOpenStep(isOpen ? null : key);
                   }}
                   controls={`step-${key}`}
@@ -450,8 +462,8 @@ export function MorningView({ data }: { data: Pick<Results, "invoices" | "summar
                     )}
                     <div className="mt-3 flex flex-wrap items-center justify-between gap-2">
                       {ordered.length > ROWS_SHOWN ? (
-                        <Button variant="ghost" size="sm" onClick={() => setShowAll((v) => !v)}>
-                          {showAll ? "Show fewer" : `Show all ${ordered.length}`}
+                        <Button variant="ghost" size="sm" onClick={() => setShownRows((n) => (n >= ordered.length ? ROWS_SHOWN : n + MORE_ROWS))}>
+                          {moreLabel(shownRows, ordered.length)}
                         </Button>
                       ) : (
                         <span />

@@ -35,6 +35,8 @@ export function AllBills({
   const [query, setQuery] = useState("");
   const [checkOnly, setCheckOnly] = useState(false);
   const [sort, setSort] = useState<{ key: SortKey; dir: "asc" | "desc" }>({ key: "amount", dir: "desc" });
+  // Hundreds of bills: show 100 at a time; search, tabs and sorting work on all of them.
+  const [limit, setLimit] = useState(100);
 
   const counts = useMemo(() => {
     const c: Record<Tab, number> = { all: invoices.length, send: 0, hold: 0, paid: 0, call: 0 };
@@ -121,7 +123,7 @@ export function AllBills({
               </TableRow>
             </TableHeader>
             <TableBody>
-              {rows.map((inv) => {
+              {rows.slice(0, limit).map((inv) => {
                 const decision = decisions[inv.id];
                 const verdict = effectiveVerdict(inv, decisions);
                 return (
@@ -171,6 +173,16 @@ export function AllBills({
               })}
             </TableBody>
           </Table>
+        )}
+        {rows.length > limit && (
+          <div className="flex items-center justify-between gap-2 border-t px-4 py-3 text-xs text-muted-foreground">
+            <span className="tabular">
+              Showing {limit} of {rows.length}
+            </span>
+            <button type="button" onClick={() => setLimit((n) => n + 100)} className="rounded-md border px-3 py-1.5 font-medium text-foreground hover:bg-muted">
+              Show {Math.min(100, rows.length - limit)} more
+            </button>
+          </div>
         )}
       </div>
     </div>
