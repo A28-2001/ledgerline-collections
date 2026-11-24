@@ -47,14 +47,13 @@ export async function POST(request: Request) {
     dueDate: invoice.dueDate,
     daysOverdue: invoice.daysOverdue,
     reminderStage: invoice.reminderStage ?? null,
-    internalNotes: invoice.reasons.map((r) => r.text),
   };
 
   const system = [
     "You reword accounts-receivable emails for a B2B software company's finance team.",
     "Keep every fact exactly as given: amounts, dates, invoice numbers, names. Never invent new facts.",
     "Never threaten, never mention late fees, collections agencies or legal action, never offer discounts or credits.",
-    "internalNotes are for your judgment only. Never mention support tickets, complaints, internal checks, AI, or anything that is not already in the current draft.",
+    "Never mention support tickets, complaints, disputes, internal checks or AI, and add no facts that are not already in the current draft.",
     "Keep it under 130 words. Sign off as the company's finance team.",
     'Reply with JSON only: {"subject": string, "body": string}.',
   ].join(" ");
@@ -111,6 +110,15 @@ export async function POST(request: Request) {
     const body = typeof parsed.body === "string" ? parsed.body.trim() : "";
     if (!body) return json({ error: "The AI reply was empty. The original draft still works." }, 502);
     const subject = typeof parsed.subject === "string" && parsed.subject.trim() ? parsed.subject.trim() : invoice.draft.subject;
+    // Guard: a customer email must never reveal internal context. If the rewrite mentions
+    // something the original draft didn't, keep the original and say why.
+    const original = `${invoice.draft.subject} ${invoice.draft.body}`.toLowerCase();
+    const leaked = ["ticket", "complaint", "dispute", "escalat", " ai ", "internal", "flagged"].filter(
+      (w) => ` ${subject} ${body} `.toLowerCase().includes(w) && !original.includes(w.trim()),
+    );
+    if (leaked.length) {
+      return json({ error: "The AI rewrite mentioned internal details, so the original draft was kept. Try again or edit by hand." }, 422);
+    }
     return json({ subject, body, model });
   } catch (err) {
     const aborted = err instanceof Error && err.name === "AbortError";
