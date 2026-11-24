@@ -1,6 +1,6 @@
 {
  "meta": {
-  "generatedAt": "2026-11-24T06:08:27+00:00",
+  "generatedAt": "2026-11-24T06:20:39+00:00",
   "asOf": "2026-10-31",
   "dataSource": "real",
   "companyName": "Ledgerline",
@@ -38,6 +38,36 @@
   "notes": [
    "No-vendor mode (Maya, 23 Nov): no AI provider is approved yet, so tickets are read with tags, status and simple rules run locally; nothing leaves Ledgerline's systems. On the same data the AI judges (redacted text) held all 14 disputed bills; this mode holds 12, sends 1 to a person and the last is a 92-day phone call anyway. No disputed bill gets an unchecked reminder.",
    "Payment status not recorded: failed card check skipped."
+  ],
+  "sources": [
+   {
+    "name": "QuickBooks Online",
+    "what": "AR aging, invoices, payments applied",
+    "how": "Read-only service account",
+    "signOff": "VP Finance (Dana Ruiz)",
+    "status": "Planned. This run: fallback export"
+   },
+   {
+    "name": "Zendesk",
+    "what": "Tickets from customers with an overdue bill; finance sees masked excerpts only",
+    "how": "Read-only service account",
+    "signOff": "Head of Support sets it up; COO signs off",
+    "status": "Planned. This run: fallback export"
+   },
+   {
+    "name": "Stripe and bank receipts",
+    "what": "Unmatched payments",
+    "how": "Read-only (Stripe is a finance tool already)",
+    "signOff": "VP Finance",
+    "status": "Planned. This run: fallback export"
+   },
+   {
+    "name": "Export upload",
+    "what": "Same files, dropped in by hand",
+    "how": "Fallback if a connection breaks",
+    "signOff": "None needed",
+    "status": "In use for this run (data room files)"
+   }
   ]
  },
  "summary": {
@@ -13666,7 +13696,7 @@
    }
   ],
   "failures": [],
-  "runtimeSeconds": 0.41
+  "runtimeSeconds": 0.44
  },
  "morningSummary": {
   "title": "Collections check, 2026-10-31",

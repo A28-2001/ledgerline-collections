@@ -207,7 +207,8 @@ def main() -> None:
     results = {
         "meta": {"generatedAt": datetime.now(timezone.utc).isoformat(timespec="seconds"), "asOf": as_of.date().isoformat(),
                  "dataSource": "sample" if args.data == "sample" else "real", "companyName": cfg["company_name"],
-                 "files": [{"name": k, "rows": v} for k, v in data.rows.items()], "aiMode": ai.mode, "notes": notes},
+                 "files": [{"name": k, "rows": v} for k, v in data.rows.items()], "aiMode": ai.mode, "notes": notes,
+                 "sources": cfg.get("sources", [])},
         "summary": {"overdueAmount": round(total, 2), "overdueCount": len(invoices), "byVerdict": by_verdict,
                     "byCause": by_cause, "shouldNotChaseAmount": round(no_chase, 2), "headline": headline},
         "invoices": invoices,

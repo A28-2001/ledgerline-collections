@@ -70,3 +70,14 @@ I'd switch yours off for the same kind of thing: chasing someone who's paid, or 
 **What it changes:**
 - Time saved, said honestly: the tool replaces the "asking around" step, which Maya estimates at 3 to 4 hours of the team's 16 a week. Labelled as her estimate, for Priya to confirm.
 - Month-1 test on the proof page, in her order: overdue dollars over 60 days (today's figure as the starting point), Priya opening it every morning, and zero customers chased who had paid or had a complaint open.
+
+## 7. Ticket access for finance, and how the data gets in
+
+**Us:** Two practical ones before I finish. Finance has no Zendesk access today. The tool needs read-only access to tickets from customers with an overdue bill, and it would show Priya the subject, status and a short excerpt with card and bank details masked. Is that OK, and who should sign off? And how should the data get in each morning: Priya exporting the AR aging from QuickBooks, or the tool pulling from QuickBooks and Zendesk directly?
+
+**Maya:** Read-only access with masked excerpts is fine by me, since it stays inside tools we already pay for and Priya needs that context. Support reports to me, so I'll sign off with our Head of Support, who owns Zendesk and will want to set up the access herself, and the VP Finance should approve the QuickBooks side. Pull directly from QuickBooks and Zendesk with read-only service accounts rather than relying on a morning export. A manual step is exactly what quietly stops happening when Priya's on leave, though keep an export upload as a fallback if the connection breaks.
+
+**What it changes:**
+- Every ticket subject and excerpt finance sees is masked (card numbers, bank details, emails, phone numbers), not just what an AI would read.
+- Production data path: read-only service accounts for QuickBooks (VP Finance approves) and Zendesk (Head of Support sets it up; Maya signs off). The export folder stays as the fallback. This run used the fallback (the data room files).
+- The proof page lists each source, how it connects, and who signs it off.

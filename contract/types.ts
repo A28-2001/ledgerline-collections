@@ -119,6 +119,7 @@ export interface Results {
     files: { name: string; rows: number }[];
     aiMode: "groq" | "rules_only";
     notes: string[]; // e.g. "Failed card payments not recorded, check skipped"
+    sources?: { name: string; what: string; how: string; signOff: string; status: string }[];
   };
   summary: {
     overdueAmount: number;

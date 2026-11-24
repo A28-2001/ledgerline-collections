@@ -20,6 +20,7 @@ import pandas as pd
 
 from load import Data
 from match import Matcher
+from ai import redact  # every ticket excerpt finance sees is masked (Maya, 24 Nov)
 
 BILLING_RX = re.compile(  # about what WE charged THEM (the product itself is billing software)
     r"(over)?charged (us|me|twice)|billed (us|me|twice|annual|for)|your invoice|ledgerline invoice|our (subscription|renewal|invoice from)|"
@@ -337,7 +338,7 @@ class Engine:
                 body = (t.get("body") or "")
                 ev.append({"id": eid, "kind": "ticket", "file": self.cfg["files"]["tickets"]["file"], "recordId": str(t["id"]),
                            "date": iso(t.get("created")), "status": t.get("status") or "",
-                           "title": t.get("subject") or "(no subject)", "detail": body[:400] + ("…" if len(body) > 400 else "")})
+                           "title": redact(t.get("subject") or "(no subject)"), "detail": redact(body)[:400] + ("…" if len(body) > 400 else "")})
                 if t.get("agreement"):
                     row.votes = t["agreement"]["votes"]
                 names_bill = row.key and row.key in t.get("invoice_refs", set())
@@ -402,8 +403,8 @@ class Engine:
                     if not any(e["id"] == eid for e in ev):
                         body = t.get("body") or ""
                         ev.append({"id": eid, "kind": "ticket", "file": self.cfg["files"]["tickets"]["file"], "recordId": str(t["id"]),
-                                   "date": iso(t.get("created")), "status": t.get("status") or "", "title": t.get("subject") or "(no subject)",
-                                   "detail": body[:400] + ("…" if len(body) > 400 else "")})
+                                   "date": iso(t.get("created")), "status": t.get("status") or "", "title": redact(t.get("subject") or "(no subject)"),
+                                   "detail": redact(body)[:400] + ("…" if len(body) > 400 else "")})
                     waited = (self.as_of - t["created"]).days if pd.notna(t.get("created")) else 0
                     row.flags["open_ticket_hold"] = True
                     rs.insert(0, {"text": f"They have a ticket {t.get('status') or 'open'} in Zendesk since {nice(t['created'])} ({waited} days). "
@@ -684,7 +685,7 @@ class Engine:
         for t in sorted(tickets.get(cid, []), key=lambda t: t.get("created") or self.as_of, reverse=True)[:12]:
             tk.append({"id": f"ticket:{t['id']}", "kind": "ticket", "file": self.cfg["files"]["tickets"]["file"],
                        "recordId": str(t["id"]), "date": iso(t.get("created")), "status": t.get("status") or "",
-                       "title": t.get("subject") or "", "detail": (t.get("body") or "")[:300]})
+                       "title": redact(t.get("subject") or ""), "detail": redact(t.get("body") or "")[:300]})
         kk = []
         k = self.t["contracts"]
         for r in k[k["customer_id"].astype(str) == cid].to_dict("records") if len(k) else []:

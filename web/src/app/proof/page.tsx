@@ -136,6 +136,41 @@ export default function ProofPage() {
         </Card>
       )}
 
+      {meta.sources && meta.sources.length > 0 && (
+        <Card className="mt-6">
+          <CardHeader>
+            <CardTitle className="leading-snug">Where the data comes from, and who signs it off</CardTitle>
+            <CardDescription>Read-only connections, so nothing depends on someone remembering a morning export. Every ticket excerpt finance sees is masked.</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="overflow-x-auto">
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead>Source</TableHead>
+                    <TableHead>What the tool reads</TableHead>
+                    <TableHead>How</TableHead>
+                    <TableHead>Signs off</TableHead>
+                    <TableHead>Status</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {meta.sources.map((src) => (
+                    <TableRow key={src.name}>
+                      <TableCell className="font-medium">{src.name}</TableCell>
+                      <TableCell className="min-w-48 whitespace-normal text-muted-foreground">{src.what}</TableCell>
+                      <TableCell className="whitespace-normal">{src.how}</TableCell>
+                      <TableCell className="whitespace-normal">{src.signOff}</TableCell>
+                      <TableCell className="whitespace-normal text-muted-foreground">{src.status}</TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </div>
+          </CardContent>
+        </Card>
+      )}
+
       {results.autoSend && <TrustLadder data={results.autoSend} invoices={invoices} />}
 
       <Card className="mt-6">

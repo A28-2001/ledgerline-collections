@@ -72,3 +72,15 @@ Short and natural, one at a time. Write down her exact answer in `worklog.md`.
 - **What changes:**
   - "Cash": borderline cases become Send.
   - "Calm": borderline cases become Hold, and renewal dates show on every invoice.
+
+## Still open after six answers (12:45 am): checked against every rule the tool assumes
+
+| Assumption in the tool | Source today | Question |
+|---|---|---|
+| Finance may see ticket subjects and excerpts | Our assumption. tool_stack.md: "Finance has no access to Zendesk" | 7a |
+| Data arrives as daily exports | Our assumption | 7b |
+| Account manager gets 5 working days on an open-ticket pause | Copied from Maya's dispute answer | 8a |
+| Nudges go by email / morning message | Our assumption; Maya said Slack is where chasing happens | 8a |
+| Priya confirms probably-paid bills | Our assumption. FIN-2 owner is Marcus Bell (cash application) | 8b |
+| Failed cards: a person asks for a new card; flag before the 150-day auto write-off | Our assumption | 9a |
+| Anything else | | 9b |

@@ -106,6 +106,14 @@ auto_send:
   max_days: 45          # first or second reminder only (policy: reminders at 7 and 21 days)
   max_amount: 5000      # Maya: start at under $5,000; Priya can change it in the app (start tight, loosen later)
 
+# How the data gets in (Maya, 24 Nov): read-only service accounts, not a morning export.
+# The export folder stays as the fallback when a connection breaks. This run used the fallback.
+sources:
+  - {name: QuickBooks Online, what: "AR aging, invoices, payments applied", how: "Read-only service account", signOff: "VP Finance (Dana Ruiz)", status: "Planned. This run: fallback export"}
+  - {name: Zendesk, what: "Tickets from customers with an overdue bill; finance sees masked excerpts only", how: "Read-only service account", signOff: "Head of Support sets it up; COO signs off", status: "Planned. This run: fallback export"}
+  - {name: Stripe and bank receipts, what: "Unmatched payments", how: "Read-only (Stripe is a finance tool already)", signOff: "VP Finance", status: "Planned. This run: fallback export"}
+  - {name: Export upload, what: "Same files, dropped in by hand", how: "Fallback if a connection breaks", signOff: "None needed", status: "In use for this run (data room files)"}
+
 trend_markers:
   - {month: "2026-03", label: Billing engine rewrite (16 Mar)}
 
