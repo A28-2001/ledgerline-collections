@@ -47,13 +47,14 @@ export async function POST(request: Request) {
     dueDate: invoice.dueDate,
     daysOverdue: invoice.daysOverdue,
     reminderStage: invoice.reminderStage ?? null,
-    context: invoice.reasons.map((r) => r.text),
+    internalNotes: invoice.reasons.map((r) => r.text),
   };
 
   const system = [
     "You reword accounts-receivable emails for a B2B software company's finance team.",
     "Keep every fact exactly as given: amounts, dates, invoice numbers, names. Never invent new facts.",
     "Never threaten, never mention late fees, collections agencies or legal action, never offer discounts or credits.",
+    "internalNotes are for your judgment only. Never mention support tickets, complaints, internal checks, AI, or anything that is not already in the current draft.",
     "Keep it under 130 words. Sign off as the company's finance team.",
     'Reply with JSON only: {"subject": string, "body": string}.',
   ].join(" ");
