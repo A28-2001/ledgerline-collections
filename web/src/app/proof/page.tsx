@@ -2,6 +2,7 @@ import { CircleCheck, CircleX, FlaskConical, Info } from "lucide-react";
 import type { Metadata } from "next";
 import { Gauge, ShareBars, SplitBar } from "@/components/charts/charts";
 import { EmptyState } from "@/components/shared/empty-state";
+import { TrustLadder } from "@/components/shared/trust-ladder";
 import { PageHeader } from "@/components/shared/page-header";
 import { VerdictBadge } from "@/components/shared/verdict-badge";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -107,11 +108,13 @@ export default function ProofPage() {
                 </p>
               </>
             ) : (
-              <EmptyState title="Rules only" description="Ticket reading used keyword rules. Add an AI key and re-run to turn the double-check on." />
+              <EmptyState title="No-vendor mode" description="No AI provider is approved yet (COO, 23 Nov), so tickets were read with tags, status and local rules. Nothing left the company. The AI double-check switches on once legal approves a provider." />
             )}
           </CardContent>
         </Card>
       </div>
+
+      {results.autoSend && <TrustLadder data={results.autoSend} />}
 
       <Card className="mt-6">
         <CardHeader>

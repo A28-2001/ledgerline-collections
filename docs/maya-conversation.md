@@ -37,3 +37,16 @@ I'd switch yours off for the same kind of thing: chasing someone who's paid, or 
 - Production default is now no-vendor mode: ticket tags, status and simple rules run locally; nothing leaves Ledgerline's systems. Measured on the real data: 12 of the 14 disputed bills held, 1 sent to a person (tagged billing), the last ($2,652) is 92 days late so it's a phone call anyway. No disputed bill gets an unchecked reminder. Cost: 18 bills in Check first instead of 10.
 - Provider for legal: Amazon Bedrock in Ledgerline's existing AWS account (AWS is already a vendor; legal to confirm the existing terms cover it). AWS states Bedrock doesn't use prompts or completions to train models or share them with third parties. Groq (used in the demo) is a new vendor: it offers a DPA, says it doesn't train on customer data, and has zero data retention, but it would need that DPA first.
 - The AI step stays one swappable function: switch `ai.ticket_text` to `redacted` and point it at the approved provider once legal signs off.
+
+## 4. Could routine reminders ever go out on their own
+
+**Us:** (sent the no-vendor result and the Bedrock recommendation) Next: once it agrees with Priya most of the time, could small routine reminders go out on their own? What must always stay with a person?
+
+**Maya:** Possibly, but not on a percentage alone. I'd want a month of Priya's approvals on record showing she almost never changed those reminders, and then only for small, polite, first-or-second reminders to customers outside the top 50 with no open ticket and no unmatched payment. Anything top-50, anything disputed or "probably paid," anything firmer than a friendly nudge, and every phone call stays with a person, permanently, because one bad email undoes all of it. Priya or Dana also needs to be able to see why each one went out and turn auto-send off herself in a click. Send me the Bedrock note today and I'll get it in front of legal this week.
+
+**What it changes:**
+- The trust ladder, in her words. Auto-send stays off until a month of Priya's approvals is on record showing she almost never changed those reminders.
+- Even then, only: small, polite, first or second reminders, customers outside the top 50, no open ticket, no unmatched payment.
+- Permanently with a person: top-50 accounts, disputed or probably-paid bills, anything firmer than a friendly nudge, every phone call.
+- Each bill shows whether it could ever be auto-sent and why not. Priya or Dana can see why each one went out and turn auto-send off in one click.
+- Open: what counts as "small" (ask her).

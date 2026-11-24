@@ -87,6 +87,12 @@ ai:
     openai/gpt-oss-120b: {reasoning_effort: low}
   max_tokens: 300    # room for the model's hidden reasoning; the answer itself is one word
 
+# Maya's trust ladder (23 Nov). Auto-send is OFF and stays off until days_on_record of Priya's approvals exist.
+auto_send:
+  days_on_record: 30
+  max_days: 45          # first or second reminder only (policy: reminders at 7 and 21 days)
+  max_amount: null      # "small": not set yet, Maya to confirm
+
 trend_markers:
   - {month: "2026-03", label: Billing engine rewrite}
 

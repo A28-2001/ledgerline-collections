@@ -53,6 +53,7 @@ export interface Invoice {
   hold?: { owner: string; ownerRole: string; deadline: string; action: string };
   draft?: { to: string; subject: string; body: string; tone: Tone };
   reminderStage?: string; // e.g. "Second reminder"
+  autoSend?: { eligible: boolean; why: string; permanent: boolean }; // Maya's trust ladder
 }
 
 export interface CustomerAlias {
@@ -141,4 +142,14 @@ export interface Results {
     runtimeSeconds: number;
   };
   morningSummary: { title: string; bullets: string[]; text: string };
+  autoSend?: {
+    on: boolean;
+    daysOnRecord: number;
+    daysNeeded: number;
+    maxAmount: number | null;
+    eligibleCount: number;
+    eligibleAmount: number;
+    permanentCount: number;
+    rule: string;
+  };
 }

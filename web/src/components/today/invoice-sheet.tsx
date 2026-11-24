@@ -251,6 +251,14 @@ function InvoiceDetail({
                 )}
               </div>
             )}
+            {inv.autoSend && (
+              <p className="mt-2 text-xs text-muted-foreground">
+                <span className="font-medium text-foreground">Auto-send:</span>{" "}
+                {inv.autoSend.eligible
+                  ? "could go out on its own once the trust ladder is on. Today a person approves it."
+                  : `${inv.autoSend.permanent ? "never" : "not now"}. ${inv.autoSend.why}.`}
+              </p>
+            )}
             <p className="mt-2 text-[11px] text-muted-foreground/80">
               Invoice <span className="font-mono">{inv.id}</span>
             </p>

@@ -214,6 +214,18 @@ def main() -> None:
                   "accuracy": acc, "agreementRate": round(ai.agreements / ai.judgments, 4) if ai.judgments else None,
                   "verifiedNumbers": vn, "failures": failures[:12], "runtimeSeconds": round(time.time() - t0, 2)},
         "morningSummary": morning,
+        "autoSend": {
+            "on": False,
+            "daysOnRecord": 0,
+            "daysNeeded": int(cfg.get("auto_send", {}).get("days_on_record", 30)),
+            "maxAmount": cfg.get("auto_send", {}).get("max_amount"),
+            "eligibleCount": sum(1 for i in invoices if i.get("autoSend", {}).get("eligible")),
+            "eligibleAmount": round(sum(i["amount"] for i in invoices if i.get("autoSend", {}).get("eligible")), 2),
+            "permanentCount": sum(1 for i in invoices if i.get("autoSend", {}).get("permanent")),
+            "rule": "Maya (COO): only after a month of Priya's approvals on record showing she almost never changed them; only small, polite "
+                    "first or second reminders outside the top 50 with no open ticket and no unmatched payment. Top-50, disputed, probably paid, "
+                    "anything firmer than a friendly nudge and every phone call stay with a person permanently. Priya or Dana can switch it off in one click.",
+        },
     }
 
     out_dir = ROOT / "data" / "cache"

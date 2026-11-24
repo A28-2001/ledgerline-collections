@@ -615,6 +615,7 @@ class Engine:
                 out["agreement"] = {"agree": len({v["answer"] for v in row.votes[1:]}) == 1, "votes": row.votes}
             if hold:
                 out["hold"] = hold
+            out["autoSend"] = self._auto_send(row, verdict, tone, cid, tickets)
             invoices_out.append({k: v for k, v in out.items() if v is not None})
             row.verdict = verdict
 
@@ -629,6 +630,43 @@ class Engine:
                     al.append({"system": system, "name": raw, "matchedBy": m.method, "score": round(float(m.score), 3)})
         self._attach_payments(cust_out)
         return {"invoices": invoices_out, "customers": cust_out, "rows": rows}
+
+    def _auto_send(self, row: Row, verdict: str, tone: str, cid, tickets) -> dict:
+        """Maya's trust ladder. Whether this bill could ever go out without Priya clicking, and if not, why not.
+        Even when eligible, nothing is auto-sent until a month of approvals is on record and Priya or Dana turns it on."""
+        a = self.cfg.get("auto_send", {})
+        never = []
+        if verdict == "call":
+            never.append("every phone call stays with a person")
+        if verdict in ("hold",):
+            never.append("disputed or held bills stay with a person")
+        if verdict == "paid" or row.flags.get("recent_payment"):
+            never.append("probably-paid bills, or customers with an unmatched payment, stay with a person")
+        if cid in self.top_accounts:
+            never.append("top-50 accounts stay with a person")
+        if never:
+            return {"eligible": False, "why": never[0][0].upper() + never[0][1:], "permanent": True}
+        why = []
+        if tone != "standard":
+            why.append("card follow-ups and softer notes stay with a person" if tone == "card_update" else "customer has an open ticket")
+        if any(t.get("is_open") for t in tickets.get(cid, [])):
+            why.append("customer has an open ticket")
+        if row.days >= int(a.get("max_days", 45)):
+            why.append("past the second reminder: anything firmer stays with a person")
+        if row.needs_review:
+            why.append("in Check first")
+        cap = a.get("max_amount")
+        if cap is None:
+            size = "size limit not set yet (Maya to confirm what counts as small)"
+        elif row.amount > float(cap):
+            why.append(f"over the {money(float(cap))} limit for small reminders")
+            size = None
+        else:
+            size = None
+        if why:
+            return {"eligible": False, "why": why[0][0].upper() + why[0][1:], "permanent": False}
+        return {"eligible": True, "why": "Small, polite first or second reminder; outside the top 50; no open ticket; no unmatched payment"
+                + (f"; {size}" if size else ""), "permanent": False}
 
     def _customer(self, cid, customers, tickets) -> dict:
         c = customers.loc[cid]
