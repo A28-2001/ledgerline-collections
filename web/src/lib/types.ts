@@ -160,7 +160,7 @@ export interface Results {
     runtimeSeconds: number;
     reviewLog?: {
       summary: string;
-      entries: { invoice: string; customer: string; amount: number; toolSaid: string; shouldBe: string; foundBy: string; why: string; change: string; status: "fixed" | "confirm" | "deliberate" | "open"; differsBecause?: string; differsShort?: string }[];
+      entries: { invoice: string; customer: string; amount: number; toolSaid: string; shouldBe: string; foundBy: string; why: string; change: string; status: "fixed" | "confirm" | "deliberate" | "open"; differsBecause?: string; differsShort?: string; toolNow?: string; reviewerSaid?: string }[];
     } | null;
   };
   morningSummary: {

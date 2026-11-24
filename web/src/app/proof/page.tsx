@@ -28,11 +28,14 @@ function StatusBadge({ status }: { status: Entry["status"] }) {
   );
 }
 
-// One line per miss: who, what happened to it, and what changed.
+// One line per miss: who, which check found it, what happened to it, and what changed.
 function MissRow({ e }: { e: Entry }) {
   return (
-    <li className="grid gap-1 px-3 py-2.5 text-sm sm:grid-cols-[minmax(0,13rem)_8.5rem_minmax(0,1fr)] sm:items-baseline sm:gap-3">
-      <span className="truncate font-medium">{e.customer}</span>
+    <li className="grid gap-1 px-3 py-2.5 text-sm lg:grid-cols-[minmax(0,13rem)_8.5rem_minmax(0,1fr)] lg:items-baseline lg:gap-3">
+      <span className="min-w-0">
+        <span className="block truncate font-medium">{e.customer}</span>
+        <span className="block text-[11px] leading-snug text-muted-foreground">{e.foundBy}</span>
+      </span>
       <StatusBadge status={e.status} />
       <span className="text-xs leading-relaxed text-muted-foreground">{e.change}</span>
     </li>
@@ -49,10 +52,17 @@ function MissItem({ e }: { e: Entry }) {
         {e.differsBecause && e.status !== "deliberate" && (
           <span className="rounded-full border px-2 text-[11px] text-muted-foreground">Differs from the reviewer on purpose</span>
         )}
-        {e.toolSaid !== "-" && (
+        {e.toolNow && e.reviewerSaid ? (
           <span className="text-xs text-muted-foreground">
-            said {e.toolSaid}, should be {e.shouldBe}
+            Tool: <span className="font-medium text-foreground">{e.toolNow}</span> · Reviewer:{" "}
+            <span className="font-medium text-foreground">{e.reviewerSaid}</span>
           </span>
+        ) : (
+          e.toolSaid !== "-" && (
+            <span className="text-xs text-muted-foreground">
+              tool said {e.toolSaid}, should be {e.shouldBe}
+            </span>
+          )
         )}
       </div>
       <p className="mt-1.5 leading-relaxed">{e.why}</p>
@@ -69,35 +79,7 @@ export default function ProofPage() {
   const crossOk = cross.filter((v) => v.ok).length;
   const up = proof.aiUplift;
 
-  // The bills that still differ from the review come first, so "explained below" is the first thing below.
-  const ordered = [...(log?.entries ?? [])].sort((a, b) => Number(!!b.differsBecause) - Number(!!a.differsBecause));
   const firstPass = (log?.entries ?? []).filter((e) => e.foundBy === "Independent review, first pass").length;
-  const sources = (log?.entries ?? []).reduce<{ by: string; n: number; fixed: number; confirm: number; kept: number; open: number }[]>((acc, e) => {
-    let row = acc.find((r) => r.by === e.foundBy);
-    if (!row) {
-      row = { by: e.foundBy, n: 0, fixed: 0, confirm: 0, kept: 0, open: 0 };
-      acc.push(row);
-    }
-    row.n += 1;
-    if (e.status === "fixed") row.fixed += 1;
-    else if (e.status === "confirm") row.confirm += 1;
-    else if (e.status === "deliberate") row.kept += 1;
-    else row.open += 1;
-    return acc;
-  }, []);
-  const split = (r: { fixed: number; confirm: number; kept: number; open: number }) =>
-    [
-      r.fixed && `${r.fixed} fixed`,
-      r.confirm && `${r.confirm} for Maya to confirm`,
-      r.kept && `${r.kept} kept on purpose`,
-      r.open && `${r.open} still open`,
-    ]
-      .filter(Boolean)
-      .join(", ");
-  const totals = sources.reduce(
-    (t, r) => ({ fixed: t.fixed + r.fixed, confirm: t.confirm + r.confirm, kept: t.kept + r.kept, open: t.open + r.open }),
-    { fixed: 0, confirm: 0, kept: 0, open: 0 },
-  );
 
   const guards = [
     {
@@ -182,56 +164,26 @@ export default function ProofPage() {
                 </div>
               </div>
             </div>
-            <p className="mt-3 text-xs leading-relaxed text-muted-foreground">
-              Of the {firstPass} first-pass differences, {fixedLater} now agree. Eastman &amp; Wexler was kept on purpose; Kingsway was fixed, then
-              held again because one payment fits two of its bills. The {log.entries.length} misses below are those {firstPass}, plus{" "}
-              {log.entries.length - firstPass} found another way.
-            </p>
             <p className="mt-4 w-fit rounded-full border border-dashed px-3 py-1 text-xs text-muted-foreground">
               Same {total} bills the rules were fixed on. The fresh test is the shadow week: new bills, and nothing goes out from the tool.
             </p>
 
-            <Tabs defaultValue="differ" className="mt-5">
-              <TabsList className="h-auto flex-wrap group-data-horizontal/tabs:h-auto">
-                <TabsTrigger value="differ">{differ} still differ</TabsTrigger>
-                <TabsTrigger value="all">All {log.entries.length} misses</TabsTrigger>
-                <TabsTrigger value="source">Where they came from</TabsTrigger>
-              </TabsList>
-              <TabsContent value="differ">
-                <ol className="space-y-3">
-                  {ordered
-                    .filter((e) => e.differsBecause)
-                    .map((e, idx) => (
-                      <MissItem key={`${e.invoice}-${idx}`} e={e} />
-                    ))}
-                </ol>
-              </TabsContent>
-              <TabsContent value="all">
-                <ul className="divide-y rounded-lg border">
-                  {ordered.map((e, idx) => (
-                    <MissRow key={`${e.invoice}-${idx}`} e={e} />
-                  ))}
-                </ul>
-              </TabsContent>
-              <TabsContent value="source">
-                <ul className="divide-y rounded-lg border text-sm" aria-label="Where every miss came from">
-                  {sources.map((r) => (
-                    <li key={r.by} className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-0.5 px-3 py-2">
-                      <span>{r.by}</span>
-                      <span className="tabular text-muted-foreground">
-                        <span className="font-medium text-foreground">{r.n}</span> · {split(r)}
-                      </span>
-                    </li>
-                  ))}
-                  <li className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-0.5 bg-muted/40 px-3 py-2 font-medium">
-                    <span>Every miss</span>
-                    <span className="tabular">
-                      {log.entries.length} · {split(totals)}
-                    </span>
-                  </li>
-                </ul>
-              </TabsContent>
-            </Tabs>
+            <h3 className="mt-6 text-sm font-semibold">The {differ} that differ, on purpose</h3>
+            <ol className="mt-2 space-y-3">
+              {log.entries
+                .filter((e) => e.differsBecause)
+                .map((e, idx) => (
+                  <MissItem key={`${e.invoice}-${idx}`} e={e} />
+                ))}
+            </ol>
+
+            <h3 className="mt-6 text-sm font-semibold">All {log.entries.length} misses from every check, and what changed</h3>
+            <ul className="mt-2 divide-y rounded-lg border">
+              {log.entries.map((e, idx) => (
+                <MissRow key={`${e.invoice}-${idx}`} e={e} />
+              ))}
+            </ul>
+
           </CardContent>
         </Card>
       )}

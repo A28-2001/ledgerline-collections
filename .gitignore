@@ -16,3 +16,6 @@ node_modules/
 out/
 .vercel
 .DS_Store
+
+# Hand-in exports (kept out of the repo)
+hand-in/

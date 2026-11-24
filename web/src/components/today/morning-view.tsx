@@ -170,7 +170,7 @@ export function MorningView({ data }: { data: Pick<Results, "invoices" | "summar
     if (v === "paid") return "Hand to Marcus";
     if (v === "send") return inv.draft?.combinedWith ? "Approve: goes in one email" : "Approve this reminder";
     if (v === "call") return "Add to the call list";
-    if (/^too early/i.test(inv.headline)) return "OK, wait";
+    if (isTooEarly(inv)) return "OK, wait";
     if (inv.hold?.ownerRole.startsWith("Finance")) return "Keep it: yours to fix";
     return `Hand to ${inv.hold?.owner ?? "the owner"}`;
   }
@@ -255,10 +255,11 @@ export function MorningView({ data }: { data: Pick<Results, "invoices" | "summar
   const emailBills = readyEmails.reduce((t, i) => t + 1 + alsoIn(i).length, 0); // one email per customer
   const currentStep = steps.find((s) => s.def.verdict === current);
 
-  // The pipeline: one tile per step, all in view. The big number is what's left; the bar is what's done.
+  // The pipeline: one tile per step, all in view. The big number is bills left; the small line says how many of
+  // the day's decisions the tile holds, so the tiles add up to the header's count. Money lives in the bar above.
   const tiles: TileData[] = [
     ...(flagged.length > 0
-      ? [{ key: "check" as StepKey, label: "Check first", icon: Flag, color: "var(--alert)", left: openGroups.length, total: allGroups.length, amount: sumAmount(flagged), done: flaggedOpen.length === 0 }]
+      ? [{ key: "check" as StepKey, label: "Check first", icon: Flag, color: "var(--alert)", left: flaggedOpen.length, total: flagged.length, note: pluralize(allGroups.length, "decision"), done: flaggedOpen.length === 0 }]
       : []),
     ...steps.map((st) => ({
       key: st.def.verdict as StepKey,
@@ -267,12 +268,12 @@ export function MorningView({ data }: { data: Pick<Results, "invoices" | "summar
       color: VERDICT_META[st.def.verdict].chart,
       left: st.undecided.length,
       total: st.items.length,
-      amount: sumAmount(st.items),
+      note: st.items.length > 0 && invoices.some((i) => i.verdict === st.def.verdict && !i.needsReview) ? "1 decision" : "",
       done: st.done && st.items.length > 0,
     })),
-    { key: "finish", label: "Done", icon: Send, color: "var(--foreground)", left: decisionsLeft, total: totalDecisions, amount: 0, done: allDone },
+    { key: "finish", label: "Decisions done", icon: Send, color: "var(--foreground)", left: decisionsLeft, total: totalDecisions, note: "", done: allDone },
     ...(myDisputes.length > 0
-      ? [{ key: "dispute" as StepKey, label: "Then: the day's disputes", icon: FileWarning, color: "var(--cause-wrong-bill)", left: disputesOpen.length, total: myDisputes.length, amount: sumAmount(myDisputes), done: disputesOpen.length === 0 }]
+      ? [{ key: "dispute" as StepKey, label: "Then: the day's disputes", icon: FileWarning, color: "var(--cause-wrong-bill)", left: disputesOpen.length, total: myDisputes.length, note: `after the ${totalDecisions}`, done: disputesOpen.length === 0 }]
       : []),
   ];
   const active: StepKey = tiles.some((t) => t.key === expanded) ? expanded : current;
@@ -344,7 +345,7 @@ export function MorningView({ data }: { data: Pick<Results, "invoices" | "summar
           </div>
         ) : (
           <>
-            <div role="tablist" aria-label="Steps" className="-mx-1 mt-3 flex gap-2 overflow-x-auto px-1 pt-2.5 pb-2 lg:grid lg:grid-cols-7 lg:overflow-visible">
+            <div role="tablist" aria-label="Steps" className="mt-3 grid grid-cols-2 gap-2 pt-2.5 pb-2 sm:grid-cols-4 lg:grid-cols-7">
               {tiles.map((t) => (
                 <StepTile key={t.key} tile={t} active={active === t.key} next={current === t.key && active !== t.key} onSelect={() => setOpenStep(t.key)} />
               ))}
@@ -382,7 +383,9 @@ export function MorningView({ data }: { data: Pick<Results, "invoices" | "summar
                         sub={
                           shadow && activeKey === "send"
                             ? "Nothing blocks these. Compare each with your own call; agreeing with all at once is marked as such in the list. Nothing goes out this week."
-                            : activeStep.def.explain
+                            : activeKey === "hold"
+                              ? holdExplain(activeStep.items)
+                              : activeStep.def.explain
                         }
                         amount={activeStep.items.length ? formatMoney(sumAmount(activeStep.items)) : undefined}
                         icon={<ActiveIcon className="size-4" style={{ color: VERDICT_META[activeKey].chart }} aria-hidden="true" />}
@@ -635,9 +638,20 @@ export function MorningView({ data }: { data: Pick<Results, "invoices" | "summar
   );
 }
 
-type TileData = { key: StepKey; label: string; icon: LucideIcon; color: string; left: number; total: number; amount: number; done: boolean };
+type TileData = { key: StepKey; label: string; icon: LucideIcon; color: string; left: number; total: number; note: string; done: boolean };
 
-// One step of the morning as a tile: what's left (big), the money, and a bar for what's done, in the answer's colour.
+const isTooEarly = (i: Invoice) => /^too early/i.test(i.headline);
+
+// The hold step mixes bills that go to an owner with bills that are simply too early for a reminder: say which is which.
+function holdExplain(items: Invoice[]): string {
+  const early = items.filter(isTooEarly).length;
+  const owned = items.length - early;
+  if (!early) return STEPS[1].explain;
+  const ownedText = owned ? `${owned} ${owned === 1 ? "goes" : "go"} to an owner with a deadline and ${owned === 1 ? "comes" : "come"} back to you if nobody acts; ` : "";
+  return `Don't chase these yet. ${ownedText}${early} ${early === 1 ? "is" : "are"} too early for a reminder and simply ${early === 1 ? "waits" : "wait"}.`;
+}
+
+// One step of the morning as a tile: bills left (big), the decisions it holds, and a bar for what's done, in the answer's colour.
 function StepTile({ tile, active, next, onSelect }: { tile: TileData; active: boolean; next: boolean; onSelect: () => void }) {
   const Icon = tile.icon;
   const isFinish = tile.key === "finish";
@@ -652,7 +666,8 @@ function StepTile({ tile, active, next, onSelect }: { tile: TileData; active: bo
       aria-controls="step-panel"
       onClick={onSelect}
       className={cn(
-        "relative flex min-w-[9.25rem] flex-col gap-1.5 rounded-xl border bg-card p-3 text-left outline-none transition-[background-color,box-shadow] focus-visible:ring-2 focus-visible:ring-ring/50 lg:min-w-0",
+        "relative flex min-w-0 flex-col gap-1.5 rounded-xl border bg-card p-3 text-left outline-none transition-[background-color,box-shadow] focus-visible:ring-2 focus-visible:ring-ring/50",
+        tile.key === "dispute" && "col-span-2 sm:col-span-1",
         !active && "hover:bg-muted/50",
         empty && "opacity-60",
       )}
@@ -674,7 +689,7 @@ function StepTile({ tile, active, next, onSelect }: { tile: TileData; active: bo
           {isFinish
             ? tile.done
               ? "save the list"
-              : `of ${tile.total} done`
+              : `of ${tile.total}`
             : empty
               ? "nothing today"
               : tile.done
@@ -682,7 +697,7 @@ function StepTile({ tile, active, next, onSelect }: { tile: TileData; active: bo
                 : `of ${tile.total} left`}
         </span>
       </span>
-      <span className="tabular text-xs font-medium">{tile.amount ? formatMoney(tile.amount, "USD", true) : "\u00a0"}</span>
+      <span className="tabular truncate text-xs font-medium">{tile.note || "\u00a0"}</span>
       <span className="h-1 overflow-hidden rounded-full bg-muted" aria-hidden="true">
         <span className="block h-full rounded-full transition-[width] duration-500" style={{ width: `${pct}%`, background: tile.color }} />
       </span>

@@ -21,9 +21,12 @@ export function MoneyBar({ invoices, onSelect }: { invoices: Invoice[]; onSelect
   // How each answer maps onto the step tiles below: disputes are Priya's own step; some bills wait in Check first.
   const disputes = invoices.filter((i) => i.verdict === "hold" && i.cause === "wrong_bill" && Boolean(i.hold?.ownerRole.startsWith("Finance"))).length;
   const inCheck = (v: Verdict) => invoices.filter((i) => i.verdict === v && i.needsReview).length;
+  // A bill under 7 days late isn't handed to anyone: it simply waits for its first reminder.
+  const early = invoices.filter((i) => i.verdict === "hold" && /^too early/i.test(i.headline)).length;
+  const handoffs = s.byVerdict.hold.count - disputes - early;
   const link: Record<Verdict, string> = {
     paid: "",
-    hold: disputes ? `${disputes} disputes · ${s.byVerdict.hold.count - disputes} hand-offs` : "",
+    hold: disputes ? `${disputes} disputes · ${pluralize(handoffs, "hand-off")}${early ? ` · ${early} too early` : ""}` : "",
     send: inCheck("send") ? `${inCheck("send")} in Check first` : "",
     call: inCheck("call") ? `${inCheck("call")} in Check first` : "",
   };
@@ -107,7 +110,7 @@ export function MoneyBar({ invoices, onSelect }: { invoices: Invoice[]; onSelect
             <span className="absolute inset-0" style={HATCH} />
           </span>
           <span>
-            <span className="tabular font-medium text-foreground">{formatMoney(s.unsureAmount)}</span> of the holds paused: the AI
+            <span className="tabular font-medium text-foreground">{formatMoney(s.unsureAmount)}</span> of the holds paused: the tool
             wasn&apos;t sure
           </span>
         </p>

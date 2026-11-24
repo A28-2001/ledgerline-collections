@@ -97,7 +97,7 @@
       "shouldBe": "send",
       "foundBy": "Independent review, first pass",
       "why": "A normal-priority question, pending since July: support is waiting on the customer.",
-      "change": "Confirmed by Maya (24 Nov): a pending ticket pauses the reminder only if it's about money, urgent, or waiting on us. Otherwise a softer reminder, and the account manager is told.",
+      "change": "Confirmed by Maya (24 Nov): a pending ticket pauses the reminder only if it's about money, urgent, or waiting on us. Otherwise a softer reminder, and the account manager is told. Kingsway's newer bill still waits, for another reason: one payment fits two of its bills.",
       "status": "fixed"
     },
     {
@@ -122,7 +122,9 @@
       "change": "Kept on purpose: a ticket waiting on us still pauses the reminder, and it's a top-50 account, so a person reads it anyway.",
       "status": "deliberate",
       "differsBecause": "a ticket waiting on us still pauses the reminder, and it's a top-50 account, so a person reads it anyway.",
-      "differsShort": "kept on purpose"
+      "differsShort": "kept on purpose",
+      "toolNow": "hold",
+      "reviewerSaid": "send"
     },
     {
       "invoice": "INV-25852",
@@ -131,11 +133,13 @@
       "toolSaid": "send",
       "shouldBe": "hold until Marcus confirms",
       "foundBy": "A second check by hand",
-      "why": "One $5,100 payment with a blank memo, and two $5,100 bills. The tool assumed it paid the older one, so the newer one would have got a reminder. The first hand check missed it.",
-      "change": "The second bill now waits for Marcus, who is asked which bill the payment covers. The reviewer assumed the payment paid the older bill, so this is one of the 2 bills where we differ from it on purpose.",
+      "why": "On the first pass it differed over a pending ticket, a rule Maya has since settled. A second check by hand then found one $5,100 payment with a blank memo and two $5,100 bills: the tool had assumed it paid the older one, so the newer one would have got a reminder. The first hand check missed it.",
+      "change": "The newer bill now waits for Marcus, who is asked which bill the payment covers. The reviewer assumed the payment paid the older bill, so here we differ from it on purpose.",
       "status": "fixed",
       "differsBecause": "one $5,100 payment could pay either of two bills, so Marcus confirms which before anyone is chased.",
-      "differsShort": "fixed after a hand check: one payment, two bills"
+      "differsShort": "fixed after a hand check: one payment, two bills",
+      "toolNow": "hold until Marcus confirms",
+      "reviewerSaid": "send"
     },
     {
       "invoice": "-",

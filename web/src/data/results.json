@@ -1,6 +1,6 @@
 {
  "meta": {
-  "generatedAt": "2026-11-24T20:49:02+00:00",
+  "generatedAt": "2026-11-24T21:13:41+00:00",
   "asOf": "2026-10-31",
   "dataSource": "real",
   "companyName": "Ledgerline",
@@ -13957,7 +13957,7 @@
     "why": "Correct answer: Bill of $5,100 is 19 days late; PAY-65805 for the same $5,100 is most likely for older INV-25469, so remind about this one only after confirming which invoice the payment covers; pending T880184 is about a client's invoice and should not block. Tool's reason: A $5,100 payment from them (received Oct 29, 2026) is unmatched. It could pay invoice INV-25469 or this one. No reminder until Marcus confirms which."
    }
   ],
-  "runtimeSeconds": 0.54,
+  "runtimeSeconds": 0.47,
   "reviewLog": {
    "summary": "An independent reviewer (a separate AI model, Claude in its own session, that never saw the tool's answers) checked all 54 bills from the raw records, and a person then checked every contested bill. First pass: 46 of 54 agreed (85%). Of the 8 differences, 5 were rule errors we fixed, 2 were judgment calls, since confirmed by Maya, and 1 we kept on purpose. The 2 misses we found ourselves were fixed before the review ran, so the very first version would have agreed on at most 44. After the fixes, 52 of 54 agree (96%) with the reviewer's own labels, on the same bills the rules were fixed against, so that is not a fresh-data score: the shadow week measures that. The last 2 differ on purpose: an open ticket (Eastman & Wexler) and a payment that could belong to either of two bills (Kingsway).",
    "entries": [
@@ -14057,7 +14057,7 @@
      "shouldBe": "send",
      "foundBy": "Independent review, first pass",
      "why": "A normal-priority question, pending since July: support is waiting on the customer.",
-     "change": "Confirmed by Maya (24 Nov): a pending ticket pauses the reminder only if it's about money, urgent, or waiting on us. Otherwise a softer reminder, and the account manager is told.",
+     "change": "Confirmed by Maya (24 Nov): a pending ticket pauses the reminder only if it's about money, urgent, or waiting on us. Otherwise a softer reminder, and the account manager is told. Kingsway's newer bill still waits, for another reason: one payment fits two of its bills.",
      "status": "fixed"
     },
     {
@@ -14082,7 +14082,9 @@
      "change": "Kept on purpose: a ticket waiting on us still pauses the reminder, and it's a top-50 account, so a person reads it anyway.",
      "status": "deliberate",
      "differsBecause": "a ticket waiting on us still pauses the reminder, and it's a top-50 account, so a person reads it anyway.",
-     "differsShort": "kept on purpose"
+     "differsShort": "kept on purpose",
+     "toolNow": "hold",
+     "reviewerSaid": "send"
     },
     {
      "invoice": "INV-25852",
@@ -14091,11 +14093,13 @@
      "toolSaid": "send",
      "shouldBe": "hold until Marcus confirms",
      "foundBy": "A second check by hand",
-     "why": "One $5,100 payment with a blank memo, and two $5,100 bills. The tool assumed it paid the older one, so the newer one would have got a reminder. The first hand check missed it.",
-     "change": "The second bill now waits for Marcus, who is asked which bill the payment covers. The reviewer assumed the payment paid the older bill, so this is one of the 2 bills where we differ from it on purpose.",
+     "why": "On the first pass it differed over a pending ticket, a rule Maya has since settled. A second check by hand then found one $5,100 payment with a blank memo and two $5,100 bills: the tool had assumed it paid the older one, so the newer one would have got a reminder. The first hand check missed it.",
+     "change": "The newer bill now waits for Marcus, who is asked which bill the payment covers. The reviewer assumed the payment paid the older bill, so here we differ from it on purpose.",
      "status": "fixed",
      "differsBecause": "one $5,100 payment could pay either of two bills, so Marcus confirms which before anyone is chased.",
-     "differsShort": "fixed after a hand check: one payment, two bills"
+     "differsShort": "fixed after a hand check: one payment, two bills",
+     "toolNow": "hold until Marcus confirms",
+     "reviewerSaid": "send"
     },
     {
      "invoice": "-",
@@ -14126,7 +14130,7 @@
   "bullets": [
    "19 bills to remind: 14 ready now, 5 after a quick check",
    "14 disputes to fix, 12 past the 5-day target: a corrected bill or a clear answer",
-   "7 bills on hold with an owner and a deadline",
+   "6 bills on hold with an owner and a deadline, 1 too early for a reminder",
    "9 bills to call about",
    "5 bills look paid: Marcus is matching them"
   ],
@@ -14149,7 +14153,7 @@
     "lines": [
      "19 bills to remind: 14 ready now, 5 after a quick check",
      "14 disputes to fix, 12 past the 5-day target: a corrected bill or a clear answer",
-     "7 bills on hold with an owner and a deadline",
+     "6 bills on hold with an owner and a deadline, 1 too early for a reminder",
      "9 bills to call about",
      "5 bills look paid: Marcus is matching them"
     ],
