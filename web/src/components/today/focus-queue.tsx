@@ -6,6 +6,7 @@ import { VerdictBadge } from "@/components/shared/verdict-badge";
 import { Button } from "@/components/ui/button";
 import { answerLine, keyProof, type KeyProof } from "@/lib/bill-text";
 import { formatMoney, sumAmount, VERDICT_META } from "@/lib/data";
+import { SCHEDULE } from "@/lib/reminder-schedule";
 import type { Invoice, Verdict } from "@/lib/types";
 import { cn } from "@/lib/utils";
 
@@ -107,6 +108,7 @@ export function FocusQueue({
             <span className="text-2xl font-semibold text-foreground">{formatMoney(total, inv.currency)}</span>
             {active.bills.length > 1 ? ` · ${active.bills.length} bills` : ""} · {inv.daysOverdue} days late
           </p>
+          <PolicyRuler days={inv.daysOverdue} color={VERDICT_META[verdict].chart} />
 
           <p className="mt-4 text-[15px] leading-relaxed font-medium">{active.why}</p>
 
@@ -178,6 +180,48 @@ export function FocusQueue({
         )}
         {doneText && <p className="mt-2 text-xs text-muted-foreground">{doneText}</p>}
         {footer && <div className="mt-3">{footer}</div>}
+      </div>
+    </div>
+  );
+}
+
+// Ledgerline's collections policy as five stages: a grace week, two reminders, a call, then the VP Finance.
+// The stage this bill has reached is lit in its answer's colour; the dot marks its exact day.
+const STAGES = SCHEDULE.map((st, k) => ({
+  from: st.day,
+  to: SCHEDULE[k + 1]?.day ?? st.day + 60,
+  label: k === 0 ? "Grace week" : st.label,
+}));
+
+function PolicyRuler({ days, color }: { days: number; color: string }) {
+  const found = STAGES.findIndex((st) => days < st.to);
+  const i = found === -1 ? STAGES.length - 1 : found;
+  const stage = STAGES[i];
+  const frac = Math.min(1, Math.max(0, (days - stage.from) / (stage.to - stage.from)));
+  const left = ((i + frac) / STAGES.length) * 100;
+  return (
+    <div className="mt-3 max-w-md" role="img" aria-label={`Day ${days} late: the ${stage.label} stage of the collections policy`}>
+      <div className="relative grid grid-cols-5 gap-0.5">
+        {STAGES.map((st, k) => (
+          <span
+            key={st.label}
+            title={k === 0 ? "Due date to day 7" : `From day ${st.from}: ${st.label}`}
+            className="h-1.5 rounded-full"
+            style={{ background: k < i ? `color-mix(in oklab, ${color} 40%, var(--muted))` : k === i ? color : "var(--muted)" }}
+          />
+        ))}
+        <span
+          className="absolute top-1/2 size-3.5 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-background shadow-sm"
+          style={{ left: `${left}%`, background: color }}
+          aria-hidden="true"
+        />
+      </div>
+      <div className="mt-1 grid grid-cols-5 gap-0.5 text-[10px] leading-tight text-muted-foreground" aria-hidden="true">
+        {STAGES.map((st, k) => (
+          <span key={st.label} className={cn("truncate", k === i && "font-semibold text-foreground")}>
+            {st.label}
+          </span>
+        ))}
       </div>
     </div>
   );

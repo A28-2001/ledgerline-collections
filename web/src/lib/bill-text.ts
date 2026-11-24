@@ -73,8 +73,14 @@ export function rowDetail(inv: Invoice, verdict: Verdict): string {
         ? `${isMine(inv) ? "Yours" : inv.hold.owner} · ${inv.hold.deadline <= results.meta.asOf ? "act today" : `by ${shortDate(inv.hold.deadline)}`}`
         : "";
       const mismatch = inv.cause === "wrong_bill" ? contractMismatch(inv) : null;
-      const t = holdTicket(inv);
-      const what = mismatch ? mismatch.charAt(0).toUpperCase() + mismatch.slice(1) : t ? `“${t.title}”` : "";
+      const t = inv.hold?.twinOf ? undefined : holdTicket(inv);
+      const what = inv.hold?.twinOf
+        ? "One payment, two bills"
+        : mismatch
+          ? mismatch.charAt(0).toUpperCase() + mismatch.slice(1)
+          : t
+            ? `“${t.title}”`
+            : "";
       return [who, what].filter(Boolean).join(" · ") || inv.headline;
     }
     case "send": {
@@ -156,6 +162,14 @@ export function keyProof(inv: Invoice, verdict: Verdict): KeyProof | null {
   if (verdict === "paid") {
     const p = paymentProof(inv, "succeeded");
     return p ? fromEvidence("The payment", p) : null;
+  }
+  if (verdict === "hold" && inv.hold?.twinOf) {
+    const first = inv.reasons[0]?.text ?? "";
+    return {
+      label: "The payment (one payment, two bills)",
+      title: first.split(/(?<=\.)\s/)[0] || "An unmatched payment fits this bill and another one.",
+      detail: `It could pay ${inv.hold.twinOf} or this bill. ${inv.hold.owner} confirms which by ${shortDate(inv.hold.deadline)}; no reminder until then.`,
+    };
   }
   if (verdict === "hold") {
     const mismatch = inv.cause === "wrong_bill" ? contractMismatch(inv) : null;

@@ -4,8 +4,8 @@ import {
   ArrowRight,
   Check,
   CheckCheck,
-  ChevronDown,
   Download,
+  FileWarning,
   Flag,
   Handshake,
   Mail,
@@ -102,7 +102,7 @@ function csvCell(value: string | number) {
 
 function scrollToStep(key: StepKey) {
   window.requestAnimationFrame(() =>
-    document.getElementById(`step-card-${key}`)?.scrollIntoView({ behavior: "smooth", block: "start" }),
+    document.getElementById(`step-tile-${key}`)?.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" }),
   );
 }
 
@@ -122,6 +122,7 @@ export function MorningView({ data }: { data: Pick<Results, "invoices" | "summar
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [startChange, setStartChange] = useState(false);
   const [openStep, setOpenStep] = useState<StepKey | null | "auto">("auto");
+  const [view, setView] = useState<"steps" | "table">("steps");
   const [confirmStep, setConfirmStep] = useState<StepDef | null>(null);
 
   // Bills the tool isn't sure about go to "Check first" until a person has decided them.
@@ -185,7 +186,7 @@ export function MorningView({ data }: { data: Pick<Results, "invoices" | "summar
     flaggedOpen.length > 0
       ? "check"
       : (steps.find((s) => s.undecided.length > 0)?.def.verdict ?? (disputesOpen.length > 0 ? "dispute" : "finish"));
-  const expanded = openStep === "auto" ? current : openStep;
+  const expanded: StepKey = openStep === "auto" || openStep === null ? current : openStep;
   const selected = selectedId ? (invoices.find((i) => i.id === selectedId) ?? null) : null;
   const allDone = decisionsLeft === 0;
 
@@ -195,6 +196,7 @@ export function MorningView({ data }: { data: Pick<Results, "invoices" | "summar
   }
 
   function goToStep(key: StepKey) {
+    setView("steps");
     setOpenStep(key);
     scrollToStep(key);
   }
@@ -249,6 +251,29 @@ export function MorningView({ data }: { data: Pick<Results, "invoices" | "summar
   const emailBills = readyEmails.reduce((t, i) => t + 1 + alsoIn(i).length, 0); // one email per customer
   const currentStep = steps.find((s) => s.def.verdict === current);
 
+  // The pipeline: one tile per step, all in view. The big number is what's left; the bar is what's done.
+  const tiles: TileData[] = [
+    ...(flagged.length > 0
+      ? [{ key: "check" as StepKey, label: "Check first", icon: Flag, color: "var(--alert)", left: openGroups.length, total: allGroups.length, amount: sumAmount(flagged), done: flaggedOpen.length === 0 }]
+      : []),
+    ...steps.map((st) => ({
+      key: st.def.verdict as StepKey,
+      label: st.def.title,
+      icon: st.def.icon,
+      color: VERDICT_META[st.def.verdict].chart,
+      left: st.undecided.length,
+      total: st.items.length,
+      amount: sumAmount(st.items),
+      done: st.done && st.items.length > 0,
+    })),
+    ...(myDisputes.length > 0
+      ? [{ key: "dispute" as StepKey, label: "Fix disputes", icon: FileWarning, color: "var(--cause-wrong-bill)", left: disputesOpen.length, total: myDisputes.length, amount: sumAmount(myDisputes), done: disputesOpen.length === 0 }]
+      : []),
+    { key: "finish", label: "Done", icon: Send, color: "var(--foreground)", left: decisionsLeft, total: totalDecisions, amount: 0, done: allDone },
+  ];
+  const active: StepKey = tiles.some((t) => t.key === expanded) ? expanded : current;
+  const activeStep = steps.find((st) => st.def.verdict === active);
+
   return (
     <>
       {/* 1. Header: one short line, no repeated numbers */}
@@ -274,10 +299,29 @@ export function MorningView({ data }: { data: Pick<Results, "invoices" | "summar
         <MoneyBar invoices={invoices} onSelect={(v) => goToStep(v)} />
       </div>
 
-      {/* 2. Steps first */}
+      {/* 2. The morning as a pipeline: every step's numbers in view, one step's work below. No accordions. */}
       <section aria-label="Morning steps" className="mt-5 sm:mt-6">
-        <div className="flex items-center justify-between gap-3">
-          <h2 className="text-lg font-semibold tracking-tight">Your morning</h2>
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <div className="flex flex-wrap items-center gap-3">
+            <h2 className="text-lg font-semibold tracking-tight">Your morning</h2>
+            <div role="tablist" aria-label="Show" className="flex rounded-lg border p-0.5 text-xs font-medium">
+              {(["steps", "table"] as const).map((v) => (
+                <button
+                  key={v}
+                  type="button"
+                  role="tab"
+                  aria-selected={view === v}
+                  onClick={() => setView(v)}
+                  className={cn(
+                    "rounded-md px-2.5 py-1 outline-none transition-colors focus-visible:ring-2 focus-visible:ring-ring/50",
+                    view === v ? "glass-pill" : "text-muted-foreground hover:text-foreground",
+                  )}
+                >
+                  {v === "steps" ? "Steps" : `All ${invoices.length} bills`}
+                </button>
+              ))}
+            </div>
+          </div>
           <div className="flex shrink-0 items-center gap-2 text-xs text-muted-foreground">
             <Progress
               value={totalDecisions ? ((totalDecisions - decisionsLeft) / totalDecisions) * 100 : 100}
@@ -286,238 +330,193 @@ export function MorningView({ data }: { data: Pick<Results, "invoices" | "summar
             />
             <span className="tabular whitespace-nowrap">
               {decisionsLeft} of {totalDecisions} decisions left
-              {myDisputes.length > 0 && <span className="hidden sm:inline"> · {disputesOpen.length} disputes to fix</span>}
             </span>
           </div>
         </div>
 
-        <ol className="mt-3 space-y-3">
-          {/* Step 0: check first */}
-          {flagged.length > 0 && (
-            <li id="step-card-check" className={cn("scroll-mt-20 rounded-xl border bg-card", expanded === "check" && "shadow-sm ring-1 ring-foreground/5")}>
-              <StepHeader
-                status={<StepStatus done={flaggedOpen.length === 0} current={current === "check"} label="Check first" flag />}
-                title="Check first"
-                sub={
-                  flaggedOpen.length === 0
-                    ? `All ${pluralize(flagged.length, "bill")} checked`
-                    : `${pluralize(flaggedOpen.length, "bill")} that need a person first · ${pluralize(openGroups.length, "decision")}`
-                }
-                open={expanded === "check"}
-                onToggle={() => {
-                                setOpenStep(expanded === "check" ? null : "check");
-                }}
-                controls="step-check"
-              />
-              {expanded === "check" && (
-                <div id="step-check" className="border-t px-4 pt-3 pb-4">
-                  <p className="text-sm leading-relaxed text-muted-foreground">
-                    One customer at a time: approve the suggestion, or change it.
-                  </p>
-                  <FocusQueue
-                    items={openGroups.map((g) => ({ key: g[0].id, bills: g, why: plainReview(g[0]) }))}
-                    verdictOf={(i) => i.verdict}
-                    proofOf={checkProof}
-                    primaryLabel={(it) => agree(`Looks right: ${VERDICT_META[it.bills[0].verdict].label}`)}
-                    onPrimary={(it) => keepGroup(it.bills)}
-                    onChange={(it) => openBill(it.bills[0].id, true)}
-                    onOpen={(it) => openBill(it.bills[0].id)}
-                    emptyText={`All ${pluralize(flagged.length, "bill")} checked.`}
-                  />
-                </div>
-              )}
-            </li>
-          )}
+        {view === "table" ? (
+          <div className="mt-3 rounded-xl border bg-card p-4">
+            <AllBills invoices={invoices} decisions={decisions} onSelect={(id) => openBill(id)} />
+          </div>
+        ) : (
+          <>
+            <div role="tablist" aria-label="Steps" className="-mx-1 mt-3 flex gap-2 overflow-x-auto px-1 pt-2.5 pb-2 lg:grid lg:grid-cols-7 lg:overflow-visible">
+              {tiles.map((t) => (
+                <StepTile key={t.key} tile={t} active={active === t.key} next={current === t.key && active !== t.key} onSelect={() => setOpenStep(t.key)} />
+              ))}
+            </div>
 
-          {/* Steps 1-4 */}
-          {steps.map((s, idx) => {
-            const key = s.def.verdict;
-            const isOpen = expanded === key;
-            const Icon = s.def.icon;
-            const amount = sumAmount(s.items);
-            const sub =
-              s.items.length === 0 && s.waiting === 0
-                ? "Nothing today"
-                : [
-                    s.done && s.items.length > 0 ? (shadow ? `${s.decidedCount} agreed` : s.def.done(s.decidedCount)) : pluralize(s.items.length, "bill"),
-                    s.waiting > 0 ? `${s.waiting} more in Check first` : null,
-                  ]
-                    .filter(Boolean)
-                    .join(" · ");
-            return (
-              <li
-                key={key}
-                id={`step-card-${key}`}
-                className={cn("scroll-mt-20 rounded-xl border bg-card", isOpen && "shadow-sm ring-1 ring-foreground/5")}
-              >
-                <StepHeader
-                  status={<StepStatus n={idx + 1} done={s.done && s.items.length > 0} current={current === key} label={s.def.title} />}
-                  title={s.def.title}
-                  dot={VERDICT_META[key].dot}
-                  sub={sub}
-                  amount={s.items.length ? formatMoney(amount) : undefined}
-                  open={isOpen}
-                  onToggle={() => {
-                                    setOpenStep(isOpen ? null : key);
-                  }}
-                  controls={`step-${key}`}
-                />
-                {isOpen && (
-                  <div id={`step-${key}`} className="border-t px-4 pt-3 pb-4">
-                    <p className="flex items-start gap-2 text-sm leading-relaxed text-muted-foreground">
-                      <Icon className="mt-0.5 size-4 shrink-0" aria-hidden="true" />
-                      {s.def.explain}
-                    </p>
-                    {s.items.length === 0 ? (
-                      <p className="mt-3 rounded-lg border border-dashed p-3 text-sm text-muted-foreground">
-                        {s.waiting > 0 ? "These bills are waiting in Check first." : "No bills in this step today."}
-                      </p>
-                    ) : (
-                      <FocusQueue
-                        items={s.undecided.map((inv) => ({
-                          key: inv.id,
-                          bills: [inv],
-                          why: key === "paid" ? "A payment fits this bill, but nobody has matched it to the bill yet." : rowDetail(inv, key),
-                        }))}
-                        verdictOf={() => key}
-                        primaryLabel={(it) => agree(stepPrimary(key, it.bills[0]))}
-                        onPrimary={(it) => decideOne(it.bills[0], key)}
-                        onChange={(it) => openBill(it.bills[0].id, true)}
-                        onOpen={(it) => openBill(it.bills[0].id)}
-                        doneText={s.decidedCount > 0 && s.undecided.length > 0 ? `${shadow ? `${s.decidedCount} agreed` : s.def.done(s.decidedCount)} so far` : undefined}
-                        emptyText={`Step done: ${shadow ? `${s.decidedCount} agreed` : s.def.done(s.decidedCount)}.`}
-                        footer={
-                          s.undecided.length > 1 ? (
-                            <Button variant="outline" className="w-full" onClick={() => setConfirmStep(s.def)}>
-                              <CheckCheck />
-                              {shadow ? `Agree with all ${s.undecided.length}` : s.def.button(s.undecided.length)}
-                            </Button>
-                          ) : undefined
-                        }
+            <div id="step-panel" role="tabpanel" aria-label={tiles.find((t) => t.key === active)?.label} className="mt-2 scroll-mt-20 rounded-xl border bg-card p-4 sm:p-5">
+              {active === "check" && (
+                <>
+                  <PanelHead
+                    title="Check first"
+                    sub={flaggedOpen.length === 0 ? `All ${pluralize(flagged.length, "bill")} checked` : `${pluralize(flaggedOpen.length, "bill")} that need a person first. One customer at a time: approve the suggestion, or change it.`}
+                    amount={formatMoney(sumAmount(flagged))}
+                  />
+              <FocusQueue
+                items={openGroups.map((g) => ({ key: g[0].id, bills: g, why: plainReview(g[0]) }))}
+                verdictOf={(i) => i.verdict}
+                proofOf={checkProof}
+                primaryLabel={(it) => agree(`Looks right: ${VERDICT_META[it.bills[0].verdict].label}`)}
+                onPrimary={(it) => keepGroup(it.bills)}
+                onChange={(it) => openBill(it.bills[0].id, true)}
+                onOpen={(it) => openBill(it.bills[0].id)}
+                emptyText={`All ${pluralize(flagged.length, "bill")} checked.`}
+              />
+                </>
+              )}
+
+              {activeStep &&
+                (() => {
+                  const activeKey = activeStep.def.verdict;
+                  const ActiveIcon = activeStep.def.icon;
+                  return (
+                    <>
+                      <PanelHead
+                        title={activeStep.def.title}
+                        sub={activeStep.def.explain}
+                        amount={activeStep.items.length ? formatMoney(sumAmount(activeStep.items)) : undefined}
+                        icon={<ActiveIcon className="size-4" style={{ color: VERDICT_META[activeKey].chart }} aria-hidden="true" />}
                       />
-                    )}
-                  </div>
-                )}
-              </li>
-            );
-          })}
-
-          {/* The day's work: Priya's own disputes */}
-          {myDisputes.length > 0 && (
-            <li id="step-card-dispute" className={cn("scroll-mt-20 rounded-xl border bg-card", expanded === "dispute" && "shadow-sm ring-1 ring-foreground/5")}>
-              <StepHeader
-                status={<StepStatus n={5} done={disputesOpen.length === 0} current={current === "dispute"} label="Fix disputes" />}
-                title="Fix disputes: the day's work"
-                dot={VERDICT_META.hold.dot}
-                sub={
-                  disputesOpen.length === 0
-                    ? `All ${myDisputes.length} answered`
-                    : `${disputesOpen.length} of ${myDisputes.length} to answer · ${pastTarget.length} past the 5-day target${repliedEarlier ? ` · ${repliedEarlier} replied earlier` : ""}`
-                }
-                amount={formatMoney(sumAmount(myDisputes))}
-                open={expanded === "dispute"}
-                onToggle={() => setOpenStep(expanded === "dispute" ? null : "dispute")}
-                controls="step-dispute"
-              />
-              {expanded === "dispute" && (
-                <div id="step-dispute" className="border-t px-4 pt-3 pb-4">
-                  <p className="text-sm leading-relaxed text-muted-foreground">
-                    {shadow
-                      ? "Yours to fix, as you do today. The tool's reply is there to compare; nothing goes out this week. Oldest first."
-                      : "Yours to fix: send the reply, then correct the bill or answer the customer. Oldest first."}
-                  </p>
-                  <FocusQueue
-                    items={disputesOpen.map((inv) => ({ key: inv.id, bills: [inv], why: rowDetail(inv, "hold") }))}
-                    verdictOf={() => "hold"}
-                    primaryLabel={() => agree("Reply sent")}
-                    onPrimary={(it) => decideOne(it.bills[0], "hold")}
-                    onChange={(it) => openBill(it.bills[0].id, true)}
-                    onOpen={(it) => openBill(it.bills[0].id)}
-                    extra={(it) =>
-                      !shadow && it.bills[0].reply ? (
-                        <CopyButton
-                          text={`To: ${it.bills[0].reply.to}\nSubject: ${it.bills[0].reply.subject}\n\n${it.bills[0].reply.body}`}
-                          label="Copy the reply"
-                        />
-                      ) : null
-                    }
-                    doneText={myDisputes.length - disputesOpen.length > 0 ? `${myDisputes.length - disputesOpen.length} answered so far` : undefined}
-                    emptyText={`All ${myDisputes.length} disputes answered. Correct each bill by its target date.`}
-                  />
-                </div>
-              )}
-            </li>
-          )}
-
-          {/* Finish line */}
-          <li
-            id="step-card-finish"
-            className={cn("scroll-mt-20 rounded-xl border p-4", allDone ? "border-foreground/30 bg-muted/40" : "border-dashed bg-card")}
-          >
-            <div className={cn("flex items-start gap-3", !allDone && "opacity-60")}>
-              <span
-                className={cn(
-                  "grid size-7 shrink-0 place-items-center rounded-full",
-                  allDone ? "bg-foreground text-background" : "border text-muted-foreground",
-                )}
-                aria-hidden="true"
-              >
-                <Send className="size-3.5" />
-              </span>
-              <div className="min-w-0 flex-1">
-                <h3 className="font-medium">{shadow ? "Done: save today's comparison" : "Done: send the emails, save the list"}</h3>
-                <p className="mt-0.5 text-sm text-muted-foreground">
-                  {allDone
-                    ? shadow
-                      ? `${pluralize(decidedBy("send"), "reminder")} agreed, ${pluralize(decidedBy("hold"), "hold")}, ${pluralize(decidedBy("paid"), "bill")} for Marcus to match, ${pluralize(decidedBy("call"), "call")}. Download the list: it is today's comparison with your own calls.`
-                      : `${pluralize(decidedBy("send"), "reminder")} ready to send, ${pluralize(decidedBy("hold"), "hold")} handed to owners, ${pluralize(decidedBy("paid"), "bill")} with Marcus to match, ${pluralize(decidedBy("call"), "call")} on the call list. Keep the list: tomorrow's run reads it, so nothing is suggested twice.`
-                    : shadow
-                      ? "When you're done, download the list into the history folder: it records where you agreed with the tool. Nothing goes out from the tool this week."
-                      : "When you're done, download the list into the history folder, so tomorrow remembers today. By hand for now; automatic before March."}
+              {activeStep.items.length === 0 ? (
+                <p className="mt-3 rounded-lg border border-dashed p-3 text-sm text-muted-foreground">
+                  {activeStep.waiting > 0 ? "These bills are waiting in Check first." : "No bills in this step today."}
                 </p>
-                <div className="mt-3 flex flex-wrap gap-2">
-                  <Button size="sm" variant={allDone ? "default" : "outline"} onClick={exportDecisions} disabled={!allDone && Object.keys(decisions).length === 0}>
-                    <Download />
-                    Download the decision list (CSV)
-                  </Button>
-                </div>
+              ) : (
+                <FocusQueue
+                  items={activeStep.undecided.map((inv) => ({
+                    key: inv.id,
+                    bills: [inv],
+                    why: activeKey === "paid" ? "A payment fits this bill, but nobody has matched it to the bill yet." : rowDetail(inv, activeKey),
+                  }))}
+                  verdictOf={() => activeKey}
+                  primaryLabel={(it) => agree(stepPrimary(activeKey, it.bills[0]))}
+                  onPrimary={(it) => decideOne(it.bills[0], activeKey)}
+                  onChange={(it) => openBill(it.bills[0].id, true)}
+                  onOpen={(it) => openBill(it.bills[0].id)}
+                  doneText={activeStep.decidedCount > 0 && activeStep.undecided.length > 0 ? `${shadow ? `${activeStep.decidedCount} agreed` : activeStep.def.done(activeStep.decidedCount)} so far` : undefined}
+                  emptyText={`Step done: ${shadow ? `${activeStep.decidedCount} agreed` : activeStep.def.done(activeStep.decidedCount)}.`}
+                  footer={
+                    activeStep.undecided.length > 1 ? (
+                      <Button variant="outline" className="w-full" onClick={() => setConfirmStep(activeStep.def)}>
+                        <CheckCheck />
+                        {shadow ? `Agree with all ${activeStep.undecided.length}` : activeStep.def.button(activeStep.undecided.length)}
+                      </Button>
+                    ) : undefined
+                  }
+                />
+              )}
+                    </>
+                  );
+                })()}
+
+              {active === "dispute" && (
+                <>
+                  <PanelHead
+                    title="Fix disputes: the day's work"
+                    sub={
+                      disputesOpen.length === 0
+                        ? `All ${myDisputes.length} answered`
+                        : `${disputesOpen.length} of ${myDisputes.length} to answer · ${pastTarget.length} past the 5-day target${repliedEarlier ? ` · ${repliedEarlier} replied earlier` : ""}`
+                    }
+                    amount={formatMoney(sumAmount(myDisputes))}
+                  />
+              <p className="text-sm leading-relaxed text-muted-foreground">
+                {shadow
+                  ? "Yours to fix, as you do today. The tool's reply is there to compare; nothing goes out this week. Oldest first."
+                  : "Yours to fix: send the reply, then correct the bill or answer the customer. Oldest first."}
+              </p>
+              <FocusQueue
+                items={disputesOpen.map((inv) => ({ key: inv.id, bills: [inv], why: rowDetail(inv, "hold") }))}
+                verdictOf={() => "hold"}
+                primaryLabel={() => agree("Reply sent")}
+                onPrimary={(it) => decideOne(it.bills[0], "hold")}
+                onChange={(it) => openBill(it.bills[0].id, true)}
+                onOpen={(it) => openBill(it.bills[0].id)}
+                extra={(it) =>
+                  !shadow && it.bills[0].reply ? (
+                    <CopyButton
+                      text={`To: ${it.bills[0].reply.to}\nSubject: ${it.bills[0].reply.subject}\n\n${it.bills[0].reply.body}`}
+                      label="Copy the reply"
+                    />
+                  ) : null
+                }
+                doneText={myDisputes.length - disputesOpen.length > 0 ? `${myDisputes.length - disputesOpen.length} answered so far` : undefined}
+                emptyText={`All ${myDisputes.length} disputes answered. Correct each bill by its target date.`}
+              />
+                </>
+              )}
+
+              {active === "finish" && (
+                <>
+          <div className={cn("flex items-start gap-3", !allDone && "opacity-60")}>
+            <span
+              className={cn(
+                "grid size-7 shrink-0 place-items-center rounded-full",
+                allDone ? "bg-foreground text-background" : "border text-muted-foreground",
+              )}
+              aria-hidden="true"
+            >
+              <Send className="size-3.5" />
+            </span>
+            <div className="min-w-0 flex-1">
+              <h3 className="font-medium">{shadow ? "Done: save today's comparison" : "Done: send the emails, save the list"}</h3>
+              <p className="mt-0.5 text-sm text-muted-foreground">
+                {allDone
+                  ? shadow
+                    ? `${pluralize(decidedBy("send"), "reminder")} agreed, ${pluralize(decidedBy("hold"), "hold")}, ${pluralize(decidedBy("paid"), "bill")} for Marcus to match, ${pluralize(decidedBy("call"), "call")}. Download the list: it is today's comparison with your own calls.`
+                    : `${pluralize(decidedBy("send"), "reminder")} ready to send, ${pluralize(decidedBy("hold"), "hold")} handed to owners, ${pluralize(decidedBy("paid"), "bill")} with Marcus to match, ${pluralize(decidedBy("call"), "call")} on the call list. Keep the list: tomorrow's run reads it, so nothing is suggested twice.`
+                  : shadow
+                    ? "When you're done, download the list into the history folder: it records where you agreed with the tool. Nothing goes out from the tool this week."
+                    : "When you're done, download the list into the history folder, so tomorrow remembers today. By hand for now; automatic before March."}
+              </p>
+              <div className="mt-3 flex flex-wrap gap-2">
+                <Button size="sm" variant={allDone ? "default" : "outline"} onClick={exportDecisions} disabled={!allDone && Object.keys(decisions).length === 0}>
+                  <Download />
+                  Download the decision list (CSV)
+                </Button>
               </div>
             </div>
-            {shadow && readyEmails.length > 0 && (
-              <p className="mt-4 border-t pt-3 text-xs leading-relaxed text-muted-foreground">
-                After the shadow week, these {readyEmails.length} emails
-                {emailBills !== readyEmails.length ? ` (${emailBills} bills: one email per customer)` : ""} open in your own email app, written and
-                addressed. This week nothing goes out from the tool.
+          </div>
+          {shadow && readyEmails.length > 0 && (
+            <p className="mt-4 border-t pt-3 text-xs leading-relaxed text-muted-foreground">
+              After the shadow week, these {readyEmails.length} emails
+              {emailBills !== readyEmails.length ? ` (${emailBills} bills: one email per customer)` : ""} open in your own email app, written and
+              addressed. This week nothing goes out from the tool.
+            </p>
+          )}
+          {!shadow && readyEmails.length > 0 && (
+            <div className="mt-4 border-t pt-3">
+              <p className="text-sm font-medium">
+                Emails ready to send · {readyEmails.length}
+                {emailBills !== readyEmails.length ? ` (${emailBills} bills)` : ""}
               </p>
-            )}
-            {!shadow && readyEmails.length > 0 && (
-              <div className="mt-4 border-t pt-3">
-                <p className="text-sm font-medium">
-                  Emails ready to send · {readyEmails.length}
-                  {emailBills !== readyEmails.length ? ` (${emailBills} bills)` : ""}
-                </p>
-                <p className="mt-0.5 text-xs text-muted-foreground">Each opens in your email app, written and addressed. Read it, then press send.</p>
-                <ul className="mt-2 divide-y rounded-lg border bg-background text-sm">
-                  {readyEmails.map((i) => (
-                    <li key={i.id} className="flex items-center gap-3 px-3 py-2">
-                      <span className="min-w-0 flex-1 truncate">{i.customerName}</span>
-                      <span className="tabular shrink-0 text-xs text-muted-foreground">
-                        {formatMoney(emailTotal(i), i.currency)}
-                        {alsoIn(i).length > 0 && ` · ${alsoIn(i).length + 1} bills`}
-                      </span>
-                      <a
-                        href={mailtoFor(i.draft?.to ?? "", i.draft?.subject ?? "", i.draft?.body ?? "")}
-                        className="shrink-0 rounded text-xs font-medium text-brand underline-offset-4 outline-none hover:underline focus-visible:ring-2 focus-visible:ring-ring/50"
-                      >
-                        Open in email
-                      </a>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            )}
-          </li>
-        </ol>
+              <p className="mt-0.5 text-xs text-muted-foreground">Each opens in your email app, written and addressed. Read it, then press send.</p>
+              <ul className="mt-2 divide-y rounded-lg border bg-background text-sm">
+                {readyEmails.map((i) => (
+                  <li key={i.id} className="flex items-center gap-3 px-3 py-2">
+                    <span className="min-w-0 flex-1 truncate">{i.customerName}</span>
+                    <span className="tabular shrink-0 text-xs text-muted-foreground">
+                      {formatMoney(emailTotal(i), i.currency)}
+                      {alsoIn(i).length > 0 && ` · ${alsoIn(i).length + 1} bills`}
+                    </span>
+                    <a
+                      href={mailtoFor(i.draft?.to ?? "", i.draft?.subject ?? "", i.draft?.body ?? "")}
+                      className="shrink-0 rounded text-xs font-medium text-brand underline-offset-4 outline-none hover:underline focus-visible:ring-2 focus-visible:ring-ring/50"
+                    >
+                      Open in email
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+                </>
+              )}
+            </div>
+          </>
+        )}
       </section>
 
       <Link
@@ -527,20 +526,6 @@ export function MorningView({ data }: { data: Pick<Results, "invoices" | "summar
         Why is it overdue?
         <ArrowRight className="size-3.5" aria-hidden="true" />
       </Link>
-
-      {/* Every bill, for searching */}
-      <details className="group mt-6 rounded-xl border bg-card">
-        <summary className="flex cursor-pointer list-none items-center justify-between gap-3 rounded-xl p-4 outline-none focus-visible:ring-2 focus-visible:ring-ring/50 [&::-webkit-details-marker]:hidden">
-          <span>
-            <span className="font-medium">Every bill in one table</span>
-            <span className="ml-2 text-sm text-muted-foreground">search, sort and filter all {invoices.length}</span>
-          </span>
-          <ChevronDown className="size-4 text-muted-foreground transition-transform group-open:rotate-180" aria-hidden="true" />
-        </summary>
-        <div className="border-t p-4">
-          <AllBills invoices={invoices} decisions={decisions} onSelect={(id) => openBill(id)} />
-        </div>
-      </details>
 
       {/* Room for the phone action bar */}
       <div className="h-20 md:hidden" aria-hidden="true" />
@@ -636,73 +621,74 @@ export function MorningView({ data }: { data: Pick<Results, "invoices" | "summar
   );
 }
 
-function StepHeader({
-  status,
-  title,
-  dot,
-  sub,
-  amount,
-  open,
-  onToggle,
-  controls,
-}: {
-  status: React.ReactNode;
-  title: string;
-  dot?: string;
-  sub: string;
-  amount?: string;
-  open: boolean;
-  onToggle: () => void;
-  controls: string;
-}) {
+type TileData = { key: StepKey; label: string; icon: LucideIcon; color: string; left: number; total: number; amount: number; done: boolean };
+
+// One step of the morning as a tile: what's left (big), the money, and a bar for what's done, in the answer's colour.
+function StepTile({ tile, active, next, onSelect }: { tile: TileData; active: boolean; next: boolean; onSelect: () => void }) {
+  const Icon = tile.icon;
+  const isFinish = tile.key === "finish";
+  const pct = tile.total ? ((tile.total - tile.left) / tile.total) * 100 : tile.done ? 100 : 0;
+  const empty = !isFinish && tile.total === 0;
   return (
     <button
+      id={`step-tile-${tile.key}`}
       type="button"
-      onClick={onToggle}
-      aria-expanded={open}
-      aria-controls={controls}
-      className="flex w-full items-center gap-3 rounded-xl p-4 text-left outline-none focus-visible:ring-2 focus-visible:ring-ring/50"
+      role="tab"
+      aria-selected={active}
+      aria-controls="step-panel"
+      onClick={onSelect}
+      className={cn(
+        "relative flex min-w-[9.25rem] flex-col gap-1.5 rounded-xl border bg-card p-3 text-left outline-none transition-[background-color,box-shadow] focus-visible:ring-2 focus-visible:ring-ring/50 lg:min-w-0",
+        !active && "hover:bg-muted/50",
+        empty && "opacity-60",
+      )}
+      style={active ? { boxShadow: `inset 0 0 0 2px ${tile.color}`, background: `color-mix(in oklab, ${tile.color} 9%, var(--card))` } : undefined}
     >
-      {status}
-      <div className="min-w-0 flex-1">
-        <div className="flex items-center gap-2">
-          <span className="font-medium">{title}</span>
-          {dot && <span className={cn("size-1.5 rounded-full", dot)} aria-hidden="true" />}
-        </div>
-        <p className="tabular text-xs text-muted-foreground">
-          {sub}
-          {amount && <span className="sm:hidden"> · {amount}</span>}
-        </p>
-      </div>
-      {amount && <span className="tabular hidden text-right text-sm font-semibold sm:block">{amount}</span>}
-      <ChevronDown className={cn("size-4 shrink-0 text-muted-foreground transition-transform", open && "rotate-180")} aria-hidden="true" />
+      <span className="flex h-8 items-start gap-1.5 text-xs leading-tight font-medium text-muted-foreground">
+        <Icon className="mt-px size-3.5 shrink-0" style={{ color: tile.color }} aria-hidden="true" />
+        <span className="line-clamp-2">{tile.label}</span>
+      </span>
+      <span className="tabular flex items-baseline gap-1.5">
+        {tile.done ? (
+          <span className="grid size-7 place-items-center rounded-full bg-foreground text-background" aria-label="Done">
+            <Check className="size-4" aria-hidden="true" />
+          </span>
+        ) : (
+          <span className="text-2xl leading-none font-semibold">{empty ? "0" : tile.left}</span>
+        )}
+        <span className="truncate text-xs text-muted-foreground">
+          {isFinish
+            ? tile.done
+              ? "save the list"
+              : "decisions to go"
+            : empty
+              ? "nothing today"
+              : tile.done
+                ? `${tile.total} done`
+                : `of ${tile.total} left`}
+        </span>
+      </span>
+      <span className="tabular text-xs font-medium">{tile.amount ? formatMoney(tile.amount, "USD", true) : "\u00a0"}</span>
+      <span className="h-1 overflow-hidden rounded-full bg-muted" aria-hidden="true">
+        <span className="block h-full rounded-full transition-[width] duration-500" style={{ width: `${pct}%`, background: tile.color }} />
+      </span>
+      {next && <span className="absolute -top-2 right-2.5 rounded-full bg-foreground px-1.5 py-px text-[10px] font-semibold text-background">Next</span>}
     </button>
   );
 }
 
-function StepStatus({ n, done, current, label, flag = false }: { n?: number; done: boolean; current: boolean; label: string; flag?: boolean }) {
-  if (done)
-    return (
-      <span className="grid size-7 shrink-0 place-items-center rounded-full bg-foreground text-background" aria-label={`${label}: done`}>
-        <Check className="size-4" aria-hidden="true" />
-      </span>
-    );
+function PanelHead({ title, sub, amount, icon }: { title: string; sub: string; amount?: string; icon?: React.ReactNode }) {
   return (
-    <span
-      className={cn(
-        "tabular grid size-7 shrink-0 place-items-center rounded-full text-sm font-semibold",
-        flag
-          ? current
-            ? "bg-alert text-alert-contrast"
-            : "border border-alert/45 text-alert-ink"
-          : current
-            ? "bg-foreground text-background"
-            : "border text-muted-foreground",
-      )}
-      aria-label={current ? `${label}: do this now` : `${label}: next`}
-    >
-      {flag ? <Flag className="size-3.5" aria-hidden="true" /> : n}
-    </span>
+    <div className="mb-1 flex flex-wrap items-start justify-between gap-x-4 gap-y-1">
+      <div className="min-w-0">
+        <h3 className="flex items-center gap-2 font-semibold">
+          {icon}
+          {title}
+        </h3>
+        <p className="mt-0.5 text-sm leading-relaxed text-muted-foreground">{sub}</p>
+      </div>
+      {amount && <span className="tabular text-lg font-semibold">{amount}</span>}
+    </div>
   );
 }
 
