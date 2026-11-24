@@ -108,6 +108,7 @@ function scrollToStep(key: StepKey) {
 
 export function MorningView({ data }: { data: Pick<Results, "invoices" | "summary" | "meta" | "morningSummary"> }) {
   const { invoices, meta } = data;
+  const shadow = !!meta.shadowWeek; // Maya: nothing goes out from the tool during the shadow week
   // Disputes Priya fixes herself: the day's real work, kept apart from the holds she hands to others.
   const isMyDispute = (i: Invoice) => i.verdict === "hold" && i.cause === "wrong_bill" && Boolean(i.hold?.ownerRole.startsWith("Finance"));
   const raisedOn = (i: Invoice) => {
@@ -237,10 +238,13 @@ export function MorningView({ data }: { data: Pick<Results, "invoices" | "summar
   }
 
   const decidedBy = (v: Verdict) => invoices.filter((i) => decisions[i.id] && decisions[i.id].verdict === v).length;
-  // Approved reminders with a written draft: one click opens each in the email app, ready to send.
-  const readyEmails = invoices.filter((i) => decisions[i.id]?.verdict === "send" && i.draft?.body && i.draft?.to);
   // Bills that ride in another bill's email (one email per customer), so the row shows the email's full amount.
   const alsoIn = (i: Invoice) => invoices.filter((x) => x.draft?.combinedWith === i.id);
+  const emailTotal = (i: Invoice) => i.amount + sumAmount(alsoIn(i));
+  // Approved reminders with a written draft, largest first: one click opens each in the email app, ready to send.
+  const readyEmails = invoices
+    .filter((i) => decisions[i.id]?.verdict === "send" && i.draft?.body && i.draft?.to)
+    .sort((a, b) => emailTotal(b) - emailTotal(a));
   const currentStep = steps.find((s) => s.def.verdict === current);
 
   return (
@@ -259,8 +263,8 @@ export function MorningView({ data }: { data: Pick<Results, "invoices" | "summar
         </p>
         <h1 className="mt-0.5 text-2xl font-semibold tracking-tight sm:text-3xl">Good morning</h1>
         <p className="tabular mt-1.5 text-sm text-muted-foreground sm:text-base">
-          {pluralize(invoices.length, "overdue bill")} · {pluralize(totalDecisions, "decision")} today · nothing is sent until you
-          approve
+          {pluralize(invoices.length, "overdue bill")} · {pluralize(totalDecisions, "decision")} today ·{" "}
+          {shadow ? "shadow week: nothing goes out from the tool" : "nothing is sent until you approve"}
         </p>
       </header>
 
@@ -457,11 +461,15 @@ export function MorningView({ data }: { data: Pick<Results, "invoices" | "summar
                 <Send className="size-3.5" />
               </span>
               <div className="min-w-0 flex-1">
-                <h3 className="font-medium">Done: send to billing</h3>
+                <h3 className="font-medium">{shadow ? "Done: save today's comparison" : "Done: send the emails, save the list"}</h3>
                 <p className="mt-0.5 text-sm text-muted-foreground">
                   {allDone
-                    ? `${pluralize(decidedBy("send"), "reminder")} ready to send, ${pluralize(decidedBy("hold"), "hold")} handed to owners, ${pluralize(decidedBy("paid"), "bill")} with Marcus to match, ${pluralize(decidedBy("call"), "call")} on the call list. Keep the list: tomorrow's run reads it, so nothing is suggested twice.`
-                    : "When you're done, download the list and save it in the history folder, so tomorrow's run remembers today. Nothing is sent automatically."}
+                    ? shadow
+                      ? `${pluralize(decidedBy("send"), "reminder")} agreed, ${pluralize(decidedBy("hold"), "hold")}, ${pluralize(decidedBy("paid"), "bill")} for Marcus to match, ${pluralize(decidedBy("call"), "call")}. Download the list: it is today's comparison with your own calls.`
+                      : `${pluralize(decidedBy("send"), "reminder")} ready to send, ${pluralize(decidedBy("hold"), "hold")} handed to owners, ${pluralize(decidedBy("paid"), "bill")} with Marcus to match, ${pluralize(decidedBy("call"), "call")} on the call list. Keep the list: tomorrow's run reads it, so nothing is suggested twice.`
+                    : shadow
+                      ? "When you're done, download the list into the history folder: it records where you agreed with the tool. Nothing goes out from the tool this week."
+                      : "When you're done, download the list into the history folder, so tomorrow remembers today. By hand for now; automatic before March."}
                 </p>
                 <div className="mt-3 flex flex-wrap gap-2">
                   <Button size="sm" variant={allDone ? "default" : "outline"} onClick={exportDecisions} disabled={!allDone && Object.keys(decisions).length === 0}>
@@ -471,7 +479,13 @@ export function MorningView({ data }: { data: Pick<Results, "invoices" | "summar
                 </div>
               </div>
             </div>
-            {readyEmails.length > 0 && (
+            {shadow && readyEmails.length > 0 && (
+              <p className="mt-4 border-t pt-3 text-xs leading-relaxed text-muted-foreground">
+                After the shadow week, each of these {readyEmails.length} reminders opens in your own email app, written and addressed. This week
+                nothing goes out from the tool.
+              </p>
+            )}
+            {!shadow && readyEmails.length > 0 && (
               <div className="mt-4 border-t pt-3">
                 <p className="text-sm font-medium">Emails ready to send · {readyEmails.length}</p>
                 <p className="mt-0.5 text-xs text-muted-foreground">Each opens in your email app, written and addressed. Read it, then press send.</p>
@@ -480,7 +494,7 @@ export function MorningView({ data }: { data: Pick<Results, "invoices" | "summar
                     <li key={i.id} className="flex items-center gap-3 px-3 py-2">
                       <span className="min-w-0 flex-1 truncate">{i.customerName}</span>
                       <span className="tabular shrink-0 text-xs text-muted-foreground">
-                        {formatMoney(i.amount + sumAmount(alsoIn(i)), i.currency)}
+                        {formatMoney(emailTotal(i), i.currency)}
                         {alsoIn(i).length > 0 && ` · ${alsoIn(i).length + 1} bills`}
                       </span>
                       <a
@@ -578,7 +592,11 @@ export function MorningView({ data }: { data: Pick<Results, "invoices" | "summar
                 <>
                   <DialogHeader>
                     <DialogTitle>{confirmStep.confirmTitle(s.undecided.length)}</DialogTitle>
-                    <DialogDescription>{confirmStep.confirmText}</DialogDescription>
+                    <DialogDescription>
+                      {shadow && confirmStep.verdict === "send"
+                        ? "This is the shadow week: approving records that you agree with the tool. Nothing goes out."
+                        : confirmStep.confirmText}
+                    </DialogDescription>
                   </DialogHeader>
                   <div className="rounded-lg border bg-muted/40 p-3 text-sm">
                     <div className="flex items-center justify-between">

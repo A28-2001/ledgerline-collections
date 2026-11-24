@@ -125,7 +125,7 @@ export default function HowPage() {
             <p className="text-xs font-semibold text-muted-foreground uppercase">AI as the auditor</p>
             <p className="mt-1 leading-relaxed">
               A separate AI model reviewed all 54 bills without the tool&apos;s answers. Its first pass disagreed on 8: 5 rule errors (fixed),
-              2 judgment calls I changed for Maya to confirm, and 1 kept on purpose. Proposed: run it weekly once legal approves a vendor.
+              2 judgment calls, since confirmed by Maya, and 1 kept on purpose. Proposed: run it weekly once legal approves a vendor.
             </p>
           </div>
           <div>

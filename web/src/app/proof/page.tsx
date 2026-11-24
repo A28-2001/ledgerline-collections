@@ -87,12 +87,12 @@ export default function ProofPage() {
       rest: "Top-50 accounts, disputes, probably-paid bills and every call always stay with a person; auto-send stays off until a month of approvals is on record.",
     },
     {
-      lead: "No AI vendor sees customer data",
-      rest: "until legal approves one: the tool runs on rules, and AI redraft is switched off. In testing, Claude reviewed the bills and Groq read masked tickets.",
+      lead: "The daily tool uses no AI.",
+      rest: "It runs on rules until legal approves an AI vendor, and AI redraft is switched off. In testing only, Claude reviewed the bills and Groq read masked tickets.",
     },
     {
-      lead: "AI is double-checked and measured:",
-      rest: up && up.cacheMisses === 0 ? `two models must agree; on these bills it changed ${up.verdictsChanged.length === 0 ? "no answers" : `${up.verdictsChanged.length} answers`} and would move ${up.checkFirstChanged} bills in or out of Check first.` : "two models must agree, or a person decides.",
+      lead: "AI is measured before it's allowed:",
+      rest: up && up.cacheMisses === 0 ? `on these bills it changed ${up.verdictsChanged.length === 0 ? "no answers" : `${up.verdictsChanged.length} answers`} and would move ${up.checkFirstChanged} bills in or out of Check first. Once allowed, two models must agree or a person decides.` : "once allowed, two models must agree or a person decides.",
     },
     { lead: "No threats, no invented facts:", rest: "emails come from Ledgerline's templates, checked for threat words." },
   ];
@@ -137,7 +137,7 @@ export default function ProofPage() {
               <div className="rounded-lg border border-dashed p-3">
                 <p className="text-xs text-muted-foreground">The fresh test</p>
                 <p className="text-xl font-semibold">Shadow week</p>
-                <p className="text-xs text-muted-foreground">New bills, not the 54 the rules were fixed on. Priya decides first, then compares.</p>
+                <p className="text-xs text-muted-foreground">New bills, not the 54 the rules were fixed on. Priya works as usual and compares her calls with the tool&apos;s; nothing goes out from it that week.</p>
               </div>
             </div>
 
@@ -149,7 +149,9 @@ export default function ProofPage() {
             {log.entries.length > 2 && (
               <details className="group mt-3">
                 <summary className="cursor-pointer text-sm font-medium text-muted-foreground hover:text-foreground">
-                  <span className="group-open:hidden">Show every miss ({log.entries.length}) and where each came from</span>
+                  <span className="group-open:hidden">
+                    Show all {log.entries.length} misses: {firstPass} from the review, {log.entries.length - firstPass} found another way
+                  </span>
                   <span className="hidden group-open:inline">Hide them</span>
                 </summary>
                 <p className="mt-3 flex flex-wrap items-baseline justify-between gap-x-4 gap-y-0.5 rounded-lg border bg-muted/40 px-3 py-2 text-sm font-medium">
@@ -199,7 +201,7 @@ export default function ProofPage() {
                 {v.strictValue !== undefined && v.strictValue > 0 && (
                   <p className="mt-1 text-xs font-medium text-hold-ink">
                     Strictest reading: {v.strictValue} {v.strictValue === 1 ? "customer" : "customers"} with a pending ticket that isn&apos;t about
-                    money. They wait in Check first until Maya confirms.
+                    money. Maya&apos;s rule (24 Nov): a polite reminder can go once Priya has read the ticket, so they wait in Check first.
                   </p>
                 )}
                 {v.note && <p className="mt-1 text-xs leading-relaxed text-muted-foreground">{v.note}</p>}

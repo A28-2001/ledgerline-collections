@@ -760,8 +760,8 @@ class Engine:
                 pending = [t for t in tickets.get(cid, []) if t.get("relevant")
                            and str(t.get("status") or "").split(" (")[0] not in self.v["ticket_closed_status"]]
                 if pending:
-                    row.needs_review.append("a ticket is still pending in Zendesk, though it isn't about money: confirm the reminder can go "
-                                            "(my call after the review, for Maya to confirm)")
+                    row.needs_review.append("a ticket is still pending in Zendesk, though it isn't about money: read it before the reminder goes, "
+                                            "and hold it if the customer sounds unhappy (Maya's rule, 24 Nov)")
             if contact_note and verdict == "send":
                 row.reasons.append({"text": contact_note.capitalize() + ".", "evidenceIds": [], "policyRef": None})
 

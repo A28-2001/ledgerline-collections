@@ -34,7 +34,7 @@ Before recording: open the site in a private window, so no earlier clicks show a
 4. Open **Send reminders**, then Rosales Engineering: show the **reminder schedule**, the **timeline** and the **draft**: "Ledgerline's own template, without the old 45-day suspension threat. Two Rosales bills go in one email." Close it and click **Approve 14 reminders**: "Approving doesn't send. Nothing goes out on its own."
 5. Open **Make calls**: "Every call today is a failed card past 45 days: call for a new card." Click **Add 7 calls to the list**.
 6. Open **Fix disputes: the day's work**: "Then the real work: 14 disputes, oldest first, 12 past the 5-day target. Each comes with a reply that names the issue. She copies it, sends it from her email, and clicks Reply sent."
-7. Scroll to **Done: send to billing**: "Every approved reminder opens in her email app, already written and addressed. She reads it and presses send. Then she downloads the list, so tomorrow remembers today."
+7. Scroll to **Done: save today's comparison**: "This is the shadow week, so nothing goes out from the tool. Priya compares its list with her own calls, and the download records where they differ. After the week, each approved reminder opens in her own email app, written and addressed, which Maya prefers because customers know her name."
 8. Open **Morning message** in the menu: "Every working day, each person gets one short Slack message and a link. Marcus is asked which bill a $5,100 payment covers, and account managers are asked for their OK on seats or price."
 
 ## 4:00 to 5:40 · How sure are we, and why the AI is safe
@@ -45,7 +45,7 @@ Before recording: open the site in a private window, so no earlier clicks show a
 - "A separate AI model reviewed all 54 bills without seeing the tool's answers, and I checked every contested bill by hand. First pass: 46 of 54, 85%."
 - Scroll to the miss list: "Every miss is here, with what changed. Eight came from the review's first pass, two I found myself before it, and one was my own mistake in the hand check: a payment that could pay either of two bills. That's the exact case that got the last tool switched off, so that bill now waits for Marcus."
 - "After the fixes it's 52 of 54, and we disagree on the last 2 on purpose. It's the same bills, so not a fresh test. The shadow week is."
-- **The COO's two tests:** "The tool would chase nobody who had paid and nobody with a complaint open: both zero. By the strictest reading, 2 customers have a pending ticket that isn't about money. They wait in Check first until Maya confirms that rule."
+- **The COO's two tests:** "The tool would chase nobody who had paid and nobody with a complaint open: both zero. By the strictest reading, 2 customers have a pending ticket that isn't about money. They wait in Check first so Priya reads the ticket before a polite reminder: Maya confirmed that rule."
 - **Why it's safe on billing** (read two or three lines): "A person approves everything. Top-50 accounts, disputes and calls always stay with a person. In daily use, no AI vendor sees customer data until legal approves one; in testing I used Claude for the review and Groq on masked tickets. And I measured what AI ticket-reading adds on these bills: it changed no answers, because rules already catch all 14 disputes, and it would move 9 bills in or out of Check first. AI earns its place on new tickets with a missing or wrong tag."
 
 ## 5:40 to 6:40 · What happens Monday

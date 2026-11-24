@@ -1,6 +1,6 @@
 {
  "meta": {
-  "generatedAt": "2026-11-24T19:23:46+00:00",
+  "generatedAt": "2026-11-24T19:37:49+00:00",
   "asOf": "2026-10-31",
   "dataSource": "real",
   "companyName": "Ledgerline",
@@ -36,7 +36,7 @@
   ],
   "aiMode": "rules_only",
   "notes": [
-   "Honest accuracy: on its first pass the tool agreed with the independent reviewer on 46 of 54 bills (85%). Of the 8 differences, 5 were rule errors we fixed, 2 were judgment calls changed for Maya to confirm, and 1 we kept on purpose. A later rule change caused one more (Studio Marsh), which the same review caught. The current figure is on the bills the rules were fixed against, so it is not a fresh-data result; the shadow week measures that.",
+   "Honest accuracy: on its first pass the tool agreed with the independent reviewer on 46 of 54 bills (85%). Of the 8 differences, 5 were rule errors we fixed, 2 were judgment calls, since confirmed by Maya, and 1 we kept on purpose. A later rule change caused one more (Studio Marsh), which the same review caught. The current figure is on the bills the rules were fixed against, so it is not a fresh-data result; the shadow week measures that.",
    "No-vendor mode (Maya, 23 Nov): no AI provider is approved yet, so tickets are read with tags, status and simple rules run locally; no ticket text leaves Ledgerline's systems. It now holds all 14 disputed bills, the same as the AI judges. Until 24 Nov it missed two (Banerjee Petrov, Upton & Bell): their tickets named the invoice but read as escalations, so the tool said 'call'. Fixed, and every call now shows the customer's tickets beside it."
   ],
   "sources": [
@@ -68,7 +68,8 @@
     "signOff": "None needed",
     "status": "In use for this run (data room files)"
    }
-  ]
+  ],
+  "shadowWeek": true
  },
  "summary": {
   "overdueAmount": 633245.0,
@@ -981,7 +982,7 @@
     "tone": "standard"
    },
    "reminderStage": "First reminder (7 days)",
-   "reviewReason": "a ticket is still pending in Zendesk, though it isn't about money: confirm the reminder can go (my call after the review, for Maya to confirm)",
+   "reviewReason": "a ticket is still pending in Zendesk, though it isn't about money: read it before the reminder goes, and hold it if the customer sounds unhappy (Maya's rule, 24 Nov)",
    "autoSend": {
     "eligible": false,
     "why": "Customer has an open ticket",
@@ -1212,7 +1213,7 @@
     "tone": "soft"
    },
    "reminderStage": "First reminder (7 days)",
-   "reviewReason": "a ticket is still pending in Zendesk, though it isn't about money: confirm the reminder can go (my call after the review, for Maya to confirm)",
+   "reviewReason": "a ticket is still pending in Zendesk, though it isn't about money: read it before the reminder goes, and hold it if the customer sounds unhappy (Maya's rule, 24 Nov)",
    "autoSend": {
     "eligible": false,
     "why": "Customer has an open ticket",
@@ -13958,7 +13959,7 @@
   ],
   "runtimeSeconds": 0.47,
   "reviewLog": {
-   "summary": "An independent reviewer (a separate AI model, Claude in its own session, that never saw the tool's answers) checked all 54 bills from the raw records, and a person then checked every contested bill. First pass: 46 of 54 agreed (85%). Of the 8 differences, 5 were rule errors we fixed, 2 were judgment calls changed for Maya to confirm, and 1 we kept on purpose. The 2 misses we found ourselves were fixed before the review ran, so the very first version would have agreed on at most 44. After the fixes, 52 of 54 agree (96%) with the reviewer's own labels, on the same bills the rules were fixed against, so that is not a fresh-data score: the shadow week measures that. The last 2 differ on purpose: an open ticket (Eastman & Wexler) and a payment that could belong to either of two bills (Kingsway).",
+   "summary": "An independent reviewer (a separate AI model, Claude in its own session, that never saw the tool's answers) checked all 54 bills from the raw records, and a person then checked every contested bill. First pass: 46 of 54 agreed (85%). Of the 8 differences, 5 were rule errors we fixed, 2 were judgment calls, since confirmed by Maya, and 1 we kept on purpose. The 2 misses we found ourselves were fixed before the review ran, so the very first version would have agreed on at most 44. After the fixes, 52 of 54 agree (96%) with the reviewer's own labels, on the same bills the rules were fixed against, so that is not a fresh-data score: the shadow week measures that. The last 2 differ on purpose: an open ticket (Eastman & Wexler) and a payment that could belong to either of two bills (Kingsway).",
    "entries": [
     {
      "invoice": "INV-25973",
@@ -14056,8 +14057,8 @@
      "shouldBe": "send",
      "foundBy": "Independent review, first pass",
      "why": "A normal-priority question, pending since July: support is waiting on the customer.",
-     "change": "My call, for Maya to confirm: a pending ticket pauses the reminder only if it's about money, urgent, or waiting on us. Otherwise a softer reminder, and the account manager is told.",
-     "status": "confirm"
+     "change": "Confirmed by Maya (24 Nov): a pending ticket pauses the reminder only if it's about money, urgent, or waiting on us. Otherwise a softer reminder, and the account manager is told.",
+     "status": "fixed"
     },
     {
      "invoice": "INV-25898",
@@ -14067,8 +14068,8 @@
      "shouldBe": "send",
      "foundBy": "Independent review, first pass",
      "why": "A pending timer bug, tagged How-to by mistake. Not about money.",
-     "change": "Same call as Kingsway, for Maya to confirm.",
-     "status": "confirm"
+     "change": "Same rule as Kingsway, confirmed by Maya (24 Nov).",
+     "status": "fixed"
     },
     {
      "invoice": "INV-25873",
@@ -14129,7 +14130,7 @@
    "5 bills look paid: Marcus is matching them"
   ],
   "link": "https://ledgerline-collections.vercel.app",
-  "text": "Good morning. Today's list is built to sort in about 5 minutes; the disputes are the day's work.",
+  "text": "Good morning. Shadow week: nothing goes out from the tool, so compare its list with your own calls. Today's list is built to sort in about 5 minutes; the disputes are the day's work.",
   "detail": [
    "14 reminders ready to approve ($168,304), and 5 more after a check.",
    "21 on hold ($368,462): 12 past their target date, so the owner acts today; the rest by Nov 3, 2026 at the earliest.",
@@ -14179,7 +14180,7 @@
     ],
     "more": 12,
     "by": "Nov 5",
-    "intro": "Priya needs your OK on 3 disputes she's fixing. 2 accounts paused until you move the issue on. 9 customers contacted today once Priya approves; reply if any should wait.",
+    "intro": "Priya needs your OK on 3 disputes she's fixing. 2 accounts paused until you move the issue on.",
     "link": "https://ledgerline-collections.vercel.app"
    },
    {
@@ -14194,7 +14195,7 @@
     ],
     "more": 10,
     "by": "Nov 5",
-    "intro": "Priya needs your OK on 1 dispute she's fixing. 1 account paused until you move the issue on. 10 customers contacted today once Priya approves; reply if any should wait.",
+    "intro": "Priya needs your OK on 1 dispute she's fixing. 1 account paused until you move the issue on.",
     "link": "https://ledgerline-collections.vercel.app"
    },
    {
@@ -14209,7 +14210,7 @@
     ],
     "more": 5,
     "by": "Nov 5",
-    "intro": "Priya needs your OK on 1 dispute she's fixing. 2 accounts paused until you move the issue on. 5 customers contacted today once Priya approves; reply if any should wait.",
+    "intro": "Priya needs your OK on 1 dispute she's fixing. 2 accounts paused until you move the issue on.",
     "link": "https://ledgerline-collections.vercel.app"
    },
    {
@@ -14224,7 +14225,7 @@
     ],
     "more": 1,
     "by": null,
-    "intro": "Priya needs your OK on 2 disputes she's fixing. 2 customers contacted today once Priya approves; reply if any should wait.",
+    "intro": "Priya needs your OK on 2 disputes she's fixing.",
     "link": "https://ledgerline-collections.vercel.app"
    },
    {

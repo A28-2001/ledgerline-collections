@@ -17,22 +17,22 @@ Every morning it asks five questions of each overdue bill and gives one answer, 
 | **Send** | Nothing blocks a polite reminder | 19 bills · $177,051 |
 | **Call** | 45+ days late, or already calling them | 9 bills · $9,384 |
 
-Priya's morning is **11 decisions**, built to take about 5 minutes, one customer at a time. Then her own step: 14 disputes, oldest first, each with a reply that names the issue. At the end, each approved reminder opens in her email app, written and addressed: she reads it and presses send. Every other hold goes to an owner with a deadline that carries over day to day, and comes back to her if nobody acts.
+Priya's morning is **11 decisions**, built to take about 5 minutes, one customer at a time. Then her own step: 14 disputes, oldest first, each with a reply that names the issue. After the shadow week, each approved reminder opens in her own email app, written and addressed: she reads it and presses send. During the shadow week nothing goes out from the tool; she compares her calls with its suggestions (the COO's call, 24 Nov). Every other hold goes to an owner with a deadline that carries over day to day, and comes back to her if nobody acts.
 
 ## What is AI, what stays with a person, and why
 
 - **A person decides every send.** Top-50 accounts, disputes, probably-paid bills, anything firmer than a nudge and every call always stay with a person: the COO's switch-off lines. Auto-send stays locked until a month of approvals is on record.
-- **AI as the auditor:** a separate AI model (Claude, in its own session) reviewed all 54 bills without seeing the tool's answers. Its first pass disagreed on 8: 5 rule errors (fixed), 2 judgment calls I changed for the COO to confirm, 1 kept on purpose. I propose running it weekly once legal approves a vendor.
+- **AI as the auditor:** a separate AI model (Claude, in its own session) reviewed all 54 bills without seeing the tool's answers. Its first pass disagreed on 8: 5 rule errors (fixed), 2 judgment calls the COO has since confirmed, 1 kept on purpose. I propose running it weekly once legal approves a vendor.
 - **No AI on customer data in daily use until legal approves a vendor**, because the SLA policy requires a data agreement first; Amazon Bedrock (AWS is already a vendor) is with legal. In testing, before the COO's answer, Groq read masked tickets: that changed no answers, as rules catch all 14 disputes by their invoice number, and would move 9 bills in or out of Check first.
 
 ## Proof, and where it fails
 
 - **Agreement with that review:** 46 of 54 (85%) on the first pass; 52 of 54 (96%) after the fixes, on the same bills, so the shadow week is the real test. The last 2 differ on purpose: an open ticket, and a payment that could belong to either of two bills. A person checked all 11 contested bills; every miss is listed in the tool.
-- **The COO's two tests read 0.** 2 customers with a pending ticket that isn't about money wait in Check first until she confirms that rule.
+- **The COO's two tests read 0.** Her rule, confirmed on 24 Nov: a ticket that isn't about money doesn't stop a polite reminder once Priya has read it (2 customers today, in Check first).
 - **Not claimed:** cash coming in sooner. The number to watch is overdue over 60 days ($57,685 today). Time saved, about 3–4 of 16 hours a week, is the COO's estimate, for Priya to confirm.
 
 ## With more time
 
-Read the billing@ inbox (disputes sent by email are invisible today); payment plans with the VP Finance's approval; live read-only QuickBooks, Zendesk and Slack connections; save each day's decisions automatically (today it's by hand, and a missed day is flagged the next morning).
+Read the billing@ inbox (disputes sent by email are invisible today); payment plans with the VP Finance's approval; live read-only QuickBooks, Zendesk and Slack connections. **Before March** (the COO's deadline): save each day's decisions automatically. By hand is fine for the shadow week, and a missed day is flagged the next morning, but a daily download is the step that gets skipped when Dana covers.
 
 **Disclosure:** built and tested on made-up data before Begin; everything using Ledgerline's data came after (see the git history). Built with Claude; an AI redraft button (Groq) exists but is switched off until legal approves a vendor.

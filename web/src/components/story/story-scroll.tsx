@@ -354,7 +354,7 @@ function MondayPicture({ data }: { data: StoryData }) {
           ))}
         </ol>
         <p className="mt-3 text-xs leading-relaxed text-muted-foreground">
-          The tool runs beside Priya on exports, and she checks that it agrees with her. Nothing is sent without a person.
+          The tool runs beside Priya on exports, and she compares its suggestions with her own calls. Nothing goes out from the tool that week.
         </p>
       </div>
     </Frame>

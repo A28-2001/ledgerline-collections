@@ -56,7 +56,9 @@ data files ──► pipeline/ (Python) ─────────────�
 | `pipeline/compare_review.py` | Compares the tool with the independent review |
 | `pipeline/test_pipeline.py` | Tests: the Paidly case, renamed columns, memory between mornings |
 
-**Memory between mornings:** drop each day's decision list (the CSV from the Today page) into `data/history/`. If the last working day's list is missing, the next morning message and every page say so. The next run reads it: an approved reminder is never suggested twice, the next stage follows what was actually sent, and hold deadlines run from the first hand-off, so an untouched hold comes back to Priya.
+**Memory between mornings:** drop each day's decision list (the CSV from the Today page) into `data/history/`. If the last working day's list is missing, the next morning message and every page say so. Maya (24 Nov): by hand is fine for the shadow week; automatic before March.
+
+**Shadow week:** `shadow_week: true` in `pipeline/config.yaml` (the default for Monday). Nothing goes out from the tool; Priya compares her calls with its suggestions, and the decision list records where she agrees. Set it to `false` after the week, and approved reminders open in her own mailbox. The next run reads it: an approved reminder is never suggested twice, the next stage follows what was actually sent, and hold deadlines run from the first hand-off, so an untouched hold comes back to Priya.
 
 ## Run it
 

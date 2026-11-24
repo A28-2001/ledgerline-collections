@@ -127,3 +127,14 @@ I'd switch yours off for the same kind of thing: chasing someone who's paid, or 
 - Every "call" shows the customer's tickets right next to it, open or recently closed, whether or not they name the invoice, with a "read before you call" line. A billing-sounding one sends the call to Check first.
 - The rules learn the Banerjee Petrov kind of dispute (cancelled or switched off, still being charged).
 - Monday = shadow week on exports. Maya is contacting the Head of Support and Dana today and sending the legal note this afternoon.
+
+## 12. Three confirmations before the shadow week (24 Nov, afternoon)
+
+**Us:** (asked her to confirm three things: that a pending ticket that isn't about money shouldn't stop a polite reminder, with a person checking it first (Crane IT and Harbor Engineering today); whether saving each day's decision list by hand is fine until a server is approved; and whether approved reminders can open in Priya's own email app during the shadow week)
+
+**Maya:** Yes, that's the rule I want: a how-to question shouldn't freeze a polite reminder, as long as Priya sees the ticket next to it and can hold it if the tone of the ticket says the customer's unhappy. A manual save is fine for the shadow week, but it has to be gone before March, because a daily download is exactly the step that gets skipped when Dana's covering on a busy morning. On the email, I thought nothing went out from the tool during the shadow week. If Priya is sending what it drafts, it isn't shadowing any more, so keep it to comparing her calls with its suggestions that week. After that, sending from her own mailbox is fine and actually better, since customers already know her name.
+
+**What it changes:**
+- The pending-ticket rule is hers now, not "for Maya to confirm": the ticket sits next to the reminder in Check first, and Priya holds it if the customer sounds unhappy.
+- A shadow-week switch (`shadow_week: true` in the config, on for Monday): nothing goes out from the tool, the email links are hidden, and approving records that Priya agrees. Switched off after the week, each approved reminder opens in her own mailbox.
+- Saving the day's list by hand is fine for the shadow week, and must be automatic before March: now a deadline in the one-pager, not "with more time".

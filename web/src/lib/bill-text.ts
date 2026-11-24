@@ -105,7 +105,7 @@ export function plainReview(inv: Invoice): string {
     if ((m = r.match(/(\d+) overdue bills have this amount/i))) return `${m[1]} bills have this amount: confirm which one the payment covers`;
     if ((m = r.match(/customer name '(.+)' not found/i))) return `“${m[1]}” isn't in the customer list`;
     if (/borderline name match/i.test(r)) return "The customer's name is only a close match";
-    if (/still pending in Zendesk/i.test(r)) return "A support ticket is still pending, though not about money. Until Maya confirms that rule, a person checks before the reminder goes";
+    if (/still pending in Zendesk/i.test(r)) return "A support ticket is still pending, though not about money. A polite reminder can go: read the ticket first, and hold it if the customer sounds unhappy (Maya's rule)";
     if (/matched by name only/i.test(r)) return "The customer was matched by a similar name only";
     if (/no name/i.test(r)) return "This bill has no customer name";
     return r.charAt(0).toUpperCase() + r.slice(1);

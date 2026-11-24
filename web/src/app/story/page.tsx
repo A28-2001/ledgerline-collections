@@ -150,7 +150,7 @@ export default function StoryPage() {
       number: firstAgreed !== null && acc ? `${firstAgreed} of ${acc.sampleSize}` : "—",
       numberNote: "bills agreed with an independent AI review on the first pass",
       text: [
-        `**Each disagreement became a fix or a question for Maya**${acc ? `: ${acc.agreed} of ${acc.sampleSize} agree now` : ""}. The shadow week is the real test.`,
+        `**Each disagreement became a fix, or a rule Maya confirmed**${acc ? `: ${acc.agreed} of ${acc.sampleSize} agree now` : ""}. The shadow week is the real test.`,
       ],
       source: "Review log (How sure are we page)",
     },
@@ -161,7 +161,7 @@ export default function StoryPage() {
       numberNote: "customers the tool would chase who had paid or had a complaint open",
       text: [
         strict
-          ? `**${strict} customers** with a pending ticket that isn't about money wait in Check first until Maya confirms.`
+          ? `**${strict} customers** with a pending ticket that isn't about money wait in Check first, so Priya reads the ticket before a polite reminder (Maya's rule).`
           : "Both of the COO's tests read 0.",
       ],
       source: "Checks on the How sure are we page; plan agreed with the COO",

@@ -1,5 +1,5 @@
 {
-  "summary": "An independent reviewer (a separate AI model, Claude in its own session, that never saw the tool's answers) checked all 54 bills from the raw records, and a person then checked every contested bill. First pass: 46 of 54 agreed (85%). Of the 8 differences, 5 were rule errors we fixed, 2 were judgment calls changed for Maya to confirm, and 1 we kept on purpose. The 2 misses we found ourselves were fixed before the review ran, so the very first version would have agreed on at most 44. After the fixes, 52 of 54 agree (96%) with the reviewer's own labels, on the same bills the rules were fixed against, so that is not a fresh-data score: the shadow week measures that. The last 2 differ on purpose: an open ticket (Eastman & Wexler) and a payment that could belong to either of two bills (Kingsway).",
+  "summary": "An independent reviewer (a separate AI model, Claude in its own session, that never saw the tool's answers) checked all 54 bills from the raw records, and a person then checked every contested bill. First pass: 46 of 54 agreed (85%). Of the 8 differences, 5 were rule errors we fixed, 2 were judgment calls, since confirmed by Maya, and 1 we kept on purpose. The 2 misses we found ourselves were fixed before the review ran, so the very first version would have agreed on at most 44. After the fixes, 52 of 54 agree (96%) with the reviewer's own labels, on the same bills the rules were fixed against, so that is not a fresh-data score: the shadow week measures that. The last 2 differ on purpose: an open ticket (Eastman & Wexler) and a payment that could belong to either of two bills (Kingsway).",
   "entries": [
     {
       "invoice": "INV-25973",
@@ -97,8 +97,8 @@
       "shouldBe": "send",
       "foundBy": "Independent review, first pass",
       "why": "A normal-priority question, pending since July: support is waiting on the customer.",
-      "change": "My call, for Maya to confirm: a pending ticket pauses the reminder only if it's about money, urgent, or waiting on us. Otherwise a softer reminder, and the account manager is told.",
-      "status": "confirm"
+      "change": "Confirmed by Maya (24 Nov): a pending ticket pauses the reminder only if it's about money, urgent, or waiting on us. Otherwise a softer reminder, and the account manager is told.",
+      "status": "fixed"
     },
     {
       "invoice": "INV-25898",
@@ -108,8 +108,8 @@
       "shouldBe": "send",
       "foundBy": "Independent review, first pass",
       "why": "A pending timer bug, tagged How-to by mistake. Not about money.",
-      "change": "Same call as Kingsway, for Maya to confirm.",
-      "status": "confirm"
+      "change": "Same rule as Kingsway, confirmed by Maya (24 Nov).",
+      "status": "fixed"
     },
     {
       "invoice": "INV-25873",

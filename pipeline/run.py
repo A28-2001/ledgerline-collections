@@ -267,7 +267,8 @@ def main() -> None:
     light = light_lines(invoices, cfg, as_of, getattr(engine, "missed_save", None))
     app_url = cfg.get("app_url", "https://ledgerline-collections.vercel.app")
     morning = {"title": f"Collections check, {nice(as_of)}", "bullets": light, "link": app_url,
-               "text": "Good morning. Today's list is built to sort in about 5 minutes; the disputes are the day's work.",
+               "text": "Good morning. " + ("Shadow week: nothing goes out from the tool, so compare its list with your own calls. "
+                                       if cfg.get("shadow_week") else "") + "Today's list is built to sort in about 5 minutes; the disputes are the day's work.",
                "detail": bullets}
     # Who gets what (Maya, 24 Nov): Slack direct messages, one a day per person, never a channel post.
     ppl = cfg.get("people", {})
@@ -311,7 +312,7 @@ def main() -> None:
             intro.append(f"Priya needs your OK on {len(ok_needed)} {'dispute' if len(ok_needed) == 1 else 'disputes'} she's fixing.")
         if bills:
             intro.append(f"{len(bills)} {'account' if len(bills) == 1 else 'accounts'} paused until you move the issue on.")
-        if out_today:
+        if out_today and not cfg.get("shadow_week"):
             who = len({i.get("customerId") or i["id"] for i in out_today})
             intro.append(f"{who} {'customer' if who == 1 else 'customers'} contacted today once Priya approves; reply if any should wait.")
         routing.append({"to": am, "role": "Account manager", "channel": "Slack direct message (one a day)", "cc": None,
@@ -358,7 +359,7 @@ def main() -> None:
         notes.insert(0, "Sample data: made-up company and numbers, used to build and test the tool.")
     elif acc:
         notes.insert(0, "Honest accuracy: on its first pass the tool agreed with the independent reviewer on 46 of 54 bills (85%). "
-                        "Of the 8 differences, 5 were rule errors we fixed, 2 were judgment calls changed for Maya to confirm, and 1 we kept on purpose. A later rule change caused one more "
+                        "Of the 8 differences, 5 were rule errors we fixed, 2 were judgment calls, since confirmed by Maya, and 1 we kept on purpose. A later rule change caused one more "
                         "(Studio Marsh), which the same review caught. The current figure is on the bills the rules were fixed against, "
                         "so it is not a fresh-data result; the shadow week measures that.")
 
@@ -366,7 +367,7 @@ def main() -> None:
         "meta": {"generatedAt": datetime.now(timezone.utc).isoformat(timespec="seconds"), "asOf": as_of.date().isoformat(),
                  "dataSource": "sample" if args.data == "sample" else "real", "companyName": cfg["company_name"],
                  "files": [{"name": k, "rows": v} for k, v in data.rows.items()], "aiMode": ai.mode, "notes": notes,
-                 "sources": cfg.get("sources", [])},
+                 "sources": cfg.get("sources", []), "shadowWeek": bool(cfg.get("shadow_week", False))},
         "summary": {"overdueAmount": round(total, 2), "overdueCount": len(invoices), "byVerdict": by_verdict,
                     "tickets": getattr(engine, "ticket_stats", None),
                     "unmatchedPayments": getattr(engine, "unmatched_count", None),

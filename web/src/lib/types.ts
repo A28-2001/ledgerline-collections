@@ -124,6 +124,7 @@ export interface Results {
     aiMode: "groq" | "rules_only";
     notes: string[]; // e.g. "Failed card payments not recorded, check skipped"
     sources?: { name: string; what: string; how: string; signOff: string; status: string }[];
+    shadowWeek?: boolean; // Maya: nothing goes out from the tool during the shadow week
   };
   summary: {
     overdueAmount: number;
