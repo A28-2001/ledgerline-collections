@@ -1,44 +1,80 @@
 # Collections check
 
-Every morning, it tells the finance team which overdue bills to chase, which to hold, and why. It connects each bill with support tickets, bank payments and the contract. A person approves everything before it reaches a customer.
+**"Should we chase this invoice today?"** Ledgerline's collections process (FIN-1), owned by Priya Nair, the AR Specialist.
 
-Built for the Scaleworks AI Operator Challenge. See `docs/disclosure.md` for what was prepared before the 24-hour clock started.
+Every morning it reads the overdue bills, bank and Stripe payments, support tickets and contracts, and gives each bill one answer with its reason, the records behind it and the policy line. A person approves everything before anything reaches a customer.
 
-## The four verdicts
+- **Live tool:** https://ledgerline-collections.vercel.app/story (start with the story, about two minutes)
+- **One-page description:** [`docs/one-pager.md`](docs/one-pager.md)
+- **What was built before the clock started:** [`docs/disclosure.md`](docs/disclosure.md); the git history shows the rest
 
-| Verdict | When | What happens |
-|---|---|---|
-| **Probably paid** | A payment already covers the bill | Finance confirms and closes it. No reminder |
-| **Hold** | Open billing complaint, serious escalation, or the bill doesn't match the contract | The owner gets a task with a deadline. If nobody acts, it returns to finance |
-| **Call** | Long overdue, a large bill, or we can't confirm who the customer is | A person calls |
-| **Send** | Nothing blocking | Reminder email: standard, softer if there's an open product complaint, or an update-card note if a card failed |
+Built for the Scaleworks AI Operator Challenge. Ledgerline and its data room are fictional.
 
-When the two AI judges disagree about a ticket, the tool doesn't chase: a person reads it first.
+## The five questions, in order
 
-## How it works
+| # | Question | If yes | Who acts |
+|---|---|---|---|
+| 1 | Already paid? | **Probably paid** | Marcus matches the payment in 2 working days; no reminder |
+| 2 | A reason not to talk about money? (dispute, open ticket, chargeback or regulator threat, refund owed, unclear payment) | **Hold** | Priya fixes disputes in 5 working days; account managers get 3 days on open tickets; Marcus gets 2 on an unclear payment |
+| 3 | Under 7 days late? | **Wait** | Comes back on day 7 |
+| 4 | 45+ days late, or already calling them? | **Call** | Priya calls, with the customer's tickets in front of her |
+| 5 | None of the above | **Send** | Priya approves a polite reminder from Ledgerline's own templates |
+
+Always with a person, permanently: top-50 accounts, disputes, probably-paid bills, anything firmer than a friendly nudge, and every call. Auto-send stays off until a month of approvals is on record.
+
+## Today's numbers (data as of 31 Oct 2026)
+
+54 overdue bills, $633,245. 19 reminders to approve, 21 holds, 9 calls, 5 probably paid. $309,000 (49%) is disputed in tickets that name the exact invoice.
+
+Accuracy: a separate AI model reviewed all 54 bills without seeing the tool's answers, and a person checked the 11 contested calls. First pass 46 of 54 (85%); 53 of 54 after the fixes, on the same bills, so not a fresh test. Every miss is listed in the tool and in [`reports/review/review-log.json`](reports/review/review-log.json).
+
+## AI and data safety
+
+- **No-vendor mode is the default** (`ai.ticket_text: "off"` in `pipeline/config.yaml`). Ledgerline's SLA policy bars sending ticket content to a new vendor without a data agreement, so tickets are read with tags, status and rules, inside Ledgerline. Amazon Bedrock, in the existing AWS account, is proposed to legal ([`docs/ai-vendor-for-legal.md`](docs/ai-vendor-for-legal.md)).
+- **When AI is on**, two models from different families read masked ticket text; if they disagree, a person decides. Answers are cached in `data/cache/ai_cache.json`.
+- **Measured, not claimed:** `pipeline/measure_ai.py` re-runs the 54 bills with the cached AI answers (no new calls). AI changed no decisions on these bills; rules already catch all 14 disputes. Result in [`reports/ai-uplift.json`](reports/ai-uplift.json).
+- Every ticket excerpt is masked (emails, card numbers, bank details, phone numbers) before anyone sees it.
+- The "Redraft with AI" button in the app is a demo: it sends a draft from this fictional data room to Groq, with guards against leaking ticket details or adding threats.
+
+## How it's built
 
 ```
-data files ──► pipeline/ (Python)                                    ──► web/ (Next.js on Vercel)
-               load → match customers → check payments, tickets,         Today · Why overdue ·
-               contracts → verdict + reasons + evidence + policy ref      Customer · Proof · Morning summary
-               → results.json
+data files ──► pipeline/ (Python) ───────────────────────────────► web/ (Next.js on Vercel)
+               load → match customers → payments, tickets,          The story · Today · Why overdue ·
+               contracts → answer + reasons + evidence + policy     Customers · Morning message ·
+               → web/src/data/results.json                          How sure are we · How it works
 ```
 
-- `pipeline/config.yaml`: column mapping and policy rules. Each rule cites its policy section.
-- `pipeline/match.py`: links the same customer across systems (exact id → exact name → fuzzy → AI judges). Weak matches go to a person.
-- `pipeline/ai.py`: the only place that calls an AI model (Groq). Two judges per decision; disagreement goes to a person. Cached, and optional.
-- `pipeline/engine.py`: the verdict logic.
-- `pipeline/run.py`: runs everything and writes `web/src/data/results.json`.
-- `pipeline/profile_data.py` and `pipeline/plan_check.py`: profile new data, and test the plan's assumptions against it.
+| File | What it does |
+|---|---|
+| `pipeline/config.yaml` | Column mapping, policy rules and every setting the COO gave (each cites its source) |
+| `pipeline/load.py`, `match.py` | Loads the files; links each customer across systems (ID, then exact name; near-matches go to a person) |
+| `pipeline/engine.py` | The five questions, reasons, evidence, owners and deadlines, drafts from Ledgerline's templates |
+| `pipeline/ai.py` | The only place that calls an AI model; off by default; cached |
+| `pipeline/run.py` | Runs everything, checks the headline numbers two ways, writes `results.json` |
+| `pipeline/measure_ai.py` | Measures what AI ticket-reading changes, from cached answers |
+| `pipeline/compare_review.py` | Compares the tool with the independent review |
+| `pipeline/test_pipeline.py` | Tests: the Paidly case, renamed columns, memory between mornings |
+
+**Memory between mornings:** drop each day's decision list (the CSV from the Today page) into `data/history/`. The next run reads it, so an approved reminder is never suggested twice and the next stage follows what was actually sent.
 
 ## Run it
 
 ```bash
 uv venv .venv --python 3.11 && uv pip install --python .venv/bin/python -r pipeline/requirements.txt
-.venv/bin/python pipeline/make_sample.py          # fake sample data
-.venv/bin/python pipeline/run.py --publish        # add --data raw for the real files in data/raw
-.venv/bin/python pipeline/test_pipeline.py        # checks
+.venv/bin/python pipeline/make_sample.py                      # made-up sample data
+.venv/bin/python pipeline/test_pipeline.py                    # tests
+.venv/bin/python pipeline/run.py --data raw --publish         # the data room files, put in data/raw/
+.venv/bin/python pipeline/measure_ai.py                       # what AI changes, from cached answers
 cd web && npm install && npm run dev
 ```
 
-The data room files are not in this repo. To re-run on them, put them in `data/raw/` and run `pipeline/run.py --data raw --publish`. AI judges need `GROQ_API_KEY` in the environment; without it, the run uses rules only and says so.
+The data room files aren't in this repo. Without `GROQ_API_KEY` (or with `ai.ticket_text: "off"`), the run uses rules only and says so.
+
+## Docs
+
+- [`docs/one-pager.md`](docs/one-pager.md): the one-page description
+- [`docs/maya-conversation.md`](docs/maya-conversation.md): the COO conversation, word for word
+- [`docs/process-diagram.md`](docs/process-diagram.md): the process, and how the tool maps to FIN-1's steps
+- [`docs/worklog.md`](docs/worklog.md): decisions and times
+- [`docs/build-vs-buy.md`](docs/build-vs-buy.md), [`docs/ai-vendor-for-legal.md`](docs/ai-vendor-for-legal.md), [`docs/disclosure.md`](docs/disclosure.md)
