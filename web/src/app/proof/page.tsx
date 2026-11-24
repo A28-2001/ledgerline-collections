@@ -107,7 +107,7 @@ export default function ProofPage() {
             <CardTitle className="leading-snug">How often it agrees with an independent review, and every miss</CardTitle>
             <CardDescription>
               A separate AI model (Claude, in its own session) reviewed all 54 bills from a summary of each bill&apos;s records, without the tool&apos;s
-              answers. A person checked the 11 contested bills, not the other 43.
+              answers. A person then checked the bills in doubt, not the others.
             </CardDescription>
           </CardHeader>
           <CardContent>

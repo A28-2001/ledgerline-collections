@@ -109,6 +109,7 @@ function scrollToStep(key: StepKey) {
 export function MorningView({ data }: { data: Pick<Results, "invoices" | "summary" | "meta" | "morningSummary"> }) {
   const { invoices, meta } = data;
   const shadow = !!meta.shadowWeek; // Maya: nothing goes out from the tool during the shadow week
+  const agree = (label: string) => (shadow ? "Agree" : label); // in the shadow week the buttons compare; nothing goes out
   // Disputes Priya fixes herself: the day's real work, kept apart from the holds she hands to others.
   const isMyDispute = (i: Invoice) => i.verdict === "hold" && i.cause === "wrong_bill" && Boolean(i.hold?.ownerRole.startsWith("Finance"));
   const raisedOn = (i: Invoice) => {
@@ -202,7 +203,7 @@ export function MorningView({ data }: { data: Pick<Results, "invoices" | "summar
     approve(step.undecided.map((i) => ({ id: i.id, verdict: step.def.verdict })));
     setConfirmStep(null);
     setOpenStep("auto");
-    toast.success(step.def.done(step.undecided.length), { description: "Step done." });
+    toast.success(shadow ? `Agreed with ${step.undecided.length}` : step.def.done(step.undecided.length), { description: "Step done." });
   }
 
   function exportDecisions() {
@@ -245,6 +246,7 @@ export function MorningView({ data }: { data: Pick<Results, "invoices" | "summar
   const readyEmails = invoices
     .filter((i) => decisions[i.id]?.verdict === "send" && i.draft?.body && i.draft?.to)
     .sort((a, b) => emailTotal(b) - emailTotal(a));
+  const emailBills = readyEmails.reduce((t, i) => t + 1 + alsoIn(i).length, 0); // one email per customer
   const currentStep = steps.find((s) => s.def.verdict === current);
 
   return (
@@ -316,7 +318,7 @@ export function MorningView({ data }: { data: Pick<Results, "invoices" | "summar
                     items={openGroups.map((g) => ({ key: g[0].id, bills: g, why: plainReview(g[0]) }))}
                     verdictOf={(i) => i.verdict}
                     proofOf={checkProof}
-                    primaryLabel={(it) => `Looks right: ${VERDICT_META[it.bills[0].verdict].label}`}
+                    primaryLabel={(it) => agree(`Looks right: ${VERDICT_META[it.bills[0].verdict].label}`)}
                     onPrimary={(it) => keepGroup(it.bills)}
                     onChange={(it) => openBill(it.bills[0].id, true)}
                     onOpen={(it) => openBill(it.bills[0].id)}
@@ -337,7 +339,7 @@ export function MorningView({ data }: { data: Pick<Results, "invoices" | "summar
               s.items.length === 0 && s.waiting === 0
                 ? "Nothing today"
                 : [
-                    s.done && s.items.length > 0 ? s.def.done(s.decidedCount) : pluralize(s.items.length, "bill"),
+                    s.done && s.items.length > 0 ? (shadow ? `${s.decidedCount} agreed` : s.def.done(s.decidedCount)) : pluralize(s.items.length, "bill"),
                     s.waiting > 0 ? `${s.waiting} more in Check first` : null,
                   ]
                     .filter(Boolean)
@@ -378,17 +380,17 @@ export function MorningView({ data }: { data: Pick<Results, "invoices" | "summar
                           why: key === "paid" ? "A payment fits this bill, but nobody has matched it to the bill yet." : rowDetail(inv, key),
                         }))}
                         verdictOf={() => key}
-                        primaryLabel={(it) => stepPrimary(key, it.bills[0])}
+                        primaryLabel={(it) => agree(stepPrimary(key, it.bills[0]))}
                         onPrimary={(it) => decideOne(it.bills[0], key)}
                         onChange={(it) => openBill(it.bills[0].id, true)}
                         onOpen={(it) => openBill(it.bills[0].id)}
-                        doneText={s.decidedCount > 0 && s.undecided.length > 0 ? `${s.def.done(s.decidedCount)} so far` : undefined}
-                        emptyText={`Step done: ${s.def.done(s.decidedCount)}.`}
+                        doneText={s.decidedCount > 0 && s.undecided.length > 0 ? `${shadow ? `${s.decidedCount} agreed` : s.def.done(s.decidedCount)} so far` : undefined}
+                        emptyText={`Step done: ${shadow ? `${s.decidedCount} agreed` : s.def.done(s.decidedCount)}.`}
                         footer={
                           s.undecided.length > 1 ? (
                             <Button variant="outline" className="w-full" onClick={() => setConfirmStep(s.def)}>
                               <CheckCheck />
-                              {s.def.button(s.undecided.length)}
+                              {shadow ? `Agree with all ${s.undecided.length}` : s.def.button(s.undecided.length)}
                             </Button>
                           ) : undefined
                         }
@@ -420,17 +422,19 @@ export function MorningView({ data }: { data: Pick<Results, "invoices" | "summar
               {expanded === "dispute" && (
                 <div id="step-dispute" className="border-t px-4 pt-3 pb-4">
                   <p className="text-sm leading-relaxed text-muted-foreground">
-                    Yours to fix: send the reply, then correct the bill or answer the customer. Oldest first.
+                    {shadow
+                      ? "Yours to fix, as you do today. The tool's reply is there to compare; nothing goes out this week. Oldest first."
+                      : "Yours to fix: send the reply, then correct the bill or answer the customer. Oldest first."}
                   </p>
                   <FocusQueue
                     items={disputesOpen.map((inv) => ({ key: inv.id, bills: [inv], why: rowDetail(inv, "hold") }))}
                     verdictOf={() => "hold"}
-                    primaryLabel={() => "Reply sent"}
+                    primaryLabel={() => agree("Reply sent")}
                     onPrimary={(it) => decideOne(it.bills[0], "hold")}
                     onChange={(it) => openBill(it.bills[0].id, true)}
                     onOpen={(it) => openBill(it.bills[0].id)}
                     extra={(it) =>
-                      it.bills[0].reply ? (
+                      !shadow && it.bills[0].reply ? (
                         <CopyButton
                           text={`To: ${it.bills[0].reply.to}\nSubject: ${it.bills[0].reply.subject}\n\n${it.bills[0].reply.body}`}
                           label="Copy the reply"
@@ -481,13 +485,17 @@ export function MorningView({ data }: { data: Pick<Results, "invoices" | "summar
             </div>
             {shadow && readyEmails.length > 0 && (
               <p className="mt-4 border-t pt-3 text-xs leading-relaxed text-muted-foreground">
-                After the shadow week, each of these {readyEmails.length} reminders opens in your own email app, written and addressed. This week
-                nothing goes out from the tool.
+                After the shadow week, these {readyEmails.length} emails
+                {emailBills !== readyEmails.length ? ` (${emailBills} bills: one email per customer)` : ""} open in your own email app, written and
+                addressed. This week nothing goes out from the tool.
               </p>
             )}
             {!shadow && readyEmails.length > 0 && (
               <div className="mt-4 border-t pt-3">
-                <p className="text-sm font-medium">Emails ready to send · {readyEmails.length}</p>
+                <p className="text-sm font-medium">
+                  Emails ready to send · {readyEmails.length}
+                  {emailBills !== readyEmails.length ? ` (${emailBills} bills)` : ""}
+                </p>
                 <p className="mt-0.5 text-xs text-muted-foreground">Each opens in your email app, written and addressed. Read it, then press send.</p>
                 <ul className="mt-2 divide-y rounded-lg border bg-background text-sm">
                   {readyEmails.map((i) => (
@@ -591,10 +599,10 @@ export function MorningView({ data }: { data: Pick<Results, "invoices" | "summar
               return (
                 <>
                   <DialogHeader>
-                    <DialogTitle>{confirmStep.confirmTitle(s.undecided.length)}</DialogTitle>
+                    <DialogTitle>{shadow ? `Agree with all ${s.undecided.length}?` : confirmStep.confirmTitle(s.undecided.length)}</DialogTitle>
                     <DialogDescription>
-                      {shadow && confirmStep.verdict === "send"
-                        ? "This is the shadow week: approving records that you agree with the tool. Nothing goes out."
+                      {shadow
+                        ? "This is the shadow week: agreeing records that you'd do the same. Nothing goes out from the tool."
                         : confirmStep.confirmText}
                     </DialogDescription>
                   </DialogHeader>
@@ -616,7 +624,7 @@ export function MorningView({ data }: { data: Pick<Results, "invoices" | "summar
                     </DialogClose>
                     <Button onClick={() => runBulk(s)}>
                       <Check />
-                      {confirmStep.button(s.undecided.length)}
+                      {shadow ? `Agree with all ${s.undecided.length}` : confirmStep.button(s.undecided.length)}
                     </Button>
                   </DialogFooter>
                 </>

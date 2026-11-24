@@ -18,7 +18,7 @@ export default function StoryPage() {
   const tk = summary.tickets;
   const disputed = summary.byCause.find((c) => c.cause === "wrong_bill");
   const count = (v: string) => invoices.filter((i) => i.verdict === v).length;
-  const strict = proof.verifiedNumbers.find((v) => v.label.startsWith("Complaint open"))?.strictValue ?? 0;
+  const strict = proof.verifiedNumbers.find((v) => v.group === "coo" && v.strictValue != null)?.strictValue ?? 0;
   const allMine = invoices.filter((i) => i.verdict === "hold" && i.cause === "wrong_bill" && i.hold?.ownerRole.startsWith("Finance")).length;
   const decisions = (() => {
     // the same count as the Today page: one per customer and reason in Check first, plus one per step
@@ -158,10 +158,10 @@ export default function StoryPage() {
       id: "monday",
       kicker: "Monday",
       number: fmt(checksTotal),
-      numberNote: "customers the tool would chase who had paid or had a complaint open",
+      numberNote: "customers the tool would chase who had paid or had a complaint open, by Maya's rule",
       text: [
         strict
-          ? `**${strict} customers** with a pending ticket that isn't about money wait in Check first, so Priya reads the ticket before a polite reminder (Maya's rule).`
+          ? `By the strictest reading it's **${strict}**: customers with a pending ticket that isn't about money. They wait in Check first, so Priya reads the ticket before a polite reminder.`
           : "Both of the COO's tests read 0.",
       ],
       source: "Checks on the How sure are we page; plan agreed with the COO",
