@@ -57,21 +57,21 @@ const STEPS: StepDef[] = [
   {
     verdict: "paid",
     title: "Already paid",
-    explain: "A payment seems to cover each of these bills. Confirm them, then close them in your accounting tool. No reminder goes out.",
+    explain: "A payment seems to cover each of these bills. Marcus matches them within 2 working days and you're copied. No reminder goes out.",
     icon: Wallet,
-    button: (n) => `Confirm ${pluralize(n, "payment")}`,
-    confirmTitle: (n) => `Confirm ${pluralize(n, "bill")} as probably paid?`,
-    confirmText: "Each has one payment that matches the bill exactly. They're marked confirmed here; you close them in your accounting tool.",
-    done: (n) => `${pluralize(n, "bill")} confirmed`,
+    button: (n) => `Hand ${pluralize(n, "bill")} to Marcus`,
+    confirmTitle: (n) => `Hand ${pluralize(n, "bill")} to Marcus to match?`,
+    confirmText: "Marcus gets them in his morning message. If a payment isn't matched within 2 working days, the bill comes back to you.",
+    done: (n) => `${pluralize(n, "bill")} with Marcus`,
   },
   {
     verdict: "send",
     title: "Send reminders",
-    explain: "Nothing is blocking these: no open complaint, no payment found, and the bill matches the contract. Read one or two drafts, then approve the rest.",
+    explain: "Nothing is blocking these: no open complaint, no payment found, and the bill matches the contract. Read one or two drafts, then approve the rest. Approving doesn't send anything.",
     icon: Mail,
     button: (n) => `Approve ${pluralize(n, "reminder")}`,
     confirmTitle: (n) => `Approve ${pluralize(n, "reminder")}?`,
-    confirmText: "They're marked approved here and you send them from your email tool. Nothing is sent automatically.",
+    confirmText: "Approving marks them ready; it doesn't send. Until a mail connection is approved, you send them from your email tool. Each account manager sees them in their morning message.",
     done: (n) => `${pluralize(n, "reminder")} approved`,
   },
   {
@@ -112,6 +112,9 @@ function scrollToStep(key: StepKey) {
 
 export function MorningView({ data }: { data: Pick<Results, "invoices" | "summary" | "meta" | "morningSummary"> }) {
   const { invoices, meta, morningSummary } = data;
+  const myOverdueHolds = invoices.filter(
+    (i) => i.verdict === "hold" && i.cause === "wrong_bill" && i.hold && i.hold.deadline <= meta.asOf && i.hold.ownerRole.startsWith("Finance"),
+  );
   const { decisions, approve, override, undo } = useDecisions();
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [startChange, setStartChange] = useState(false);
@@ -405,6 +408,16 @@ export function MorningView({ data }: { data: Pick<Results, "invoices" | "summar
                       <Icon className="mt-0.5 size-4 shrink-0" aria-hidden="true" />
                       {s.def.explain}
                     </p>
+                    {s.def.verdict === "hold" && myOverdueHolds.length > 0 && (
+                      <p className="mt-2 rounded-lg border border-hold/40 bg-hold-soft/60 px-3 py-2 text-sm">
+                        <span className="font-medium">
+                          Yours today: {pluralize(myOverdueHolds.length, "disputed bill")} ({formatMoney(sumAmount(myOverdueHolds))})
+                        </span>{" "}
+                        <span className="text-muted-foreground">
+                          past the 5-day fix target. Each needs a corrected invoice or a clear answer from you. The rest go to their owners.
+                        </span>
+                      </p>
+                    )}
                     {s.items.length === 0 ? (
                       <p className="mt-3 rounded-lg border border-dashed p-3 text-sm text-muted-foreground">
                         {s.waiting > 0 ? "These bills are waiting in Check first." : "No bills in this step today."}

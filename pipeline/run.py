@@ -58,6 +58,15 @@ def trend(engine: Engine) -> list[dict]:
     return out
 
 
+def send_line(invoices) -> str:
+    """Reminders ready now, and the ones that wait for a check first."""
+    send = [i for i in invoices if i["verdict"] == "send"]
+    ready = [i for i in send if not i["needsReview"]]
+    later = len(send) - len(ready)
+    line = f"{len(ready)} reminders ready to approve ({money(sum(i['amount'] for i in ready))})"
+    return line + (f", and {later} more after a check." if later else ".")
+
+
 def short(text: str, limit: int = 120) -> str:
     """The first sentence, or the text cut at a word with an ellipsis."""
     first_sentence = text.split(". ")[0].rstrip(".") + "."
@@ -128,15 +137,22 @@ def verified_numbers(engine: Engine, invoices: list[dict], by_cause: list[dict])
     tk_open = [r for r in engine._rows if getattr(r, "verdict", None) in ("send", "call") and not r.needs_review
                and any(e["kind"] == "ticket" and str(e.get("status") or "") in engine.v["ticket_open_status"] for e in r.evidence)
                and not r.flags.get("soft")]
+    strict = sorted({r.match.customer_id for r in engine._rows if getattr(r, "verdict", None) in ("send", "call")
+                     and any(e["kind"] == "ticket" and str(e.get("status") or "").split(" (")[0] in engine.v["ticket_open_status"] for e in r.evidence)})
+    strict_names = [engine.customer_name(c) for c in strict]
     out.append({"label": "Complaint open but chased", "methodA": "Reminders or calls to a customer with an open ticket, or a pending one about money or marked high priority",
                 "valueA": len(tk_open), "methodB": "Allowed (Maya: nobody chased who had a complaint open)", "valueB": 0, "ok": len(tk_open) == 0,
                 "unit": "count", "group": "coo",
-                "note": "Earlier versions would have chased 4 customers with a complaint or dispute open: Eastman Engineering, Drummond Consulting, "
-                        "Banerjee Petrov and Upton & Bell. A rule change briefly put Studio Marsh at risk too. Each became a rule; "
-                        "these are the bills the rules were fixed on, so the shadow week re-tests it on new ones."})
+                "strictValue": len(strict),
+                "note": (f"Under the strictest reading (any open or pending ticket at all), {len(strict)} customers get a reminder today: "
+                         + ", ".join(strict_names) + ". Their pending tickets aren't about money, or the customer said it was resolved. "
+                         "Letting those through, with a softer tone and the account manager told, was my call after the review; "
+                         "Maya to confirm in the shadow week. " if strict else "")
+                        + "Earlier versions would have chased 4 customers with a complaint or dispute open: Eastman Engineering, Drummond Consulting, "
+                        "Banerjee Petrov and Upton & Bell. Each became a rule."})
     for v in out:
         v.setdefault("unit", "money")
-        v.setdefault("group", "cross")
+        v.setdefault("group", "internal" if v["label"] == "Causes add up" else "cross")
     return out
 
 
@@ -213,11 +229,12 @@ def main() -> None:
     holds = [i for i in invoices if i["verdict"] == "hold"]
     first_deadline = min((i["hold"]["deadline"] for i in holds), default=None)
     bullets = [
-        f"{by_verdict['send']['count']} reminders ready to send ({money(by_verdict['send']['amount'])}). Approve all in one click.",
+        send_line(invoices),
         hold_line(holds, by_verdict, engine) if holds else "Nothing on hold.",
-        f"{by_verdict['paid']['count']} probably paid already ({money(by_verdict['paid']['amount'])}): confirm and close.",
+        f"{by_verdict['paid']['count']} probably paid already ({money(by_verdict['paid']['amount'])}): with "
+        f"{str(cfg.get('people', {}).get('cash_owner', 'the cash team')).split(' (')[0]} to match; you're copied.",
         f"{by_verdict['call']['count']} need a phone call ({money(by_verdict['call']['amount'])}).",
-        f"{len(review)} need a second look before anything goes out." if review else "No cases need a second look.",
+        f"{len(review)} of these need a second look first, in Check first." if review else "Nothing needs a second look.",
     ]
     morning = {"title": f"Collections check, {nice(as_of)}", "bullets": bullets,
                "text": f"Good morning. {headline} Today: " + " ".join(bullets)}
@@ -241,12 +258,27 @@ def main() -> None:
         elif i["verdict"] == "hold" and "with " in h.get("ownerRole", ""):
             am = h["ownerRole"].split("with ")[-1].split(" for")[0]
             by_am.setdefault(am, []).append(i)
-    for am, bills in sorted(by_am.items()):
-        routing.append({"to": am, "role": "Account manager", "channel": "Slack direct message (one nudge a day)", "cc": None,
-                        "lines": [f"{i['customerName']}: invoice {i['id']}, {money(i['amount'])}. {short(i['headline'])}" for i in bills],
-                        "by": pd.Timestamp(np.busday_offset(as_of.date(), int(cfg["policy"].get("am_pause_days", 3)), roll="forward")).strftime("%b %-d"),
-                        "intro": f"{len(bills)} of your accounts have a reminder paused. Get each issue moving or tell {priya} the reminder can go; "
-                                 f"after {cfg['policy'].get('am_pause_days', 3)} working days it comes back to {priya}."})
+    # Policy: tell the account manager before finance contacts one of their accounts.
+    going: dict[str, list] = {}
+    for i in invoices:
+        am_name = (engine.account_manager(i.get("customerId")) or "")
+        if am_name and i["verdict"] in ("send", "call"):
+            going.setdefault(am_name, []).append(i)
+    for am in sorted(set(by_am) | set(going)):
+        bills, out_today = by_am.get(am, []), going.get(am, [])
+        lines = [f"Paused: {i['customerName']}, invoice {i['id']}, {money(i['amount'])}. {short(i['headline'])}" for i in bills]
+        lines += [f"Going out after {priya} approves: {'a reminder' if i['verdict'] == 'send' else 'a call'} to {i['customerName']}, "
+                  f"invoice {i['id']}, {money(i['amount'])}" for i in out_today]
+        intro = []
+        if bills:
+            intro.append(f"{len(bills)} of your accounts have a reminder paused. Get each issue moving or tell {priya} the reminder can go; "
+                         f"after {cfg['policy'].get('am_pause_days', 3)} working days it comes back to {priya}.")
+        if out_today:
+            intro.append(f"{len(out_today)} {'contact' if len(out_today) == 1 else 'contacts'} planned today on your accounts: reply if any of them should wait.")
+        routing.append({"to": am, "role": "Account manager", "channel": "Slack direct message (one a day)", "cc": None,
+                        "lines": lines,
+                        "by": pd.Timestamp(np.busday_offset(as_of.date(), int(cfg["policy"].get("am_pause_days", 3)), roll="forward")).strftime("%b %-d") if bills else None,
+                        "intro": " ".join(intro)})
     # Dana: automatic write-offs coming (Maya: flag her at least five working days before)
     wo = [(r, i) for r in engine._rows for i in invoices if i["id"] == r.display_id and r.flags.get("writeoff_days_left") is not None]
     if wo and dana:

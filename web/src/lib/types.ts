@@ -51,7 +51,7 @@ export interface Invoice {
   reviewReason?: string;
   agreement?: { agree: boolean; votes: AgreementVote[] };
   hold?: { owner: string; ownerRole: string; deadline: string; action: string };
-  draft?: { to: string; subject: string; body: string; tone: Tone };
+  draft?: { to: string; subject: string; body: string; tone: Tone; combinedWith?: string };
   reminderStage?: string; // e.g. "Second reminder"
   autoSend?: { eligible: boolean; why: string; permanent: boolean }; // Maya's trust ladder
 }
@@ -102,7 +102,8 @@ export interface VerifiedNumber {
   ok: boolean; // the two methods agree (within tolerance)
   note?: string;
   unit?: "money" | "count";
-  group?: "cross" | "coo"; // a two-way cross-check, or one of the COO's two tests
+  group?: "cross" | "coo" | "internal"; // a two-way cross-check, one of the COO's two tests, or a consistency check
+  strictValue?: number; // the COO's complaint test under the strictest reading (any open or pending ticket)
 }
 
 export interface Failure {
@@ -131,7 +132,7 @@ export interface Results {
     shouldNotChaseAmount: number; // paid + hold
     headline: string;
     // all tickets / from customers who owe money / the ones that matter to collections / of those, with no tag
-    tickets?: { all: number; fromOverdue: number; relevant: number; relevantUntagged: number } | null;
+    tickets?: { all: number; fromOverdue: number; relevant: number; relevantUntagged: number; fromOverdueUntagged?: number } | null;
     unmatchedPayments?: number | null;
   };
   invoices: Invoice[];

@@ -179,7 +179,12 @@ export default function ProofPage() {
                   </p>
                 </div>
                 <p className="mt-1 text-xs leading-relaxed text-muted-foreground">Counted: {v.methodA.charAt(0).toLowerCase() + v.methodA.slice(1)}.</p>
-                {v.note && <p className="mt-2 text-xs leading-relaxed">{v.note}</p>}
+                {v.strictValue !== undefined && v.strictValue > 0 && (
+                  <p className="mt-2 text-xs font-medium text-hold-ink">
+                    Strictest reading: {v.strictValue} {v.strictValue === 1 ? "customer" : "customers"} today
+                  </p>
+                )}
+                {v.note && <p className="mt-1 text-xs leading-relaxed">{v.note}</p>}
               </div>
             ))}
           </CardContent>

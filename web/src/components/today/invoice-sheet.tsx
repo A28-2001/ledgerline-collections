@@ -352,7 +352,10 @@ function InvoiceDetail({
           ) : verdict === "paid" || verdict === "hold" ? null : (
             <Section title={verdict === "call" ? "Before you call" : "Message"} icon={verdict === "call" ? Phone : Mail}>
               <div className="rounded-lg border border-dashed p-3 text-sm text-muted-foreground">
-                {verdict === "send" && "No draft for this bill. Write the reminder by hand, or change what to do."}
+                {verdict === "send" &&
+                  (inv.draft?.combinedWith
+                    ? `This bill goes in the same email as invoice ${inv.draft.combinedWith}: one email per customer, not two on the same morning.`
+                    : "No draft for this bill. Write the reminder by hand, or change what to do.")}
                 {verdict === "call" && (
                   <>
                     <p>
@@ -577,9 +580,9 @@ function DraftSection({ invoice: inv }: { invoice: Invoice }) {
             Redraft with AI
           </Button>
           <p className="text-[11px] leading-relaxed text-muted-foreground sm:col-span-3">
-            Demo only: this sends the draft, with the customer&apos;s name, invoice number, amount and due date, to Groq, on made-up data. At Ledgerline it stays off
-            until legal approves an AI vendor (proposed: Amazon Bedrock, in the AWS account it already has). The template draft above
-            needs no AI.
+            Demo only: this sends the draft, with the customer&apos;s name, invoice number, amount and due date, to Groq. That&apos;s fine for
+            this fictional data room; at Ledgerline it stays off until legal approves an AI vendor (proposed: Amazon Bedrock, in the AWS
+            account it already has). The template draft above needs no AI.
           </p>
         </div>
       )}

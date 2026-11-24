@@ -1,6 +1,6 @@
 {
  "meta": {
-  "generatedAt": "2026-11-24T15:25:56+00:00",
+  "generatedAt": "2026-11-24T15:43:10+00:00",
   "asOf": "2026-10-31",
   "dataSource": "real",
   "companyName": "Ledgerline",
@@ -95,7 +95,8 @@
    "all": 1041,
    "fromOverdue": 134,
    "relevant": 131,
-   "relevantUntagged": 27
+   "relevantUntagged": 27,
+   "fromOverdueUntagged": 27
   },
   "unmatchedPayments": 7,
   "byCause": [
@@ -574,6 +575,11 @@
    "headline": "First reminder (7 days): 7 days overdue, nothing blocking",
    "reasons": [
     {
+     "text": "One email covers all 2 of this customer's reminders (INV-25906, INV-25907).",
+     "evidenceIds": [],
+     "policyRef": "Maya (COO): one conversation per customer"
+    },
+    {
      "text": "7 days overdue, no open complaint, no payment found, bill matches the contract.",
      "evidenceIds": [
       "contract:C1504:2026-09-24"
@@ -600,8 +606,8 @@
    "needsReview": false,
    "draft": {
     "to": "quentin.castell@rosalesengineering.example",
-    "subject": "Invoice INV-25906 is overdue",
-    "body": "Hi Quentin,\n\nA quick note that invoice INV-25906 for $16,320 was due on Oct 24, 2026 and is still open on our side.\n\nIf you've already paid, thank you, and please ignore this. If anything on the invoice looks wrong, like the seat count or plan, just reply and we'll fix it before you pay.\n\nThanks,\nPriya Nair\nLedgerline Billing",
+    "subject": "Invoices INV-25906 and INV-25907 are overdue",
+    "body": "Hi Quentin,\n\nA quick note that these invoices ($18,820 in total) are past due and still open on our side:\n\n- INV-25906: $16,320, due Oct 24, 2026\n- INV-25907: $2,500, due Oct 24, 2026\n\nIf you've already paid, thank you, and please ignore this. If anything on them looks wrong, just reply and we'll fix it before you pay.\n\nThanks,\nPriya Nair\nLedgerline Billing",
     "tone": "standard"
    },
    "reminderStage": "First reminder (7 days)",
@@ -1089,8 +1095,13 @@
    "verdict": "send",
    "cause": "simply_late",
    "confidence": "high",
-   "headline": "First reminder (7 days): 7 days overdue, nothing blocking",
+   "headline": "Goes in the same email as invoice INV-25906",
    "reasons": [
+    {
+     "text": "Same customer as invoice INV-25906: both go in one email, not two on the same morning.",
+     "evidenceIds": [],
+     "policyRef": "Maya (COO): one conversation per customer"
+    },
     {
      "text": "7 days overdue, no open complaint, no payment found, bill matches the contract.",
      "evidenceIds": [
@@ -1118,14 +1129,15 @@
    "needsReview": false,
    "draft": {
     "to": "quentin.castell@rosalesengineering.example",
-    "subject": "Invoice INV-25907 is overdue",
-    "body": "Hi Quentin,\n\nA quick note that invoice INV-25907 for $2,500 was due on Oct 24, 2026 and is still open on our side.\n\nIf you've already paid, thank you, and please ignore this. If anything on the invoice looks wrong, like the seat count or plan, just reply and we'll fix it before you pay.\n\nThanks,\nPriya Nair\nLedgerline Billing",
-    "tone": "standard"
+    "subject": "",
+    "body": "",
+    "tone": "none",
+    "combinedWith": "INV-25906"
    },
    "reminderStage": "First reminder (7 days)",
    "autoSend": {
-    "eligible": true,
-    "why": "Polite first or second reminder; outside the top 50; no open ticket; no unmatched payment",
+    "eligible": false,
+    "why": "Goes in one email with invoice INV-25906",
     "permanent": false
    }
   },
@@ -2189,7 +2201,7 @@
      "policyRef": "collections_policy.md: tell the account manager before finance contacts one of their accounts"
     },
     {
-     "text": "Open support ticket, not about money: send, but in a softer tone, and tell the account manager.",
+     "text": "Also open: a support ticket that isn't about money.",
      "evidenceIds": [
       "ticket:T881016"
      ],
@@ -2289,7 +2301,7 @@
      "policyRef": "collections_policy.md: do not chase an invoice the customer has disputed"
     },
     {
-     "text": "Open support ticket, not about money: send, but in a softer tone, and tell the account manager.",
+     "text": "Also open: a support ticket that isn't about money.",
      "evidenceIds": [
       "ticket:T880996"
      ],
@@ -3673,7 +3685,7 @@
      "policyRef": "collections_policy.md: tell the account manager before finance contacts one of their accounts"
     },
     {
-     "text": "Open support ticket, not about money: send, but in a softer tone, and tell the account manager.",
+     "text": "Also open: a support ticket that isn't about money.",
      "evidenceIds": [
       "ticket:T880474"
      ],
@@ -5221,7 +5233,8 @@
    "plan": "Core",
    "accountManager": "Hannah Drummond",
    "arr": 9588.0,
-   "renewalDate": "2026-11-04"
+   "renewalDate": "2026-11-04",
+   "billingContact": "Clara (clara.underhill@northgatecreative.example)"
   },
   "C1469": {
    "id": "C1469",
@@ -5341,7 +5354,8 @@
    "plan": "Growth",
    "accountManager": "Nadia Sinclair",
    "arr": 20400.0,
-   "renewalDate": "2026-12-12"
+   "renewalDate": "2026-12-12",
+   "billingContact": "Marcus (marcus.tan@kingswayengineeringgro.example)"
   },
   "C1477": {
    "id": "C1477",
@@ -5444,7 +5458,8 @@
    "plan": "Core",
    "accountManager": "Maria Yardley",
    "arr": 6204.0,
-   "renewalDate": "2027-03-12"
+   "renewalDate": "2027-03-12",
+   "billingContact": "Ethan (ethan.corbin@hollisnairengineers.example)"
   },
   "C1439": {
    "id": "C1439",
@@ -5564,7 +5579,8 @@
    "plan": "Growth",
    "accountManager": "Nadia Sinclair",
    "arr": 10608.0,
-   "renewalDate": "2027-04-01"
+   "renewalDate": "2027-04-01",
+   "billingContact": "Marcus (marcus.glover@banerjeepetrovengineer.example)"
   },
   "C1486": {
    "id": "C1486",
@@ -5649,7 +5665,8 @@
    "plan": "Core",
    "accountManager": "Hannah Drummond",
    "arr": 6204.0,
-   "renewalDate": "2027-05-18"
+   "renewalDate": "2027-05-18",
+   "billingContact": "Clara (clara.finch@studionakamura.example)"
   },
   "C1254": {
    "id": "C1254",
@@ -5798,7 +5815,8 @@
    "plan": "Growth",
    "accountManager": "Hannah Drummond",
    "arr": 44064.0,
-   "renewalDate": "2027-07-27"
+   "renewalDate": "2027-07-27",
+   "billingContact": "Noah (noah.mbeki@uptonbelladvisory.example)"
   },
   "C1341": {
    "id": "C1341",
@@ -5991,7 +6009,8 @@
    "plan": "Growth",
    "accountManager": "Hannah Drummond",
    "arr": 19584.0,
-   "renewalDate": "2027-05-09"
+   "renewalDate": "2027-05-09",
+   "billingContact": "Emma (emma.stanhope@quillmottco.example)"
   },
   "C1342": {
    "id": "C1342",
@@ -6183,7 +6202,8 @@
    "plan": "Core",
    "accountManager": "Nadia Sinclair",
    "arr": 7896.0,
-   "renewalDate": "2027-05-09"
+   "renewalDate": "2027-05-09",
+   "billingContact": "Nadia (nadia.thorne@moreaucraneagency.example)"
   },
   "C1100": {
    "id": "C1100",
@@ -6424,7 +6444,8 @@
    "plan": "Core",
    "accountManager": "Maria Yardley",
    "arr": 11280.0,
-   "renewalDate": "2027-02-10"
+   "renewalDate": "2027-02-10",
+   "billingContact": "Anika (anika.moreau@oyelarandevlinengineer.example)"
   },
   "C1261": {
    "id": "C1261",
@@ -6645,7 +6666,8 @@
    "plan": "Growth",
    "accountManager": "Nadia Upton",
    "arr": 16320.0,
-   "renewalDate": "2027-08-10"
+   "renewalDate": "2027-08-10",
+   "billingContact": "Tessa (tessa.birch@wexlerhumeadvisory.example)"
   },
   "C1030": {
    "id": "C1030",
@@ -6857,7 +6879,8 @@
    "plan": "Growth",
    "accountManager": "Nadia Upton",
    "arr": 15504.0,
-   "renewalDate": "2026-11-12"
+   "renewalDate": "2026-11-12",
+   "billingContact": "Caleb (caleb.holloway@mercerbanerjeellp.example)"
   },
   "C1264": {
    "id": "C1264",
@@ -7036,7 +7059,8 @@
    "plan": "Enterprise",
    "accountManager": "Nadia Upton",
    "arr": 47904.0,
-   "renewalDate": "2027-08-14"
+   "renewalDate": "2027-08-14",
+   "billingContact": "Chloe (chloe.sterling@westbrookengineeringgr.example)"
   },
   "C1266": {
    "id": "C1266",
@@ -7175,7 +7199,8 @@
    "plan": "Core",
    "accountManager": "Nadia Upton",
    "arr": 7896.0,
-   "renewalDate": "2027-08-18"
+   "renewalDate": "2027-08-18",
+   "billingContact": "Ravi (ravi.upton@thackerayaccounting.example)"
   },
   "C1152": {
    "id": "C1152",
@@ -7354,7 +7379,8 @@
    "plan": "Growth",
    "accountManager": "Maria Yardley",
    "arr": 13056.0,
-   "renewalDate": "2027-08-21"
+   "renewalDate": "2027-08-21",
+   "billingContact": "Emma (emma.orwell@elleryconsulting.example)"
   },
   "C1045": {
    "id": "C1045",
@@ -7565,7 +7591,8 @@
    "plan": "Growth",
    "accountManager": "Hannah Drummond",
    "arr": 25296.0,
-   "renewalDate": "2027-02-23"
+   "renewalDate": "2027-02-23",
+   "billingContact": "Maria (maria.novak@castellengineering.example)"
   },
   "C1154": {
    "id": "C1154",
@@ -7724,7 +7751,8 @@
    "plan": "Enterprise",
    "accountManager": "Nadia Sinclair",
    "arr": 46848.0,
-   "renewalDate": "2027-08-23"
+   "renewalDate": "2027-08-23",
+   "billingContact": "Oscar (oscar.farrow@okafornakamurallp.example)"
   },
   "C1492": {
    "id": "C1492",
@@ -7817,7 +7845,8 @@
    "plan": "Core",
    "accountManager": "Hannah Drummond",
    "arr": 7896.0,
-   "renewalDate": "2027-06-24"
+   "renewalDate": "2027-06-24",
+   "billingContact": "Chloe (chloe.wexler@drummondconsulting.example)"
   },
   "C1273": {
    "id": "C1273",
@@ -7981,7 +8010,8 @@
    "plan": "Enterprise",
    "accountManager": "Nadia Sinclair",
    "arr": 62688.0,
-   "renewalDate": "2027-08-26"
+   "renewalDate": "2027-08-26",
+   "billingContact": "Joel (joel.okafor@jessoporwellagency.example)"
   },
   "C1073": {
    "id": "C1073",
@@ -8120,7 +8150,8 @@
    "plan": "Enterprise",
    "accountManager": "Nadia Upton",
    "arr": 60576.0,
-   "renewalDate": "2027-08-27"
+   "renewalDate": "2027-08-27",
+   "billingContact": "Ian (ian.kowalczyk@riversidepartners.example)"
   },
   "C1255": {
    "id": "C1255",
@@ -8351,7 +8382,8 @@
    "plan": "Growth",
    "accountManager": "Hannah Drummond",
    "arr": 13056.0,
-   "renewalDate": "2027-07-28"
+   "renewalDate": "2027-07-28",
+   "billingContact": "Nadia (nadia.marsh@ashgrovepartners.example)"
   },
   "C1375": {
    "id": "C1375",
@@ -8554,7 +8586,8 @@
    "plan": "Growth",
    "accountManager": "Maria Yardley",
    "arr": 22032.0,
-   "renewalDate": "2027-01-02"
+   "renewalDate": "2027-01-02",
+   "billingContact": "Kofi (kofi.glover@gloverengineering.example)"
   },
   "C1126": {
    "id": "C1126",
@@ -8781,7 +8814,8 @@
    "plan": "Growth",
    "accountManager": "Nadia Sinclair",
    "arr": 25296.0,
-   "renewalDate": "2027-06-03"
+   "renewalDate": "2027-06-03",
+   "billingContact": "Aisha (aisha.garrick@brandtlowellcpas.example)"
   },
   "C1409": {
    "id": "C1409",
@@ -8984,7 +9018,8 @@
    "plan": "Growth",
    "accountManager": "Hannah Drummond",
    "arr": 14688.0,
-   "renewalDate": "2027-09-04"
+   "renewalDate": "2027-09-04",
+   "billingContact": "Aisha (aisha.sinclair@wexlermedia.example)"
   },
   "C1075": {
    "id": "C1075",
@@ -9163,7 +9198,8 @@
    "plan": "Growth",
    "accountManager": "Hannah Drummond",
    "arr": 26112.0,
-   "renewalDate": "2027-09-07"
+   "renewalDate": "2027-09-07",
+   "billingContact": "Oscar (oscar.hale@brandtashbyit.example)"
   },
   "C1278": {
    "id": "C1278",
@@ -9384,7 +9420,8 @@
    "plan": "Core",
    "accountManager": "Maria Yardley",
    "arr": 8460.0,
-   "renewalDate": "2027-09-07"
+   "renewalDate": "2027-09-07",
+   "billingContact": "Emma (emma.holloway@kowalczykstanhopearchi.example)"
   },
   "C1161": {
    "id": "C1161",
@@ -9573,7 +9610,8 @@
    "plan": "Enterprise",
    "accountManager": "Maria Yardley",
    "arr": 41568.0,
-   "renewalDate": "2027-09-09"
+   "renewalDate": "2027-09-09",
+   "billingContact": "Ethan (ethan.whitfield@delacroixjessopco.example)"
   },
   "C1188": {
    "id": "C1188",
@@ -9771,7 +9809,8 @@
    "plan": "Growth",
    "accountManager": "Maria Yardley",
    "arr": 14688.0,
-   "renewalDate": "2026-12-11"
+   "renewalDate": "2026-12-11",
+   "billingContact": "Leo (leo.lowell@castellanocraneco.example)"
   },
   "C1455": {
    "id": "C1455",
@@ -9865,7 +9904,8 @@
    "plan": "Growth",
    "accountManager": "Nadia Sinclair",
    "arr": 19584.0,
-   "renewalDate": "2027-09-11"
+   "renewalDate": "2027-09-11",
+   "billingContact": "Lucia (lucia.kessler@okaforlegal.example)"
   },
   "C1022": {
    "id": "C1022",
@@ -10106,7 +10146,8 @@
    "plan": "Core",
    "accountManager": "Nadia Sinclair",
    "arr": 5640.0,
-   "renewalDate": "2027-09-13"
+   "renewalDate": "2027-09-13",
+   "billingContact": "Rhys (rhys.underhill@studiomarsh.example)"
   },
   "C1316": {
    "id": "C1316",
@@ -10298,7 +10339,8 @@
    "plan": "Enterprise",
    "accountManager": "Maria Yardley",
    "arr": 38400.0,
-   "renewalDate": "2026-12-13"
+   "renewalDate": "2026-12-13",
+   "billingContact": "Anika (anika.abara@gloverstrategy.example)"
   },
   "C1411": {
    "id": "C1411",
@@ -10410,7 +10452,8 @@
    "plan": "Growth",
    "accountManager": "Nadia Sinclair",
    "arr": 13056.0,
-   "renewalDate": "2027-09-13"
+   "renewalDate": "2027-09-13",
+   "billingContact": "Quentin (quentin.moreau@vosskowalczykagency.example)"
   },
   "C1361": {
    "id": "C1361",
@@ -10540,7 +10583,8 @@
    "plan": "Enterprise",
    "accountManager": "Nadia Upton",
    "arr": 39456.0,
-   "renewalDate": "2027-09-14"
+   "renewalDate": "2027-09-14",
+   "billingContact": "Nadia (nadia.vance@thornfieldconsultinggr.example)"
   },
   "C1412": {
    "id": "C1412",
@@ -10726,7 +10770,8 @@
    "plan": "Growth",
    "accountManager": "Hannah Drummond",
    "arr": 20400.0,
-   "renewalDate": "2027-09-14"
+   "renewalDate": "2027-09-14",
+   "billingContact": "Caleb (caleb.crane@banerjeedesignpartners.example)"
   },
   "C1346": {
    "id": "C1346",
@@ -10934,7 +10979,8 @@
    "plan": "Core",
    "accountManager": "Maria Yardley",
    "arr": 6768.0,
-   "renewalDate": "2027-06-15"
+   "renewalDate": "2027-06-15",
+   "billingContact": "Elena (elena.whitfield@yardleyduarteadvisory.example)"
   },
   "C1457": {
    "id": "C1457",
@@ -11048,7 +11094,8 @@
    "plan": "Growth",
    "accountManager": "Hannah Drummond",
    "arr": 22848.0,
-   "renewalDate": "2027-09-15"
+   "renewalDate": "2027-09-15",
+   "billingContact": "Daniel (daniel.whitfield@hollisstanhopeadvisory.example)"
   },
   "C1282": {
    "id": "C1282",
@@ -11207,7 +11254,8 @@
    "plan": "Enterprise",
    "accountManager": "Nadia Sinclair",
    "arr": 43680.0,
-   "renewalDate": "2027-09-16"
+   "renewalDate": "2027-09-16",
+   "billingContact": "Anika (anika.langford@eastmanwexlercpas.example)"
   },
   "C1217": {
    "id": "C1217",
@@ -11418,7 +11466,8 @@
    "plan": "Core",
    "accountManager": "Hannah Drummond",
    "arr": 9588.0,
-   "renewalDate": "2027-03-18"
+   "renewalDate": "2027-03-18",
+   "billingContact": "Ethan (ethan.underhill@corbinmedia.example)"
   },
   "C1284": {
    "id": "C1284",
@@ -11557,7 +11606,8 @@
    "plan": "Growth",
    "accountManager": "Maria Yardley",
    "arr": 16320.0,
-   "renewalDate": "2027-09-18"
+   "renewalDate": "2027-09-18",
+   "billingContact": "Tessa (tessa.bell@sinclairvancellp.example)"
   },
   "C1077": {
    "id": "C1077",
@@ -11726,7 +11776,8 @@
    "plan": "Growth",
    "accountManager": "Maria Yardley",
    "arr": 17136.0,
-   "renewalDate": "2027-09-19"
+   "renewalDate": "2027-09-19",
+   "billingContact": "Quentin (quentin.bramwell@riversideconsultinggro.example)"
   },
   "C1446": {
    "id": "C1446",
@@ -11829,7 +11880,8 @@
    "plan": "Growth",
    "accountManager": "Hannah Drummond",
    "arr": 18768.0,
-   "renewalDate": "2027-06-19"
+   "renewalDate": "2027-06-19",
+   "billingContact": "Layla (layla.garrick@oyelaranstrategy.example)"
   },
   "C1407": {
    "id": "C1407",
@@ -12022,7 +12074,8 @@
    "plan": "Core",
    "accountManager": "Maria Yardley",
    "arr": 7896.0,
-   "renewalDate": "2027-08-21"
+   "renewalDate": "2027-08-21",
+   "billingContact": "Tomas (tomas.castellano@ambroselowelladvisory.example)"
   },
   "C1437": {
    "id": "C1437",
@@ -12162,7 +12215,8 @@
    "plan": "Core",
    "accountManager": "Nadia Sinclair",
    "arr": 7332.0,
-   "renewalDate": "2027-03-21"
+   "renewalDate": "2027-03-21",
+   "billingContact": "Samuel (samuel.birch@harborengineeringgroup.example)"
   },
   "C1063": {
    "id": "C1063",
@@ -12373,7 +12427,8 @@
    "plan": "Growth",
    "accountManager": "Maria Yardley",
    "arr": 12240.0,
-   "renewalDate": "2027-06-24"
+   "renewalDate": "2027-06-24",
+   "billingContact": "Ian (ian.achebe@craneitpartners.example)"
   },
   "C1504": {
    "id": "C1504",
@@ -12413,7 +12468,8 @@
    "plan": "Growth",
    "accountManager": "Maria Yardley",
    "arr": 16320.0,
-   "renewalDate": "2027-09-24"
+   "renewalDate": "2027-09-24",
+   "billingContact": "Quentin (quentin.castell@rosalesengineering.example)"
   },
   "C1353": {
    "id": "C1353",
@@ -12615,7 +12671,8 @@
    "plan": "Core",
    "accountManager": "Hannah Drummond",
    "arr": 9588.0,
-   "renewalDate": "2027-07-25"
+   "renewalDate": "2027-07-25",
+   "billingContact": "Signe (signe.abbott@elleryachebechartereda.example)"
   },
   "C1470": {
    "id": "C1470",
@@ -12708,7 +12765,8 @@
    "plan": "Growth",
    "accountManager": "Nadia Sinclair",
    "arr": 18768.0,
-   "renewalDate": "2026-12-27"
+   "renewalDate": "2026-12-27",
+   "billingContact": "Dalia (dalia.wexler@abbottdesignpartnershi.example)"
   },
   "C1379": {
    "id": "C1379",
@@ -12931,7 +12989,8 @@
    "plan": "Core",
    "accountManager": "Nadia Upton",
    "arr": 10152.0,
-   "renewalDate": "2027-02-01"
+   "renewalDate": "2027-02-01",
+   "billingContact": "Clara (clara.hollis@ruizwhitfieldcpas.example)"
   },
   "C1454": {
    "id": "C1454",
@@ -13115,7 +13174,8 @@
    "plan": "Core",
    "accountManager": "Maria Yardley",
    "arr": 7332.0,
-   "renewalDate": "2027-09-01"
+   "renewalDate": "2027-09-01",
+   "billingContact": "Kofi (kofi.glover@tanaccounting.example)"
   },
   "C1110": {
    "id": "C1110",
@@ -13326,7 +13386,8 @@
    "plan": "Core",
    "accountManager": "Nadia Sinclair",
    "arr": 7332.0,
-   "renewalDate": "2027-04-08"
+   "renewalDate": "2027-04-08",
+   "billingContact": "Mateo (mateo.abbott@bramwellsinclaircharte.example)"
   },
   "C1426": {
    "id": "C1426",
@@ -13465,7 +13526,8 @@
    "plan": "Growth",
    "accountManager": "Hannah Drummond",
    "arr": 13056.0,
-   "renewalDate": "2027-01-08"
+   "renewalDate": "2027-01-08",
+   "billingContact": "Ivy (ivy.abara@eastmanengineering.example)"
   },
   "C1319": {
    "id": "C1319",
@@ -13657,7 +13719,8 @@
    "plan": "Core",
    "accountManager": "Maria Yardley",
    "arr": 3384.0,
-   "renewalDate": "2026-12-16"
+   "renewalDate": "2026-12-16",
+   "billingContact": "Layla (layla.zeller@humeaccounting.example)"
   }
  },
  "trend": [
@@ -13778,7 +13841,7 @@
     "valueB": 633245.0,
     "ok": true,
     "unit": "money",
-    "group": "cross"
+    "group": "internal"
    },
    {
     "label": "Shouldn't chase today",
@@ -13810,7 +13873,8 @@
     "ok": true,
     "unit": "count",
     "group": "coo",
-    "note": "Earlier versions would have chased 4 customers with a complaint or dispute open: Eastman Engineering, Drummond Consulting, Banerjee Petrov and Upton & Bell. A rule change briefly put Studio Marsh at risk too. Each became a rule; these are the bills the rules were fixed on, so the shadow week re-tests it on new ones."
+    "strictValue": 3,
+    "note": "Under the strictest reading (any open or pending ticket at all), 3 customers get a reminder today: Crane IT Partners, Harbor Engineering Group, Kingsway Engineering Group. Their pending tickets aren't about money, or the customer said it was resolved. Letting those through, with a softer tone and the account manager told, was my call after the review; Maya to confirm in the shadow week. Earlier versions would have chased 4 customers with a complaint or dispute open: Eastman Engineering, Drummond Consulting, Banerjee Petrov and Upton & Bell. Each became a rule."
    }
   ],
   "failures": [
@@ -13821,7 +13885,7 @@
     "why": "Correct answer: TOP-50 account 15 days late with no dispute; open T881016 is a normal-priority product bug about a client's send log, so a person should write a personal reminder after telling the account manager. Tool's reason: They have a ticket open in Zendesk since Oct 28, 2026 (3 days). Chasing payment while their question is unanswered is what gets the tool switched off; the account manager decides when to resume."
    }
   ],
-  "runtimeSeconds": 0.46,
+  "runtimeSeconds": 0.47,
   "reviewLog": {
    "summary": "An independent reviewer (a separate AI model that never saw the tool's answers) checked all 54 bills from the raw records, and a person then confirmed every contested call. First pass: 46 of 54 agreed (85%). Of the 8 differences, 7 were rule errors we fixed and 1 we kept on purpose. The 2 misses we found ourselves were fixed before the review ran, so the very first version would have agreed on at most 44. After the fixes, 53 of 54 agree (98%), on the same bills the rules were fixed against, so that is not a fresh-data score: the shadow week measures that.",
    "entries": [
@@ -13921,7 +13985,7 @@
      "shouldBe": "send",
      "foundBy": "Independent review, first pass",
      "why": "A normal-priority question \"pending\" since July: in Zendesk that means support is waiting on the customer.",
-     "change": "Decided with the team: a pending ticket blocks only if it's about money, high priority, or still waiting on Ledgerline. Otherwise a softer reminder, and the account manager is told.",
+     "change": "My call after the review, for Maya to confirm in the shadow week: a pending ticket (support waiting on the customer) pauses the reminder only if it's about money, high priority, or still waiting on Ledgerline. Otherwise a softer reminder, and the account manager is told. Under the strictest reading of her rule, 3 customers would be held instead.",
      "status": "fixed"
     },
     {
@@ -13932,7 +13996,7 @@
      "shouldBe": "send",
      "foundBy": "Independent review, first pass",
      "why": "A pending timer bug, mis-tagged How-to. Not about money.",
-     "change": "Same decision as Kingsway.",
+     "change": "Same call as Kingsway, for Maya to confirm.",
      "status": "fixed"
     },
     {
@@ -13974,13 +14038,13 @@
  "morningSummary": {
   "title": "Collections check, Oct 31, 2026",
   "bullets": [
-   "20 reminders ready to send ($182,151). Approve all in one click.",
+   "16 reminders ready to approve ($173,197), and 4 more after a check.",
    "20 on hold ($363,362): 12 past their target date, so the owner acts today; the rest by Nov 3, 2026 at the earliest.",
-   "5 probably paid already ($78,348): confirm and close.",
+   "5 probably paid already ($78,348): with Marcus Bell to match; you're copied.",
    "9 need a phone call ($9,384).",
-   "15 need a second look before anything goes out."
+   "15 of these need a second look first, in Check first."
   ],
-  "text": "Good morning. $441,710 of $633,245 overdue (70%) sits with customers we shouldn't chase today: they've probably paid, they're unhappy, or the bill is wrong. Today: 20 reminders ready to send ($182,151). Approve all in one click. 20 on hold ($363,362): 12 past their target date, so the owner acts today; the rest by Nov 3, 2026 at the earliest. 5 probably paid already ($78,348): confirm and close. 9 need a phone call ($9,384). 15 need a second look before anything goes out.",
+  "text": "Good morning. $441,710 of $633,245 overdue (70%) sits with customers we shouldn't chase today: they've probably paid, they're unhappy, or the bill is wrong. Today: 16 reminders ready to approve ($173,197), and 4 more after a check. 20 on hold ($363,362): 12 past their target date, so the owner acts today; the rest by Nov 3, 2026 at the earliest. 5 probably paid already ($78,348): with Marcus Bell to match; you're copied. 9 need a phone call ($9,384). 15 of these need a second look first, in Check first.",
   "cover": "While Priya Nair is on leave (March, dates to confirm), Dana Ruiz owns this morning list and Marcus Bell keeps the probably-paid list. Cover is off today.",
   "routing": [
    {
@@ -13989,11 +14053,11 @@
     "channel": "Slack direct message",
     "cc": "Dana Ruiz",
     "lines": [
-     "20 reminders ready to send ($182,151). Approve all in one click.",
+     "16 reminders ready to approve ($173,197), and 4 more after a check.",
      "20 on hold ($363,362): 12 past their target date, so the owner acts today; the rest by Nov 3, 2026 at the earliest.",
-     "5 probably paid already ($78,348): confirm and close.",
+     "5 probably paid already ($78,348): with Marcus Bell to match; you're copied.",
      "9 need a phone call ($9,384).",
-     "15 need a second look before anything goes out."
+     "15 of these need a second look first, in Check first."
     ],
     "by": null
    },
@@ -14015,54 +14079,83 @@
    {
     "to": "Hannah Drummond",
     "role": "Account manager",
-    "channel": "Slack direct message (one nudge a day)",
+    "channel": "Slack direct message (one a day)",
     "cc": null,
     "lines": [
-     "Brandt Ashby IT: invoice INV-25822, $26,112. The customer disputes this exact invoice in a support ticket and says they're holding payment until it's fixed.",
-     "Castell Engineering: invoice INV-25764, $6,324. The customer disputes this exact invoice in a support ticket and says they're holding payment until it's fixed.",
-     "Eastman Engineering: invoice INV-25973, $3,264. On Aug 30, 2026 they threatened or started a complaint to a regulator or consumer affairs office and a card dispute\u2026",
-     "Wexler Media: invoice INV-25811, $1,224. The customer disputes this exact invoice in a support ticket.",
-     "Drummond Consulting: invoice INV-25769, $658. On Jul 2, 2026 they threatened or started a card dispute (chargeback) with their bank (ticket marked solved)."
+     "Paused: Brandt Ashby IT, invoice INV-25822, $26,112. The customer disputes this exact invoice in a support ticket and says they're holding payment until it's fixed.",
+     "Paused: Castell Engineering, invoice INV-25764, $6,324. The customer disputes this exact invoice in a support ticket and says they're holding payment until it's fixed.",
+     "Paused: Eastman Engineering, invoice INV-25973, $3,264. On Aug 30, 2026 they threatened or started a complaint to a regulator or consumer affairs office and a card dispute\u2026",
+     "Paused: Wexler Media, invoice INV-25811, $1,224. The customer disputes this exact invoice in a support ticket.",
+     "Paused: Drummond Consulting, invoice INV-25769, $658. On Jul 2, 2026 they threatened or started a card dispute (chargeback) with their bank (ticket marked solved).",
+     "Going out after Priya Nair approves: a reminder to Hollis & Stanhope Advisory, invoice INV-25869, $22,848",
+     "Going out after Priya Nair approves: a reminder to Banerjee Design Partnership, invoice INV-25863, $5,100",
+     "Going out after Priya Nair approves: a reminder to Oyelaran Strategy, invoice INV-25890, $4,692",
+     "Going out after Priya Nair approves: a reminder to Corbin Media, invoice INV-25881, $2,397",
+     "Going out after Priya Nair approves: a reminder to Ellery Achebe Chartered Accountants, invoice INV-25912, $799",
+     "Going out after Priya Nair approves: a call to Quill, Mott & Co, invoice INV-25708, $1,632",
+     "Going out after Priya Nair approves: a call to Quill, Mott & Co, invoice INV-25975, $1,632",
+     "Going out after Priya Nair approves: a call to Ashgrove Partners, invoice INV-25793, $1,088",
+     "Going out after Priya Nair approves: a call to Northgate Creative, invoice INV-25433, $799",
+     "Going out after Priya Nair approves: a call to Studio Nakamura, invoice INV-25622, $517"
     ],
     "by": "Nov 5",
-    "intro": "5 of your accounts have a reminder paused. Get each issue moving or tell Priya Nair the reminder can go; after 3 working days it comes back to Priya Nair."
+    "intro": "5 of your accounts have a reminder paused. Get each issue moving or tell Priya Nair the reminder can go; after 3 working days it comes back to Priya Nair. 10 contacts planned today on your accounts: reply if any of them should wait."
    },
    {
     "to": "Maria Yardley",
     "role": "Account manager",
-    "channel": "Slack direct message (one nudge a day)",
+    "channel": "Slack direct message (one a day)",
     "cc": null,
     "lines": [
-     "Delacroix, Jessop & Co: invoice INV-25834, $41,568. The customer disputes this exact invoice in a support ticket and says they're holding payment until it's fixed.",
-     "Ambrose & Lowell Advisory: invoice INV-25897, $658. They have a ticket pending in Zendesk since Aug 24, 2026 (68 days)."
+     "Paused: Delacroix, Jessop & Co, invoice INV-25834, $41,568. The customer disputes this exact invoice in a support ticket and says they're holding payment until it's fixed.",
+     "Paused: Ambrose & Lowell Advisory, invoice INV-25897, $658. They have a ticket pending in Zendesk since Aug 24, 2026 (68 days).",
+     "Going out after Priya Nair approves: a reminder to Riverside Consulting Group, invoice INV-25885, $17,136",
+     "Going out after Priya Nair approves: a reminder to Sinclair & Vance LLP, invoice INV-25883, $16,320",
+     "Going out after Priya Nair approves: a reminder to Rosales Engineering, invoice INV-25906, $16,320",
+     "Going out after Priya Nair approves: a reminder to Glover Strategy, invoice INV-25858, $9,600",
+     "Going out after Priya Nair approves: a reminder to Crane IT Partners, invoice INV-25902, $3,060",
+     "Going out after Priya Nair approves: a reminder to Rosales Engineering, invoice INV-25907, $2,500",
+     "Going out after Priya Nair approves: a reminder to Tan Accounting, invoice INV-25928, $611",
+     "Going out after Priya Nair approves: a reminder to Hume Accounting, invoice INV-26005, $282",
+     "Going out after Priya Nair approves: a call to Glover Engineering, invoice INV-25803, $1,836",
+     "Going out after Priya Nair approves: a call to Kowalczyk + Stanhope Architects, invoice INV-25825, $705",
+     "Going out after Priya Nair approves: a call to Hollis Nair Engineers, invoice INV-25470, $517"
     ],
     "by": "Nov 5",
-    "intro": "2 of your accounts have a reminder paused. Get each issue moving or tell Priya Nair the reminder can go; after 3 working days it comes back to Priya Nair."
+    "intro": "2 of your accounts have a reminder paused. Get each issue moving or tell Priya Nair the reminder can go; after 3 working days it comes back to Priya Nair. 11 contacts planned today on your accounts: reply if any of them should wait."
    },
    {
     "to": "Nadia Sinclair",
     "role": "Account manager",
-    "channel": "Slack direct message (one nudge a day)",
+    "channel": "Slack direct message (one a day)",
     "cc": null,
     "lines": [
-     "Okafor & Nakamura LLP: invoice INV-25765, $46,848. The customer disputes this exact invoice in a support ticket and says they're holding payment until it's fixed.",
-     "Eastman & Wexler CPAs: invoice INV-25873, $43,680. They have a ticket open in Zendesk since Oct 28, 2026 (3 days).",
-     "Studio Marsh: invoice INV-25854, $1,410. A billing ticket from Oct 29, 2026, only 2 days ago, is marked solved in Zendesk, but nothing shows the money issue was\u2026"
+     "Paused: Okafor & Nakamura LLP, invoice INV-25765, $46,848. The customer disputes this exact invoice in a support ticket and says they're holding payment until it's fixed.",
+     "Paused: Eastman & Wexler CPAs, invoice INV-25873, $43,680. They have a ticket open in Zendesk since Oct 28, 2026 (3 days).",
+     "Paused: Studio Marsh, invoice INV-25854, $1,410. A billing ticket from Oct 29, 2026, only 2 days ago, is marked solved in Zendesk, but nothing shows the money issue was\u2026",
+     "Going out after Priya Nair approves: a reminder to Okafor Legal, invoice INV-25848, $19,584",
+     "Going out after Priya Nair approves: a reminder to Voss & Kowalczyk Agency, invoice INV-25859, $13,056",
+     "Going out after Priya Nair approves: a reminder to Kingsway Engineering Group, invoice INV-25852, $5,100",
+     "Going out after Priya Nair approves: a reminder to Harbor Engineering Group, invoice INV-25898, $1,833",
+     "Going out after Priya Nair approves: a reminder to Bramwell Sinclair Chartered Accountants, invoice INV-25969, $611",
+     "Going out after Priya Nair approves: a call to Moreau & Crane Agency, invoice INV-25709, $658"
     ],
     "by": "Nov 5",
-    "intro": "3 of your accounts have a reminder paused. Get each issue moving or tell Priya Nair the reminder can go; after 3 working days it comes back to Priya Nair."
+    "intro": "3 of your accounts have a reminder paused. Get each issue moving or tell Priya Nair the reminder can go; after 3 working days it comes back to Priya Nair. 6 contacts planned today on your accounts: reply if any of them should wait."
    },
    {
     "to": "Nadia Upton",
     "role": "Account manager",
-    "channel": "Slack direct message (one nudge a day)",
+    "channel": "Slack direct message (one a day)",
     "cc": null,
     "lines": [
-     "Riverside Partners: invoice INV-25787, $60,576. The customer disputes this exact invoice in a support ticket and says they're holding payment until it's fixed.",
-     "Wexler & Hume Advisory: invoice INV-25712, $4,080. The customer disputes this exact invoice in a support ticket."
+     "Paused: Riverside Partners, invoice INV-25787, $60,576. The customer disputes this exact invoice in a support ticket and says they're holding payment until it's fixed.",
+     "Paused: Wexler & Hume Advisory, invoice INV-25712, $4,080. The customer disputes this exact invoice in a support ticket.",
+     "Going out after Priya Nair approves: a reminder to Thornfield Consulting Group, invoice INV-25862, $39,456",
+     "Going out after Priya Nair approves: a reminder to Ruiz & Whitfield CPAs, invoice INV-25926, $846"
     ],
     "by": "Nov 5",
-    "intro": "2 of your accounts have a reminder paused. Get each issue moving or tell Priya Nair the reminder can go; after 3 working days it comes back to Priya Nair."
+    "intro": "2 of your accounts have a reminder paused. Get each issue moving or tell Priya Nair the reminder can go; after 3 working days it comes back to Priya Nair. 2 contacts planned today on your accounts: reply if any of them should wait."
    },
    {
     "to": "Dana Ruiz",
@@ -14163,8 +14256,8 @@
   "daysOnRecord": 0,
   "daysNeeded": 30,
   "maxAmount": 5000,
-  "eligibleCount": 3,
-  "eligibleAmount": 10252.0,
+  "eligibleCount": 2,
+  "eligibleAmount": 7752.0,
   "permanentCount": 34,
   "rule": "Maya (COO): only after a month of Priya's approvals on record showing she almost never changed them; only small, polite first or second reminders outside the top 50 with no open ticket and no unmatched payment. Top-50, disputed, probably paid, anything firmer than a friendly nudge and every phone call stay with a person permanently. Priya or Dana can switch it off in one click."
  }

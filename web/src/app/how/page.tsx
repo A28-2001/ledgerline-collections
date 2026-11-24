@@ -33,7 +33,7 @@ export default function HowPage() {
       who: "Marcus matches it within 2 working days, Priya copied", tone: "paid" },
     { q: "A reason not to talk about money?", hint: "They dispute the bill, a ticket is still open, they threatened a chargeback or a regulator, or we owe them a refund",
       answer: "Hold", n: count("hold") - wait, who: "Priya fixes disputes in 5 working days; account managers have 3 days on open tickets", tone: "hold" },
-    { q: "Under 7 days late?", hint: "The policy's first reminder goes at day 7", answer: "Wait", n: wait, who: "Comes back on day 7 if still unpaid", tone: "wait" },
+    { q: "Under 7 days late?", hint: "The policy's first reminder goes at day 7", answer: "Wait", n: wait, who: "Comes back on day 7 if still unpaid. Other pages count it with the holds (20 in all)", tone: "wait" },
     { q: "45+ days late, or already calling them?", hint: "The 45-day email threatens suspension, so a person phones instead; one conversation per customer",
       answer: "Call", n: count("call"), who: "Priya calls, with the customer's tickets in front of her", tone: "call" },
     { q: "None of the above", hint: "Nothing blocks a reminder", answer: "Send a reminder", n: count("send"),
@@ -128,22 +128,23 @@ export default function HowPage() {
           <div>
             <p className="text-xs font-semibold text-muted-foreground uppercase">Once legal approves a vendor</p>
             <p className="mt-1 leading-relaxed">
-              Two AI models from different families read the masked ticket text on their own; if they disagree, a person decides. Tested
-              on this data, they held all 14 disputed bills. Proposed vendor: Amazon Bedrock, in Ledgerline&apos;s existing AWS account.
+              Two AI models from different families read the masked ticket text on their own; if they disagree, a person decides. In a
+              test run that sent this fictional data room&apos;s masked tickets to Groq, they held all 14 disputed bills. Proposed vendor:
+              Amazon Bedrock, in Ledgerline&apos;s existing AWS account.
             </p>
           </div>
           <div>
             <p className="text-xs font-semibold text-muted-foreground uppercase">Why rules aren&apos;t enough</p>
             <p className="mt-1 leading-relaxed">
               {tk
-                ? `${tk.relevantUntagged} of the ${tk.relevant} tickets that matter have no tag, and tags can be wrong (a timer bug was tagged How-to). Only reading the text catches those.`
+                ? `${tk.fromOverdueUntagged ?? tk.relevantUntagged} of the ${tk.fromOverdue} tickets from customers who owe money have no tag, and tags can be wrong (a timer bug was tagged How-to). Only reading the text catches those.`
                 : "Tags are often missing or wrong. Only reading the text catches those."}
             </p>
           </div>
         </div>
         <p className="mt-3 text-xs leading-relaxed text-muted-foreground">
           Never AI: the decision to send. Priya approves every message, and drafts come from Ledgerline&apos;s own templates. The
-          &ldquo;Redraft with AI&rdquo; button is a demo on made-up data.
+          &ldquo;Redraft with AI&rdquo; button is a demo: it sends a draft from this fictional data room to Groq.
         </p>
       </section>
 

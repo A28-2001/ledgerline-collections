@@ -97,7 +97,7 @@
       "shouldBe": "send",
       "foundBy": "Independent review, first pass",
       "why": "A normal-priority question \"pending\" since July: in Zendesk that means support is waiting on the customer.",
-      "change": "Decided with the team: a pending ticket blocks only if it's about money, high priority, or still waiting on Ledgerline. Otherwise a softer reminder, and the account manager is told.",
+      "change": "My call after the review, for Maya to confirm in the shadow week: a pending ticket (support waiting on the customer) pauses the reminder only if it's about money, high priority, or still waiting on Ledgerline. Otherwise a softer reminder, and the account manager is told. Under the strictest reading of her rule, 3 customers would be held instead.",
       "status": "fixed"
     },
     {
@@ -108,7 +108,7 @@
       "shouldBe": "send",
       "foundBy": "Independent review, first pass",
       "why": "A pending timer bug, mis-tagged How-to. Not about money.",
-      "change": "Same decision as Kingsway.",
+      "change": "Same call as Kingsway, for Maya to confirm.",
       "status": "fixed"
     },
     {

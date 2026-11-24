@@ -18,7 +18,7 @@ export function ageBreakdown(invoices: Invoice[]) {
   const title =
     total === 0 || !top
       ? "Nothing is overdue"
-      : `Most of the money is ${top.bucket} days late (${formatPercent(top.total / total)})`;
+      : `${top.total / total > 0.505 ? "Most" : top.total / total >= 0.495 ? "Half" : "The largest share"} of the money is ${top.bucket} days late (${formatPercent(top.total / total)})`;
   return { rows, total, title };
 }
 

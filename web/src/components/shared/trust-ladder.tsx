@@ -15,6 +15,28 @@ export function TrustLadder({ data, invoices }: { data: NonNullable<Results["aut
   const [cap, setCap] = useAutoSendCap(data.maxAmount);
   const eligible = invoices.filter((i) => couldAutoSend(i, cap));
   const eligibleAmount = eligible.reduce((s, i) => s + i.amount, 0);
+  // Everything else that isn't "always a person": why it can't go out on its own today.
+  const notYet = invoices
+    .filter((i) => i.autoSend && !i.autoSend.permanent && !couldAutoSend(i, cap))
+    .reduce<Record<string, number>>((acc, i) => {
+      const raw = i.autoSend!.why.toLowerCase();
+      const why = i.autoSend!.eligible
+        ? `over the ${cap === null ? "size" : formatMoney(cap)} limit`
+        : raw.startsWith("card follow-ups")
+          ? "card or softer notes"
+          : raw.includes("open ticket")
+            ? "with an open ticket"
+            : raw.startsWith("past the second")
+              ? "past the second reminder"
+              : raw.includes("check first")
+                ? "in Check first"
+                : raw.includes("one email")
+                  ? "in another bill's email"
+                  : raw;
+      acc[why] = (acc[why] ?? 0) + 1;
+      return acc;
+    }, {});
+  const notYetCount = Object.values(notYet).reduce((s, n) => s + n, 0);
   // Off unless unlocked AND switched on earlier on this device. Storage errors leave it off.
   const [on, setOn] = useState(() => {
     if (typeof window === "undefined" || data.daysOnRecord < data.daysNeeded) return false;
@@ -108,6 +130,19 @@ export function TrustLadder({ data, invoices }: { data: NonNullable<Results["aut
             </p>
           </div>
         </div>
+        {notYetCount > 0 && (
+          <p className="text-xs leading-relaxed">
+            <span className="font-medium">The other {pluralize(notYetCount, "bill")}</span>{" "}
+            <span className="text-muted-foreground">
+              could qualify one day but not today:{" "}
+              {Object.entries(notYet)
+                .sort((a, b) => b[1] - a[1])
+                .map(([why, n]) => `${n} ${why}`)
+                .join(", ")}
+              .
+            </span>
+          </p>
+        )}
         <p className="text-xs leading-relaxed text-muted-foreground">{data.rule}</p>
       </CardContent>
     </Card>

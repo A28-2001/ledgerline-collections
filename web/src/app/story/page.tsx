@@ -71,7 +71,7 @@ export default function StoryPage() {
       numberNote: `overdue, across ${summary.overdueCount} bills`,
       text: [
         highest
-          ? `The highest month-end in the last ${trend.length} months: ${pct(last.overdueShare)} of what customers owe.`
+          ? `The highest overdue total of any month-end in the last ${trend.length} months. It's ${pct(last.overdueShare)} of what customers owe.`
           : `That's ${pct(last.overdueShare)} of what customers owe.`,
         "Finance chases it by hand: about 16 hours a week across the team.",
       ],
@@ -109,7 +109,7 @@ export default function StoryPage() {
       text: [
         "Five questions decide each bill, and Priya approves every email in one click.",
         tk
-          ? `Rules read the ticket tags today. Once legal approves an AI vendor, AI also reads the text, because ${tk.relevantUntagged} of the ${tk.relevant} tickets that matter have no tag.`
+          ? `Rules read the ticket tags today. Once legal approves an AI vendor, AI also reads the text, because ${tk.fromOverdueUntagged ?? tk.relevantUntagged} of the ${tk.fromOverdue} tickets from customers who owe money have no tag.`
           : "",
         `The rest go to a person: ${count("hold")} holds${wait ? ` (${wait} just too early)` : ""}, ${count("call")} calls and ${count("paid")} probably paid.`,
       ].filter(Boolean),

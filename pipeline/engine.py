@@ -209,9 +209,10 @@ class Engine:
         # Plain counts for the story: how many tickets matter to collections, and how many have no tag to read.
         mine = [t for ts in out.values() for t in ts if t["_match"].customer_id in overdue_customers]
         rel = [t for t in mine if t.get("relevant")]
+        untagged = lambda t: not str(t.get("category") or "").strip() or str(t.get("category")).lower() == "nan"  # noqa: E731
         self.ticket_stats = {"all": int(len(tk)), "fromOverdue": len(mine), "relevant": len(rel),
-                             "relevantUntagged": sum(1 for t in rel if not str(t.get("category") or "").strip()
-                                                     or str(t.get("category")).lower() == "nan")}
+                             "relevantUntagged": sum(1 for t in rel if untagged(t)),
+                             "fromOverdueUntagged": sum(1 for t in mine if untagged(t))}
         return out
 
     # ---------------------------------------------------------------- payments
@@ -640,6 +641,7 @@ class Engine:
         return {"to": to, "subject": subj, "body": body, "tone": tone}
 
     def _assemble(self, rows, tickets, customers, contacts) -> dict:
+        self._customers_df = customers
         invoices_out, cust_out = [], {}
         hold_days = self.p["hold_business_days"]
         for row in rows:
@@ -704,6 +706,11 @@ class Engine:
                 verdict = "send"
                 cause = "card_failed" if f.get("card_failed") else "unhappy" if f.get("soft") else "simply_late"
             tone = "card_update" if f.get("card_failed") else "soft" if f.get("soft") else "standard"
+            if verdict != "send":
+                for r in row.reasons:
+                    if r["text"].startswith("Open support ticket, not about money: send"):
+                        r["text"] = "Also open: a support ticket that isn't about money."
+                    r["text"] = r["text"].replace(" It doesn't block the reminder, but the tone is softer and the account manager is told.", "")
             if cid in self.top_accounts and verdict in ("send", "call"):
                 row.needs_review.append("one of the 50 largest accounts: a person reads or writes this one personally")
                 row.reasons.append({"text": "One of the 50 largest accounts: nothing goes out until a person has read it.",
@@ -782,6 +789,9 @@ class Engine:
             if cid:
                 co = cust_out.setdefault(cid, self._customer(cid, customers, tickets))
                 co["invoiceIds"].append(row.display_id)
+                if to and not co.get("billingContact"):
+                    who = getattr(self, "_first", "")
+                    co["billingContact"] = f"{who} ({to})" if who else to
         calls = {}
         for o in invoices_out:
             if o["verdict"] == "call" and o.get("customerId"):
@@ -801,6 +811,39 @@ class Engine:
                     if r.display_id == o["id"]:
                         r.verdict = "call"
 
+        # One conversation per customer, for email too: several reminders to the same customer go in one email.
+        by_cust: dict = {}
+        for o in invoices_out:
+            if o["verdict"] == "send" and o.get("customerId") and o.get("draft", {}).get("body"):
+                by_cust.setdefault(o["customerId"], []).append(o)
+        for cid2, group in by_cust.items():
+            if len(group) < 2:
+                continue
+            group.sort(key=lambda o: (-o["daysOverdue"], -o["amount"]))
+            main, rest = group[0], group[1:]
+            ids = [o["id"] for o in group]
+            listed = "\n".join(f"- {o['id']}: {money(o['amount'])}, due {nice(pd.Timestamp(o['dueDate']))}" for o in group)
+            total = money(sum(o["amount"] for o in group))
+            body = main["draft"]["body"]
+            hi, _, after = body.partition("\n\n")
+            sign = body[body.rfind("\n\nThanks,"):] if "\n\nThanks," in body else ""
+            main["draft"]["subject"] = f"Invoices {', '.join(ids[:-1])} and {ids[-1]} are overdue"
+            main["draft"]["body"] = (f"{hi}\n\nA quick note that these invoices ({total} in total) are past due and still open on our side:\n\n{listed}\n\n"
+                                     f"If you've already paid, thank you, and please ignore this. If anything on them looks wrong, "
+                                     f"just reply and we'll fix it before you pay.{sign}")
+            for w in THREAT_WORDS:
+                assert w not in main["draft"]["body"].lower(), f"combined draft contains '{w}'"
+            main["reasons"].insert(0, {"text": f"One email covers all {len(group)} of this customer's reminders ({', '.join(ids)}).",
+                                       "evidenceIds": [], "policyRef": "Maya (COO): one conversation per customer"})
+            if any(not o.get("autoSend", {}).get("eligible") for o in rest):
+                main["autoSend"] = {"eligible": False, "why": "One email with other bills that need a person", "permanent": False}
+            for o in rest:
+                o["headline"] = f"Goes in the same email as invoice {main['id']}"
+                o["reasons"].insert(0, {"text": f"Same customer as invoice {main['id']}: both go in one email, not two on the same morning.",
+                                        "evidenceIds": [], "policyRef": "Maya (COO): one conversation per customer"})
+                o["draft"] = {"to": o["draft"].get("to", ""), "subject": "", "body": "", "tone": "none", "combinedWith": main["id"]}
+                o["autoSend"] = {"eligible": False, "why": f"Goes in one email with invoice {main['id']}", "permanent": False}
+
         # aliases for each customer
         for system, raw, m in self.matcher.log:
             if m.customer_id in cust_out and raw:
@@ -809,6 +852,15 @@ class Engine:
                     al.append({"system": system, "name": raw, "matchedBy": m.method, "score": round(float(m.score), 3)})
         self._attach_payments(cust_out)
         return {"invoices": invoices_out, "customers": cust_out, "rows": rows}
+
+    def customer_name(self, cid) -> str:
+        c = self._customers_df.loc[cid] if cid is not None and cid in self._customers_df.index else None
+        return str(c["name"]) if c is not None else str(cid)
+
+    def account_manager(self, cid) -> str | None:
+        c = self._customers_df.loc[cid] if cid is not None and cid in self._customers_df.index else None
+        am = c.get("account_manager") if c is not None else None
+        return str(am) if am is not None and pd.notna(am) and str(am) else None
 
     def _approver(self, cid, amount: float) -> str:
         """Maya: Priya corrects up to the limit herself; Dana approves above it or on any top-50 account."""

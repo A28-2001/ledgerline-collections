@@ -17,18 +17,18 @@ Every morning it asks five questions of each overdue bill, in order, and gives o
 | **Call** | 45+ days late, or already calling them | 9 · $9,384 |
 | **Send** | Nothing blocks a polite reminder | 20 · $182,151 |
 
-Priya makes **19 decisions instead of reading 54 bills**. Each hold goes to an owner with a deadline; if nobody acts, it comes back to her.
+Priya sorts **54 bills in 19 decisions**; her real work today is correcting 12 disputed bills past the 5-day target ($241,320). Every other hold goes to an owner with a deadline; if nobody acts, it comes back to her.
 
 ## What is AI, what stays with a person, and why
 
 - **A person decides every send.** Priya approves each message. Top-50 accounts, disputes, probably-paid bills, anything firmer than a nudge and every call stay with a person: the COO's switch-off lines.
-- **No AI on customer data until legal approves a vendor**, because the SLA policy requires a data agreement first. Until then, rules read ticket tags and status inside Ledgerline. Rules miss untagged tickets (27 of the 131 that matter), so after approval two AI models from different families read the masked text, and a person decides when they disagree. In testing they held all 14 disputes. Proposed vendor: Amazon Bedrock (AWS is already a vendor).
+- **No AI on customer data until legal approves a vendor**, because the SLA policy requires a data agreement first. Until then, rules read ticket tags and status inside Ledgerline. Rules miss untagged tickets (27 of the 134 from customers who owe money), so after approval two AI models from different families read the masked text, and a person decides when they disagree. In a test run that sent this fictional data room's masked tickets to Groq, they held all 14 disputes. Proposed vendor: Amazon Bedrock (AWS is already a vendor).
 - **Auto-send stays locked** until a month of approvals is on record, then only for small, polite first or second reminders.
 
 ## Proof, and where it fails
 
 - **Accuracy:** a separate AI model that never saw the tool's answers reviewed all 54 bills; I confirmed every contested call by hand. First pass: **46 of 54 (85%)**, with 7 rule errors (since fixed) and 1 difference kept on purpose. Now 53 of 54, but on the same bills, so the shadow week is the real test. Every miss is listed in the tool.
-- **The COO's two tests read 0:** nobody chased who had paid or had a complaint open. Earlier versions would have chased 4 customers with a complaint open.
+- **The COO's two tests read 0:** nobody chased who had paid or had a complaint open. Under the strictest reading (any pending ticket), 3 customers still get a reminder, because their tickets aren't about money or they said it was resolved: my call after the review, for the COO to confirm. Earlier versions would have chased 4 customers with a complaint open.
 - **Not claimed:** cash coming in sooner. The number to watch is overdue over 60 days ($57,685 today).
 
 ## With more time
