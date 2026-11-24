@@ -159,8 +159,8 @@ export default function HowPage() {
           </div>
         </div>
         <p className="mt-3 text-xs leading-relaxed text-muted-foreground">
-          No AI touches customer data until legal approves a vendor (Amazon Bedrock, in the AWS account Ledgerline already has, is proposed).
-          Never AI: the decision to send.
+          In daily use, no AI touches customer data until legal approves a vendor (Amazon Bedrock, in the AWS account Ledgerline already has,
+          is proposed). In testing only, Claude reviewed the bills and Groq read masked tickets. Never AI: the decision to send.
         </p>
       </section>
 

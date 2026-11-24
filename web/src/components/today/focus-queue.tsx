@@ -60,6 +60,7 @@ export function FocusQueue({
   const inv = active.bills[0];
   const verdict = verdictOf(inv);
   const proof = proofOf ? proofOf(inv) : keyProof(inv, verdict);
+  const mixed = new Set(items.map((it) => verdictOf(it.bills[0]))).size > 1; // say the answer only where answers differ
   const total = sumAmount(active.bills);
 
   const go = (step: number) => setActiveKey(items[(idx + step + items.length) % items.length].key);
@@ -88,7 +89,7 @@ export function FocusQueue({
   }
 
   return (
-    <div className="mt-3 grid gap-4 lg:grid-cols-[minmax(0,1fr)_minmax(0,17rem)]">
+    <div className="mt-3 grid gap-4 lg:grid-cols-[minmax(0,1fr)_minmax(0,19rem)]">
       <div
         tabIndex={0}
         onKeyDown={onKey}
@@ -162,7 +163,7 @@ export function FocusQueue({
                 >
                   <span className="size-2 shrink-0 rounded-full" style={{ background: VERDICT_META[verdictOf(b)].chart }} aria-hidden="true" />
                   <span className="min-w-0 flex-1 truncate">{b.customerName}</span>
-                  <span className="shrink-0 text-[11px] text-muted-foreground">{SHORT_ANSWER[verdictOf(b)]}</span>
+                  {mixed && <span className="shrink-0 text-[11px] text-muted-foreground">{SHORT_ANSWER[verdictOf(b)]}</span>}
                   <span className="tabular shrink-0 text-xs text-muted-foreground">{formatMoney(Math.round(sumAmount(it.bills)), b.currency)}</span>
                 </button>
               </li>

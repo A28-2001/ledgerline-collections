@@ -184,7 +184,8 @@ export default function ProofPage() {
             </div>
             <p className="mt-3 text-xs leading-relaxed text-muted-foreground">
               Of the {firstPass} first-pass differences, {fixedLater} now agree. Eastman &amp; Wexler was kept on purpose; Kingsway was fixed, then
-              held again because one payment fits two of its bills.
+              held again because one payment fits two of its bills. The {log.entries.length} misses below are those {firstPass}, plus{" "}
+              {log.entries.length - firstPass} found another way.
             </p>
             <p className="mt-4 w-fit rounded-full border border-dashed px-3 py-1 text-xs text-muted-foreground">
               Same {total} bills the rules were fixed on. The fresh test is the shadow week: new bills, and nothing goes out from the tool.

@@ -22,7 +22,7 @@ Priya's morning is **11 decisions**, built to take about 5 minutes (the shadow w
 ## What is AI, what stays with a person, and why
 
 - **A person decides every send.** Top-50 accounts, disputes, probably-paid bills, anything firmer than a nudge and every call always stay with a person: the COO's switch-off lines. Auto-send stays locked until a month of approvals is on record.
-- **AI as the auditor:** a separate AI model (Claude, in its own session) reviewed all 54 bills without seeing the tool's answers. Its first pass disagreed on 8: 5 rule errors (fixed), 2 judgment calls the COO has since confirmed, 1 kept on purpose. I propose running it weekly once legal approves a vendor.
+- **AI as the auditor:** a separate AI model (Claude, in its own session) reviewed all 54 bills without seeing the tool's answers. Its first pass disagreed on 8: 5 rule errors (fixed), 2 judgment calls the COO has since confirmed, 1 kept on purpose. 6 of those 8 now agree; the other 2 differ on purpose. I propose running it weekly once legal approves a vendor.
 - **No AI on customer data in daily use until legal approves a vendor**, because the SLA policy requires a data agreement first; Amazon Bedrock (AWS is already a vendor) is with legal. In testing, before the COO's answer, Groq read masked tickets: that changed no answers, as rules catch all 14 disputes by their invoice number; Check first would hold 10 bills instead of 7.
 
 ## Proof, and where it fails

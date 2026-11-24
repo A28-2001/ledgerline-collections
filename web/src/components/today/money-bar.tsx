@@ -18,6 +18,15 @@ export function MoneyBar({ invoices, onSelect }: { invoices: Invoice[]; onSelect
   const s = moneyStats(invoices);
   const total = s.overdue || 1;
   const pct = (x: number) => `${(x / total) * 100}%`;
+  // How each answer maps onto the step tiles below: disputes are Priya's own step; some bills wait in Check first.
+  const disputes = invoices.filter((i) => i.verdict === "hold" && i.cause === "wrong_bill" && Boolean(i.hold?.ownerRole.startsWith("Finance"))).length;
+  const inCheck = (v: Verdict) => invoices.filter((i) => i.verdict === v && i.needsReview).length;
+  const link: Record<Verdict, string> = {
+    paid: "",
+    hold: disputes ? `${disputes} disputes · ${s.byVerdict.hold.count - disputes} hand-offs` : "",
+    send: inCheck("send") ? `${inCheck("send")} in Check first` : "",
+    call: inCheck("call") ? `${inCheck("call")} in Check first` : "",
+  };
 
   return (
     <section aria-label="Where today's overdue money goes" className="rounded-xl border bg-card p-4 sm:p-5">
@@ -87,6 +96,7 @@ export function MoneyBar({ invoices, onSelect }: { invoices: Invoice[]; onSelect
               </span>
             </span>
             <span className="tabular block text-xs text-muted-foreground">{pluralize(s.byVerdict[v].count, "bill")}</span>
+            {link[v] && <span className="tabular block text-[11px] leading-snug text-muted-foreground/80">{link[v]}</span>}
           </button>
         ))}
       </div>

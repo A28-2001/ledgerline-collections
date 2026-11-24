@@ -78,6 +78,9 @@ def light_lines(invoices, cfg, as_of, missed_save=None) -> list[str]:
                 and i["hold"]["ownerRole"].startswith("Finance")]
     if all_mine:
         out.append(f"{len(all_mine)} disputes to fix, {len(mine)} past the 5-day target: a corrected bill or a clear answer")
+    others = [i for i in invoices if i["verdict"] == "hold" and i not in all_mine]
+    if others:
+        out.append(f"{len(others)} bills on hold with an owner and a deadline")
     if calls:
         out.append(f"{len(calls)} bills to call about")
     if paid:
