@@ -37,3 +37,36 @@ flowchart TD
 | Reminders go out late and inconsistently | One morning list, rebuilt from the data every day |
 | Customers with an open complaint get chased | Holds: disputes, open tickets, threats. "Would chase someone with a complaint open": 0 |
 | Failed card payments are rarely followed up | Priya owns them; Dana is warned before automatic write-offs |
+
+## How it fits Priya's process
+
+```mermaid
+flowchart LR
+  subgraph T["FIN-1 today, by hand (16 hours a week)"]
+    direction TB
+    t1["Export the AR aging report"] --> t2["Ask around on Slack:<br/>is there a dispute?"]
+    t2 --> t3["Write reminders from saved templates"]
+    t3 --> t4["Phone the largest accounts"]
+  end
+  subgraph N["With the tool, every morning"]
+    direction TB
+    n1["Reads bills, payments and tickets<br/>(read-only)"] --> n2["11 decisions: Check first,<br/>then Paid, Hold, Send, Call"]
+    n2 --> n3["14 disputes, oldest first:<br/>the day's work"]
+    n3 --> n4["Shadow week: Priya compares,<br/>nothing goes out"]
+    n4 --> n5["Save the list:<br/>tomorrow remembers"]
+  end
+  t2 -.->|"replaced: the tool reads the tickets"| n1
+```
+
+## How it was built, with Maya
+
+```mermaid
+flowchart LR
+  a["Read the data room<br/>51 files"] --> b["Find the real problem<br/>$309,000 disputed"]
+  b --> c["Ask Maya<br/>12 rounds of questions"]
+  c --> d["Build the rules<br/>and the app"]
+  d --> e["Independent AI review<br/>46 of 54 agree"]
+  e --> f["Fix every miss<br/>52 of 54 agree"]
+  f --> g["Design reviews,<br/>Maya confirms 3 rules"]
+  g --> h["Monday:<br/>shadow week"]
+```

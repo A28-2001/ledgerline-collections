@@ -1,64 +1,46 @@
-# Demo video script (about 7 minutes)
+# Demo video script (about 8 to 9 minutes)
 
-Record the live site: https://ledgerline-collections.vercel.app. Browser full screen, light mode (Light, at the bottom of the left panel), zoom 110%. Close other tabs and notifications. Speak slowly; it's fine to pause.
+Record the live site, https://ledgerline-collections.vercel.app/story, in a **private window** (so nothing is decided yet and the counts match). Light mode (Light, at the bottom of the left panel), browser zoom 110%, notifications off. Keep the demo guide page open on a second screen. Speak slowly; it's fine to pause. If a number on screen differs from this script, read the screen.
 
-Before recording: open the site in a private window, so no earlier clicks show as already decided.
+**Two examples carry the video:**
+- **Banerjee Petrov Engineers** (INV-25539, $2,652, 92 days late): the bill we must not chase. The customer disputes it and is holding payment; Zendesk marks the ticket solved, but the bill was never corrected.
+- **Kingsway Engineering Group** (INV-25469 and INV-25852, $5,100 each): one $5,100 payment with a blank memo could pay either bill. The older one is probably paid; the newer one waits for Marcus. Nobody who paid gets chased.
+
+Crane IT Partners appears on its own as the first card on Today (Maya's pending-ticket rule).
 
 ---
 
-## 0:00 to 0:40 · Who it's for and the question
+## 0:00 to 2:00 · The story
 
-**Screen:** /story, top of the page.
+**Screen:** /story, scroll slowly.
 
-**Say:**
-"This is a tool for Ledgerline's collections process, FIN-1, owned by Priya Nair, the AR Specialist. It answers one question every morning: should we chase this invoice today? I'll show the story first, then Priya's morning, then how sure we are and why the AI is safe to use."
+- 0:00 "This is Ledgerline's collections process, FIN-1, owned by Priya Nair, the AR Specialist. Every morning she asks one question: should we chase this invoice today?"
+- 0:20 Chapters 1 to 3 (pause on 3): "$633,245 is overdue, the highest month-end in a year. Finance can't open Zendesk: 134 tickets from customers who owe money are invisible to them. And $309,000, half of it, is disputed in tickets that name the exact bill. Banerjee Petrov: Zendesk says solved, but the bill was never fixed."
+- 1:30 Chapters 4 to 6: "Five questions decide each bill, and Priya's morning is 11 decisions. An independent AI review agreed on 46 of 54 bills at first, 52 now. The COO's two tests read 0. The shadow week is the real test."
 
-## 0:40 to 2:00 · The story: what the data showed
+## 2:00 to 3:20 · How it works, and how it fits
 
-**Screen:** scroll the story slowly, pausing on each chapter.
+- 2:00 **How it works:** "Five questions, in order. The first yes decides. A person always handles top-50 accounts, disputes, probably-paid bills and every call."
+- 2:35 **Demo guide page** (the two process diagrams): "Today Priya asks around on Slack, because finance can't open Zendesk. The tool reads the tickets instead. We built it with Maya, the COO: every answer became a rule, every miss a fix."
 
-**Say:**
-- Chapter 1: "$633,245 is overdue across 54 bills: the highest month-end in a year."
-- Chapter 2: "Finance can't open Zendesk. 134 tickets from customers who owe money are invisible to them, so they ask around on Slack."
-- Chapter 3 (pause here): "This was the surprise. $309,000, 49% of the overdue money, is disputed in tickets that name the exact invoice. Zendesk marks most of those tickets solved, but the bills were never fixed. A reminder on any of them chases someone waiting for a corrected bill."
-- Chapter 4: "Five questions decide each bill. Priya's morning is 11 decisions, then the disputes, oldest first. $446,810 isn't chased today."
+## 3:20 to 6:05 · Priya's morning (Today)
 
-## 2:00 to 4:00 · Priya's morning
+- 3:20 The money bar, then **Check first**, Crane IT: "$446,810 isn't chased today. One customer at a time: the reason, the ticket beside it, Maya's rule. This week the button says Agree, because nothing goes out from the tool."
+- 4:05 Open **Probably paid**, then **Hand off holds**; open Kingsway INV-25852's full details: "One $5,100 payment, two $5,100 bills. The older one goes to Marcus; this one waits until he confirms, by Nov 4. That's the COO's Paidly fear, handled."
+- 4:50 **Send reminders:** open one draft, then Agree with all 14. **Make calls:** one line. "Ledgerline's own template, without the old suspension threat. Rosales gets one email for two bills. Every call today is a failed card past 45 days."
+- 5:25 **Fix disputes:** Banerjee Petrov is first, the oldest. Then scroll to the finish. "The day's work: 14 disputes, oldest first, each with a reply that names the issue. This week Priya compares; the download saves the day's comparison."
 
-**Screen:** click "Open today's list", or Today in the menu.
+## 6:05 to 8:05 · The other pages
 
-**Say and do:**
-1. "Her morning is 11 decisions, and nothing is sent until she approves." Open **Check first**: "One customer at a time, with the record that matters beside it. Crane IT has a support ticket still pending, though it isn't about money, and the customer says it's resolved." Click **Approve this reminder**: "Decided bills join their step, and the next one moves in."
-2. "The other bills are four steps, in this order: paid, hold, send, call." Open **Probably paid**: "5 bills look paid. Marcus matches each payment, so nobody who paid gets chased." Click **Hand 5 bills to Marcus**.
-3. Open **Hand off holds**: "Each of these 7 goes to its owner with a deadline: the account manager, or Marcus for a payment that could pay either of two Kingsway bills. If nobody acts, the bill comes back to her."
-4. Open **Send reminders**, then Rosales Engineering: show the **reminder schedule**, the **timeline** and the **draft**: "Ledgerline's own template, without the old 45-day suspension threat. Two Rosales bills go in one email." Close it and click **Approve 14 reminders**: "Approving doesn't send. Nothing goes out on its own."
-5. Open **Make calls**: "Every call today is a failed card past 45 days: call for a new card." Click **Add 7 calls to the list**.
-6. Open **Fix disputes: the day's work**: "Then the real work: 14 disputes, oldest first, 12 past the 5-day target. Each comes with a reply that names the issue. This week she compares it with her own answer; after the shadow week she can send it from her own email."
-7. Scroll to **Done: save today's comparison**: "This is the shadow week, so nothing goes out from the tool. Priya compares its list with her own calls, and the download records where they differ. After the week, each approved reminder opens in her own email app, written and addressed, which Maya prefers because customers know her name."
-8. Open **Morning message** in the menu: "Every working day, each person gets one short Slack message and a link. Marcus is asked which bill a $5,100 payment covers, and account managers are asked for their OK on seats or price."
+- 6:05 **Why overdue:** "Seven in ten overdue dollars shouldn't be chased today. Disputes are the biggest reason, in red; the rest are grey. The reason decides the fix."
+- 6:30 **Customers:** search "Banerjee", open the customer. "Every bill, ticket and payment for one customer, in one place."
+- 6:55 **Morning message:** "One short message each morning. This week only Priya's is used; after it, Marcus is asked which bill the Kingsway payment covers."
+- 7:20 **How sure are we:** "85% on the first pass, 96% now, on the same bills. The 2 that still differ are shown first, Kingsway is one of them. The COO's two tests read 0. The daily tool uses no AI until legal approves a vendor."
 
-## 4:00 to 5:40 · How sure are we, and why the AI is safe
+## 8:05 to 8:50 · Polish, limits and next
 
-**Screen:** How sure are we.
-
-**Say:**
-- "A separate AI model reviewed all 54 bills without seeing the tool's answers, and I checked every contested bill by hand. First pass: 46 of 54, 85%."
-- Scroll to the miss list: "Every miss is here, with what changed. Eight came from the review's first pass, two I found myself before it, and one was my own mistake in the hand check: a payment that could pay either of two bills. That's the exact case that got the last tool switched off, so that bill now waits for Marcus."
-- "After the fixes it's 52 of 54, and we disagree on the last 2 on purpose. It's the same bills, so not a fresh test. The shadow week is."
-- **The COO's two tests:** "The tool would chase nobody who had paid and nobody with a complaint open: both zero. By the strictest reading, 2 customers have a pending ticket that isn't about money. They wait in Check first so Priya reads the ticket before a polite reminder: Maya confirmed that rule."
-- **Why it's safe on billing** (read two or three lines): "A person approves everything. Top-50 accounts, disputes and calls always stay with a person. In daily use, no AI vendor sees customer data until legal approves one; in testing I used Claude for the review and Groq on masked tickets. And I measured what AI ticket-reading adds on these bills: it changed no answers, because rules already catch all 14 disputes, and it would move 9 bills in or out of Check first. AI earns its place on new tickets with a missing or wrong tag."
-
-## 5:40 to 6:40 · What happens Monday
-
-**Screen:** How it works, then back to the story's last chapter.
-
-**Say:**
-"On Monday it runs as a shadow week on exports: the tool runs beside Priya, and nothing is sent without her. The COO is taking the AI vendor note to legal. The next things I'd build: read the billing@ inbox, where some disputes arrive by email, and store approvals on a server so the auto-send record can build up."
-
-## 6:40 to 7:00 · Close
-
-**Say:**
-"One process, done in depth: every answer shows its reason, its records and its policy line, and every miss is on the page. Thank you."
+- 8:05 Switch to **Dark**, then a narrow window: "It works in dark mode and on a phone."
+- 8:20 **Demo guide page**, limitations and next steps: "What isn't proven yet: it agrees on the same bills its rules were fixed on, and the save is manual until March. Next: automatic saving, live read-only connections, the billing@ inbox, and AI through Bedrock once legal approves. Thank you."
 
 ---
 
@@ -66,4 +48,4 @@ Before recording: open the site in a private window, so no earlier clicks show a
 
 - A page is slow: wait two seconds, keep talking.
 - You click the wrong thing: say "let me go back" and carry on. No need to restart.
-- The numbers on screen should match this script. If a number differs, read what's on screen, not the script.
+- A number differs from this script: read the screen.
