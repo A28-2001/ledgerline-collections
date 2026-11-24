@@ -138,11 +138,13 @@
   --verdict-hold: var(--hold);
   --verdict-paid: var(--paid);
   --verdict-call: var(--call);
+  /* Reasons: only disputes get a colour. Every other reason is the same grey, so no reason
+     colour can be mistaken for an answer colour (gold Hold, blue Paid). */
   --cause-simply-late: #7d8b95;
-  --cause-unhappy: #d9772e;
+  --cause-unhappy: #7d8b95;
   --cause-wrong-bill: #9e2a4f;
-  --cause-paid: #6f86a6;
-  --cause-card-failed: #8d7966;
+  --cause-paid: #7d8b95;
+  --cause-card-failed: #7d8b95;
 }
 
 .dark {
@@ -208,10 +210,10 @@
   --verdict-paid: var(--paid);
   --verdict-call: var(--call);
   --cause-simply-late: #8796a1;
-  --cause-unhappy: #f0995a;
+  --cause-unhappy: #8796a1;
   --cause-wrong-bill: #d0638a;
-  --cause-paid: #93a8c4;
-  --cause-card-failed: #b3a08c;
+  --cause-paid: #8796a1;
+  --cause-card-failed: #8796a1;
 }
 
 @layer base {

@@ -86,12 +86,14 @@ export function AppShell({
   dataSource,
   asOf,
   generatedAt,
+  historyGap,
 }: {
   children: ReactNode;
   companyName: string;
   dataSource: "sample" | "real";
   asOf: string;
   generatedAt: string;
+  historyGap?: string | null;
 }) {
   const [open, setOpen] = useState(false);
 
@@ -144,7 +146,17 @@ export function AppShell({
             className="flex items-center justify-center gap-2 border-b border-hold/40 bg-hold-soft px-4 py-1.5 text-center text-xs font-medium text-hold-ink"
           >
             <TriangleAlert className="size-3.5 shrink-0" aria-hidden="true" />
-            Sample data — not real figures
+            Sample data, not real figures
+          </div>
+        )}
+
+        {historyGap && (
+          <div
+            role="note"
+            className="flex items-center justify-center gap-2 border-b border-hold/40 bg-hold-soft px-4 py-1.5 text-center text-xs font-medium text-hold-ink"
+          >
+            <TriangleAlert className="size-3.5 shrink-0" aria-hidden="true" />
+            No decision list was saved for {historyGap}: some reminders may come back, so check before approving.
           </div>
         )}
 

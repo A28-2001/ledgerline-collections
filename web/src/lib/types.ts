@@ -135,6 +135,7 @@ export interface Results {
     // all tickets / from customers who owe money / the ones that matter to collections / of those, with no tag
     tickets?: { all: number; fromOverdue: number; relevant: number; relevantUntagged: number; fromOverdueUntagged?: number } | null;
     unmatchedPayments?: number | null;
+    historyGap?: string | null;
   };
   invoices: Invoice[];
   customers: Record<string, Customer>;

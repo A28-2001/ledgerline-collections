@@ -38,6 +38,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
               dataSource={meta.dataSource}
               asOf={formatDate(meta.asOf)}
               generatedAt={formatDateTime(meta.generatedAt)}
+              historyGap={results.summary.historyGap ? formatDate(results.summary.historyGap) : null}
             >
               {children}
             </AppShell>

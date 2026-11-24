@@ -116,10 +116,22 @@ def history_check(rules: dict):
         data = load(ROOT / "data" / "sample", cfg)
         a = ai_mod.AI(cfg)
         a.enabled = False
-        res = {i["id"]: i for i in Engine(data, as_of, a).run()["invoices"]}
+        eng = Engine(data, as_of, a)
+        res = {i["id"]: i for i in eng.run()["invoices"]}
+        # no list saved for the last working day: flagged in the morning message, not silent
+        prev = (as_of.normalize() - pd.offsets.BDay(1)).normalize()
+        assert eng.missed_save == prev, eng.missed_save
+        with open(Path(tmp) / "decisions-prev.csv", "w", newline="") as fh:
+            w = csv.writer(fh)
+            w.writerow(["invoice_id", "final", "decision", "decided_at"])
+            w.writerow([send["id"], "call", "approved", prev.strftime("%Y-%m-%dT09:00:00Z")])
+        eng2 = Engine(load(ROOT / "data" / "sample", cfg), as_of, a)
+        eng2.run()
+        assert eng2.missed_save is None, eng2.missed_save
     again = res[send["id"]]
     assert again["verdict"] == "hold" and again["headline"].startswith("Too early for the next reminder"), again["headline"]
     print(f"Memory between mornings: {send['id']}, already approved, waits for its next stage instead of a second email.")
+    print(f"Missed saves are said: no list for {prev:%b %d} is flagged, and saving one clears it.")
     if am_hold is not None:
         back = res[am_hold["id"]]["hold"]
         assert back["action"].startswith("Back with you"), back["action"]

@@ -936,11 +936,21 @@ class Engine:
         out: dict[str, pd.Timestamp] = {}
         self.handoffs: dict[str, pd.Timestamp] = {}  # first day each hold or paid bill was handed over
         self.record_days: set = set()  # days with decisions on record (the auto-send ladder counts these)
+        self.missed_save = None  # the last working day, when no decision list was saved for it: said, never silent
         if not hd:
             return out
+        saved_days: set = set()
         folder = _Path(hd) if _Path(hd).is_absolute() else _Path(__file__).resolve().parent.parent / hd
         for f in sorted(folder.glob("*.csv")) if folder.exists() else []:
             for r in _csv.DictReader(f.open()):
+                stamp = str(r.get("decided_at") or "")[:10]
+                if stamp:
+                    try:
+                        day = pd.Timestamp(stamp).normalize()
+                        if day <= self.as_of:
+                            saved_days.add(day)
+                    except ValueError:
+                        pass
                 final = (r.get("final") or "").strip()
                 if final not in ("send", "hold", "paid") or not r.get("decided_at"):
                     continue
@@ -955,6 +965,9 @@ class Engine:
                 if final in ("hold", "paid") and (key not in self.handoffs or when < self.handoffs[key]):
                     self.handoffs[key] = when
                 self.record_days.add(when.normalize())
+        last_working_day = (pd.Timestamp(self.as_of).normalize() - pd.offsets.BDay(1)).normalize()
+        if saved_days and last_working_day not in saved_days:
+            self.missed_save = last_working_day
         return out
 
     def _dispute_reply(self, row: Row, to: str, hold: dict) -> dict:

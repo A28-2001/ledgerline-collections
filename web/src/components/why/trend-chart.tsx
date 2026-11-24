@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Area, AreaChart, Bar, BarChart, CartesianGrid, ReferenceLine, Tooltip, XAxis, YAxis } from "recharts";
+import { Area, AreaChart, CartesianGrid, ReferenceLine, Tooltip, XAxis, YAxis } from "recharts";
 import { ChartContainer, type ChartConfig } from "@/components/ui/chart";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { formatMoney, formatMonth, formatPercent } from "@/lib/data";
@@ -86,34 +86,5 @@ export function TrendChart({
         </AreaChart>
       </ChartContainer>
     </div>
-  );
-}
-
-export function TicketsChart({ trend }: { trend: TrendPoint[] }) {
-  const data = trend.filter((t) => t.billingTickets !== null);
-  const config: ChartConfig = { billingTickets: { label: "Billing tickets", color: "var(--cause-unhappy)" } };
-  if (data.length === 0) return null;
-  return (
-    <ChartContainer config={config} className="aspect-auto h-40 w-full">
-      <BarChart data={data} margin={{ left: 4, right: 12, top: 16, bottom: 0 }}>
-        <CartesianGrid vertical={false} strokeDasharray="3 3" />
-        <XAxis dataKey="month" tickFormatter={formatMonth} tickLine={false} axisLine={false} tickMargin={8} />
-        <YAxis allowDecimals={false} tickLine={false} axisLine={false} width={32} />
-        <Tooltip
-          cursor={{ fill: "var(--muted)", opacity: 0.5 }}
-          content={({ active, payload, label }) => {
-            const v = active && payload?.length ? Number(payload[0].value) : null;
-            if (v === null) return null;
-            return (
-              <div className="rounded-lg border bg-popover px-3 py-2 text-xs shadow-md">
-                <div className="font-medium">{formatMonth(String(label))}</div>
-                <div className="tabular mt-1 text-muted-foreground">{v} billing tickets</div>
-              </div>
-            );
-          }}
-        />
-        <Bar dataKey="billingTickets" fill="var(--cause-unhappy)" radius={[4, 4, 0, 0]} maxBarSize={48} isAnimationActive={false} />
-      </BarChart>
-    </ChartContainer>
   );
 }

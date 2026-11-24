@@ -24,7 +24,7 @@ import pandas as pd
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from ai import AI  # noqa: E402
-from engine import CAUSE_LABEL, Engine, money, nice  # noqa: E402
+from engine import CAUSE_LABEL, Engine, iso, money, nice  # noqa: E402
 from load import ROOT, as_of_date, load, load_config, norm_id  # noqa: E402
 
 VERDICTS = ["send", "hold", "paid", "call"]
@@ -58,7 +58,7 @@ def trend(engine: Engine) -> list[dict]:
     return out
 
 
-def light_lines(invoices, cfg, as_of) -> list[str]:
+def light_lines(invoices, cfg, as_of, missed_save=None) -> list[str]:
     """The morning message, kept light: what needs Priya today, in four short lines at most."""
     as_iso = as_of.strftime("%Y-%m-%d")
     send = [i for i in invoices if i["verdict"] == "send"]
@@ -69,6 +69,8 @@ def light_lines(invoices, cfg, as_of) -> list[str]:
     paid = [i for i in invoices if i["verdict"] == "paid"]
     marcus = str(cfg.get("people", {}).get("cash_owner", "the cash team")).split(" (")[0].split()[0]
     out = []
+    if missed_save is not None:
+        out.append(f"No decision list was saved for {nice(missed_save)}: some reminders may come back, so check before approving")
     emails = [i for i in send if (i.get("draft") or {}).get("body")]
     if send:
         later = len(send) - len(ready)
@@ -170,8 +172,7 @@ def verified_numbers(engine: Engine, invoices: list[dict], by_cause: list[dict])
                 "valueA": len(tk_open), "methodB": "Allowed (Maya: nobody chased who had a complaint open)", "valueB": 0, "ok": len(tk_open) == 0,
                 "unit": "count", "group": "coo",
                 "strictValue": len(strict),
-                "note": (f"{len(strict)} customers with a pending ticket that isn't about money wait in Check first until Maya confirms. "
-                         if strict else "") + "Earlier versions would have chased 3; each became a rule."})
+                "note": "Earlier versions would have chased 3; each became a rule."})
     for v in out:
         v.setdefault("unit", "money")
         v.setdefault("group", "internal" if v["label"] == "Causes add up" else "cross")
@@ -265,7 +266,7 @@ def main() -> None:
         f"{by_verdict['call']['count']} need a phone call ({money(by_verdict['call']['amount'])}).",
         f"{len(review)} of these need a second look first, in Check first." if review else "Nothing needs a second look.",
     ]
-    light = light_lines(invoices, cfg, as_of)
+    light = light_lines(invoices, cfg, as_of, getattr(engine, "missed_save", None))
     app_url = cfg.get("app_url", "https://ledgerline-collections.vercel.app")
     morning = {"title": f"Collections check, {nice(as_of)}", "bullets": light, "link": app_url,
                "text": "Good morning. Today's list is built to sort in about 5 minutes; the disputes are the day's work.",
@@ -371,6 +372,7 @@ def main() -> None:
         "summary": {"overdueAmount": round(total, 2), "overdueCount": len(invoices), "byVerdict": by_verdict,
                     "tickets": getattr(engine, "ticket_stats", None),
                     "unmatchedPayments": getattr(engine, "unmatched_count", None),
+                    "historyGap": iso(getattr(engine, "missed_save", None)),
                     "byCause": by_cause, "shouldNotChaseAmount": round(no_chase, 2), "headline": headline},
         "invoices": invoices,
         "customers": res["customers"],
@@ -405,10 +407,8 @@ def main() -> None:
                  "target": "Should start coming down from today's figure"},
                 {"label": "Priya opens it every morning", "today": None, "todayText": "Counting starts on day one",
                  "target": "Still opened every working morning a month from now"},
-                {"label": "Nobody chased who had paid or had a complaint open", "today": 0,
-                 "todayText": "0 today (both checks on this page)", "target": "Still 0 after a month. If this slips, a good receivables number won't save it"},
             ],
-            "timeSaved": "Time saved: about 3 to 4 of the team's 16 hours a week (the 'asking around' step), by the COO's estimate, for Priya to confirm.",
+            "timeSaved": "Time saved: the COO estimates 3 to 4 of the team's 16 hours a week, the 'asking around' step. Priya to confirm.",
         },
         "autoSend": {
             "on": False,

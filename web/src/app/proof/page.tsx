@@ -64,7 +64,7 @@ export default function ProofPage() {
   const split = (r: { fixed: number; confirm: number; kept: number; open: number }) =>
     [
       r.fixed && `${r.fixed} fixed`,
-      r.confirm && `${r.confirm} changed for Maya to confirm`,
+      r.confirm && `${r.confirm} for Maya to confirm`,
       r.kept && `${r.kept} kept on purpose`,
       r.open && `${r.open} still open`,
     ]
@@ -115,7 +115,7 @@ export default function ProofPage() {
                 <p className="tabular text-xl font-semibold">{proof.accuracy ? `${Math.round(proof.accuracy.rate * 100)}%` : "-"}</p>
                 <p className="text-xs text-muted-foreground">
                   {proof.accuracy
-                    ? `${proof.accuracy.agreed} of ${proof.accuracy.sampleSize} on the same bills.${
+                    ? `${proof.accuracy.agreed} of ${proof.accuracy.sampleSize}.${
                         proof.accuracy.agreed < proof.accuracy.sampleSize
                           ? ` The other ${proof.accuracy.sampleSize - proof.accuracy.agreed} differ on purpose, explained below.`
                           : ""
@@ -130,7 +130,7 @@ export default function ProofPage() {
               <div className="rounded-lg border border-dashed p-3">
                 <p className="text-xs text-muted-foreground">The fresh test</p>
                 <p className="text-xl font-semibold">Shadow week</p>
-                <p className="text-xs text-muted-foreground">New bills; Priya decides first, then compares</p>
+                <p className="text-xs text-muted-foreground">New bills, not the 54 the rules were fixed on. Priya decides first, then compares.</p>
               </div>
             </div>
 
@@ -178,7 +178,8 @@ export default function ProofPage() {
           <CardHeader>
             <CardTitle className="leading-snug">The COO&apos;s two tests</CardTitle>
             <CardDescription>
-              Her words: &ldquo;nobody has been chased who&apos;d paid or had a complaint open.&rdquo;
+              Her words: &ldquo;nobody has been chased who&apos;d paid or had a complaint open.&rdquo; Her real test is that both stay at 0 for
+              a month.
             </CardDescription>
           </CardHeader>
           <CardContent className="grid gap-3 sm:grid-cols-2">
@@ -190,7 +191,8 @@ export default function ProofPage() {
                 </div>
                 {v.strictValue !== undefined && v.strictValue > 0 && (
                   <p className="mt-1 text-xs font-medium text-hold-ink">
-                    Strictest reading: {v.strictValue} {v.strictValue === 1 ? "customer" : "customers"}
+                    Strictest reading: {v.strictValue} {v.strictValue === 1 ? "customer" : "customers"} with a pending ticket that isn&apos;t about
+                    money. They wait in Check first until Maya confirms.
                   </p>
                 )}
                 {v.note && <p className="mt-1 text-xs leading-relaxed text-muted-foreground">{v.note}</p>}
@@ -227,7 +229,7 @@ export default function ProofPage() {
             <CardTitle className="leading-snug">How we&apos;ll know it works, a month from now</CardTitle>
           </CardHeader>
           <CardContent>
-            <ol className="grid gap-3 text-sm sm:grid-cols-3">
+            <ol className="grid gap-3 text-sm sm:grid-cols-2">
               {results.monthOne.measures.map((m, idx) => (
                 <li key={m.label} className="rounded-lg border p-3">
                   <p className="text-xs text-muted-foreground">{idx === 0 ? "The COO's one number" : "Her real test"}</p>

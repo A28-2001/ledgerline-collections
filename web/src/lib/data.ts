@@ -157,10 +157,6 @@ export function daysBetween(a: string, b: string): number | null {
   return Math.round((db.getTime() - da.getTime()) / 86_400_000);
 }
 
-export function invoiceById(id: string): Invoice | undefined {
-  return results.invoices.find((inv) => inv.id === id);
-}
-
 export function customerHref(id: string): string {
   return `/customers/${encodeURIComponent(id)}`;
 }
@@ -181,14 +177,6 @@ export const GLOSSARY: { term: string; meaning: string }[] = [
   { term: "Chase today", meaning: "Bills with nothing blocking them: reminders to send and customers to call." },
   { term: "Decision", meaning: "One click by a person: each customer in Check first, plus one click to approve each step. Disputes are counted apart: they're the day's work, not the morning sort. The tool never acts on its own." },
 ];
-
-export const MATCH_METHOD_LABEL: Record<string, string> = {
-  exact_id: "Same customer ID",
-  exact_name: "Same name",
-  fuzzy: "Close spelling",
-  ai: "AI checks agreed",
-  unmatched: "No match: a person checks",
-};
 
 export const VOTE_LABEL: Record<string, string> = {
   billing_complaint: "Billing complaint",

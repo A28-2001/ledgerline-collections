@@ -33,6 +33,6 @@ Priya's morning is **11 decisions**, built to take about 5 minutes, one customer
 
 ## With more time
 
-Read the billing@ inbox (disputes sent by email are invisible today); payment plans with the VP Finance's approval; live read-only QuickBooks, Zendesk and Slack connections; save each day's decisions automatically instead of by hand.
+Read the billing@ inbox (disputes sent by email are invisible today); payment plans with the VP Finance's approval; live read-only QuickBooks, Zendesk and Slack connections; save each day's decisions automatically (today it's by hand, and a missed day is flagged the next morning).
 
 **Disclosure:** built and tested on made-up data before Begin; everything using Ledgerline's data came after (see the git history). Built with Claude; the demo's redraft button uses Groq.
