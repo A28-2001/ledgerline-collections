@@ -217,14 +217,15 @@ export function MorningView({ data }: { data: Pick<Results, "invoices" | "summar
       toast.info("Nothing decided yet", { description: "Finish a step first." });
       return;
     }
-    const header = ["invoice_id", "customer", "amount", "days_overdue", "tool_said", "final", "decision", "how", "reason", "decided_at", "to", "subject", "body", "owner", "deadline"];
+    // "mode" tells tomorrow's run whether a row was a shadow-week comparison (nothing sent) or a real approval.
+    const header = ["invoice_id", "customer", "amount", "days_overdue", "tool_said", "final", "decision", "how", "reason", "decided_at", "to", "subject", "body", "owner", "deadline", "mode"];
     const lines = decided.map((i) => {
       const d = decisions[i.id];
       // Subject and body travel with each approved reminder, so sending is a paste, not a hunt.
       const sendIt = d.verdict === "send";
       const how = d.status === "overridden" ? "changed" : d.bulk ? "all at once" : "one by one";
       return [i.id, i.customerName, i.amount, i.daysOverdue, i.verdict, d.verdict, d.status, how, d.reason ?? "", d.at, i.draft?.to ?? "",
-        sendIt ? (i.draft?.subject ?? "") : "", sendIt ? (i.draft?.body ?? "") : "", i.hold?.owner ?? "", i.hold?.deadline ?? ""]
+        sendIt ? (i.draft?.subject ?? "") : "", sendIt ? (i.draft?.body ?? "") : "", i.hold?.owner ?? "", i.hold?.deadline ?? "", shadow ? "shadow" : "live"]
         .map(csvCell)
         .join(",");
     });
@@ -557,7 +558,7 @@ export function MorningView({ data }: { data: Pick<Results, "invoices" | "summar
         ) : current !== "finish" && currentStep ? (
           <Button className="w-full" onClick={() => setConfirmStep(currentStep.def)}>
             <CheckCheck />
-            {currentStep.def.button(currentStep.undecided.length)}
+            {shadow ? `Agree with all ${currentStep.undecided.length}` : currentStep.def.button(currentStep.undecided.length)}
           </Button>
         ) : (
           <Button className="w-full" onClick={exportDecisions}>

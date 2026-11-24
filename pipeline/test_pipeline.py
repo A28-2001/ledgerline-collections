@@ -92,6 +92,32 @@ def rehearsal_check(baseline: dict):
     print(f"Rehearsal with renamed columns and subfolders: mapping suggested, {len(got)} verdicts identical.")
 
 
+def shadow_check(rules: dict):
+    """Shadow week: an 'Agree' is a comparison, not an action. The day counts as saved, but nothing counts as sent."""
+    import csv
+    import tempfile
+
+    import pandas as pd
+    cfg = load_config(ROOT / "pipeline" / "config.sample.yaml")
+    send = next(i for i in rules.values() if i["verdict"] == "send")
+    with tempfile.TemporaryDirectory() as tmp:
+        as_of = as_of_date(load(ROOT / "data" / "sample", cfg))
+        prev = (as_of.normalize() - pd.offsets.BDay(1)).normalize()
+        with open(Path(tmp) / "decisions.csv", "w", newline="") as fh:
+            w = csv.writer(fh)
+            w.writerow(["invoice_id", "final", "decision", "decided_at", "mode"])
+            w.writerow([send["id"], "send", "approved", prev.strftime("%Y-%m-%dT09:00:00Z"), "shadow"])
+        cfg["history_dir"] = tmp
+        a = ai_mod.AI(cfg)
+        a.enabled = False
+        eng = Engine(load(ROOT / "data" / "sample", cfg), as_of, a)
+        res = {i["id"]: i for i in eng.run()["invoices"]}
+    assert res[send["id"]]["verdict"] == "send", res[send["id"]]["headline"]
+    assert not eng.record_days, eng.record_days
+    assert eng.missed_save is None, eng.missed_save
+    print(f"Shadow week: {send['id']}, agreed yesterday, still gets its reminder; the day counts as saved, and no approval is on record.")
+
+
 def history_check(rules: dict):
     """Memory between mornings: an approved reminder comes back as a wait for its next stage, not a second email."""
     import csv
@@ -173,6 +199,7 @@ def main():
     print(f"Paidly case: all {len(paidly)} bills paid by an unmatched bank payment are marked paid, none chased.")
     rehearsal_check(rules)
     history_check(rules)
+    shadow_check(rules)
     print(f"{len(withai)} bills, {len(disputed)} with judges disagreeing (all held for a person). All checks passed.")
 
 

@@ -94,7 +94,20 @@ export function rowDetail(inv: Invoice, verdict: Verdict): string {
       // Maya: any ticket from the customer sits next to the call, named invoice or not.
       const tickets = inv.evidence.filter((e) => e.kind === "ticket");
       const latest = [...tickets].sort((a, b) => (b.date ?? "").localeCompare(a.date ?? ""))[0];
-      return latest ? `${callWhy(inv)} · Read first: \u201c${latest.title}\u201d` : callWhy(inv);
+      if (!latest) return callWhy(inv);
+      // The subject line is often empty or "Re: Fwd:", so quote the customer's first sentence or two instead.
+      const body = (latest.detail ?? "")
+        .replace(/^\s*(good morning|morning|hi there|hello there|hi|hello|hey|dear)\b[^\n.!?]*?(\s[-\u2013\u2014]\s|[,:!.\n])\s*/i, "")
+        .replace(/\s+/g, " ")
+        .trim();
+      let said = "";
+      for (const sentence of body.match(/[^.!?]+[.!?]+/g) ?? []) {
+        if ((said + sentence.trim()).length > 90) break;
+        said = said + sentence.trim() + " ";
+      }
+      said = said.trim() || (body.length > 90 ? body.slice(0, 87).replace(/\s+\S*$/, "") + "\u2026" : body);
+      if (said.length <= 12) said = latest.title;
+      return `${callWhy(inv)} · Read first: \u201c${said}\u201d`;
     }
   }
 }

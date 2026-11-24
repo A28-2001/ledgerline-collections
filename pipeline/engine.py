@@ -951,6 +951,10 @@ class Engine:
                             saved_days.add(day)
                     except ValueError:
                         pass
+                # Shadow week (Maya, 24 Nov): Priya's "Agree" only compares. Nothing was sent or handed off,
+                # so the row keeps the day counted as saved but isn't memory, and isn't an approval on record.
+                if str(r.get("mode") or "").strip().lower() == "shadow":
+                    continue
                 final = (r.get("final") or "").strip()
                 if final not in ("send", "hold", "paid") or not r.get("decided_at"):
                     continue

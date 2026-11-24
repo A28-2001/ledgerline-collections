@@ -31,7 +31,7 @@ During the shadow week (the COO's decision), nothing goes out from the tool. Pri
 
 - Daily use runs on rules only. No AI touches customer data until legal approves a vendor, because the SLA policy needs a data agreement first. Amazon Bedrock is with legal.
 - AI is the auditor. A separate model (Claude, in its own session) reviewed all 54 bills from the raw records without seeing the tool's answers. A person then checked every contested bill.
-- AI is measured before it's allowed. In testing, Groq read masked tickets: it changed none of the answers and would only add 3 bills to Check first. Once AI is allowed, two models must agree or a person decides.
+- AI is measured before it's allowed. In testing, Groq read masked tickets: it changed none of the answers, but it would change which bills a person checks first: 6 more, all already held or paid, and 3 fewer reminders. Once AI is allowed, two models must agree or a person decides.
 - A person decides every send. Top-50 accounts, disputes, probably-paid bills and every call always stay with a person, and auto-send stays locked until a month of approvals is on record. The reason is Paidly, the tool Ledgerline switched off in 2025 after it chased a customer who had already paid by wire.
 
 ## What it gets wrong

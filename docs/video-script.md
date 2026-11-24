@@ -223,7 +223,7 @@ Say:
 
 > Now the honest part. The 96% is on the same 54 bills I fixed the rules on, so the shadow week, on new bills, is the real test.
 >
-> The AI has limits too. The reviewer is itself an AI model, so agreement isn't proof: a person checked every contested bill. Models can misread a customer's tone or make things up, so emails only come from Ledgerline's templates, and no customer data goes to an AI vendor until legal approves one.
+> The AI has limits too. The reviewer is itself an AI model, so agreement isn't proof: a person checked every contested bill. When I tested AI reading the tickets, it changed no answers, but it would have let 3 reminders skip a person's check. Models can misread tone or make things up, so emails only come from Ledgerline's templates, and no customer data goes to an AI vendor until legal approves one.
 >
 > And it isn't finished: it runs on exports, the day's list is saved by hand until March, and disputes emailed to billing@ are invisible to it.
 

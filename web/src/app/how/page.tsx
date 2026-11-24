@@ -145,7 +145,9 @@ export default function HowPage() {
               {up && up.cacheMisses === 0 && (
                 <>
                   {" "}
-                  On these {up.bills} bills it changed {up.verdictsChanged.length === 0 ? "none of the four answers" : `${up.verdictsChanged.length} answers`}; it would only send {up.checkFirstWithAI} bills to Check first instead of {up.checkFirstRules}.
+                  On these {up.bills} bills it changed {up.verdictsChanged.length === 0 ? "none of the four answers" : `${up.verdictsChanged.length} answers`}, but it would change which bills a person checks first:{" "}
+                  {(up.checkFirstChanged + up.checkFirstWithAI - up.checkFirstRules) / 2} more, all already held or paid, and{" "}
+                  {up.checkFirstChanged - (up.checkFirstChanged + up.checkFirstWithAI - up.checkFirstRules) / 2} fewer reminders. So it stays off until it&apos;s measured on new bills.
                 </>
               )}
             </p>

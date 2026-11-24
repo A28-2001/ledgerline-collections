@@ -124,7 +124,7 @@ I'd switch yours off for the same kind of thing: chasing someone who's paid, or 
 **Maya:** That plan works for me, and a shadow week on exports is the right way to start, because Priya will trust it far more once she's watched it agree with her for a few days. The Banerjee Petrov miss worries me more than Upton & Bell: a person picking up the phone to chase a bill the customer is contesting is exactly the kind of call that ends up in the CEO's inbox. Before Monday, I'd want Priya to see any open ticket from that customer next to the "call" suggestion, whether or not it names the invoice. I'll message our Head of Support and Dana today about access and the wording sign-off, and send your note to legal this afternoon.
 
 **What it changes:**
-- Every "call" shows the customer's tickets right next to it, open or recently closed, whether or not they name the invoice, with a "read before you call" line. A billing-sounding one sends the call to Check first.
+- Every "call" shows the customer's tickets right next to it, open or recently closed, whether or not they name the invoice, with a "read before you call" line. A billing-sounding one sends the call to Check first. *(24 Nov, after review: calls stay on the call list, because a person makes every call anyway. Each call card now quotes the customer's latest ticket in their own words, so Priya reads it before she dials.)*
 - The rules learn the Banerjee Petrov kind of dispute (cancelled or switched off, still being charged).
 - Monday = shadow week on exports. Maya is contacting the Head of Support and Dana today and sending the legal note this afternoon.
 

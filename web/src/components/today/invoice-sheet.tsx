@@ -231,7 +231,17 @@ function InvoiceDetail({
           )}
 
           {decision && (
-            <Alert className="border-paid/35 bg-paid-soft text-paid-ink">
+            <Alert
+              className={
+                decision.verdict === "send"
+                  ? "border-send/35 bg-send-soft text-send-ink"
+                  : decision.verdict === "hold"
+                    ? "border-hold/45 bg-hold-soft text-hold-ink"
+                    : decision.verdict === "call"
+                      ? "border-call/35 bg-call-soft text-call-ink"
+                      : "border-paid/35 bg-paid-soft text-paid-ink"
+              }
+            >
               <BadgeCheck aria-hidden="true" />
               <AlertTitle>
                 {decision.status === "approved"
@@ -368,8 +378,12 @@ function InvoiceDetail({
                 </dl>
                 <p className="px-3 py-3 text-sm leading-relaxed whitespace-pre-wrap">{inv.reply.body}</p>
                 <div className="flex flex-wrap items-center gap-2 border-t px-3 py-2.5">
-                  <CopyButton text={`To: ${inv.reply.to}\nSubject: ${inv.reply.subject}\n\n${inv.reply.body}`} />
-                  <span className="text-xs text-muted-foreground">A first answer, not a payment request. Send it, then fix the bill.</span>
+                  {!results.meta.shadowWeek && <CopyButton text={`To: ${inv.reply.to}\nSubject: ${inv.reply.subject}\n\n${inv.reply.body}`} />}
+                  <span className="text-xs text-muted-foreground">
+                    {results.meta.shadowWeek
+                      ? "A first answer, not a payment request. This week it's here to compare with your own; nothing goes out."
+                      : "A first answer, not a payment request. Send it, then fix the bill."}
+                  </span>
                 </div>
               </div>
             </Section>
@@ -562,7 +576,9 @@ function DraftSection({ invoice: inv }: { invoice: Invoice }) {
         </dl>
         <p className="px-3 py-3 text-sm leading-relaxed whitespace-pre-wrap">{shown.body}</p>
         <div className="flex flex-wrap items-center gap-2 border-t px-3 py-2.5">
-          <CopyButton text={isCallNotes ? shown.body : `To: ${draft.to}\nSubject: ${shown.subject}\n\n${shown.body}`} />
+          {(isCallNotes || !results.meta.shadowWeek) && (
+            <CopyButton text={isCallNotes ? shown.body : `To: ${draft.to}\nSubject: ${shown.subject}\n\n${shown.body}`} />
+          )}
           {redraft && (
             <Button variant="ghost" size="sm" onClick={() => setRedraft(null)}>
               <Undo2 />

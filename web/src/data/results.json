@@ -1,6 +1,6 @@
 {
  "meta": {
-  "generatedAt": "2026-11-24T21:13:41+00:00",
+  "generatedAt": "2026-11-24T21:37:49+00:00",
   "asOf": "2026-10-31",
   "dataSource": "real",
   "companyName": "Ledgerline",
@@ -13957,7 +13957,7 @@
     "why": "Correct answer: Bill of $5,100 is 19 days late; PAY-65805 for the same $5,100 is most likely for older INV-25469, so remind about this one only after confirming which invoice the payment covers; pending T880184 is about a client's invoice and should not block. Tool's reason: A $5,100 payment from them (received Oct 29, 2026) is unmatched. It could pay invoice INV-25469 or this one. No reminder until Marcus confirms which."
    }
   ],
-  "runtimeSeconds": 0.47,
+  "runtimeSeconds": 0.49,
   "reviewLog": {
    "summary": "An independent reviewer (a separate AI model, Claude in its own session, that never saw the tool's answers) checked all 54 bills from the raw records, and a person then checked every contested bill. First pass: 46 of 54 agreed (85%). Of the 8 differences, 5 were rule errors we fixed, 2 were judgment calls, since confirmed by Maya, and 1 we kept on purpose. The 2 misses we found ourselves were fixed before the review ran, so the very first version would have agreed on at most 44. After the fixes, 52 of 54 agree (96%) with the reviewer's own labels, on the same bills the rules were fixed against, so that is not a fresh-data score: the shadow week measures that. The last 2 differ on purpose: an open ticket (Eastman & Wexler) and a payment that could belong to either of two bills (Kingsway).",
    "entries": [
