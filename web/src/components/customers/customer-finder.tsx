@@ -16,7 +16,7 @@ export type CustomerRow = {
   nearMatch: boolean;
 };
 
-const ORDER: Verdict[] = ["hold", "paid", "call", "send"];
+const ORDER: Verdict[] = ["paid", "hold", "send", "call"];
 const PAGE = 15;
 
 // Works the same for 50 customers or 5,000: search, filter by what to do, biggest first, 15 at a time.

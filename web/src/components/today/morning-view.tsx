@@ -62,16 +62,6 @@ const STEPS: StepDef[] = [
     done: (n) => `${pluralize(n, "bill")} with Marcus`,
   },
   {
-    verdict: "send",
-    title: "Send reminders",
-    explain: "Nothing is blocking these: no open complaint, no payment found, and the bill matches the contract. Read one or two drafts, then approve the rest. Approving doesn't send anything.",
-    icon: Mail,
-    button: (n) => `Approve ${pluralize(n, "reminder")}`,
-    confirmTitle: (n) => `Approve ${pluralize(n, "reminder")}?`,
-    confirmText: "Approving marks them ready; it doesn't send. Until a mail connection is approved, you send them from your email tool. Each account manager sees them in their morning message.",
-    done: (n) => `${pluralize(n, "reminder")} approved`,
-  },
-  {
     verdict: "hold",
     title: "Hand off holds",
     explain: "Don't chase these yet. Each goes to its owner with a deadline. If nobody acts by then, it comes back to finance, flagged.",
@@ -80,6 +70,16 @@ const STEPS: StepDef[] = [
     confirmTitle: (n) => `Hand off ${pluralize(n, "hold")} to their owners?`,
     confirmText: "Each owner gets the bill, the reason and the deadline. The bills stay paused until the owner acts.",
     done: (n) => `${pluralize(n, "hold")} handed off`,
+  },
+  {
+    verdict: "send",
+    title: "Send reminders",
+    explain: "Nothing is blocking these: no open complaint, no payment found, and the bill matches the contract. Read one or two drafts, then approve the rest. Approving doesn't send anything.",
+    icon: Mail,
+    button: (n) => `Approve ${pluralize(n, "reminder")}`,
+    confirmTitle: (n) => `Approve ${pluralize(n, "reminder")}?`,
+    confirmText: "Approving marks them ready; it doesn't send. Until a mail connection is approved, you send them from your email tool. Each account manager sees them in their morning message.",
+    done: (n) => `${pluralize(n, "reminder")} approved`,
   },
   {
     verdict: "call",
@@ -107,12 +107,14 @@ function scrollToStep(key: StepKey) {
 }
 
 export function MorningView({ data }: { data: Pick<Results, "invoices" | "summary" | "meta" | "morningSummary"> }) {
-  const { invoices, meta, morningSummary } = data;
+  const { invoices, meta } = data;
   // Disputes Priya fixes herself: the day's real work, kept apart from the holds she hands to others.
   const isMyDispute = (i: Invoice) => i.verdict === "hold" && i.cause === "wrong_bill" && Boolean(i.hold?.ownerRole.startsWith("Finance"));
-  const myDisputes = invoices
-    .filter(isMyDispute)
-    .sort((a, b) => (a.hold!.deadline > b.hold!.deadline ? 1 : a.hold!.deadline < b.hold!.deadline ? -1 : b.amount - a.amount));
+  const raisedOn = (i: Invoice) => {
+    const id = i.reasons.flatMap((r) => r.evidenceIds).find((e) => e.startsWith("ticket:"));
+    return i.evidence.find((e) => e.id === id)?.date ?? i.dueDate;
+  };
+  const myDisputes = invoices.filter(isMyDispute).sort((a, b) => (raisedOn(a) < raisedOn(b) ? -1 : raisedOn(a) > raisedOn(b) ? 1 : b.amount - a.amount));
   const pastTarget = myDisputes.filter((i) => i.hold!.deadline <= meta.asOf);
   const { decisions, approve, override, undo } = useDecisions();
   const [selectedId, setSelectedId] = useState<string | null>(null);
@@ -175,7 +177,8 @@ export function MorningView({ data }: { data: Pick<Results, "invoices" | "summar
     toast.success(`${inv.customerName}: done`, { action: { label: "Undo", onClick: () => undo(inv.id) } });
   }
 
-  const disputesOpen = myDisputes.filter((i) => !decisions[i.id]);
+  const disputesOpen = myDisputes.filter((i) => !decisions[i.id] && !i.hold?.repliedOn);
+  const repliedEarlier = myDisputes.filter((i) => i.hold?.repliedOn).length;
   const current: StepKey =
     flaggedOpen.length > 0
       ? "check"
@@ -234,13 +237,6 @@ export function MorningView({ data }: { data: Pick<Results, "invoices" | "summar
   }
 
   const decidedBy = (v: Verdict) => invoices.filter((i) => decisions[i.id] && decisions[i.id].verdict === v).length;
-  const morningText = [
-    morningSummary.title,
-    "",
-    morningSummary.text,
-    ...morningSummary.bullets.map((b) => `• ${b}`),
-    ...(morningSummary.link ? ["", `Open today's list: ${morningSummary.link}`] : []),
-  ].join("\n");
   const currentStep = steps.find((s) => s.def.verdict === current);
 
   return (
@@ -406,7 +402,7 @@ export function MorningView({ data }: { data: Pick<Results, "invoices" | "summar
                 sub={
                   disputesOpen.length === 0
                     ? `All ${myDisputes.length} answered`
-                    : `${disputesOpen.length} of ${myDisputes.length} to answer · ${pastTarget.length} past the 5-day target`
+                    : `${disputesOpen.length} of ${myDisputes.length} to answer · ${pastTarget.length} past the 5-day target${repliedEarlier ? ` · ${repliedEarlier} replied earlier` : ""}`
                 }
                 amount={formatMoney(sumAmount(myDisputes))}
                 open={expanded === "dispute"}
@@ -444,13 +440,13 @@ export function MorningView({ data }: { data: Pick<Results, "invoices" | "summar
           {/* Finish line */}
           <li
             id="step-card-finish"
-            className={cn("scroll-mt-20 rounded-xl border p-4", allDone ? "border-paid/40 bg-paid-soft/60" : "border-dashed bg-card")}
+            className={cn("scroll-mt-20 rounded-xl border p-4", allDone ? "border-foreground/30 bg-muted/40" : "border-dashed bg-card")}
           >
             <div className={cn("flex items-start gap-3", !allDone && "opacity-60")}>
               <span
                 className={cn(
                   "grid size-7 shrink-0 place-items-center rounded-full",
-                  allDone ? "bg-paid text-paid-contrast" : "border text-muted-foreground",
+                  allDone ? "bg-foreground text-background" : "border text-muted-foreground",
                 )}
                 aria-hidden="true"
               >
@@ -461,14 +457,13 @@ export function MorningView({ data }: { data: Pick<Results, "invoices" | "summar
                 <p className="mt-0.5 text-sm text-muted-foreground">
                   {allDone
                     ? `${pluralize(decidedBy("send"), "reminder")} ready to send, ${pluralize(decidedBy("hold"), "hold")} handed to owners, ${pluralize(decidedBy("paid"), "bill")} with Marcus to match, ${pluralize(decidedBy("call"), "call")} on the call list. Keep the list: tomorrow's run reads it, so nothing is suggested twice.`
-                    : "When every decision is made, download the list for billing and post the morning message. Keep the list: tomorrow's run reads it, so nothing is suggested twice. Nothing is sent automatically."}
+                    : "When every decision is made, download the list. Saved in the tool's history folder, tomorrow's run reads it, so nothing is suggested twice and every clock keeps running. That save is manual for now. Nothing is sent automatically."}
                 </p>
                 <div className="mt-3 flex flex-wrap gap-2">
                   <Button size="sm" variant={allDone ? "default" : "outline"} onClick={exportDecisions} disabled={!allDone && Object.keys(decisions).length === 0}>
                     <Download />
                     Download the decision list (CSV)
                   </Button>
-                  <CopyButton text={morningText} label="Copy the morning message" />
                 </div>
               </div>
             </div>
@@ -635,7 +630,7 @@ function StepHeader({
 function StepStatus({ n, done, current, label, flag = false }: { n?: number; done: boolean; current: boolean; label: string; flag?: boolean }) {
   if (done)
     return (
-      <span className="grid size-7 shrink-0 place-items-center rounded-full bg-paid text-paid-contrast" aria-label={`${label}: done`}>
+      <span className="grid size-7 shrink-0 place-items-center rounded-full bg-foreground text-background" aria-label={`${label}: done`}>
         <Check className="size-4" aria-hidden="true" />
       </span>
     );

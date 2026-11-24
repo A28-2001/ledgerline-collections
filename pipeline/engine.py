@@ -675,6 +675,9 @@ class Engine:
                     if waited > 5:
                         row.reasons.insert(1, {"text": f"This payment has sat unmatched for {waited} working days, longer than the 3 to 5 days cash application normally takes.",
                                                "evidenceIds": [pe["id"]], "policyRef": "processes.md FIN-2: matching lags three to five days"})
+                started = getattr(self, "handoffs", {}).get(row.display_id)
+                if started is not None and add_business_days(started, int(self.p.get("paid_match_days", 2))) < self.as_of:
+                    row.needs_review.append(f"{matcher_name} hasn't matched this payment in {int(self.p.get('paid_match_days', 2))} working days: it's back with you")
                 row.reasons.append({"text": f"Goes to {matcher_name} to match the payment, with {back_to} copied so she knows it's on hold. "
                                             f"If it isn't matched by {by}, it comes back to {back_to}.",
                                     "evidenceIds": [], "policyRef": "Maya (COO): matching is Marcus's job; back to Priya after two working days"})
@@ -804,7 +807,9 @@ class Engine:
                     since = f.get("dispute_since")
                     open_days = int(np.busday_count(pd.Timestamp(since).date(), self.as_of.date())) if since is not None and pd.notna(since) else None
                     with_am = f.get("dispute_pricing")
+                    replied = getattr(self, "handoffs", {}).get(row.display_id)
                     hold = {"owner": owner.split(" (")[0], "ownerRole": "Finance (AR)" + (f", with {am} for the customer's agreement" if with_am else ""),
+                            **({"repliedOn": iso(replied)} if replied is not None else {}),
                             "deadline": iso(add_business_days(self.as_of, max(1, days_fix - (open_days or 0))) if (open_days or 0) < days_fix else self.as_of),
                             "action": (f"Send a corrected invoice or a clear answer to the customer" + (f", agreeing seats or price with {am} first" if with_am else "")
                                        + f". Target: {days_fix} working days from when they raised it. " + self._approver(cid, row.amount))}
@@ -929,14 +934,15 @@ class Engine:
         from pathlib import Path as _Path
         hd = self.cfg.get("history_dir")
         out: dict[str, pd.Timestamp] = {}
-        self.handoffs: dict[str, pd.Timestamp] = {}  # first day each hold was handed to its owner
+        self.handoffs: dict[str, pd.Timestamp] = {}  # first day each hold or paid bill was handed over
+        self.record_days: set = set()  # days with decisions on record (the auto-send ladder counts these)
         if not hd:
             return out
         folder = _Path(hd) if _Path(hd).is_absolute() else _Path(__file__).resolve().parent.parent / hd
         for f in sorted(folder.glob("*.csv")) if folder.exists() else []:
             for r in _csv.DictReader(f.open()):
                 final = (r.get("final") or "").strip()
-                if final not in ("send", "hold") or not r.get("decided_at"):
+                if final not in ("send", "hold", "paid") or not r.get("decided_at"):
                     continue
                 when = pd.Timestamp(str(r["decided_at"])[:10])
                 if when > self.as_of:
@@ -946,8 +952,9 @@ class Engine:
                     continue
                 if final == "send" and (key not in out or when > out[key]):
                     out[key] = when
-                if final == "hold" and (key not in self.handoffs or when < self.handoffs[key]):
+                if final in ("hold", "paid") and (key not in self.handoffs or when < self.handoffs[key]):
                     self.handoffs[key] = when
+                self.record_days.add(when.normalize())
         return out
 
     def _dispute_reply(self, row: Row, to: str, hold: dict) -> dict:
@@ -958,8 +965,8 @@ class Engine:
         by = nice(pd.Timestamp(hold["deadline"])) if hold.get("deadline") and pd.Timestamp(hold["deadline"]) > self.as_of \
             else nice(add_business_days(self.as_of, 2))
         late = bool(hold.get("deadline")) and pd.Timestamp(hold["deadline"]) <= self.as_of
-        cited = {i for r in row.reasons for i in r.get("evidenceIds", [])}
-        ticket = next((e for e in row.evidence if e["kind"] == "ticket" and e["id"] in cited), None)
+        first = [i for r in row.reasons for i in r.get("evidenceIds", []) if i.startswith("ticket:")]
+        ticket = next((e for e in row.evidence if e["kind"] == "ticket" and first and e["id"] == first[0]), None)
         title = (ticket or {}).get("title") or ""
         # Quote the customer's own subject line, unless it holds a word the threat guard blocks (e.g. "late fee").
         about = f" (\u201c{title}\u201d)" if title and not any(w in title.lower() for w in THREAT_WORDS) else ""

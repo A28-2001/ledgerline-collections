@@ -96,7 +96,7 @@ export default function WhyPage() {
                   <p className="mt-1 text-xs leading-relaxed text-muted-foreground">
                     {m?.description}
                     {s.cause === "card_failed" && otherCards > 0 &&
-                      ` ${otherCards} more failed-card ${otherCards === 1 ? "bill also has" : "bills also have"} an open ticket, so ${otherCards === 1 ? "it's" : "they're"} counted under that reason.`}
+                      ` ${otherCards} more failed-card ${otherCards === 1 ? "bill is" : "bills are"} counted under another reason (a complaint or threat comes first).`}
                   </p>
                 </li>
               );

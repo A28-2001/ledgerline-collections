@@ -73,7 +73,7 @@ export default function ProofPage() {
       rest: up && up.cacheMisses === 0 ? `two models must agree; on these bills it changed ${up.verdictsChanged.length === 0 ? "no answers" : `${up.verdictsChanged.length} answers`}.` : "two models must agree, or a person decides.",
     },
     { lead: "No threats, no invented facts:", rest: "emails come from Ledgerline's templates, checked for threat words." },
-    { lead: "Every number is checked:", rest: `all names linked, and ${crossOk} of ${cross.length} headline figures agree two ways.` },
+    { lead: "The headline totals are checked:", rest: `worked out two ways, ${crossOk} of ${cross.length} agree; every customer name is linked.` },
   ];
 
   return (
@@ -83,7 +83,7 @@ export default function ProofPage() {
       {log && (
         <Card className="mb-6 border-foreground/20">
           <CardHeader>
-            <CardTitle className="leading-snug">How often it&apos;s right, and every time it was wrong</CardTitle>
+            <CardTitle className="leading-snug">How often it agrees with an independent review, and every miss</CardTitle>
             <CardDescription>
               A separate AI model reviewed all 54 bills from fact files we built, without the tool&apos;s answers. A person checked the 11
               contested calls, not the other 43.

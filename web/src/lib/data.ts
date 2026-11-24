@@ -4,7 +4,7 @@ import type { Cause, Confidence, Invoice, Results, Tone, Verdict } from "@/lib/t
 // The pipeline writes src/data/results.json; every page reads it at build time.
 export const results = raw as unknown as Results;
 
-export const VERDICTS: Verdict[] = ["send", "hold", "paid", "call"];
+export const VERDICTS: Verdict[] = ["paid", "hold", "send", "call"];
 
 export const VERDICT_META: Record<
   Verdict,

@@ -9,7 +9,7 @@ import type { Verdict } from "@/lib/types";
 
 export const metadata: Metadata = { title: "Customers" };
 
-const ORDER: Verdict[] = ["hold", "paid", "call", "send"];
+const ORDER: Verdict[] = ["paid", "hold", "send", "call"];
 // Size bands read the same whether there are 50 customers or 5,000.
 const BANDS = [
   { key: "20k", label: "$20,000 or more", min: 20000 },

@@ -50,7 +50,7 @@ export interface Invoice {
   needsReview: boolean; // judges disagreed or customer match is weak
   reviewReason?: string;
   agreement?: { agree: boolean; votes: AgreementVote[] };
-  hold?: { owner: string; ownerRole: string; deadline: string; action: string };
+  hold?: { owner: string; ownerRole: string; deadline: string; action: string; repliedOn?: string; twinOf?: string };
   draft?: { to: string; subject: string; body: string; tone: Tone; combinedWith?: string };
   reply?: { to: string; subject: string; body: string }; // a first answer to a disputed bill (Priya's)
   reminderStage?: string; // e.g. "Second reminder"

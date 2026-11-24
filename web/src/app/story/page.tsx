@@ -18,9 +18,6 @@ export default function StoryPage() {
   const tk = summary.tickets;
   const disputed = summary.byCause.find((c) => c.cause === "wrong_bill");
   const count = (v: string) => invoices.filter((i) => i.verdict === v).length;
-  const mine = invoices.filter(
-    (i) => i.verdict === "hold" && i.cause === "wrong_bill" && i.hold && i.hold.deadline <= meta.asOf && i.hold.ownerRole.startsWith("Finance"),
-  );
   const strict = proof.verifiedNumbers.find((v) => v.label.startsWith("Complaint open"))?.strictValue ?? 0;
   const allMine = invoices.filter((i) => i.verdict === "hold" && i.cause === "wrong_bill" && i.hold?.ownerRole.startsWith("Finance")).length;
   const emails = invoices.filter((i) => i.verdict === "send" && i.draft?.body).length;
@@ -87,7 +84,9 @@ export default function StoryPage() {
       if (!pick || !t?.detail) return null;
       const sentences = t.detail.split(/(?<=[.!?])\s+/);
       const hits = sentences.filter((x) => x.includes(pick.id) || /correct|resend|refund|waive|wrong/i.test(x));
-      let quote = (hits.length ? hits : sentences).slice(0, 2).join(" ").replace(/\s+/g, " ").trim();
+      const picked = (hits.length ? hits : sentences).slice(0, 2);
+      const adjacent = picked.length < 2 || sentences.indexOf(picked[1]) === sentences.indexOf(picked[0]) + 1;
+      let quote = picked.join(adjacent ? " " : " … ").replace(/\s+/g, " ").trim();
       if (quote.length > 200) quote = quote.slice(0, 197).replace(/\s+\S*$/, "") + "…";
       return {
         customer: pick.customerName,
@@ -143,7 +142,7 @@ export default function StoryPage() {
       id: "answer",
       kicker: "The answer",
       number: fmt(decisions),
-      numberNote: `decisions sort the morning, in about 5 minutes. Then ${allMine} disputes to fix (${mine.length} past the 5-day target): the day's work.`,
+      numberNote: `decisions sort the morning (built to take about 5 minutes). Then ${allMine} disputes to fix, oldest first: the day's work.`,
       text: [
         `Five questions decide each bill, and **${formatMoney(summary.shouldNotChaseAmount)} isn't chased today**. ${count("send")} bills get a reminder (${emails} emails) once Priya approves.`,
       ],
@@ -151,12 +150,12 @@ export default function StoryPage() {
     },
     {
       id: "misses",
-      kicker: "The misses",
+      kicker: "The AI check",
       number: firstAgreed !== null && acc ? `${firstAgreed} of ${acc.sampleSize}` : "—",
-      numberNote: "matched an independent review on the first pass",
+      numberNote: "bills agreed with an independent AI review on the first pass",
       text: [
-        `The reviewer, a separate AI model, never saw the tool's answers, and a person checked every disagreement. Each rule error became a new rule${acc ? `: ${acc.agreed} of ${acc.sampleSize} agree now` : ""}.`,
-        "That's on the same bills, not fresh data, so **the shadow week is the real test**.",
+        `A separate AI model checked every bill without seeing the tool's answers. **Each disagreement became a fix or a question for Maya**${acc ? `: ${acc.agreed} of ${acc.sampleSize} agree now, on the same bills` : ""}.`,
+        "**The shadow week is the real test.**",
       ],
       source: "Review log (How sure are we page)",
     },

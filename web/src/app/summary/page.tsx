@@ -21,7 +21,7 @@ export default function SummaryPage() {
     <>
       <PageHeader
         title="Morning message"
-        description="Every working day, one short Slack message each. Only what needs them today; the rest is in the app."
+        description="Every working day, one short Slack message each, copied from here until the Slack connection is approved. The rest is in the app."
         actions={<CopyButton text={plain} label="Copy message" variant="default" size="default" />}
       />
 

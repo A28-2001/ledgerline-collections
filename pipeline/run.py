@@ -72,8 +72,10 @@ def light_lines(invoices, cfg, as_of) -> list[str]:
     emails = [i for i in ready if (i.get("draft") or {}).get("body")]
     if ready:
         out.append(f"{len(ready)} bills to remind, in {len(emails)} emails" + (f" ({len(send) - len(ready)} more after a quick check)" if len(send) > len(ready) else ""))
-    if mine:
-        out.append(f"{len(mine)} disputed bills to fix: corrected invoice or a clear answer")
+    all_mine = [i for i in invoices if i["verdict"] == "hold" and i["cause"] == "wrong_bill" and i.get("hold")
+                and i["hold"]["ownerRole"].startswith("Finance")]
+    if all_mine:
+        out.append(f"{len(all_mine)} disputes to fix ({len(mine)} past the 5-day target): corrected invoice or a clear answer")
     if calls:
         people = len({i.get("customerId") or i["id"] for i in calls})
         out.append(f"{len(calls)} bills to call about, in {people} calls" if people != len(calls) else f"{people} calls to make")
@@ -299,9 +301,14 @@ def main() -> None:
             going.setdefault(am_name, []).append(i)
     for am in sorted(set(by_am) | set(going)):
         bills, out_today = by_am.get(am, []), going.get(am, [])
-        lines = [f"Paused: {i['customerName']}, {money(i['amount'])}" for i in bills]
+        ok_needed = [i for i in bills if (i.get("hold") or {}).get("ownerRole", "").startswith("Finance")]
+        bills = [i for i in bills if i not in ok_needed]
+        lines = [f"Your OK on seats or price: {i['customerName']}, {money(i['amount'])} (Priya is fixing the bill)" for i in ok_needed]
+        lines += [f"Paused: {i['customerName']}, {money(i['amount'])}" for i in bills]
         lines += [f"Planned: {'reminder' if i['verdict'] == 'send' else 'call'} to {i['customerName']}, {money(i['amount'])}" for i in out_today]
         intro = []
+        if ok_needed:
+            intro.append(f"Priya needs your OK on {len(ok_needed)} {'dispute' if len(ok_needed) == 1 else 'disputes'} she's fixing.")
         if bills:
             intro.append(f"{len(bills)} {'account' if len(bills) == 1 else 'accounts'} paused until you move the issue on.")
         if out_today:
@@ -404,7 +411,7 @@ def main() -> None:
         },
         "autoSend": {
             "on": False,
-            "daysOnRecord": 0,
+            "daysOnRecord": len(getattr(engine, "record_days", set())),
             "daysNeeded": int(cfg.get("auto_send", {}).get("days_on_record", 30)),
             "maxAmount": cfg.get("auto_send", {}).get("max_amount"),
             "eligibleCount": sum(1 for i in invoices if i.get("autoSend", {}).get("eligible") and i["amount"] < float(cfg.get("auto_send", {}).get("max_amount") or 0)),
