@@ -294,6 +294,16 @@ def main() -> None:
                         "by": pd.Timestamp(np.busday_offset(as_of.date(), int(cfg["policy"].get("paid_match_days", 2)), roll="forward")).strftime("%b %-d"),
                         "intro": f"{len(paid_bills)} {'bill is' if len(paid_bills) == 1 else 'bills are'} probably paid. Please match them; no reminders go out meanwhile."
                                  + (f" One payment could pay either of two bills: tell {priya} which." if twin_bills else "")})
+    # Head of Support first: chargeback, regulator or legal threats (sla_policy.md), held until they confirm it's settled.
+    head = str(cfg.get("people", {}).get("support_head", "")).split(" (")[0]
+    grave = [i for i in invoices if i["verdict"] == "hold" and (i.get("hold") or {}).get("ownerRole", "").startswith("Head of Support")]
+    if head and grave:
+        routing.append({"to": head, "role": "Head of Support", "channel": "Slack direct message", "cc": priya,
+                        "lines": [f"{i['customerName']}, {money(i['amount'])}: is it settled?" for i in grave][:3],
+                        "more": max(0, len(grave) - 3),
+                        "by": None,
+                        "intro": f"{len(grave)} {'customer' if len(grave) == 1 else 'customers'} with an overdue bill threatened a chargeback, "
+                                 f"a regulator or legal action. Nobody chases them until you confirm it's settled."})
     by_am: dict[str, list] = {}
     for i in invoices:
         h = i.get("hold") or {}
@@ -314,6 +324,8 @@ def main() -> None:
         bills = [i for i in bills if i not in ok_needed]
         lines = [f"Your OK on seats or price: {i['customerName']}, {money(i['amount'])} (Priya is fixing the bill)" for i in ok_needed]
         lines += [f"Paused: {i['customerName']}, {money(i['amount'])}" for i in bills]
+        told = [i for i in grave if (engine.account_manager(i.get("customerId")) or "") == am] if head else []
+        lines += [f"For your information: {i['customerName']}, {money(i['amount'])}, is with {head} (a chargeback or regulator threat)" for i in told]
         if not cfg.get("shadow_week"):  # in the shadow week nothing goes out, so nothing is "planned"
             lines += [f"Planned: {'reminder' if i['verdict'] == 'send' else 'call'} to {i['customerName']}, {money(i['amount'])}" for i in out_today]
         intro = []
@@ -342,7 +354,7 @@ def main() -> None:
                         "by": None,
                         "intro": " ".join(x for x in [
                             f"{len(wo)} card invoices will be written off automatically soon: chase them or let them go?" if wo else "",
-                            f"{len(escalate)} more {'bill is' if len(escalate) == 1 else 'bills are'} past {esc_days} days: yours to escalate." if escalate else ""] if x)})
+                            f"{len(escalate)} more {'call is' if len(escalate) == 1 else 'calls are'} past {esc_days} days: yours to escalate." if escalate else ""] if x)})
     for r in routing[1:]:
         r["link"] = app_url
     lc = cfg.get("leave_cover") or {}

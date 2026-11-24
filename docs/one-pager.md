@@ -17,7 +17,7 @@ Each morning it reads QuickBooks, bank and Stripe payments, Zendesk tickets and 
 - Probably paid: 5 bills, $78,348. Marcus matches the payment.
 - Hold: 21 bills, $368,462. That's 14 disputes Priya fixes, 6 bills handed to an owner with a deadline, and 1 too early for a reminder.
 - Send: 19 bills, $177,051.
-- Call: 9 bills, $9,384. These are 45 or more days late.
+- Call: 9 bills, $9,384. Cards that failed and ran out of retries; one call per customer.
 
 To use it, read the story, then open Today:
 
@@ -31,7 +31,7 @@ During the shadow week (the COO's decision), nothing goes out from the tool. Pri
 
 - Daily use runs on rules only. No AI touches customer data until legal approves a vendor, because the SLA policy needs a data agreement first. Amazon Bedrock is with legal.
 - AI is the auditor. A separate model (Claude, in its own session) reviewed all 54 bills from the raw records without seeing the tool's answers. A person then checked every contested bill.
-- AI is measured before it's allowed. In testing, Groq read masked tickets: it changed none of the answers, but it would change which bills a person checks first: 6 more, all already held or paid, and 3 fewer reminders. Once AI is allowed, two models must agree or a person decides.
+- AI is measured before it's allowed. In testing, Groq read masked tickets: it changed none of the answers, but it would change which bills a person checks first: 6 more, all already held or paid, and 3 reminders would skip a person's check. Once AI is allowed, two models must agree or a person decides.
 - A person decides every send. Top-50 accounts, disputes, probably-paid bills and every call always stay with a person, and auto-send stays locked until a month of approvals is on record. The reason is Paidly, the tool Ledgerline switched off in 2025 after it chased a customer who had already paid by wire.
 
 ## What it gets wrong
@@ -41,6 +41,7 @@ During the shadow week (the COO's decision), nothing goes out from the tool. Pri
   - Eastman & Wexler, which has an open ticket waiting on us.
   - Kingsway, where one $5,100 payment fits two bills, so Marcus confirms which one it paid.
 - Disputes emailed to billing@ are invisible to it.
+- Its memory between mornings is thin. In the shadow week it doesn't know which reminders Priya sent herself, calls aren't remembered yet, and bills just reminded would wait as holds. Until live connections exist, someone exports, runs and publishes it each morning (docs/shadow-week-runbook.md).
 - It runs on exports, so messages are copied by hand and the day's list is saved by hand. That's allowed for the shadow week only: a missed day is flagged, and saving becomes automatic before March.
 - "About 5 minutes" a morning, and 3 to 4 of 16 hours saved a week, are estimates until the shadow week times them.
 - Payment plans (FIN-1 step 5) aren't built.

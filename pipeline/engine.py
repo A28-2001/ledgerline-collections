@@ -818,6 +818,14 @@ class Engine:
                         row.reasons.append({"text": (f"Raised {nice(since)}: {open_days} working days without a fix, {late} past the {days_fix}-day target."
                                                      if late > 0 else f"Raised {nice(since)}: {open_days} working days so far, target {days_fix}."),
                                             "evidenceIds": [], "policyRef": "Maya (COO): corrected invoice or clear answer within 5 working days"})
+                elif f.get("grave_hold") and self.cfg["people"].get("support_head"):
+                    head = str(self.cfg["people"]["support_head"]).split(" (")[0]
+                    am = str(c["account_manager"]) if c is not None and pd.notna(c.get("account_manager")) else "the account manager"
+                    started = getattr(self, "handoffs", {}).get(row.display_id)
+                    hold = {"owner": head, "ownerRole": "Head of Support (chargeback, regulator or legal threat)",
+                            "deadline": iso(add_business_days(started if started is not None else self.as_of, int(self.p.get("am_pause_days", 3)))),
+                            "action": f"Confirm the threat is settled before anyone chases; {am} is told. Nobody chases it meanwhile: "
+                                      f"if nothing is confirmed by the date, {self.cfg['people']['finance_owner'].split(' (')[0]} asks {head} again, not the customer."}
                 else:
                     am = str(c["account_manager"]) if c is not None and pd.notna(c.get("account_manager")) else "Account manager"
                     am_days = int(self.p.get("am_pause_days", 3))

@@ -84,7 +84,7 @@ const STEPS: StepDef[] = [
   {
     verdict: "call",
     title: "Make calls",
-    explain: "Past 45 days, so a person phones instead of emailing. The reasons are the talking points.",
+    explain: "A card that failed and ran out of retries, or a bill past 45 days: a person phones instead of emailing. One call per customer; the reasons are the talking points.",
     icon: Phone,
     button: (n) => `Add ${pluralize(n, "call")} to the list`,
     confirmTitle: (n) => `Add ${pluralize(n, "customer")} to today's call list?`,
@@ -385,8 +385,10 @@ export function MorningView({ data }: { data: Pick<Results, "invoices" | "summar
                           shadow && activeKey === "send"
                             ? "Nothing blocks these. Compare each with your own call; agreeing with all at once is marked as such in the list. Nothing goes out this week."
                             : activeKey === "hold"
-                              ? holdExplain(activeStep.items)
-                              : activeStep.def.explain
+                              ? holdExplain(activeStep.items, shadow)
+                              : shadow && activeKey === "paid"
+                                ? "A payment seems to cover each of these. This week nothing goes to Marcus: compare with your own call. After it, he matches them within 2 working days."
+                                : activeStep.def.explain
                         }
                         amount={activeStep.items.length ? formatMoney(sumAmount(activeStep.items)) : undefined}
                         icon={<ActiveIcon className="size-4" style={{ color: VERDICT_META[activeKey].chart }} aria-hidden="true" />}
@@ -556,9 +558,11 @@ export function MorningView({ data }: { data: Pick<Results, "invoices" | "summar
             Check the next bill ({openGroups.length} left in Check first)
           </Button>
         ) : current !== "finish" && currentStep ? (
-          <Button className="w-full" onClick={() => setConfirmStep(currentStep.def)}>
+          <Button className="w-full" onClick={() => (shadow ? openBill(currentStep.undecided[0].id) : setConfirmStep(currentStep.def))}>
             <CheckCheck />
-            {shadow ? `Agree with all ${currentStep.undecided.length}` : currentStep.def.button(currentStep.undecided.length)}
+            {shadow
+              ? `Next bill (${currentStep.undecided.length} left in ${currentStep.def.title})`
+              : currentStep.def.button(currentStep.undecided.length)}
           </Button>
         ) : (
           <Button className="w-full" onClick={exportDecisions}>
@@ -644,9 +648,13 @@ type TileData = { key: StepKey; label: string; icon: LucideIcon; color: string; 
 const isTooEarly = (i: Invoice) => /^too early/i.test(i.headline);
 
 // The hold step mixes bills that go to an owner with bills that are simply too early for a reminder: say which is which.
-function holdExplain(items: Invoice[]): string {
+function holdExplain(items: Invoice[], shadow = false): string {
   const early = items.filter(isTooEarly).length;
   const owned = items.length - early;
+  if (shadow) {
+    const parts = [owned ? `${owned} would go to an owner with a deadline` : "", early ? `${early} ${early === 1 ? "is" : "are"} too early for a reminder` : ""].filter(Boolean);
+    return `Don't chase these yet. This week nothing goes to the owners: compare with your own call. ${parts.join("; ")}.`;
+  }
   if (!early) return STEPS[1].explain;
   const ownedText = owned ? `${owned} ${owned === 1 ? "goes" : "go"} to an owner with a deadline and ${owned === 1 ? "comes" : "come"} back to you if nobody acts; ` : "";
   return `Don't chase these yet. ${ownedText}${early} ${early === 1 ? "is" : "are"} too early for a reminder and simply ${early === 1 ? "waits" : "wait"}.`;

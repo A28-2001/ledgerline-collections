@@ -97,7 +97,7 @@ export default function ProofPage() {
       lead: "AI is measured before it's allowed",
       rest:
         up && up.cacheMisses === 0
-          ? `On these bills it changed ${up.verdictsChanged.length === 0 ? "none of the four answers" : `${up.verdictsChanged.length} answers`}, but it would change which bills a person checks first: ${(up.checkFirstChanged + up.checkFirstWithAI - up.checkFirstRules) / 2} more, all already held or paid, and ${up.checkFirstChanged - (up.checkFirstChanged + up.checkFirstWithAI - up.checkFirstRules) / 2} fewer reminders. So it stays off until it's measured on new bills; once allowed, two models must agree or a person decides.`
+          ? `On these bills it changed ${up.verdictsChanged.length === 0 ? "none of the four answers" : `${up.verdictsChanged.length} answers`}, but it would change which bills a person checks first: ${(up.checkFirstChanged + up.checkFirstWithAI - up.checkFirstRules) / 2} more, all already held or paid, and ${up.checkFirstChanged - (up.checkFirstChanged + up.checkFirstWithAI - up.checkFirstRules) / 2} reminders would skip a person's check. So it stays off until it's measured on new bills; once allowed, two models must agree or a person decides.`
           : "Once allowed, two models must agree or a person decides.",
     },
     { icon: MessageSquareText, lead: "No threats, no invented facts", rest: "Emails come from Ledgerline's own templates, checked for threat words." },

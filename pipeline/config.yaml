@@ -136,6 +136,8 @@ people:
   billing_owner: Ana Duarte (Billing Support Specialist)
   vp_finance: Dana Ruiz (VP Finance)
   cash_owner: Marcus Bell (Staff Accountant)
+  # sla_policy.md: legal action, a regulator, a chargeback or cancellation go to the Head of Support.
+  support_head: Sam Whitfield (Head of Support)
 
 # Memory between mornings: drop each day's decision list (the CSV from the Today page) here.
 # Maya (24 Nov): by hand is fine for the shadow week, but it must be automatic before March.
