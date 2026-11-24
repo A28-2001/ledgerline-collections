@@ -351,7 +351,7 @@ export function MorningView({ data }: { data: Pick<Results, "invoices" | "summar
                 <>
                   <PanelHead
                     title="Check first"
-                    sub={flaggedOpen.length === 0 ? `All ${pluralize(flagged.length, "bill")} checked` : `${pluralize(flaggedOpen.length, "bill")} that need a person first. One customer at a time: approve the suggestion, or change it.`}
+                    sub={flaggedOpen.length === 0 ? `All ${pluralize(flagged.length, "bill")} checked` : `${pluralize(flaggedOpen.length, "bill")} that need a person first. One customer at a time: ${shadow ? "agree with" : "approve"} the suggestion, or change it.`}
                     amount={formatMoney(sumAmount(flagged))}
                   />
               <FocusQueue
@@ -375,7 +375,11 @@ export function MorningView({ data }: { data: Pick<Results, "invoices" | "summar
                     <>
                       <PanelHead
                         title={activeStep.def.title}
-                        sub={activeStep.def.explain}
+                        sub={
+                          shadow && activeKey === "send"
+                            ? "Nothing blocks these. Read a draft or two, then agree with the rest. Nothing goes out this week."
+                            : activeStep.def.explain
+                        }
                         amount={activeStep.items.length ? formatMoney(sumAmount(activeStep.items)) : undefined}
                         icon={<ActiveIcon className="size-4" style={{ color: VERDICT_META[activeKey].chart }} aria-hidden="true" />}
                       />
@@ -564,7 +568,7 @@ export function MorningView({ data }: { data: Pick<Results, "invoices" | "summar
         onApprove={(inv) => {
           const v = effectiveVerdict(inv, decisions);
           approve([{ id: inv.id, verdict: v }]);
-          toast.success(`Approved: ${VERDICT_META[v].label}`, { description: inv.customerName });
+          toast.success(`${shadow ? "Agreed" : "Approved"}: ${VERDICT_META[v].label}`, { description: inv.customerName });
         }}
         onOverride={(inv, verdict, reason) => {
           override(inv.id, verdict, reason);
@@ -654,13 +658,13 @@ function StepTile({ tile, active, next, onSelect }: { tile: TileData; active: bo
             <Check className="size-4" aria-hidden="true" />
           </span>
         ) : (
-          <span className="text-2xl leading-none font-semibold">{empty ? "0" : tile.left}</span>
+          <span className="text-2xl leading-none font-semibold">{empty ? "0" : isFinish ? tile.total - tile.left : tile.left}</span>
         )}
         <span className="truncate text-xs text-muted-foreground">
           {isFinish
             ? tile.done
               ? "save the list"
-              : "decisions to go"
+              : `of ${tile.total} decisions made`
             : empty
               ? "nothing today"
               : tile.done

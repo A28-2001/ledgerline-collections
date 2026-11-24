@@ -23,16 +23,18 @@ Priya's morning is **11 decisions**, built to take about 5 minutes (the shadow w
 
 - **A person decides every send.** Top-50 accounts, disputes, probably-paid bills, anything firmer than a nudge and every call always stay with a person: the COO's switch-off lines. Auto-send stays locked until a month of approvals is on record.
 - **AI as the auditor:** a separate AI model (Claude, in its own session) reviewed all 54 bills without seeing the tool's answers. Its first pass disagreed on 8: 5 rule errors (fixed), 2 judgment calls the COO has since confirmed, 1 kept on purpose. I propose running it weekly once legal approves a vendor.
-- **No AI on customer data in daily use until legal approves a vendor**, because the SLA policy requires a data agreement first; Amazon Bedrock (AWS is already a vendor) is with legal. In testing, before the COO's answer, Groq read masked tickets: that changed no answers, as rules catch all 14 disputes by their invoice number; it would only change which 9 bills a person checks first.
+- **No AI on customer data in daily use until legal approves a vendor**, because the SLA policy requires a data agreement first; Amazon Bedrock (AWS is already a vendor) is with legal. In testing, before the COO's answer, Groq read masked tickets: that changed no answers, as rules catch all 14 disputes by their invoice number; Check first would hold 10 bills instead of 7.
 
 ## Proof, and where it fails
 
-- **Agreement with that review:** 46 of 54 (85%) on the first pass; 52 of 54 (96%) after the fixes, on the same bills, so the shadow week is the real test. The last 2 differ on purpose: an open ticket, and a payment that could belong to either of two bills. A person checked all 11 contested bills; every miss is listed in the tool.
+- **Agreement with that review:** 46 of 54 (85%) on the first pass; 52 of 54 (96%) after the fixes, on the same bills, so the shadow week is the real test. The last 2 differ on purpose: an open ticket, and a payment that could belong to either of two bills. A person checked the contested bills; every miss is listed in the tool, with what changed.
 - **The COO's two tests read 0.** Her rule, confirmed on 24 Nov: a ticket that isn't about money doesn't stop a polite reminder once Priya has read it (2 customers today, in Check first).
 - **Not claimed:** cash coming in sooner. The number to watch is overdue over 60 days ($57,685 today). Time saved, about 3–4 of 16 hours a week, is the COO's estimate, for Priya to confirm.
 
+**Committed before March** (the COO's deadline): save each day's decisions automatically. By hand is fine for the shadow week, and a missed day is flagged the next morning, but a daily download is the step that gets skipped when Dana covers.
+
 ## With more time
 
-Read the billing@ inbox (disputes sent by email are invisible today); payment plans with the VP Finance's approval; live read-only QuickBooks, Zendesk and Slack connections. **Before March** (the COO's deadline): save each day's decisions automatically. By hand is fine for the shadow week, and a missed day is flagged the next morning, but a daily download is the step that gets skipped when Dana covers.
+Read the billing@ inbox (disputes sent by email are invisible today); payment plans with the VP Finance's approval; live read-only QuickBooks, Zendesk and Slack connections.
 
 **Disclosure:** built and tested on made-up data before Begin; everything using Ledgerline's data came after (see the git history). Built with Claude; an AI redraft button (Groq) exists but is switched off until legal approves a vendor.

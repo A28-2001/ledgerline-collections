@@ -115,7 +115,7 @@ export default function ProofPage() {
       lead: "AI is measured before it's allowed",
       rest:
         up && up.cacheMisses === 0
-          ? `On these bills it changed ${up.verdictsChanged.length === 0 ? "no answers" : `${up.verdictsChanged.length} answers`}; it would only change which ${up.checkFirstChanged} bills a person checks first. Once allowed, two models must agree or a person decides.`
+          ? `On these bills it changed ${up.verdictsChanged.length === 0 ? "no answers" : `${up.verdictsChanged.length} answers`}; Check first would hold ${up.checkFirstWithAI} bills instead of ${up.checkFirstRules}. Once allowed, two models must agree or a person decides.`
           : "Once allowed, two models must agree or a person decides.",
     },
     { icon: MessageSquareText, lead: "No threats, no invented facts", rest: "Emails come from Ledgerline's own templates, checked for threat words." },
@@ -182,7 +182,11 @@ export default function ProofPage() {
                 </div>
               </div>
             </div>
-            <p className="mt-5 w-fit rounded-full border border-dashed px-3 py-1 text-xs text-muted-foreground">
+            <p className="mt-3 text-xs leading-relaxed text-muted-foreground">
+              Of the {firstPass} first-pass differences, {fixedLater} now agree. Eastman &amp; Wexler was kept on purpose; Kingsway was fixed, then
+              held again because one payment fits two of its bills.
+            </p>
+            <p className="mt-4 w-fit rounded-full border border-dashed px-3 py-1 text-xs text-muted-foreground">
               Same {total} bills the rules were fixed on. The fresh test is the shadow week: new bills, and nothing goes out from the tool.
             </p>
 
@@ -249,8 +253,8 @@ export default function ProofPage() {
                 </div>
                 {v.strictValue !== undefined && v.strictValue > 0 && (
                   <p className="mt-1 text-xs font-medium text-hold-ink">
-                    Strictest reading: {v.strictValue} {v.strictValue === 1 ? "customer" : "customers"} with a pending ticket that isn&apos;t about
-                    money. Maya&apos;s rule (24 Nov): a polite reminder can go once Priya has read the ticket, so they wait in Check first.
+                    Maya&apos;s rule (24 Nov): {v.strictValue} {v.strictValue === 1 ? "customer" : "customers"} with a pending ticket that isn&apos;t
+                    about money wait in Check first, so Priya reads it before a polite reminder.
                   </p>
                 )}
                 {v.note && <p className="mt-1 text-xs leading-relaxed text-muted-foreground">{v.note}</p>}

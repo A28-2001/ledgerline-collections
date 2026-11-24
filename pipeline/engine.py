@@ -1010,7 +1010,8 @@ class Engine:
         never = []
         if verdict == "call":
             never.append("every phone call stays with a person")
-        if verdict in ("hold",):
+        waiting = verdict == "hold" and (row.flags.get("too_early") or row.flags.get("wait_next"))
+        if verdict == "hold" and not waiting:
             never.append("disputed or held bills stay with a person")
         if verdict == "paid" or row.flags.get("recent_payment"):
             never.append("probably-paid bills, or customers with an unmatched payment, stay with a person")
@@ -1019,6 +1020,8 @@ class Engine:
         if never:
             return {"eligible": False, "why": never[0][0].upper() + never[0][1:], "permanent": True}
         why = []
+        if waiting:
+            why.append("too early: a reminder isn't due yet")
         if tone != "standard":
             why.append("card follow-ups and softer notes stay with a person" if tone == "card_update" else "customer has an open ticket")
         if any(str(t.get("status") or "").split(" (")[0] not in self.v["ticket_closed_status"] for t in tickets.get(cid, [])):

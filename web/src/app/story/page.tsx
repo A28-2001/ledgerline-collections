@@ -140,7 +140,7 @@ export default function StoryPage() {
       numberNote: `decisions sort the morning, built to take about 5 minutes; the shadow week will time it. Then ${allMine} disputes to fix, oldest first: the day's work.`,
       text: [
         "Five questions decide each bill, in order: already paid → Probably paid; a reason to hold, or under 7 days late → Hold; 45+ days late → Call; nothing in the way → Send.",
-        `**${formatMoney(summary.shouldNotChaseAmount)} isn't chased today.** ${count("send")} bills get a reminder once Priya approves.`,
+        `**${formatMoney(summary.shouldNotChaseAmount)} isn't chased today.** ${count("send")} bills get a reminder${meta.shadowWeek ? " after the shadow week; this week Priya only compares" : " once Priya approves"}.`,
       ],
       source: `This run, all ${invoices.length} bills (Today and How it works pages)`,
     },
@@ -150,7 +150,7 @@ export default function StoryPage() {
       number: firstAgreed !== null && acc ? `${firstAgreed} of ${acc.sampleSize}` : "—",
       numberNote: "bills agreed with an independent AI review on the first pass",
       text: [
-        `**Each disagreement became a fix, or a rule Maya confirmed**${acc ? `: ${acc.agreed} of ${acc.sampleSize} agree now` : ""}. The shadow week is the real test.`,
+        `**Each disagreement became a fix, a rule Maya confirmed, or a choice we explain**${acc ? `: ${acc.agreed} of ${acc.sampleSize} agree now` : ""}. The shadow week is the real test.`,
       ],
       source: "Review log (How sure are we page)",
     },

@@ -235,7 +235,7 @@ function InvoiceDetail({
               <BadgeCheck aria-hidden="true" />
               <AlertTitle>
                 {decision.status === "approved"
-                  ? `Approved: ${VERDICT_META[decision.verdict].label}`
+                  ? `${results.meta.shadowWeek ? "Agreed" : "Approved"}: ${VERDICT_META[decision.verdict].label}`
                   : `Changed to ${VERDICT_META[decision.verdict].label}`}
               </AlertTitle>
               {decision.reason && (
@@ -267,7 +267,7 @@ function InvoiceDetail({
               <p className="mt-2 text-xs text-muted-foreground">
                 <span className="font-medium text-foreground">Auto-send:</span>{" "}
                 {couldAutoSend(inv, cap)
-                  ? "could go out on its own once the trust ladder is on. Today a person approves it."
+                  ? "could go out on its own once the trust ladder is on. Today a person decides."
                   : inv.autoSend.eligible
                     ? `not now. Over the ${cap === null ? "size" : "$" + cap.toLocaleString("en-US")} limit for small reminders (Priya can change it).`
                   : `${inv.autoSend.permanent ? "never" : "not now"}. ${inv.autoSend.why}.`}
@@ -487,7 +487,7 @@ function InvoiceDetail({
         {!decision && (
           <Button onClick={() => onApprove(inv)}>
             <BadgeCheck />
-            {APPROVE_LABEL[verdict]}
+            {results.meta.shadowWeek ? "Agree" : APPROVE_LABEL[verdict]}
           </Button>
         )}
       </div>

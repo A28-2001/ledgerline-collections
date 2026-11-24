@@ -143,8 +143,7 @@ export default function HowPage() {
               {up && up.cacheMisses === 0 && (
                 <>
                   {" "}
-                  On these {up.bills} bills it changed {up.verdictsChanged.length === 0 ? "no answers" : `${up.verdictsChanged.length} answers`}; it
-                  would only change which {up.checkFirstChanged} bills a person checks first.
+                  On these {up.bills} bills it changed {up.verdictsChanged.length === 0 ? "no answers" : `${up.verdictsChanged.length} answers`}; Check first would hold {up.checkFirstWithAI} bills instead of {up.checkFirstRules}.
                 </>
               )}
             </p>
