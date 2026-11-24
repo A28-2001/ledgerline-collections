@@ -24,9 +24,9 @@ Always with a person, permanently: top-50 accounts, disputes, probably-paid bill
 
 ## Today's numbers (data as of 31 Oct 2026)
 
-54 overdue bills, $633,245. 19 bills to remind (15 emails ready, 3 bills after a quick check), 21 holds, 8 calls (9 bills), 5 probably paid. $309,000 (49%) is disputed in tickets that name the exact invoice.
+54 overdue bills, $633,245. 19 bills to remind (18 emails), 21 holds (14 of them disputes Priya fixes herself), 9 bills to call about (8 calls), 5 probably paid. The morning sort is 11 decisions: 7 bills to check, then four bulk approvals. $309,000 (49%) is disputed in tickets that name the exact invoice.
 
-Accuracy: a separate AI model reviewed all 54 bills without seeing the tool's answers, and a person checked the 11 contested calls. First pass 46 of 54 (85%); 53 of 54 after the fixes, on the same bills, so not a fresh test. Every miss is listed in the tool and in [`reports/review/review-log.json`](reports/review/review-log.json).
+Accuracy: a separate AI model reviewed all 54 bills without seeing the tool's answers, and a person checked the 11 contested calls. First pass 46 of 54 (85%); 53 of 54 after the fixes (52 against the reviewer's first labels, as one label was changed after the hand check), on the same bills, so not a fresh test. Every miss is listed in the tool and in [`reports/review/review-log.json`](reports/review/review-log.json).
 
 ## AI and data safety
 
@@ -56,7 +56,7 @@ data files ──► pipeline/ (Python) ─────────────�
 | `pipeline/compare_review.py` | Compares the tool with the independent review |
 | `pipeline/test_pipeline.py` | Tests: the Paidly case, renamed columns, memory between mornings |
 
-**Memory between mornings:** drop each day's decision list (the CSV from the Today page) into `data/history/`. The next run reads it, so an approved reminder is never suggested twice and the next stage follows what was actually sent.
+**Memory between mornings:** drop each day's decision list (the CSV from the Today page) into `data/history/`. The next run reads it: an approved reminder is never suggested twice, the next stage follows what was actually sent, and hold deadlines run from the first hand-off, so an untouched hold comes back to Priya.
 
 ## Run it
 

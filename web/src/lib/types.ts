@@ -143,7 +143,7 @@ export interface Results {
   proof: {
     matchRate: number; // 0..1
     matchBreakdown: { method: string; count: number }[];
-    accuracy: { sampleSize: number; agreed: number; rate: number; labelledBy: string } | null;
+    accuracy: { sampleSize: number; agreed: number; rate: number; labelledBy: string; agreedOriginal?: number | null } | null;
     agreementRate: number | null; // share of AI judgments where judges agreed
     verifiedNumbers: VerifiedNumber[];
     aiUplift?: {

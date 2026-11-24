@@ -1,6 +1,6 @@
 {
  "meta": {
-  "generatedAt": "2026-11-24T17:18:30+00:00",
+  "generatedAt": "2026-11-24T17:47:54+00:00",
   "asOf": "2026-10-31",
   "dataSource": "real",
   "companyName": "Ledgerline",
@@ -114,7 +114,7 @@
    },
    {
     "cause": "paid",
-    "label": "Already paid",
+    "label": "Payment arrived, not matched",
     "amount": 83448.0,
     "count": 6
    },
@@ -923,7 +923,7 @@
    "agingBucket": "1-30",
    "verdict": "send",
    "cause": "simply_late",
-   "confidence": "high",
+   "confidence": "low",
    "headline": "First reminder (7 days): 7 days overdue, nothing blocking",
    "reasons": [
     {
@@ -972,7 +972,7 @@
     }
    ],
    "policyRef": "collections_policy.md: reminders at 7, 21 and 45 days",
-   "needsReview": false,
+   "needsReview": true,
    "draft": {
     "to": "ian.achebe@craneitpartners.example",
     "subject": "Invoice INV-25902 is overdue",
@@ -980,6 +980,7 @@
     "tone": "standard"
    },
    "reminderStage": "First reminder (7 days)",
+   "reviewReason": "a ticket is still pending in Zendesk, though it isn't about money: confirm the reminder can go (my call after the review, for Maya to confirm)",
    "autoSend": {
     "eligible": false,
     "why": "Customer has an open ticket",
@@ -1138,7 +1139,7 @@
    "agingBucket": "1-30",
    "verdict": "send",
    "cause": "unhappy",
-   "confidence": "high",
+   "confidence": "low",
    "headline": "Send a softer reminder (open support ticket, not about money)",
    "reasons": [
     {
@@ -1202,7 +1203,7 @@
     }
    ],
    "policyRef": "collections_policy.md: tell the account manager before finance contacts one of their accounts",
-   "needsReview": false,
+   "needsReview": true,
    "draft": {
     "to": "samuel.birch@harborengineeringgroup.example",
     "subject": "Invoice INV-25898: a quick note",
@@ -1210,6 +1211,7 @@
     "tone": "soft"
    },
    "reminderStage": "First reminder (7 days)",
+   "reviewReason": "a ticket is still pending in Zendesk, though it isn't about money: confirm the reminder can go (my call after the review, for Maya to confirm)",
    "autoSend": {
     "eligible": false,
     "why": "Customer has an open ticket",
@@ -1325,7 +1327,7 @@
    "draft": {
     "to": "clara.hollis@ruizwhitfieldcpas.example",
     "subject": "Card payment for invoice INV-25926 didn't go through",
-    "body": "Hi Clara,\n\nYour card didn't go through for invoice INV-25926 ($846). You can update it here: [update-card link]. If you'd rather pay by bank transfer, just reply and we'll send the details.\n\nThanks,\nPriya Nair\nLedgerline Billing",
+    "body": "Hi Clara,\n\nYour card didn't go through for invoice INV-25926 ($846). You can update it in your Ledgerline billing settings, or reply and we'll send you a secure link. If you'd rather pay by bank transfer, just reply and we'll send the details.\n\nThanks,\nPriya Nair\nLedgerline Billing",
     "tone": "card_update"
    },
    "reminderStage": "Second reminder (21 days)",
@@ -1420,7 +1422,7 @@
    "draft": {
     "to": "signe.abbott@elleryachebechartereda.example",
     "subject": "Card payment for invoice INV-25912 didn't go through",
-    "body": "Hi Signe,\n\nYour card didn't go through for invoice INV-25912 ($799). You can update it here: [update-card link]. If you'd rather pay by bank transfer, just reply and we'll send the details.\n\nThanks,\nPriya Nair\nLedgerline Billing",
+    "body": "Hi Signe,\n\nYour card didn't go through for invoice INV-25912 ($799). You can update it in your Ledgerline billing settings, or reply and we'll send you a secure link. If you'd rather pay by bank transfer, just reply and we'll send the details.\n\nThanks,\nPriya Nair\nLedgerline Billing",
     "tone": "card_update"
    },
    "reminderStage": "Second reminder (21 days)",
@@ -1509,7 +1511,7 @@
    "draft": {
     "to": "kofi.glover@tanaccounting.example",
     "subject": "Card payment for invoice INV-25928 didn't go through",
-    "body": "Hi Kofi,\n\nYour card didn't go through for invoice INV-25928 ($611). You can update it here: [update-card link]. If you'd rather pay by bank transfer, just reply and we'll send the details.\n\nThanks,\nPriya Nair\nLedgerline Billing",
+    "body": "Hi Kofi,\n\nYour card didn't go through for invoice INV-25928 ($611). You can update it in your Ledgerline billing settings, or reply and we'll send you a secure link. If you'd rather pay by bank transfer, just reply and we'll send the details.\n\nThanks,\nPriya Nair\nLedgerline Billing",
     "tone": "card_update"
    },
    "reminderStage": "Second reminder (21 days)",
@@ -1597,7 +1599,7 @@
    "draft": {
     "to": "mateo.abbott@bramwellsinclaircharte.example",
     "subject": "Card payment for invoice INV-25969 didn't go through",
-    "body": "Hi Mateo,\n\nYour card didn't go through for invoice INV-25969 ($611). You can update it here: [update-card link]. If you'd rather pay by bank transfer, just reply and we'll send the details.\n\nThanks,\nPriya Nair\nLedgerline Billing",
+    "body": "Hi Mateo,\n\nYour card didn't go through for invoice INV-25969 ($611). You can update it in your Ledgerline billing settings, or reply and we'll send you a secure link. If you'd rather pay by bank transfer, just reply and we'll send the details.\n\nThanks,\nPriya Nair\nLedgerline Billing",
     "tone": "card_update"
    },
    "reminderStage": "Second reminder (21 days)",
@@ -1669,7 +1671,7 @@
    "draft": {
     "to": "layla.zeller@humeaccounting.example",
     "subject": "Card payment for invoice INV-26005 didn't go through",
-    "body": "Hi Layla,\n\nYour card didn't go through for invoice INV-26005 ($282). You can update it here: [update-card link]. If you'd rather pay by bank transfer, just reply and we'll send the details.\n\nThanks,\nPriya Nair\nLedgerline Billing",
+    "body": "Hi Layla,\n\nYour card didn't go through for invoice INV-26005 ($282). You can update it in your Ledgerline billing settings, or reply and we'll send you a secure link. If you'd rather pay by bank transfer, just reply and we'll send the details.\n\nThanks,\nPriya Nair\nLedgerline Billing",
     "tone": "card_update"
    },
    "reminderStage": "First reminder (7 days)",
@@ -1755,7 +1757,7 @@
    "reply": {
     "to": "ian.kowalczyk@riversidepartners.example",
     "subject": "Invoice INV-25787: we're on it",
-    "body": "Hi Ian,\n\nThank you for flagging invoice INV-25787, and sorry it has taken this long. We're reviewing it against your contract now, and you'll have a corrected invoice or a clear answer from me by Nov 4, 2026.\n\nThere's no need to pay the current invoice in the meantime.\n\nThanks,\nPriya Nair\nLedgerline Billing"
+    "body": "Hi Ian,\n\nThank you for flagging invoice INV-25787 (\u201cUsers double counted after workspace merge\u201d), and sorry it has taken this long. We're checking it against your contract now, and you'll have a corrected invoice or a clear answer from me by Nov 4, 2026.\n\nWe won't chase this invoice while we sort it out.\n\nThanks,\nPriya Nair\nLedgerline Billing"
    },
    "hold": {
     "owner": "Priya Nair",
@@ -1892,7 +1894,7 @@
    "reply": {
     "to": "chloe.sterling@westbrookengineeringgr.example",
     "subject": "Invoice INV-25730: we're on it",
-    "body": "Hi Chloe,\n\nThank you for flagging invoice INV-25730, and sorry it has taken this long. We're reviewing it against your contract now, and you'll have a corrected invoice or a clear answer from me by Nov 4, 2026.\n\nThere's no need to pay the current invoice in the meantime.\n\nThanks,\nPriya Nair\nLedgerline Billing"
+    "body": "Hi Chloe,\n\nThank you for flagging invoice INV-25730 (\u201cImplementation fee was meant to be waived\u201d), and sorry it has taken this long. We're checking it against your contract now, and you'll have a corrected invoice or a clear answer from me by Nov 4, 2026.\n\nWe won't chase this invoice while we sort it out.\n\nThanks,\nPriya Nair\nLedgerline Billing"
    },
    "hold": {
     "owner": "Priya Nair",
@@ -1995,7 +1997,7 @@
    "reply": {
     "to": "oscar.farrow@okafornakamurallp.example",
     "subject": "Invoice INV-25765: we're on it",
-    "body": "Hi Oscar,\n\nThank you for flagging invoice INV-25765, and sorry it has taken this long. We're reviewing it against your contract now, and you'll have a corrected invoice or a clear answer from me by Nov 4, 2026.\n\nThere's no need to pay the current invoice in the meantime.\n\nThanks,\nPriya Nair\nLedgerline Billing"
+    "body": "Hi Oscar,\n\nThank you for flagging invoice INV-25765 (\u201cSecond office discount missing\u201d), and sorry it has taken this long. We're checking it against your contract now, and you'll have a corrected invoice or a clear answer from me by Nov 4, 2026.\n\nWe won't chase this invoice while we sort it out.\n\nThanks,\nPriya Nair\nLedgerline Billing"
    },
    "hold": {
     "owner": "Priya Nair",
@@ -2088,7 +2090,7 @@
    "reply": {
     "to": "noah.mbeki@uptonbelladvisory.example",
     "subject": "Invoice INV-25662: we're on it",
-    "body": "Hi Noah,\n\nThank you for flagging invoice INV-25662, and sorry it has taken this long. We're reviewing it against your contract now, and you'll have a corrected invoice or a clear answer from me by Nov 4, 2026.\n\nThere's no need to pay the current invoice in the meantime.\n\nThanks,\nPriya Nair\nLedgerline Billing"
+    "body": "Hi Noah,\n\nThank you for flagging invoice INV-25662, and sorry it has taken this long. We're checking it against your contract now, and you'll have a corrected invoice or a clear answer from me by Nov 4, 2026.\n\nWe won't chase this invoice while we sort it out.\n\nThanks,\nPriya Nair\nLedgerline Billing"
    },
    "hold": {
     "owner": "Priya Nair",
@@ -2342,7 +2344,7 @@
    "reply": {
     "to": "ethan.whitfield@delacroixjessopco.example",
     "subject": "Invoice INV-25834: we're on it",
-    "body": "Hi Ethan,\n\nThank you for flagging invoice INV-25834. We're reviewing it against your contract now, and you'll have a corrected invoice or a clear answer from me by Nov 9, 2026.\n\nThere's no need to pay the current invoice in the meantime.\n\nThanks,\nPriya Nair\nLedgerline Billing"
+    "body": "Hi Ethan,\n\nThank you for flagging invoice INV-25834 (\u201cQuestion about latest invoice\u201d). We're checking it against your contract now, and you'll have a corrected invoice or a clear answer from me by Nov 9, 2026.\n\nWe won't chase this invoice while we sort it out.\n\nThanks,\nPriya Nair\nLedgerline Billing"
    },
    "hold": {
     "owner": "Priya Nair",
@@ -2472,7 +2474,7 @@
    "reply": {
     "to": "oscar.hale@brandtashbyit.example",
     "subject": "Invoice INV-25822: we're on it",
-    "body": "Hi Oscar,\n\nThank you for flagging invoice INV-25822. We're reviewing it against your contract now, and you'll have a corrected invoice or a clear answer from me by Nov 5, 2026.\n\nThere's no need to pay the current invoice in the meantime.\n\nThanks,\nPriya Nair\nLedgerline Billing"
+    "body": "Hi Oscar,\n\nThank you for flagging invoice INV-25822 (\u201cBilled annual renewal after moving to monthly\u201d). We're checking it against your contract now, and you'll have a corrected invoice or a clear answer from me by Nov 5, 2026.\n\nWe won't chase this invoice while we sort it out.\n\nThanks,\nPriya Nair\nLedgerline Billing"
    },
    "hold": {
     "owner": "Priya Nair",
@@ -2599,7 +2601,7 @@
    "reply": {
     "to": "emma.orwell@elleryconsulting.example",
     "subject": "Invoice INV-25757: we're on it",
-    "body": "Hi Emma,\n\nThank you for flagging invoice INV-25757, and sorry it has taken this long. We're reviewing it against your contract now, and you'll have a corrected invoice or a clear answer from me by Nov 4, 2026.\n\nThere's no need to pay the current invoice in the meantime.\n\nThanks,\nPriya Nair\nLedgerline Billing"
+    "body": "Hi Emma,\n\nThank you for flagging invoice INV-25757 (\u201cSales tax using old address\u201d), and sorry it has taken this long. We're checking it against your contract now, and you'll have a corrected invoice or a clear answer from me by Nov 4, 2026.\n\nWe won't chase this invoice while we sort it out.\n\nThanks,\nPriya Nair\nLedgerline Billing"
    },
    "hold": {
     "owner": "Priya Nair",
@@ -2682,7 +2684,7 @@
    "reply": {
     "to": "ravi.upton@thackerayaccounting.example",
     "subject": "Invoice INV-25750: we're on it",
-    "body": "Hi Ravi,\n\nThank you for flagging invoice INV-25750, and sorry it has taken this long. We're reviewing it against your contract now, and you'll have a corrected invoice or a clear answer from me by Nov 4, 2026.\n\nThere's no need to pay the current invoice in the meantime.\n\nThanks,\nPriya Nair\nLedgerline Billing"
+    "body": "Hi Ravi,\n\nThank you for flagging invoice INV-25750 (\u201cVAT added incorrectly\u201d), and sorry it has taken this long. We're checking it against your contract now, and you'll have a corrected invoice or a clear answer from me by Nov 4, 2026.\n\nWe won't chase this invoice while we sort it out.\n\nThanks,\nPriya Nair\nLedgerline Billing"
    },
    "hold": {
     "owner": "Priya Nair",
@@ -2765,7 +2767,7 @@
    "reply": {
     "to": "maria.novak@castellengineering.example",
     "subject": "Invoice INV-25764: we're on it",
-    "body": "Hi Maria,\n\nThank you for flagging invoice INV-25764, and sorry it has taken this long. We're reviewing it against your contract now, and you'll have a corrected invoice or a clear answer from me by Nov 4, 2026.\n\nThere's no need to pay the current invoice in the meantime.\n\nThanks,\nPriya Nair\nLedgerline Billing"
+    "body": "Hi Maria,\n\nThank you for flagging invoice INV-25764 (\u201ccharged pro after we downgraded\u201d), and sorry it has taken this long. We're checking it against your contract now, and you'll have a corrected invoice or a clear answer from me by Nov 4, 2026.\n\nWe won't chase this invoice while we sort it out.\n\nThanks,\nPriya Nair\nLedgerline Billing"
    },
    "hold": {
     "owner": "Priya Nair",
@@ -3029,7 +3031,7 @@
    "reply": {
     "to": "tessa.birch@wexlerhumeadvisory.example",
     "subject": "Invoice INV-25712: we're on it",
-    "body": "Hi Tessa,\n\nThank you for flagging invoice INV-25712, and sorry it has taken this long. We're reviewing it against your contract now, and you'll have a corrected invoice or a clear answer from me by Nov 4, 2026.\n\nThere's no need to pay the current invoice in the meantime.\n\nThanks,\nPriya Nair\nLedgerline Billing"
+    "body": "Hi Tessa,\n\nThank you for flagging invoice INV-25712 (\u201c???\u201d), and sorry it has taken this long. We're checking it against your contract now, and you'll have a corrected invoice or a clear answer from me by Nov 4, 2026.\n\nWe won't chase this invoice while we sort it out.\n\nThanks,\nPriya Nair\nLedgerline Billing"
    },
    "hold": {
     "owner": "Priya Nair",
@@ -3129,7 +3131,7 @@
    "reply": {
     "to": "caleb.holloway@mercerbanerjeellp.example",
     "subject": "Invoice INV-25718: we're on it",
-    "body": "Hi Caleb,\n\nThank you for flagging invoice INV-25718, and sorry it has taken this long. We're reviewing it against your contract now, and you'll have a corrected invoice or a clear answer from me by Nov 4, 2026.\n\nThere's no need to pay the current invoice in the meantime.\n\nThanks,\nPriya Nair\nLedgerline Billing"
+    "body": "Hi Caleb,\n\nThank you for flagging invoice INV-25718 (\u201cStill being charged for time tracking\u201d), and sorry it has taken this long. We're checking it against your contract now, and you'll have a corrected invoice or a clear answer from me by Nov 4, 2026.\n\nWe won't chase this invoice while we sort it out.\n\nThanks,\nPriya Nair\nLedgerline Billing"
    },
    "hold": {
     "owner": "Priya Nair",
@@ -3359,7 +3361,7 @@
    "reply": {
     "to": "anika.moreau@oyelarandevlinengineer.example",
     "subject": "Invoice INV-25711: we're on it",
-    "body": "Hi Anika,\n\nThank you for flagging invoice INV-25711, and sorry it has taken this long. We're reviewing it against your contract now, and you'll have a corrected invoice or a clear answer from me by Nov 4, 2026.\n\nThere's no need to pay the current invoice in the meantime.\n\nThanks,\nPriya Nair\nLedgerline Billing"
+    "body": "Hi Anika,\n\nThank you for flagging invoice INV-25711 (\u201cMigration fee\u201d), and sorry it has taken this long. We're checking it against your contract now, and you'll have a corrected invoice or a clear answer from me by Nov 4, 2026.\n\nWe won't chase this invoice while we sort it out.\n\nThanks,\nPriya Nair\nLedgerline Billing"
    },
    "hold": {
     "owner": "Priya Nair",
@@ -3432,7 +3434,7 @@
    "reply": {
     "to": "marcus.glover@banerjeepetrovengineer.example",
     "subject": "Invoice INV-25539: we're on it",
-    "body": "Hi Marcus,\n\nThank you for flagging invoice INV-25539, and sorry it has taken this long. We're reviewing it against your contract now, and you'll have a corrected invoice or a clear answer from me by Nov 4, 2026.\n\nThere's no need to pay the current invoice in the meantime.\n\nThanks,\nPriya Nair\nLedgerline Billing"
+    "body": "Hi Marcus,\n\nThank you for flagging invoice INV-25539 (\u201cClient portal cancellation ignored\u201d), and sorry it has taken this long. We're checking it against your contract now, and you'll have a corrected invoice or a clear answer from me by Nov 4, 2026.\n\nWe won't chase this invoice while we sort it out.\n\nThanks,\nPriya Nair\nLedgerline Billing"
    },
    "hold": {
     "owner": "Priya Nair",
@@ -3635,7 +3637,7 @@
    "reply": {
     "to": "aisha.sinclair@wexlermedia.example",
     "subject": "Invoice INV-25811: we're on it",
-    "body": "Hi Aisha,\n\nThank you for flagging invoice INV-25811, and sorry it has taken this long. We're reviewing it against your contract now, and you'll have a corrected invoice or a clear answer from me by Nov 4, 2026.\n\nThere's no need to pay the current invoice in the meantime.\n\nThanks,\nPriya Nair\nLedgerline Billing"
+    "body": "Hi Aisha,\n\nThank you for flagging invoice INV-25811 (\u201cRenewal discount not reflected\u201d), and sorry it has taken this long. We're checking it against your contract now, and you'll have a corrected invoice or a clear answer from me by Nov 4, 2026.\n\nWe won't chase this invoice while we sort it out.\n\nThanks,\nPriya Nair\nLedgerline Billing"
    },
    "hold": {
     "owner": "Priya Nair",
@@ -13880,7 +13882,8 @@
    "sampleSize": 54,
    "agreed": 53,
    "rate": 0.9815,
-   "labelledBy": "an independent review of all 54 bills by a separate AI model that never saw the tool's answers, with every contested call confirmed by a person (24 Nov)"
+   "labelledBy": "an independent review of all 54 bills by a separate AI model that never saw the tool's answers, with every contested call confirmed by a person (24 Nov)",
+   "agreedOriginal": 52
   },
   "agreementRate": null,
   "verifiedNumbers": [
@@ -13923,7 +13926,7 @@
     "ok": true,
     "unit": "count",
     "group": "coo",
-    "note": "An earlier version assumed a blank-memo payment paid the older of two same-amount Kingsway bills. Now the other bill waits for Marcus to say which."
+    "note": "Earlier, a blank-memo payment was assumed to pay the older of two same-amount bills; now Marcus confirms which."
    },
    {
     "label": "Complaint open but chased",
@@ -13935,7 +13938,7 @@
     "unit": "count",
     "group": "coo",
     "strictValue": 2,
-    "note": "2 customers (Crane IT Partners, Harbor Engineering Group) have a pending ticket that isn't about money, or said it was resolved, so they still get a reminder: my call after the review, for Maya to confirm. Earlier versions would have chased 3 customers with a complaint open; each became a rule."
+    "note": "2 customers with a pending ticket that isn't about money wait in Check first until Maya confirms. Earlier versions would have chased 3; each became a rule."
    }
   ],
   "failures": [
@@ -13946,7 +13949,7 @@
     "why": "Correct answer: TOP-50 account 15 days late with no dispute; open T881016 is a normal-priority product bug about a client's send log, so a person should write a personal reminder after telling the account manager. Tool's reason: They have a ticket open in Zendesk since Oct 28, 2026 (3 days). Chasing payment while their question is unanswered is what gets the tool switched off; the account manager decides when to resume."
    }
   ],
-  "runtimeSeconds": 0.48,
+  "runtimeSeconds": 0.46,
   "reviewLog": {
    "summary": "An independent reviewer (a separate AI model that never saw the tool's answers) checked all 54 bills from the raw records, and a person then confirmed every contested call. First pass: 46 of 54 agreed (85%). Of the 8 differences, 7 were rule errors we fixed and 1 we kept on purpose. The 2 misses we found ourselves were fixed before the review ran, so the very first version would have agreed on at most 44. After the fixes, 53 of 54 agree (98%), on the same bills the rules were fixed against, so that is not a fresh-data score: the shadow week measures that.",
    "entries": [
@@ -13957,7 +13960,7 @@
      "toolSaid": "send",
      "shouldBe": "hold",
      "foundBy": "Independent review, first pass",
-     "why": "Two months before this bill they complained to the state consumer affairs office and threatened to contest the card charge. The tool only linked tickets raised after the bill.",
+     "why": "Five weeks before this bill they complained to the state consumer affairs office and threatened to contest the card charge. The tool only linked tickets raised after the bill.",
      "change": "A chargeback, regulator or legal threat in the last 180 days stops chasing until the account manager and Head of Support say it's settled.",
      "status": "fixed"
     },
@@ -14109,19 +14112,19 @@
  "morningSummary": {
   "title": "Collections check, Oct 31, 2026",
   "bullets": [
-   "15 reminder emails to approve (3 more bills after a quick check)",
+   "14 bills to remind, in 13 emails (5 more after a quick check)",
    "12 disputed bills to fix: corrected invoice or a clear answer",
-   "8 calls to make (9 bills)",
+   "9 bills to call about, in 8 calls",
    "5 bills look paid: Marcus is matching them"
   ],
   "link": "https://ledgerline-collections.vercel.app",
   "text": "Good morning. Sorting today's list takes about 5 minutes; the disputes are the day's work.",
   "detail": [
-   "16 reminders ready to approve ($173,197), and 3 more after a check.",
+   "14 reminders ready to approve ($168,304), and 5 more after a check.",
    "21 on hold ($368,462): 12 past their target date, so the owner acts today; the rest by Nov 3, 2026 at the earliest.",
    "5 probably paid already ($78,348): with Marcus Bell to match; you're copied.",
    "9 need a phone call ($9,384).",
-   "5 of these need a second look first, in Check first."
+   "7 of these need a second look first, in Check first."
   ],
   "cover": "While Priya Nair is on leave (March, dates to confirm), Dana Ruiz owns this morning list and Marcus Bell keeps the probably-paid list. Cover is off today.",
   "routing": [
@@ -14131,9 +14134,9 @@
     "channel": "Slack direct message",
     "cc": "Dana Ruiz",
     "lines": [
-     "15 reminder emails to approve (3 more bills after a quick check)",
+     "14 bills to remind, in 13 emails (5 more after a quick check)",
      "12 disputed bills to fix: corrected invoice or a clear answer",
-     "8 calls to make (9 bills)",
+     "9 bills to call about, in 8 calls",
      "5 bills look paid: Marcus is matching them"
     ],
     "by": null
@@ -14165,7 +14168,7 @@
     ],
     "more": 12,
     "by": "Nov 5",
-    "intro": "5 accounts paused until you move the issue on. 10 contacts planned today; reply if any should wait.",
+    "intro": "5 accounts paused until you move the issue on. 9 customers contacted today once Priya approves; reply if any should wait.",
     "link": "https://ledgerline-collections.vercel.app"
    },
    {
@@ -14180,7 +14183,7 @@
     ],
     "more": 10,
     "by": "Nov 5",
-    "intro": "2 accounts paused until you move the issue on. 11 contacts planned today; reply if any should wait.",
+    "intro": "2 accounts paused until you move the issue on. 10 customers contacted today once Priya approves; reply if any should wait.",
     "link": "https://ledgerline-collections.vercel.app"
    },
    {
@@ -14195,7 +14198,7 @@
     ],
     "more": 5,
     "by": "Nov 5",
-    "intro": "3 accounts paused until you move the issue on. 5 contacts planned today; reply if any should wait.",
+    "intro": "3 accounts paused until you move the issue on. 5 customers contacted today once Priya approves; reply if any should wait.",
     "link": "https://ledgerline-collections.vercel.app"
    },
    {
@@ -14210,7 +14213,7 @@
     ],
     "more": 1,
     "by": "Nov 5",
-    "intro": "2 accounts paused until you move the issue on. 2 contacts planned today; reply if any should wait.",
+    "intro": "2 accounts paused until you move the issue on. 2 customers contacted today once Priya approves; reply if any should wait.",
     "link": "https://ledgerline-collections.vercel.app"
    },
    {
@@ -14225,7 +14228,7 @@
     ],
     "more": 0,
     "by": null,
-    "intro": "2 card invoices will be written off automatically soon: chase them or let them go? 1 bill is past 90 days: yours to escalate.",
+    "intro": "2 card invoices will be written off automatically soon: chase them or let them go? 1 more bill is past 90 days: yours to escalate.",
     "link": "https://ledgerline-collections.vercel.app"
    }
   ]
@@ -14308,7 +14311,7 @@
     "target": "Still 0 after a month. If this slips, a good receivables number won't save it"
    }
   ],
-  "timeSaved": "The tool replaces the 'asking around' step: about 3 to 4 of the team's 16 hours a week, by the COO's estimate. Priya to confirm before anyone quotes it."
+  "timeSaved": "Time saved: about 3 to 4 of the team's 16 hours a week (the 'asking around' step), by the COO's estimate, for Priya to confirm."
  },
  "autoSend": {
   "on": false,

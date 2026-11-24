@@ -105,6 +105,7 @@ export function plainReview(inv: Invoice): string {
     if ((m = r.match(/(\d+) overdue bills have this amount/i))) return `${m[1]} bills have this amount: confirm which one the payment covers`;
     if ((m = r.match(/customer name '(.+)' not found/i))) return `“${m[1]}” isn't in the customer list`;
     if (/borderline name match/i.test(r)) return "The customer's name is only a close match";
+    if (/still pending in Zendesk/i.test(r)) return "A ticket is still pending (not about money): confirm the reminder can go, until Maya confirms the rule";
     if (/matched by name only/i.test(r)) return "The customer was matched by a similar name only";
     if (/no name/i.test(r)) return "This bill has no customer name";
     return r.charAt(0).toUpperCase() + r.slice(1);
@@ -172,7 +173,7 @@ export function keyProof(inv: Invoice, verdict: Verdict): KeyProof | null {
     }
     if (inv.draft?.tone === "soft") {
       const t = openTicket(inv);
-      if (t) return fromEvidence("The open complaint (not about money)", t);
+      if (t) return fromEvidence(`The support ticket (${t.status || "open"}, not about money)`, t);
     }
     return {
       label: "The bill",
@@ -189,6 +190,10 @@ export function keyProof(inv: Invoice, verdict: Verdict): KeyProof | null {
 
 // For a bill in Check first: the record the check is about (a solved billing ticket to confirm), else the usual proof.
 export function checkProof(inv: Invoice): KeyProof | null {
+  if (/still pending in Zendesk/i.test(inv.reviewReason ?? "")) {
+    const t = inv.evidence.find((e) => e.kind === "ticket" && !CLOSED.test((e.status ?? "").split(" (")[0]));
+    if (t) return fromEvidence(`The pending ticket (${t.status || "pending"})`, t);
+  }
   const m = (inv.reviewReason ?? "").match(/ticket from ([A-Z][a-z]{2} \d{1,2}, \d{4})/);
   if (m) {
     const t = inv.evidence.find((e) => e.kind === "ticket" && e.date && formatDate(e.date) === m[1]);

@@ -46,10 +46,7 @@ export default function ProofPage() {
   const cross = proof.verifiedNumbers.filter((v) => (v.group ?? "cross") === "cross");
   const cooTests = proof.verifiedNumbers.filter((v) => v.group === "coo");
   const crossOk = cross.filter((v) => v.ok).length;
-  const byId = proof.matchBreakdown.find((m) => m.method === "exact_id")?.count ?? 0;
-  const byName = proof.matchBreakdown.find((m) => m.method === "exact_name")?.count ?? 0;
   const up = proof.aiUplift;
-  const sendCount = invoices.filter((i) => i.verdict === "send").length;
 
   const sources = (log?.entries ?? []).reduce<{ by: string; n: number; fixed: number; kept: number; open: number }[]>((acc, e) => {
     let row = acc.find((r) => r.by === e.foundBy);
@@ -68,43 +65,28 @@ export default function ProofPage() {
   const totals = sources.reduce((t, r) => ({ fixed: t.fixed + r.fixed, kept: t.kept + r.kept, open: t.open + r.open }), { fixed: 0, kept: 0, open: 0 });
 
   const guards: { lead: string; rest: string }[] = [
+    { lead: "A person approves everything.", rest: "Auto-send stays off until a month of approvals is on record." },
+    { lead: "Some bills always stay with a person:", rest: "top-50 accounts, disputes, probably-paid bills and every call." },
+    { lead: "No customer data goes to an AI vendor", rest: "until legal approves one; ticket excerpts are masked." },
     {
-      lead: "A person approves everything that goes out.",
-      rest: `Today that's ${sendCount} bills to remind, read or bulk-approved by Priya. Auto-send stays off until a month of her approvals is on record, then only for small, polite reminders.`,
+      lead: "AI is double-checked and measured:",
+      rest: up && up.cacheMisses === 0 ? `two models must agree; on these bills it changed ${up.verdictsChanged.length === 0 ? "no answers" : `${up.verdictsChanged.length} answers`}.` : "two models must agree, or a person decides.",
     },
-    {
-      lead: "Some bills never go out without a person.",
-      rest: "Top-50 accounts, disputes, probably-paid bills, anything firmer than a friendly nudge, and every phone call. Permanently.",
-    },
-    {
-      lead: "No customer data goes to an AI vendor yet.",
-      rest: "Not until legal approves one (Amazon Bedrock, in Ledgerline's existing AWS account, is proposed). Every ticket excerpt finance sees is masked.",
-    },
-    {
-      lead: "AI is double-checked, and measured.",
-      rest: `When it reads tickets, two models from different families must agree, or a person decides.${up && up.cacheMisses === 0 ? ` On these ${up.bills} bills it changed ${up.verdictsChanged.length === 0 ? "no answers" : `${up.verdictsChanged.length} answers`} (rules catch all 14 disputes by their invoice number) and moved ${up.checkFirstChanged} bills in or out of Check first.` : ""}`,
-    },
-    {
-      lead: "No threats, no invented facts.",
-      rest: "Emails come from Ledgerline's own templates, with the 45-day suspension threat removed and a check for threat words. The AI redraft button can't add facts or ticket details; it's a demo that sends a draft from this fictional data room to Groq.",
-    },
-    {
-      lead: "Every number is checked.",
-      rest: `Every name on bills, payments and tickets was linked to a customer (${byId} by ID, ${byName} by exact name). The headline figures are worked out two ways, and ${crossOk} of ${cross.length} agree.`,
-    },
+    { lead: "No threats, no invented facts:", rest: "emails come from Ledgerline's templates, checked for threat words." },
+    { lead: "Every number is checked:", rest: `all names linked, and ${crossOk} of ${cross.length} headline figures agree two ways.` },
   ];
 
   return (
     <>
-      <PageHeader title="How sure are we" description="Can finance trust today's list, and is the AI safe to use on billing?" />
+      <PageHeader title="How sure are we" description="Can finance trust the list, and is the AI safe on billing?" />
 
       {log && (
         <Card className="mb-6 border-foreground/20">
           <CardHeader>
             <CardTitle className="leading-snug">How often it&apos;s right, and every time it was wrong</CardTitle>
             <CardDescription>
-              A separate AI model reviewed all 54 bills from fact files we built, without seeing the tool&apos;s answers. A person checked
-              all 11 contested calls; the other 43 bills weren&apos;t hand-checked.
+              A separate AI model reviewed all 54 bills from fact files we built, without the tool&apos;s answers. A person checked the 11
+              contested calls, not the other 43.
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -118,7 +100,13 @@ export default function ProofPage() {
                 <p className="text-xs text-muted-foreground">After fixing what it missed</p>
                 <p className="tabular text-xl font-semibold">{proof.accuracy ? `${Math.round(proof.accuracy.rate * 100)}%` : "-"}</p>
                 <p className="text-xs text-muted-foreground">
-                  {proof.accuracy ? `${proof.accuracy.agreed} of ${proof.accuracy.sampleSize}, same bills: not a fresh test` : "not measured"}
+                  {proof.accuracy
+                    ? `${proof.accuracy.agreed} of ${proof.accuracy.sampleSize} on the same bills${
+                        proof.accuracy.agreedOriginal != null && proof.accuracy.agreedOriginal !== proof.accuracy.agreed
+                          ? ` (${proof.accuracy.agreedOriginal} against the reviewer's first labels; I changed one after my hand check)`
+                          : ""
+                      }`
+                    : "not measured"}
                 </p>
               </div>
               <div className="rounded-lg border border-dashed p-3">
@@ -146,19 +134,19 @@ export default function ProofPage() {
             </ul>
 
             <ol className="mt-4 space-y-3">
-              {log.entries.slice(0, 3).map((e, idx) => (
+              {log.entries.slice(0, 2).map((e, idx) => (
                 <MissItem key={`${e.invoice}-${idx}`} e={e} />
               ))}
             </ol>
-            {log.entries.length > 3 && (
+            {log.entries.length > 2 && (
               <details className="group mt-3">
                 <summary className="cursor-pointer text-sm font-medium text-muted-foreground hover:text-foreground">
-                  <span className="group-open:hidden">Show the other {log.entries.length - 3}</span>
+                  <span className="group-open:hidden">Show the other {log.entries.length - 2}</span>
                   <span className="hidden group-open:inline">Hide them</span>
                 </summary>
                 <ol className="mt-3 space-y-3">
-                  {log.entries.slice(3).map((e, idx) => (
-                    <MissItem key={`${e.invoice}-${idx + 3}`} e={e} />
+                  {log.entries.slice(2).map((e, idx) => (
+                    <MissItem key={`${e.invoice}-${idx + 2}`} e={e} />
                   ))}
                 </ol>
               </details>
@@ -172,7 +160,7 @@ export default function ProofPage() {
           <CardHeader>
             <CardTitle className="leading-snug">The COO&apos;s two tests</CardTitle>
             <CardDescription>
-              Her words: &ldquo;nobody has been chased who&apos;d paid or had a complaint open.&rdquo; Either one failing gets the tool switched off.
+              Her words: &ldquo;nobody has been chased who&apos;d paid or had a complaint open.&rdquo;
             </CardDescription>
           </CardHeader>
           <CardContent className="grid gap-3 sm:grid-cols-2">
@@ -219,19 +207,19 @@ export default function ProofPage() {
         <Card>
           <CardHeader>
             <CardTitle className="leading-snug">How we&apos;ll know it works, a month from now</CardTitle>
-            <CardDescription>{results.monthOne.source}</CardDescription>
           </CardHeader>
           <CardContent>
             <ol className="grid gap-3 text-sm sm:grid-cols-3">
               {results.monthOne.measures.map((m, idx) => (
                 <li key={m.label} className="rounded-lg border p-3">
-                  <p className="text-xs text-muted-foreground">{idx === 0 ? "The one number" : "The real test"}</p>
+                  <p className="text-xs text-muted-foreground">{idx === 0 ? "The COO's one number" : "Her real test"}</p>
                   <p className="mt-0.5 font-medium">{m.label}</p>
                   <p className="tabular mt-1 text-base font-semibold">{m.todayText}</p>
                   <p className="mt-1 text-xs text-muted-foreground">{m.target}</p>
                 </li>
               ))}
             </ol>
+            {results.monthOne.timeSaved && <p className="mt-3 text-xs leading-relaxed text-muted-foreground">{results.monthOne.timeSaved}</p>}
           </CardContent>
         </Card>
       )}

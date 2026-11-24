@@ -100,6 +100,7 @@ def history_check(rules: dict):
     import pandas as pd
     cfg = load_config(ROOT / "pipeline" / "config.sample.yaml")
     send = next(i for i in rules.values() if i["verdict"] == "send")
+    am_hold = next((i for i in rules.values() if i["verdict"] == "hold" and (i.get("hold") or {}).get("ownerRole", "").startswith("Account manager")), None)
     with tempfile.TemporaryDirectory() as tmp:
         data = load(ROOT / "data" / "sample", cfg)
         as_of = as_of_date(data)
@@ -108,6 +109,9 @@ def history_check(rules: dict):
             w.writerow(["invoice_id", "final", "decision", "decided_at"])
             # approved this morning: a second run today must not suggest it again
             w.writerow([send["id"], "send", "approved", as_of.strftime("%Y-%m-%dT09:00:00Z")])
+            # handed to an account manager 8 days ago: their 3 working days have run out
+            if am_hold is not None:
+                w.writerow([am_hold["id"], "hold", "approved", (as_of - pd.Timedelta(days=8)).strftime("%Y-%m-%dT09:00:00Z")])
         cfg["history_dir"] = tmp
         data = load(ROOT / "data" / "sample", cfg)
         a = ai_mod.AI(cfg)
@@ -116,6 +120,10 @@ def history_check(rules: dict):
     again = res[send["id"]]
     assert again["verdict"] == "hold" and again["headline"].startswith("Too early for the next reminder"), again["headline"]
     print(f"Memory between mornings: {send['id']}, already approved, waits for its next stage instead of a second email.")
+    if am_hold is not None:
+        back = res[am_hold["id"]]["hold"]
+        assert back["action"].startswith("Back with you"), back["action"]
+        print(f"Hold clocks carry over: {am_hold['id']}, handed off 8 days ago, is back with finance.")
 
 
 def main():

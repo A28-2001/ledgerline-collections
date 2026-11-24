@@ -22,7 +22,14 @@ export default function StoryPage() {
     (i) => i.verdict === "hold" && i.cause === "wrong_bill" && i.hold && i.hold.deadline <= meta.asOf && i.hold.ownerRole.startsWith("Finance"),
   );
   const strict = proof.verifiedNumbers.find((v) => v.label.startsWith("Complaint open"))?.strictValue ?? 0;
-  const emails = invoices.filter((i) => i.verdict === "send" && !i.needsReview && i.draft?.body).length;
+  const allMine = invoices.filter((i) => i.verdict === "hold" && i.cause === "wrong_bill" && i.hold?.ownerRole.startsWith("Finance")).length;
+  const emails = invoices.filter((i) => i.verdict === "send" && i.draft?.body).length;
+  const decisions = (() => {
+    // the same count as the Today page: one per customer and reason in Check first, plus one per step
+    const groups = new Set(invoices.filter((i) => i.needsReview).map((i) => `${i.customerId ?? i.customerName}|${i.verdict}|${i.reviewReason ?? ""}`));
+    const steps = new Set(invoices.filter((i) => !i.needsReview && !(i.verdict === "hold" && i.cause === "wrong_bill")).map((i) => i.verdict));
+    return groups.size + steps.size;
+  })();
   const maybePaid = invoices.filter((i) => i.verdict === "hold" && i.cause === "paid");
 
   const firstPass = proof.reviewLog?.summary.match(/(\d+) of \d+ agreed \((\d+)%\)/);
@@ -41,15 +48,17 @@ export default function StoryPage() {
       { name: "Zendesk", detail: tk ? `${fmt(tk.fromOverdue)} tickets from customers who owe money` : `${fmt(rows("tickets.csv"))} tickets`, locked: true },
       { name: "Contracts", detail: "What each customer agreed to pay", locked: false },
     ],
-    causes: summary.byCause.map((c) => ({
-      key: c.cause,
-      label: CAUSE_META[c.cause].label,
-      color: CAUSE_META[c.cause].color,
-      amount: c.amount,
-      amountText: formatMoney(c.amount),
-      count: c.count,
-      share: c.amount / summary.overdueAmount,
-    })),
+    causes: (() => {
+      const d = summary.byCause.find((c) => c.cause === "wrong_bill");
+      const restAmount = summary.overdueAmount - (d?.amount ?? 0);
+      const restCount = summary.overdueCount - (d?.count ?? 0);
+      return [
+        ...(d
+          ? [{ key: "wrong_bill", label: CAUSE_META.wrong_bill.label, color: CAUSE_META.wrong_bill.color, amount: d.amount, amountText: formatMoney(d.amount), count: d.count, share: d.amount / summary.overdueAmount }]
+          : []),
+        { key: "rest", label: "Every other reason", color: "var(--muted-foreground)", amount: restAmount, amountText: formatMoney(restAmount), count: restCount, share: restAmount / summary.overdueAmount },
+      ];
+    })(),
     verdicts: VERDICTS.map((v) => ({
       key: v,
       label: VERDICT_META[v].label,
@@ -133,13 +142,10 @@ export default function StoryPage() {
     {
       id: "answer",
       kicker: "The answer",
-      number: mine.length ? fmt(mine.length) : `${count("send")} of ${invoices.length}`,
-      numberNote: mine.length
-        ? `of the ${disputed?.count ?? mine.length} disputed bills are past the 5-day target. Priya fixes them first.`
-        : "bills get a polite email today",
+      number: fmt(decisions),
+      numberNote: `decisions sort the morning, in about 5 minutes. Then ${allMine} disputes to fix (${mine.length} past the 5-day target): the day's work.`,
       text: [
-        `Five questions decide each bill. **Disputes go to Priya** to fix within 5 working days; ${emails} reminder emails go out once she approves them.`,
-        "Everything else waits with an owner and a deadline.",
+        `Five questions decide each bill, and **${formatMoney(summary.shouldNotChaseAmount)} isn't chased today**. ${count("send")} bills get a reminder (${emails} emails) once Priya approves.`,
       ],
       source: `This run, all ${invoices.length} bills (Today and How it works pages)`,
     },
@@ -158,9 +164,9 @@ export default function StoryPage() {
       id: "monday",
       kicker: "Monday",
       number: fmt(checksTotal),
-      numberNote: "reminders to anyone who had paid or had a complaint open",
+      numberNote: `customers chased who had paid or had a complaint open${strict ? ` (${strict} by the strictest reading, now checked first)` : ""}`,
       text: [
-        `The COO's two tests: both 0.${strict ? ` ${strict} customers with a pending question that isn't about money still get a reminder, for Maya to confirm.` : ""}`,
+        `The COO's two tests: both 0.${strict ? ` **${strict} customers** with a pending ticket that isn't about money wait in Check first until Maya confirms.` : ""}`,
         "Monday: a shadow week beside Priya. **Nothing is sent without a person.**",
       ],
       source: "Checks on the How sure are we page; plan agreed with the COO",

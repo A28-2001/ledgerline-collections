@@ -4,7 +4,7 @@ import { PageHeader } from "@/components/shared/page-header";
 import { EmptyState } from "@/components/shared/empty-state";
 import { SimpleBars } from "@/components/why/cause-chart";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { results, VERDICT_META } from "@/lib/data";
+import { formatMoney, results, VERDICT_META } from "@/lib/data";
 import type { Verdict } from "@/lib/types";
 
 export const metadata: Metadata = { title: "Customers" };
@@ -17,6 +17,30 @@ const BANDS = [
   { key: "1k", label: "$1,000 to $5,000", min: 1000 },
   { key: "0", label: "Under $1,000", min: 0 },
 ];
+
+function Donut({ share, label }: { share: number; label: string }) {
+  const r = 40;
+  const c = 2 * Math.PI * r;
+  return (
+    <svg viewBox="0 0 112 112" className="size-24 shrink-0 sm:size-28" role="img" aria-label={`${label} of the overdue money`}>
+      <circle cx="56" cy="56" r={r} fill="none" stroke="var(--muted)" strokeWidth="14" />
+      <circle
+        cx="56"
+        cy="56"
+        r={r}
+        fill="none"
+        stroke="var(--accent-brand)"
+        strokeWidth="14"
+        strokeDasharray={`${share * c} ${c}`}
+        strokeLinecap="butt"
+        transform="rotate(-90 56 56)"
+      />
+      <text x="56" y="61" textAnchor="middle" fontSize="20" fontWeight="600" fill="var(--foreground)">
+        {label}
+      </text>
+    </svg>
+  );
+}
 
 export default function CustomersPage() {
   const invoicesById = new Map(results.invoices.map((i) => [i.id, i]));
@@ -67,7 +91,7 @@ export default function CustomersPage() {
     <>
       <PageHeader title="Customers" description={`${rows.length} customers with an overdue bill. Find any of them below.`} />
 
-      <div className="grid gap-6 lg:grid-cols-2">
+      <div className="grid gap-6 lg:grid-cols-2 xl:grid-cols-3">
         <Card className="min-w-0">
           <CardHeader>
             <CardTitle className="leading-snug">What to do, across all customers</CardTitle>
@@ -82,28 +106,36 @@ export default function CustomersPage() {
             <CardTitle className="leading-snug">
               {biggestBand ? `Most of the money sits with balances of ${biggestBand.label.toLowerCase()}` : "How big the balances are"}
             </CardTitle>
-            <CardDescription>Customers grouped by how much they owe</CardDescription>
           </CardHeader>
           <CardContent>
             <SimpleBars label="Customers by size of balance" total={total} rows={bands} highlight={biggestBand?.key} unit={["customer", "customers"]} />
           </CardContent>
         </Card>
+        <Card className="min-w-0 lg:col-span-2 xl:col-span-1">
+          <CardHeader>
+            <CardTitle className="leading-snug">
+              The {top.length} biggest hold {topShare}% of the overdue money
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="flex items-center gap-5">
+            <Donut share={topShare / 100} label={`${topShare}%`} />
+            <ol className="min-w-0 flex-1 space-y-1 text-sm">
+              {top.map((r, i) => (
+                <li key={r.id} className="flex items-baseline justify-between gap-3">
+                  <span className="truncate">
+                    <span className="tabular text-muted-foreground">{i + 1}.</span> {r.name}
+                  </span>
+                  <span className="tabular shrink-0 text-xs text-muted-foreground">{formatMoney(r.overdue, "USD", true)}</span>
+                </li>
+              ))}
+              <li className="flex items-baseline justify-between gap-3 border-t pt-1 text-muted-foreground">
+                <span>The other {rows.length - top.length}</span>
+                <span className="tabular shrink-0 text-xs">{formatMoney(total - top.reduce((x, r) => x + r.overdue, 0), "USD", true)}</span>
+              </li>
+            </ol>
+          </CardContent>
+        </Card>
       </div>
-
-      <Card className="mt-6">
-        <CardHeader>
-          <CardTitle className="leading-snug">
-            The {top.length} biggest hold {topShare}% of the overdue money
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <SimpleBars
-            label="The biggest customers by overdue money"
-            total={total}
-            rows={top.map((r) => ({ key: r.id, label: r.name, amount: r.overdue, count: r.bills, color: "var(--muted-foreground)" }))}
-          />
-        </CardContent>
-      </Card>
 
       <Card className="mt-6">
         <CardHeader>

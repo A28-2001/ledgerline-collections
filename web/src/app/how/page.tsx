@@ -122,23 +122,21 @@ export default function HowPage() {
         </p>
         <div className="mt-3 grid gap-4 text-sm sm:grid-cols-3">
           <div>
-            <p className="text-xs font-semibold text-muted-foreground uppercase">At Ledgerline today</p>
+            <p className="text-xs font-semibold text-muted-foreground uppercase">AI as the auditor</p>
             <p className="mt-1 leading-relaxed">
-              No AI on customer data. Rules read ticket tags, status and invoice numbers inside Ledgerline. A billing ticket the rules
-              can&apos;t read goes to a person first.
+              A separate AI model reviewed all 54 bills without the tool&apos;s answers and found 7 rule errors, each now fixed. Proposed: run
+              it every week once legal approves a vendor, with disagreements going to Priya.
             </p>
           </div>
           <div>
-            <p className="text-xs font-semibold text-muted-foreground uppercase">Once legal approves a vendor</p>
+            <p className="text-xs font-semibold text-muted-foreground uppercase">AI reading tickets</p>
             <p className="mt-1 leading-relaxed">
-              Two AI models from different families read the masked ticket text on their own; if they disagree, a person decides. Proposed
-              vendor: Amazon Bedrock, in Ledgerline&apos;s existing AWS account.
+              Two models from different families read the masked text; if they disagree, a person decides.
               {up && up.cacheMisses === 0 && (
                 <>
                   {" "}
-                  Measured on these {up.bills} bills (with answers saved from a test run on Groq): AI changed{" "}
-                  {up.verdictsChanged.length === 0 ? "no answers" : `${up.verdictsChanged.length} answers`}, because rules already catch
-                  all 14 disputes by their invoice number, and moved {up.checkFirstChanged} bills in or out of Check first.
+                  Measured on these {up.bills} bills: it changed {up.verdictsChanged.length === 0 ? "no answers" : `${up.verdictsChanged.length} answers`}{" "}
+                  and moved {up.checkFirstChanged} bills in or out of Check first.
                 </>
               )}
             </p>
@@ -153,8 +151,8 @@ export default function HowPage() {
           </div>
         </div>
         <p className="mt-3 text-xs leading-relaxed text-muted-foreground">
-          Never AI: the decision to send. Priya approves every message, and drafts come from Ledgerline&apos;s own templates. The
-          &ldquo;Redraft with AI&rdquo; button is a demo: it sends a draft from this fictional data room to Groq.
+          At Ledgerline today, no AI touches customer data until legal approves a vendor (Amazon Bedrock, in the existing AWS account, is
+          proposed). Never AI: the decision to send. The &ldquo;Redraft with AI&rdquo; button is a demo on this fictional data.
         </p>
       </section>
 

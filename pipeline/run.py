@@ -71,12 +71,12 @@ def light_lines(invoices, cfg, as_of) -> list[str]:
     out = []
     emails = [i for i in ready if (i.get("draft") or {}).get("body")]
     if ready:
-        out.append(f"{len(emails)} reminder emails to approve" + (f" ({len(send) - len(ready)} more bills after a quick check)" if len(send) > len(ready) else ""))
+        out.append(f"{len(ready)} bills to remind, in {len(emails)} emails" + (f" ({len(send) - len(ready)} more after a quick check)" if len(send) > len(ready) else ""))
     if mine:
         out.append(f"{len(mine)} disputed bills to fix: corrected invoice or a clear answer")
     if calls:
         people = len({i.get("customerId") or i["id"] for i in calls})
-        out.append(f"{people} calls to make" + (f" ({len(calls)} bills)" if people != len(calls) else ""))
+        out.append(f"{len(calls)} bills to call about, in {people} calls" if people != len(calls) else f"{people} calls to make")
     if paid:
         out.append(f"{len(paid)} bills look paid: {marcus} is matching them")
     return out
@@ -155,8 +155,7 @@ def verified_numbers(engine: Engine, invoices: list[dict], by_cause: list[dict])
     out.append({"label": "Paid but chased (the Paidly case)", "methodA": "Bills with a matching or recent unmatched payment that would get a reminder",
                 "valueA": len(chased), "methodB": "Allowed (Maya: chasing someone who has paid gets the tool switched off)", "valueB": 0,
                 "ok": len(chased) == 0, "unit": "count", "group": "coo",
-                "note": "An earlier version assumed a blank-memo payment paid the older of two same-amount Kingsway bills. "
-                        "Now the other bill waits for Marcus to say which."})
+                "note": "Earlier, a blank-memo payment was assumed to pay the older of two same-amount bills; now Marcus confirms which."})
     # 5. Maya's real test, second half: nobody chased who had a complaint open
     tk_open = [r for r in engine._rows if getattr(r, "verdict", None) in ("send", "call") and not r.needs_review
                and any(e["kind"] == "ticket" and str(e.get("status") or "") in engine.v["ticket_open_status"] for e in r.evidence)
@@ -168,9 +167,8 @@ def verified_numbers(engine: Engine, invoices: list[dict], by_cause: list[dict])
                 "valueA": len(tk_open), "methodB": "Allowed (Maya: nobody chased who had a complaint open)", "valueB": 0, "ok": len(tk_open) == 0,
                 "unit": "count", "group": "coo",
                 "strictValue": len(strict),
-                "note": (f"{len(strict)} customers ({', '.join(strict_names)}) have a pending ticket that isn't about money, or said it was "
-                         "resolved, so they still get a reminder: my call after the review, for Maya to confirm. " if strict else "")
-                        + "Earlier versions would have chased 3 customers with a complaint open; each became a rule."})
+                "note": (f"{len(strict)} customers with a pending ticket that isn't about money wait in Check first until Maya confirms. "
+                         if strict else "") + "Earlier versions would have chased 3; each became a rule."})
     for v in out:
         v.setdefault("unit", "money")
         v.setdefault("group", "internal" if v["label"] == "Causes add up" else "cross")
@@ -197,7 +195,14 @@ def accuracy(invoices: list[dict], labels_path: Path, labelled_by: str):
                              "why": f"Correct answer: {(note or t).rstrip('. ')}. Tool's reason: {i['headline']}"})
     if not n:
         return None, []
-    return {"sampleSize": n, "agreed": agreed, "rate": round(agreed / n, 4), "labelledBy": labelled_by}, failures
+    orig_path = ROOT / "reports" / "review" / "independent-review.csv"
+    agreed_orig = None
+    if orig_path.exists():
+        orig = {norm_id(r["invoice_id"]): str(r.get("should_be") or "").strip().lower()
+                for r in pd.read_csv(orig_path, dtype=str).fillna("").to_dict("records")}
+        agreed_orig = sum(1 for i in invoices if orig.get(norm_id(i["id"])) == i["verdict"])
+    return {"sampleSize": n, "agreed": agreed, "rate": round(agreed / n, 4), "labelledBy": labelled_by,
+            "agreedOriginal": agreed_orig}, failures
 
 
 def main() -> None:
@@ -300,7 +305,8 @@ def main() -> None:
         if bills:
             intro.append(f"{len(bills)} {'account' if len(bills) == 1 else 'accounts'} paused until you move the issue on.")
         if out_today:
-            intro.append(f"{len(out_today)} {'contact' if len(out_today) == 1 else 'contacts'} planned today; reply if any should wait.")
+            who = len({i.get("customerId") or i["id"] for i in out_today})
+            intro.append(f"{who} {'customer' if who == 1 else 'customers'} contacted today once Priya approves; reply if any should wait.")
         routing.append({"to": am, "role": "Account manager", "channel": "Slack direct message (one a day)", "cc": None,
                         "lines": lines[:3], "more": max(0, len(lines) - 3),
                         "by": pd.Timestamp(np.busday_offset(as_of.date(), int(cfg["policy"].get("am_pause_days", 3)), roll="forward")).strftime("%b %-d") if bills else None,
@@ -319,7 +325,7 @@ def main() -> None:
                         "by": None,
                         "intro": " ".join(x for x in [
                             f"{len(wo)} card invoices will be written off automatically soon: chase them or let them go?" if wo else "",
-                            f"{len(escalate)} {'bill is' if len(escalate) == 1 else 'bills are'} past {esc_days} days: yours to escalate." if escalate else ""] if x)})
+                            f"{len(escalate)} more {'bill is' if len(escalate) == 1 else 'bills are'} past {esc_days} days: yours to escalate." if escalate else ""] if x)})
     for r in routing[1:]:
         r["link"] = app_url
     lc = cfg.get("leave_cover") or {}
@@ -394,7 +400,7 @@ def main() -> None:
                 {"label": "Nobody chased who had paid or had a complaint open", "today": 0,
                  "todayText": "0 today (both checks on this page)", "target": "Still 0 after a month. If this slips, a good receivables number won't save it"},
             ],
-            "timeSaved": "The tool replaces the 'asking around' step: about 3 to 4 of the team's 16 hours a week, by the COO's estimate. Priya to confirm before anyone quotes it.",
+            "timeSaved": "Time saved: about 3 to 4 of the team's 16 hours a week (the 'asking around' step), by the COO's estimate, for Priya to confirm.",
         },
         "autoSend": {
             "on": False,

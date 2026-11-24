@@ -26,6 +26,7 @@ export function FocusQueue({
   doneText,
   emptyText,
   proofOf,
+  extra,
 }: {
   items: FocusItem[];
   verdictOf: (inv: Invoice) => Verdict;
@@ -37,6 +38,7 @@ export function FocusQueue({
   doneText?: string;
   emptyText: string;
   proofOf?: (inv: Invoice) => KeyProof | null;
+  extra?: (item: FocusItem) => ReactNode;
 }) {
   const [activeKey, setActiveKey] = useState<string | null>(null);
   const [queueShown, setQueueShown] = useState(QUEUE_SHOWN);
@@ -121,6 +123,7 @@ export function FocusQueue({
             <Check />
             {primaryLabel(active)}
           </Button>
+          {extra?.(active)}
           <Button variant="outline" onClick={() => onChange(active)}>
             <PencilLine />
             Change

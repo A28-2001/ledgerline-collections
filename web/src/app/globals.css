@@ -77,7 +77,7 @@
      Every text-on-colour pair below was checked for WCAG AA (4.5:1 text, 3:1 icons). */
   --ink: #101820;
   --paper: #f4f6f4;
-  --gold: #e9b44c;
+  --gold: #d49a26;
   --background: #f4f6f4;
   --foreground: #101820;
   --card: #fbfcfb;
@@ -95,9 +95,9 @@
   --destructive: #b8303f;
   --border: #d9e0dd;
   --input: #cfd8d4;
-  --ring: #2a9d8f;
-  --chart-1: #2a9d8f;
-  --chart-2: #e9b44c;
+  --ring: #11806a;
+  --chart-1: #11806a;
+  --chart-2: #d49a26;
   --chart-3: #5e8c61;
   --chart-4: #7b5ea7;
   --chart-5: #d1495b;
@@ -106,21 +106,21 @@
      these light values are for the phone menu sheet. */
   --sidebar: #eaf0ed;
   --sidebar-foreground: #101820;
-  --sidebar-primary: #2a9d8f;
+  --sidebar-primary: #11806a;
   --sidebar-primary-foreground: #ffffff;
   --sidebar-accent: #dcebe7;
   --sidebar-accent-foreground: #101820;
   --sidebar-border: #d9e0dd;
-  --sidebar-ring: #2a9d8f;
-  --accent-brand: #2a9d8f;
+  --sidebar-ring: #11806a;
+  --accent-brand: #11806a;
 
-  --send: #2a9d8f;
-  --send-ink: #1b6b62;
-  --send-soft: #e1f1ee;
+  --send: #11806a;
+  --send-ink: #0b5e4e;
+  --send-soft: #dcf0ea;
   --send-contrast: #ffffff;
-  --hold: #e9b44c;
-  --hold-ink: #8a5a00;
-  --hold-soft: #fbf1dc;
+  --hold: #d49a26;
+  --hold-ink: #7a5300;
+  --hold-soft: #faeed6;
   --hold-contrast: #3d2800;
   --paid: #3a74b6;
   --paid-ink: #2a5a92;
@@ -149,7 +149,7 @@
 .dark {
   --ink: #101820;
   --paper: #f4f6f4;
-  --gold: #edbe5e;
+  --gold: #e7ae45;
   --background: #101820;
   --foreground: #eef2f0;
   --card: #16212b;
@@ -167,29 +167,29 @@
   --destructive: #e0687a;
   --border: rgb(238 242 240 / 10%);
   --input: rgb(238 242 240 / 14%);
-  --ring: #3db8a8;
-  --chart-1: #3db8a8;
-  --chart-2: #edbe5e;
+  --ring: #39bf9e;
+  --chart-1: #39bf9e;
+  --chart-2: #e7ae45;
   --chart-3: #8db58f;
   --chart-4: #a48acb;
   --chart-5: #e0687a;
   --sidebar: #0b1218;
   --sidebar-foreground: #e8eeeb;
-  --sidebar-primary: #3db8a8;
+  --sidebar-primary: #39bf9e;
   --sidebar-primary-foreground: #101820;
   --sidebar-accent: #182630;
   --sidebar-accent-foreground: #ffffff;
   --sidebar-border: rgb(238 242 240 / 8%);
-  --sidebar-ring: #3db8a8;
-  --accent-brand: #3db8a8;
+  --sidebar-ring: #39bf9e;
+  --accent-brand: #39bf9e;
 
-  --send: #3db8a8;
-  --send-ink: #7fd6cb;
-  --send-soft: rgb(61 184 168 / 14%);
+  --send: #39bf9e;
+  --send-ink: #92e2cd;
+  --send-soft: rgb(57 191 158 / 14%);
   --send-contrast: #101820;
-  --hold: #edbe5e;
-  --hold-ink: #f2cd7e;
-  --hold-soft: rgb(237 190 94 / 13%);
+  --hold: #e7ae45;
+  --hold-ink: #f3cf8a;
+  --hold-soft: rgb(231 174 69 / 13%);
   --hold-contrast: #101820;
   --paid: #78a7dc;
   --paid-ink: #a3c4ea;

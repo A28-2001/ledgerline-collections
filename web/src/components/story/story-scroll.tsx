@@ -92,7 +92,7 @@ function Backdrop() {
         }}
       />
       <div data-speed="-0.12" className="absolute -top-24 right-[-6rem] size-[30rem] rounded-full bg-send/12 blur-3xl" />
-      <div data-speed="0.1" className="absolute top-[38%] left-[-8rem] size-[22rem] rounded-full bg-gold/14 blur-3xl" />
+      <div data-speed="0.1" className="absolute top-[38%] left-[-8rem] size-[22rem] rounded-full bg-brand/12 blur-3xl" />
       <div data-speed="-0.22" className="absolute top-[22%] right-[8%] size-44 rounded-full border border-send/30" />
       <div data-speed="0.16" className="absolute top-[64%] right-[30%] size-24 rounded-full border border-gold/40" />
       <div data-speed="-0.08" className="absolute top-[82%] right-[-4rem] size-[26rem] rounded-full bg-call/8 blur-3xl" />
@@ -213,7 +213,7 @@ function ExampleBill({ e, color }: { e: NonNullable<StoryData["example"]>; color
 
 function CausesPicture({ data }: { data: StoryData }) {
   return (
-    <Frame title={`Why the ${data.totalText} is overdue`} note="Share of the money, by cause">
+    <Frame title={`How much of the ${data.totalText} is disputed`} note="Share of the overdue money">
       <div className="flex h-9 w-full overflow-hidden rounded-lg" role="img" aria-label={data.causes.map((c) => `${c.label} ${pct(c.share)}`).join(", ")}>
         {data.causes.map((c) => (
           <div
@@ -402,7 +402,7 @@ export function StoryScroll({ chapters, data, asOf }: { chapters: Chapter[]; dat
                 <div className="w-full">
                   <h2 id={`ch-${ch.id}-title`} className="flex items-center gap-3 text-xs font-semibold tracking-[0.16em] uppercase">
                     <span className="tabular text-send-ink">{String(i + 1).padStart(2, "0")}</span>
-                    <span className="h-px w-8 bg-gold" aria-hidden="true" />
+                    <span className="h-px w-8 bg-brand" aria-hidden="true" />
                     <span className="text-muted-foreground">{ch.kicker}</span>
                   </h2>
                   <p className="tabular mt-4 text-5xl font-semibold tracking-tight sm:text-6xl">{ch.number}</p>
@@ -412,7 +412,7 @@ export function StoryScroll({ chapters, data, asOf }: { chapters: Chapter[]; dat
                       <p key={t}>
                         {t.split(/(\*\*[^*]+\*\*)/).map((part, k) =>
                           part.startsWith("**") ? (
-                            <strong key={k} className="font-semibold text-foreground underline decoration-gold decoration-2 underline-offset-4">
+                            <strong key={k} className="font-semibold text-foreground underline decoration-brand decoration-2 underline-offset-4">
                               {part.slice(2, -2)}
                             </strong>
                           ) : (

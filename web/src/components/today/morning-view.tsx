@@ -93,7 +93,7 @@ const STEPS: StepDef[] = [
   },
 ];
 
-type StepKey = "check" | Verdict | "finish";
+type StepKey = "check" | Verdict | "dispute" | "finish";
 
 function csvCell(value: string | number) {
   const s = String(value);
@@ -108,9 +108,12 @@ function scrollToStep(key: StepKey) {
 
 export function MorningView({ data }: { data: Pick<Results, "invoices" | "summary" | "meta" | "morningSummary"> }) {
   const { invoices, meta, morningSummary } = data;
-  const myOverdueHolds = invoices.filter(
-    (i) => i.verdict === "hold" && i.cause === "wrong_bill" && i.hold && i.hold.deadline <= meta.asOf && i.hold.ownerRole.startsWith("Finance"),
-  );
+  // Disputes Priya fixes herself: the day's real work, kept apart from the holds she hands to others.
+  const isMyDispute = (i: Invoice) => i.verdict === "hold" && i.cause === "wrong_bill" && Boolean(i.hold?.ownerRole.startsWith("Finance"));
+  const myDisputes = invoices
+    .filter(isMyDispute)
+    .sort((a, b) => (a.hold!.deadline > b.hold!.deadline ? 1 : a.hold!.deadline < b.hold!.deadline ? -1 : b.amount - a.amount));
+  const pastTarget = myDisputes.filter((i) => i.hold!.deadline <= meta.asOf);
   const { decisions, approve, override, undo } = useDecisions();
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [startChange, setStartChange] = useState(false);
@@ -134,7 +137,7 @@ export function MorningView({ data }: { data: Pick<Results, "invoices" | "summar
     () =>
       STEPS.map((def) => {
         const items = invoices.filter(
-          (i) => effectiveVerdict(i, decisions) === def.verdict && (!i.needsReview || decisions[i.id]),
+          (i) => effectiveVerdict(i, decisions) === def.verdict && (!i.needsReview || decisions[i.id]) && !isMyDispute(i),
         );
         const undecided = items.filter((i) => !decisions[i.id]);
         const waiting = invoices.filter((i) => i.needsReview && !decisions[i.id] && i.verdict === def.verdict).length;
@@ -172,8 +175,11 @@ export function MorningView({ data }: { data: Pick<Results, "invoices" | "summar
     toast.success(`${inv.customerName}: done`, { action: { label: "Undo", onClick: () => undo(inv.id) } });
   }
 
+  const disputesOpen = myDisputes.filter((i) => !decisions[i.id]);
   const current: StepKey =
-    flaggedOpen.length > 0 ? "check" : (steps.find((s) => s.undecided.length > 0)?.def.verdict ?? "finish");
+    flaggedOpen.length > 0
+      ? "check"
+      : (steps.find((s) => s.undecided.length > 0)?.def.verdict ?? (disputesOpen.length > 0 ? "dispute" : "finish"));
   const expanded = openStep === "auto" ? current : openStep;
   const selected = selectedId ? (invoices.find((i) => i.id === selectedId) ?? null) : null;
   const allDone = decisionsLeft === 0;
@@ -274,6 +280,7 @@ export function MorningView({ data }: { data: Pick<Results, "invoices" | "summar
             />
             <span className="tabular whitespace-nowrap">
               {decisionsLeft} of {totalDecisions} decisions left
+              {myDisputes.length > 0 && <span className="hidden sm:inline"> · {disputesOpen.length} disputes to fix</span>}
             </span>
           </div>
         </div>
@@ -355,16 +362,6 @@ export function MorningView({ data }: { data: Pick<Results, "invoices" | "summar
                       <Icon className="mt-0.5 size-4 shrink-0" aria-hidden="true" />
                       {s.def.explain}
                     </p>
-                    {s.def.verdict === "hold" && myOverdueHolds.length > 0 && (
-                      <p className="mt-2 rounded-lg border border-hold/40 bg-hold-soft/60 px-3 py-2 text-sm">
-                        <span className="font-medium">
-                          Yours today: {pluralize(myOverdueHolds.length, "disputed bill")} ({formatMoney(sumAmount(myOverdueHolds))})
-                        </span>{" "}
-                        <span className="text-muted-foreground">
-                          past the 5-day fix target. Each needs a corrected invoice or a clear answer from you. The rest go to their owners.
-                        </span>
-                      </p>
-                    )}
                     {s.items.length === 0 ? (
                       <p className="mt-3 rounded-lg border border-dashed p-3 text-sm text-muted-foreground">
                         {s.waiting > 0 ? "These bills are waiting in Check first." : "No bills in this step today."}
@@ -398,6 +395,51 @@ export function MorningView({ data }: { data: Pick<Results, "invoices" | "summar
               </li>
             );
           })}
+
+          {/* The day's work: Priya's own disputes */}
+          {myDisputes.length > 0 && (
+            <li id="step-card-dispute" className={cn("scroll-mt-20 rounded-xl border bg-card", expanded === "dispute" && "shadow-sm ring-1 ring-foreground/5")}>
+              <StepHeader
+                status={<StepStatus n={5} done={disputesOpen.length === 0} current={current === "dispute"} label="Fix disputes" />}
+                title="Fix disputes: the day's work"
+                dot={VERDICT_META.hold.dot}
+                sub={
+                  disputesOpen.length === 0
+                    ? `All ${myDisputes.length} answered`
+                    : `${disputesOpen.length} of ${myDisputes.length} to answer · ${pastTarget.length} past the 5-day target`
+                }
+                amount={formatMoney(sumAmount(myDisputes))}
+                open={expanded === "dispute"}
+                onToggle={() => setOpenStep(expanded === "dispute" ? null : "dispute")}
+                controls="step-dispute"
+              />
+              {expanded === "dispute" && (
+                <div id="step-dispute" className="border-t px-4 pt-3 pb-4">
+                  <p className="text-sm leading-relaxed text-muted-foreground">
+                    Yours to fix: send the reply, then correct the bill or answer the customer. Oldest first.
+                  </p>
+                  <FocusQueue
+                    items={disputesOpen.map((inv) => ({ key: inv.id, bills: [inv], why: rowDetail(inv, "hold") }))}
+                    verdictOf={() => "hold"}
+                    primaryLabel={() => "Reply sent"}
+                    onPrimary={(it) => decideOne(it.bills[0], "hold")}
+                    onChange={(it) => openBill(it.bills[0].id, true)}
+                    onOpen={(it) => openBill(it.bills[0].id)}
+                    extra={(it) =>
+                      it.bills[0].reply ? (
+                        <CopyButton
+                          text={`To: ${it.bills[0].reply.to}\nSubject: ${it.bills[0].reply.subject}\n\n${it.bills[0].reply.body}`}
+                          label="Copy the reply"
+                        />
+                      ) : null
+                    }
+                    doneText={myDisputes.length - disputesOpen.length > 0 ? `${myDisputes.length - disputesOpen.length} answered so far` : undefined}
+                    emptyText={`All ${myDisputes.length} disputes answered. Correct each bill by its target date.`}
+                  />
+                </div>
+              )}
+            </li>
+          )}
 
           {/* Finish line */}
           <li

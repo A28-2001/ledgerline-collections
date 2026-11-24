@@ -61,7 +61,7 @@ def grave_phrase(text: str) -> str:
 
 INVOICE_REF_RX = re.compile(r"\binv[-\s#]?(\d{4,7})\b", re.I)
 NEGATIVE_RX = re.compile(r"broken|fail|error|frustrat|not working|issue|problem|bug|slow|spins|lost|blocking", re.I)
-CAUSE_LABEL = {"unhappy": "Open complaint or ticket", "paid": "Already paid", "wrong_bill": "Customer says the bill is wrong",
+CAUSE_LABEL = {"unhappy": "Open complaint or ticket", "paid": "Payment arrived, not matched", "wrong_bill": "Customer says the bill is wrong",
                "card_failed": "Card payment failed", "simply_late": "Simply late"}
 
 
@@ -630,7 +630,7 @@ class Engine:
             return {"to": to, "subject": "", "body": "", "tone": "none"}
         if tone == "card_update":
             subj = f"Card payment for invoice {inv} didn't go through"
-            body = (f"{hi}\n\nYour card didn't go through for invoice {inv} ({amt}). You can update it here: [update-card link]. "
+            body = (f"{hi}\n\nYour card didn't go through for invoice {inv} ({amt}). You can update it in your Ledgerline billing settings, or reply and we'll send you a secure link. "
                     f"If you'd rather pay by bank transfer, just reply and we'll send the details.\n\n{sign}")
         elif tone == "soft":
             subj = f"Invoice {inv}: a quick note"
@@ -753,6 +753,12 @@ class Engine:
             if verdict == "send" and not [r for r in row.reasons if not r["text"].startswith("Tell ")]:
                 row.reasons.insert(0, {"text": f"{row.days} days overdue, no open complaint, no payment found, bill matches the contract.",
                                        "evidenceIds": [e["id"] for e in row.evidence], "policyRef": stage_ref})
+            if verdict == "send":
+                pending = [t for t in tickets.get(cid, []) if t.get("relevant")
+                           and str(t.get("status") or "").split(" (")[0] not in self.v["ticket_closed_status"]]
+                if pending:
+                    row.needs_review.append("a ticket is still pending in Zendesk, though it isn't about money: confirm the reminder can go "
+                                            "(my call after the review, for Maya to confirm)")
             if contact_note and verdict == "send":
                 row.reasons.append({"text": contact_note.capitalize() + ".", "evidenceIds": [], "policyRef": None})
 
@@ -784,8 +790,9 @@ class Engine:
                 if f.get("twin_payment"):
                     marcus = str(self.cfg["people"].get("cash_owner", "Cash application")).split(" (")[0]
                     back_to = self.cfg["people"]["finance_owner"].split(" (")[0]
+                    started = getattr(self, "handoffs", {}).get(row.display_id)
                     hold = {"owner": marcus, "ownerRole": "Staff Accountant (matches payments)",
-                            "deadline": iso(add_business_days(self.as_of, int(self.p.get("paid_match_days", 2)))),
+                            "deadline": iso(add_business_days(started if started is not None else self.as_of, int(self.p.get("paid_match_days", 2)))),
                             "twinOf": f.get("twin_of"),
                             "action": f"Confirm whether the {money(f.get('twin_amount') or row.amount)} payment pays {f.get('twin_of')} or this bill. "
                                       f"If it's this one, close it; if not, the reminder can go. Not confirmed in "
@@ -810,9 +817,15 @@ class Engine:
                     am = str(c["account_manager"]) if c is not None and pd.notna(c.get("account_manager")) else "Account manager"
                     am_days = int(self.p.get("am_pause_days", 3))
                     back_to = self.cfg["people"]["finance_owner"].split(" (")[0]
-                    hold = {"owner": am, "ownerRole": "Account manager (Slack direct message, one nudge a day)",
-                            "deadline": iso(add_business_days(self.as_of, am_days)),
-                            "action": f"Get the issue moving, or tell {back_to} the reminder can go. If neither happens within {am_days} working days, it comes back to {back_to} automatically."}
+                    started = getattr(self, "handoffs", {}).get(row.display_id)
+                    due = add_business_days(started if started is not None else self.as_of, am_days)
+                    if started is not None and due < self.as_of:
+                        hold = {"owner": back_to, "ownerRole": "Finance (AR), back from the account manager", "deadline": iso(self.as_of),
+                                "action": f"Back with you: {am} had {am_days} working days from {nice(started)} and nothing moved. Decide whether the reminder can go."}
+                    else:
+                        hold = {"owner": am, "ownerRole": "Account manager (Slack direct message, one nudge a day)", "deadline": iso(due),
+                                "action": (f"Handed over on {nice(started)}. " if started is not None else "")
+                                          + f"Get the issue moving, or tell {back_to} the reminder can go. If neither happens within {am_days} working days, it comes back to {back_to} automatically."}
             policy_ref = next((r["policyRef"] for r in row.reasons if r.get("policyRef")), stage_ref)
             out = {
                 "id": row.display_id, "customerId": cid, "customerName": name, "amount": round(row.amount, 2),
@@ -916,19 +929,25 @@ class Engine:
         from pathlib import Path as _Path
         hd = self.cfg.get("history_dir")
         out: dict[str, pd.Timestamp] = {}
+        self.handoffs: dict[str, pd.Timestamp] = {}  # first day each hold was handed to its owner
         if not hd:
             return out
         folder = _Path(hd) if _Path(hd).is_absolute() else _Path(__file__).resolve().parent.parent / hd
         for f in sorted(folder.glob("*.csv")) if folder.exists() else []:
             for r in _csv.DictReader(f.open()):
-                if (r.get("final") or "").strip() != "send" or not r.get("decided_at"):
+                final = (r.get("final") or "").strip()
+                if final not in ("send", "hold") or not r.get("decided_at"):
                     continue
                 when = pd.Timestamp(str(r["decided_at"])[:10])
                 if when > self.as_of:
                     continue
                 key = str(r.get("invoice_id") or "").strip()
-                if key and (key not in out or when > out[key]):
+                if not key:
+                    continue
+                if final == "send" and (key not in out or when > out[key]):
                     out[key] = when
+                if final == "hold" and (key not in self.handoffs or when < self.handoffs[key]):
+                    self.handoffs[key] = when
         return out
 
     def _dispute_reply(self, row: Row, to: str, hold: dict) -> dict:
@@ -939,9 +958,14 @@ class Engine:
         by = nice(pd.Timestamp(hold["deadline"])) if hold.get("deadline") and pd.Timestamp(hold["deadline"]) > self.as_of \
             else nice(add_business_days(self.as_of, 2))
         late = bool(hold.get("deadline")) and pd.Timestamp(hold["deadline"]) <= self.as_of
-        body = (f"{hi}\n\nThank you for flagging invoice {row.display_id}{', and sorry it has taken this long' if late else ''}. We're reviewing it against your "
-                f"contract now, and you'll have a corrected invoice or a clear answer from me by {by}.\n\n"
-                f"There's no need to pay the current invoice in the meantime.\n\n{sign}")
+        cited = {i for r in row.reasons for i in r.get("evidenceIds", [])}
+        ticket = next((e for e in row.evidence if e["kind"] == "ticket" and e["id"] in cited), None)
+        title = (ticket or {}).get("title") or ""
+        # Quote the customer's own subject line, unless it holds a word the threat guard blocks (e.g. "late fee").
+        about = f" (\u201c{title}\u201d)" if title and not any(w in title.lower() for w in THREAT_WORDS) else ""
+        body = (f"{hi}\n\nThank you for flagging invoice {row.display_id}{about}{', and sorry it has taken this long' if late else ''}. "
+                f"We're checking it against your contract now, and you'll have a corrected invoice or a clear answer from me by {by}.\n\n"
+                f"We won't chase this invoice while we sort it out.\n\n{sign}")
         for w in THREAT_WORDS:
             assert w not in body.lower(), f"reply for {row.display_id} contains '{w}'"
         return {"to": to, "subject": f"Invoice {row.display_id}: we're on it", "body": body}

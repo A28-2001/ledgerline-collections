@@ -65,9 +65,9 @@ export const CAUSE_META: Record<Cause, { label: string; color: string; descripti
     description: "The customer says this bill is wrong, often in a ticket Zendesk marks solved. Correct it or answer them before asking for money.",
   },
   paid: {
-    label: "Probably already paid",
+    label: "Payment arrived, not matched",
     color: "var(--cause-paid)",
-    description: "Money arrived but wasn't matched to the bill.",
+    description: "Money arrived but nobody has matched it to the bill yet.",
   },
   card_failed: {
     label: "Card payment failed",
@@ -173,13 +173,13 @@ export const GLOSSARY: { term: string; meaning: string }[] = [
   { term: "Hold", meaning: VERDICT_META.hold.description },
   { term: "Probably paid", meaning: VERDICT_META.paid.description },
   { term: "Call them", meaning: VERDICT_META.call.description },
-  { term: "Why it's overdue", meaning: "The reason behind the late bill: simply late, unhappy customer, already paid, wrong bill or failed card." },
-  { term: "Check first", meaning: "The tool isn't sure: the AI wasn't sure what a ticket means, a payment could belong to more than one bill, or the customer match is weak. A person decides these before anything else." },
-  { term: "AI double-check", meaning: "Two different AI models read each ticket on their own. If they disagree, the AI wasn't sure, and nobody is chased until a person reads it." },
+  { term: "Why it's overdue", meaning: "The reason behind the late bill: the customer disputes it, it's simply late, a payment arrived but isn't matched, a complaint or ticket is open, or a card failed." },
+  { term: "Check first", meaning: "Bills a person decides before anything else: a solved billing ticket to confirm, a ticket still pending, a write-off to decide, or a weak customer match." },
+  { term: "AI double-check", meaning: "When AI reads tickets (only once legal approves a vendor), two different models read each one on their own. If they disagree, a person reads it before anyone is chased." },
   { term: "Proof", meaning: "The records behind a suggestion: the ticket, payment or contract, with the file and row it came from." },
-  { term: "Don't chase today", meaning: "Money we would have chased by mistake: bills that look paid, customers with an open complaint or a chargeback threat, and bills the customer disputes." },
+  { term: "Don't chase today", meaning: "Money not to chase today: bills that look paid, customers with an open complaint or a threat, bills the customer disputes, and bills not yet 7 days late." },
   { term: "Chase today", meaning: "Bills with nothing blocking them: reminders to send and customers to call." },
-  { term: "Decision", meaning: "One click by a person: each bill to check first, plus one click to approve each step. The tool never acts on its own." },
+  { term: "Decision", meaning: "One click by a person: each customer in Check first, plus one click to approve each step. Disputes are counted apart: they're the day's work, not the morning sort. The tool never acts on its own." },
 ];
 
 export const MATCH_METHOD_LABEL: Record<string, string> = {

@@ -69,9 +69,17 @@ export default function SummaryPage() {
             <ul className="mt-3 space-y-2.5">
               {s.routing.slice(1).map((r) => (
                 <li key={r.to} className="rounded-xl border bg-card p-4 text-sm">
-                  <p className="font-semibold">
-                    {r.to} <span className="font-normal text-muted-foreground">· {r.role}</span>
-                  </p>
+                  <div className="flex items-start justify-between gap-2">
+                    <p className="font-semibold">
+                      {r.to} <span className="font-normal text-muted-foreground">· {r.role}</span>
+                    </p>
+                    <CopyButton
+                      text={[r.intro ?? "", ...r.lines.map((l) => `• ${l}`), ...((r.more ?? 0) > 0 ? [`and ${r.more} more`] : []), ...(r.link ? ["", r.link] : [])]
+                        .filter((x, i) => x !== "" || i > 0)
+                        .join("\n")}
+                      label="Copy"
+                    />
+                  </div>
                   {r.intro && <p className="mt-1 leading-relaxed">{r.intro}</p>}
                   {r.lines.length > 0 && (
                     <ul className="mt-1.5 space-y-0.5 text-muted-foreground">
