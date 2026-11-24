@@ -44,6 +44,8 @@ PRICING_RX = re.compile(r"seat|price|pricing|plan\b|discount|renewal|downgrad|up
 # threatened any of these is not chased by finance until someone confirms it is settled, whatever Zendesk says.
 GRAVE_RX = re.compile(r"chargeback|charge ?back|contest(ing)? the charge|disput\w* (the )?charges? with (my|our) bank|consumer affairs|"
                       r"attorney general|better business bureau|\bBBB\b|ombudsman|regulator|small claims|legal action|lawyer|attorney|solicitor", re.I)
+RESOLVED_RX = re.compile(r"closing this out|you can close|please close|all sorted|sorted now|resolved now|it'?s (fixed|resolved|working) now|"
+                         r"no longer an issue|no further action|that fixed it|all good now|problem solved", re.I)
 INVOICE_REF_RX = re.compile(r"\binv[-\s#]?(\d{4,7})\b", re.I)
 NEGATIVE_RX = re.compile(r"broken|fail|error|frustrat|not working|issue|problem|bug|slow|spins|lost|blocking", re.I)
 CAUSE_LABEL = {"unhappy": "Unhappy customer", "paid": "Already paid", "wrong_bill": "Customer says the bill is wrong",
@@ -173,7 +175,10 @@ class Engine:
                 continue
             out.setdefault(m.customer_id, []).append(t)
             created = t.get("created")
-            is_open = (t.get("status") or "") not in self.v["ticket_closed_status"]
+            said_resolved = bool(RESOLVED_RX.search(str(t.get("body") or "")))
+            if said_resolved and (t.get("status") or "") not in self.v["ticket_closed_status"]:
+                t["status"] = f"{t.get('status')} (customer says resolved)"
+            is_open = (t.get("status") or "") not in self.v["ticket_closed_status"] and not said_resolved  # the customer said it's resolved
             t["is_open"] = is_open
             # Open tickets always count. Closed ones count from the day the customer's oldest overdue bill was
             # issued: at Ledgerline a "solved" ticket can still be an unresolved dispute about that bill.
@@ -364,6 +369,13 @@ class Engine:
                     rs.insert(0, {"text": f"A billing ticket from {nice(t['created'])} says they're holding payment. Zendesk marks it {t.get('status')}, but nothing shows it was fixed.",
                                   "evidenceIds": [eid], "policyRef": "collections_policy.md: do not chase an invoice the customer has disputed"})
                     continue
+                money_text = bool(BILLING_RX.search(f"{t.get('subject') or ''} {t.get('body') or ''}") or t.get("holding"))
+                if not open_ and after_issue and label == "billing_complaint" and recent and money_text:
+                    row.flags["complaint_hold"] = True
+                    rs.insert(0, {"text": f"A billing ticket from {nice(t['created'])}, only {(self.as_of - t['created']).days} days ago, is marked {t.get('status')} in Zendesk, "
+                                          "but nothing shows the money issue was settled (for example a refund we owe them). Confirm it before chasing.",
+                                  "evidenceIds": [eid], "policyRef": "collections_policy.md: do not chase an invoice the customer has disputed"})
+                    continue
                 if not open_ and after_issue and label == "billing_complaint":
                     row.needs_review.append(f"a billing ticket from {nice(t['created'])} is marked {t.get('status')}: check it was really fixed")
                 # No-vendor mode (Maya, until legal approves an AI provider): a ticket TAGGED billing or account change
@@ -421,6 +433,31 @@ class Engine:
             if not (row.flags.get("dispute_hold") or row.flags.get("complaint_hold") or row.flags.get("disputed_hold")
                     or row.flags.get("paid_unmatched") or row.flags.get("paid_linked")):
                 still_open = [t for t in tickets.get(cid, []) if t.get("relevant") and t.get("is_open")]
+
+                def blocks(t):
+                    # Decided 24 Nov after the independent review: in Zendesk "pending" means support is waiting on the
+                    # customer, so it pauses the reminder only if it's about money, high priority, or still waiting on us.
+                    text = f"{t.get('subject') or ''} {t.get('body') or ''}"
+                    return ((t.get("status") or "") not in ("pending",)
+                            or (t.get("priority") or "") in ("high", "urgent")
+                            or (t.get("category") or "") in self.v["ticket_billing_category"]
+                            or bool(BILLING_RX.search(text) or HOLDING_RX.search(text)))
+
+                blocking = [t for t in still_open if blocks(t)]
+                waiting = [t for t in still_open if not blocks(t)]
+                if waiting and not blocking:
+                    t = sorted(waiting, key=lambda t: t.get("created") or self.as_of)[0]
+                    eid = f"ticket:{t['id']}"
+                    if not any(e["id"] == eid for e in ev):
+                        body = t.get("body") or ""
+                        ev.append({"id": eid, "kind": "ticket", "file": self.cfg["files"]["tickets"]["file"], "recordId": str(t["id"]),
+                                   "date": iso(t.get("created")), "status": t.get("status") or "", "title": redact(t.get("subject") or "(no subject)"),
+                                   "detail": redact(body)[:400] + ("…" if len(body) > 400 else "")})
+                    row.flags["soft"] = True
+                    rs.append({"text": f"Their ticket \u201c{redact(t.get('subject') or '(no subject)')}\u201d is pending in Zendesk since {nice(t['created'])}: "
+                                       "support is waiting on them, and it isn't about money. It doesn't block the reminder, but the tone is softer and the account manager is told.",
+                               "evidenceIds": [eid], "policyRef": "collections_policy.md: tell the account manager before finance contacts one of their accounts"})
+                still_open = blocking
                 if still_open:
                     t = sorted(still_open, key=lambda t: t.get("created") or self.as_of)[0]
                     eid = f"ticket:{t['id']}"
@@ -431,6 +468,8 @@ class Engine:
                                    "detail": redact(body)[:400] + ("…" if len(body) > 400 else "")})
                     waited = (self.as_of - t["created"]).days if pd.notna(t.get("created")) else 0
                     row.flags["open_ticket_hold"] = True
+                    row.flags["soft"] = False
+                    rs[:] = [x for x in rs if not x["text"].startswith(("Open product complaint", "Their ticket \u201c"))]
                     rs.insert(0, {"text": f"They have a ticket {t.get('status') or 'open'} in Zendesk since {nice(t['created'])} ({waited} days). "
                                           "Chasing payment while their question is unanswered is what gets the tool switched off; the account manager decides when to resume.",
                                   "evidenceIds": [eid], "policyRef": "collections_policy.md: tell the account manager before finance contacts one of their accounts"})

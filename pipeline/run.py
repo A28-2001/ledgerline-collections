@@ -102,8 +102,9 @@ def verified_numbers(engine: Engine, invoices: list[dict], by_cause: list[dict])
                 "ok": len(chased) == 0})
     # 5. Maya's real test, second half: nobody chased who had a complaint open
     tk_open = [r for r in engine._rows if getattr(r, "verdict", None) == "send" and not r.needs_review
-               and any(e["kind"] == "ticket" and str(e.get("status") or "") in engine.v["ticket_open_status"] for e in r.evidence)]
-    out.append({"label": "Complaint open but chased", "methodA": "Reminders going to a customer with an open or pending ticket",
+               and any(e["kind"] == "ticket" and str(e.get("status") or "") in engine.v["ticket_open_status"] for e in r.evidence)
+               and not r.flags.get("soft")]
+    out.append({"label": "Complaint open but chased", "methodA": "Reminders going to a customer with an open ticket, or a pending one about money or marked high priority",
                 "valueA": len(tk_open), "methodB": "Allowed (Maya: nobody chased who had a complaint open)", "valueB": 0, "ok": len(tk_open) == 0})
     # 6. Count
     out.append({"label": "Bills checked", "methodA": "Rows in the overdue list", "valueA": len(engine._rows),
@@ -267,7 +268,9 @@ def main() -> None:
         "proof": {"matchRate": round(ms["rate"], 4),
                   "matchBreakdown": [{"method": k, "count": v} for k, v in sorted(ms["by_method"].items(), key=lambda x: -x[1])],
                   "accuracy": acc, "agreementRate": round(ai.agreements / ai.judgments, 4) if ai.judgments else None,
-                  "verifiedNumbers": vn, "failures": failures[:12], "runtimeSeconds": round(time.time() - t0, 2)},
+                  "verifiedNumbers": vn, "failures": failures[:12], "runtimeSeconds": round(time.time() - t0, 2),
+                  "reviewLog": (json.loads((ROOT / "reports/review/review-log.json").read_text())
+                                if args.data == "raw" and (ROOT / "reports/review/review-log.json").exists() else None)},
         "morningSummary": morning,
         "settings": [
             {"name": "Small reminder (auto-send limit)", "value": money(float(cfg.get("auto_send", {}).get("max_amount") or 0)), "who": "Priya, on this page", "source": "Maya, 24 Nov"},

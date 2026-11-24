@@ -34,6 +34,48 @@ export default function ProofPage() {
         description={`How far to trust today's list: how well customers were matched, how often the suggestions were right, where the AI wasn't sure, and where the tool is wrong. The full run took ${proof.runtimeSeconds.toFixed(1)} seconds.`}
       />
 
+      {proof.reviewLog && (
+        <Card className="mb-6 border-foreground/20">
+          <CardHeader>
+            <CardTitle className="leading-snug">Where it was wrong, and what we changed</CardTitle>
+            <CardDescription>{proof.reviewLog.summary}</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <ol className="space-y-3">
+              {proof.reviewLog.entries.map((e, idx) => (
+                <li key={`${e.invoice}-${idx}`} className="rounded-lg border p-3 text-sm">
+                  <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
+                    <span className="font-medium">{e.customer}</span>
+                    {e.invoice !== "-" && <span className="font-mono text-xs text-muted-foreground">{e.invoice}</span>}
+                    {e.amount > 0 && <span className="tabular text-xs text-muted-foreground">{formatMoney(e.amount)}</span>}
+                    <span
+                      className={
+                        e.status === "fixed"
+                          ? "rounded-full border border-emerald-600/40 px-2 text-[11px] text-emerald-700 dark:text-emerald-400"
+                          : e.status === "deliberate"
+                            ? "rounded-full border px-2 text-[11px] text-muted-foreground"
+                            : "rounded-full border border-amber-600/40 px-2 text-[11px] text-amber-700 dark:text-amber-400"
+                      }
+                    >
+                      {e.status === "fixed" ? "Fixed" : e.status === "deliberate" ? "Kept on purpose" : "Still open"}
+                    </span>
+                    <span className="text-[11px] text-muted-foreground">Found by {e.foundBy}</span>
+                  </div>
+                  {e.toolSaid !== "-" && (
+                    <p className="mt-1 text-xs text-muted-foreground">
+                      Tool said <span className="font-medium text-foreground">{e.toolSaid}</span> · should be{" "}
+                      <span className="font-medium text-foreground">{e.shouldBe}</span>
+                    </p>
+                  )}
+                  <p className="mt-1.5 leading-relaxed">{e.why}</p>
+                  <p className="mt-1 text-xs leading-relaxed text-muted-foreground">Change: {e.change}</p>
+                </li>
+              ))}
+            </ol>
+          </CardContent>
+        </Card>
+      )}
+
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
         <Card>
           <CardHeader>

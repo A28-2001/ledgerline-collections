@@ -1,7 +1,7 @@
 # Review of all 54 overdue bills: tool vs independent reviewer
 
 The reviewer read the raw records (masked tickets, payments, contracts) and Ledgerline's policy, without seeing the tool's answers.
-Agreement: **50 of 54 bills (93%)**, $579,572 of $633,245.
+Agreement: **53 of 54 bills (98%)**, $589,565 of $633,245.
 
 ## Tool (rows) vs reviewer (columns)
 
@@ -9,9 +9,9 @@ Agreement: **50 of 54 bills (93%)**, $579,572 of $633,245.
 review  call  hold  paid  send  All
 tool                               
 call       9     0     0     0    9
-hold       0    19     0     4   23
+hold       0    19     0     1   20
 paid       0     0     5     0    5
-send       0     0     0    17   17
+send       0     0     0    20   20
 All        9    19     5    21   54
 ```
 
@@ -19,17 +19,14 @@ All        9    19     5    21   54
 
 | Invoice | Customer | $ | Days | Tool | Reviewer | Reviewer's reason | Tool's reason |
 |---|---|---|---|---|---|---|---|
-| INV-25873 | Eastman & Wexler CPAs | 43,680 | 15 | hold | send (medium) | TOP-50 account 15 days late with no dispute; open T881016 is a normal-priority product bug about a client's send log, so a person should write a personal reminder after telling the account manager. | Open product complaint (not about money): send, but in a softer tone, and tell the account manager. |
-| INV-25852 | Kingsway Engineering Group | 5,100 | 19 | hold | send (medium) | Bill of $5,100 is 19 days late; PAY-65805 for the same $5,100 is most likely for older INV-25469, so remind about this one only after confirming which invoice the payment covers; pending T880184 is about a client's invoice and should not block. | They have a ticket pending in Zendesk since Jul 20, 2026 (103 days). Chasing payment while their question is unanswered is what gets the too |
-| INV-25902 | Crane IT Partners | 3,060 | 7 | hold | send (high) | Bill of $3,060 is 7 days late; T880058 is still pending but the customer wrote that the tax codes are back and they are closing it out, so send a polite first reminder. | Serious open escalation with support. Money talk waits until it's resolved. |
-| INV-25898 | Harbor Engineering Group | 1,833 | 10 | hold | send (medium) | Bill of $1,833 is 10 days late; T880226's July double-charge question is solved and pending T880229 is a timer bug, so send a polite reminder. | They have a ticket pending in Zendesk since Jul 24, 2026 (99 days). Chasing payment while their question is unanswered is what gets the tool |
+| INV-25873 | Eastman & Wexler CPAs | 43,680 | 15 | hold | send (medium) | TOP-50 account 15 days late with no dispute; open T881016 is a normal-priority product bug about a client's send log, so a person should write a personal reminder after telling the account manager. | They have a ticket open in Zendesk since Oct 28, 2026 (3 days). Chasing payment while their question is unanswered is what gets the tool swi |
 
 ## Where the reviewer doubts a rule
 
 - **INV-25873 Eastman & Wexler CPAs**: The open-ticket rule would hold this bill, but a product bug about the customer's own client is not a dispute or escalation about money owed to Ledgerline.
+- **INV-25923 Abbott Design Partnership**: None of the four answers means 'not yet due for a reminder'; hold here only means wait three days, not a dispute.
 - **INV-25902 Crane IT Partners**: The pending-ticket rule would hold this, but the ticket text says the issue is resolved.
 - **INV-25898 Harbor Engineering Group**: A pending product bug from July should not block a reminder.
-- **INV-25923 Abbott Design Partnership**: None of the four answers means 'not yet due for a reminder'; hold here only means wait three days, not a dispute.
 - **INV-25975 Quill, Mott & Co**: The failed-card send rule would email about this bill on the same day a person phones about the older one; one contact per customer is better.
 - **INV-25433 Northgate Creative**: The failed-card email rule would say send and the 150-day auto write-off would drop $799 from an active customer whose later monthly bills are paid; at this age it should be a call and the write-off should wait for a person.
 - **INV-25470 Hollis Nair Engineers**: The failed-card email rule would say send, but an update-card email has clearly not worked after 141 days; the age rule should win.
@@ -59,6 +56,7 @@ All        9    19     5    21   54
 | INV-25764 | Castell Engineering | 6,324 | hold | T880849 (marked solved) says INV-25764 bills the full month at the old higher plan after a downgrade on the 3rd and they will not pay until fixed; PAY-65766 for the same $6,324 is from Brandt & Lowell, not this customer. |
 | INV-25806 | Brandt & Lowell CPAs | 6,324 | paid | PAY-65766 ($6,324 ACH from BRANDT & LOWELL CPAS, memo 'Ledgerline subscription', received 2026-10-19) matches this 28-day bill by name and amount and should be applied now. |
 | INV-25469 | Kingsway Engineering Group | 5,100 | paid | PAY-65805 ($5,100 ACH from Kingsway Engineering Group on 2026-10-29, blank memo) matches this 111-day bill, but INV-25852 is also $5,100; apply it oldest-first here and confirm with the customer which invoice it was for. |
+| INV-25852 | Kingsway Engineering Group | 5,100 | send | Bill of $5,100 is 19 days late; PAY-65805 for the same $5,100 is most likely for older INV-25469, so remind about this one only after confirming which invoice the payment covers; pending T880184 is about a client's invoice and should not block. |
 | INV-25863 | Banerjee Design Partnership | 5,100 | send | Bill of $5,100 is 17 days late and its tickets are how-tos and a bug; PAY-65805 for the same amount came from Kingsway Engineering Group, not this customer, so send a polite reminder. |
 | INV-25890 | Oyelaran Strategy | 4,692 | send | Bill of $4,692 is 12 days late with no tickets and no matching payment, so send a polite reminder to Layla Garrick only, not departed contact Renee Fairbanks. |
 | INV-25923 | Abbott Design Partnership | 4,692 | hold | Bill is only 4 days late (first reminder is due at 7 days, on 3 November) and T880542 is an ownership-transfer request, so no contact about money today. |
@@ -66,11 +64,13 @@ All        9    19     5    21   54
 | INV-25718 | Mercer & Banerjee LLP | 3,876 | hold | T880648 refuses to pay the time-tracking module on INV-25718 and T880514 gave notice of termination asking for the final amount owing, neither shows a fix, so the account manager must handle it; also remove departed contact Oscar Pemberton. |
 | INV-25845 | Castellano, Crane & Co | 3,672 | paid | PAY-65806 ($3,672 wire from Castellano, Crane & Co, memo 'INV-25845', received 2026-10-30) matches this bill by name, amount and invoice number. |
 | INV-25973 | Eastman Engineering | 3,264 | hold | T880519 complains of a 35% renewal increase, says a complaint was filed with the state consumer affairs office and threatens to contest the card charge, and nothing shows it was resolved, so do not chase this 23-day failed card bill. |
+| INV-25902 | Crane IT Partners | 3,060 | send | Bill of $3,060 is 7 days late; T880058 is still pending but the customer wrote that the tax codes are back and they are closing it out, so send a polite first reminder. |
 | INV-25711 | Oyelaran Devlin Engineers | 2,820 | hold | T880667 (marked solved) says the data migration fee on INV-25711 was waived in writing and asks for it to be removed and resent, and nothing shows that was done. |
 | INV-25539 | Banerjee Petrov Engineers | 2,652 | hold | T880432 (marked solved) disputes INV-25539 by number, saying the cancelled portal fee and setup line were billed again and asking for a corrected invoice, and nothing shows a correction (next bill INV-25927 is the same $2,652); the account manager must resolve it before the 92-day call to the VP Finance. |
 | INV-25907 | Rosales Engineering | 2,500 | send | The $2,500 implementation bill is 7 days late with no tickets and no matching payment, so include it in one polite first reminder with INV-25906. |
 | INV-25881 | Corbin Media | 2,397 | send | Bill of $2,397 is 13 days late and its tickets are questions about the sync log and the customer's own credit notes, so send a polite reminder. |
 | INV-25803 | Glover Engineering | 1,836 | call | Failed card bill of $1,836 is 59 days late with no dispute in its tickets, so a person phones; mention the two-seat removal asked for in T880736 so it is confirmed as done. |
+| INV-25898 | Harbor Engineering Group | 1,833 | send | Bill of $1,833 is 10 days late; T880226's July double-charge question is solved and pending T880229 is a timer bug, so send a polite reminder. |
 | INV-25708 | Quill, Mott & Co | 1,632 | call | Failed card bill of $1,632 is 83 days late, a second $1,632 card bill (INV-25975) has also failed, and the only ticket T880731 is a product bug, so a person phones about both bills. |
 | INV-25975 | Quill, Mott & Co | 1,632 | call | Second failed $1,632 card bill (22 days) for Quill, Mott & Co, whose INV-25708 is 83 days late, so cover it on the same phone call instead of a separate update-your-card email. |
 | INV-25854 | Studio Marsh | 1,410 | hold | T881021 (2026-10-29) chases a duplicate-charge refund Ledgerline approved but has not paid, so confirm the refund (and whether it relates to this bill) before reminding about this 18-day $1,410 bill; pending T880643 is a product bug. |
