@@ -67,13 +67,31 @@ export default function ProofPage() {
     [r.fixed && `${r.fixed} fixed`, r.kept && `${r.kept} kept on purpose`, r.open && `${r.open} still open`].filter(Boolean).join(", ");
   const totals = sources.reduce((t, r) => ({ fixed: t.fixed + r.fixed, kept: t.kept + r.kept, open: t.open + r.open }), { fixed: 0, kept: 0, open: 0 });
 
-  const guards = [
-    `A person approves everything that goes out: today ${sendCount} reminders, each one read or bulk-approved by Priya. Auto-send stays off until a month of her approvals is on record, then only for small, polite reminders.`,
-    "Some bills never go out without a person, permanently: top-50 accounts, disputes, probably-paid bills, anything firmer than a friendly nudge, and every phone call.",
-    "No customer data goes to an AI vendor until legal approves one (Amazon Bedrock, in Ledgerline's existing AWS account, is proposed). Every ticket excerpt finance sees is masked.",
-    `When AI does read tickets, two models from different families must agree, or a person decides.${up && up.cacheMisses === 0 ? ` Measured on these ${up.bills} bills, it changed ${up.verdictsChanged.length === 0 ? "no answers" : `${up.verdictsChanged.length} answers`} (rules already catch all 14 disputes by their invoice number) and moved ${up.checkFirstChanged} bills in or out of Check first (${up.checkFirstWithAI} with AI, ${up.checkFirstRules} without).` : ""}`,
-    "Emails come from Ledgerline's own templates, with the 45-day suspension threat removed and a check that no threat words get in. The AI redraft button can't add facts or ticket details; it's a demo that sends a draft from this fictional data room to Groq.",
-    `Every name on bills, payments and tickets was linked to a customer, ${byId} by ID and ${byName} by exact name; a near-match would go to a person. The headline figures are worked out two ways, and ${crossOk} of ${cross.length} agree.`,
+  const guards: { lead: string; rest: string }[] = [
+    {
+      lead: "A person approves everything that goes out.",
+      rest: `Today that's ${sendCount} bills to remind, read or bulk-approved by Priya. Auto-send stays off until a month of her approvals is on record, then only for small, polite reminders.`,
+    },
+    {
+      lead: "Some bills never go out without a person.",
+      rest: "Top-50 accounts, disputes, probably-paid bills, anything firmer than a friendly nudge, and every phone call. Permanently.",
+    },
+    {
+      lead: "No customer data goes to an AI vendor yet.",
+      rest: "Not until legal approves one (Amazon Bedrock, in Ledgerline's existing AWS account, is proposed). Every ticket excerpt finance sees is masked.",
+    },
+    {
+      lead: "AI is double-checked, and measured.",
+      rest: `When it reads tickets, two models from different families must agree, or a person decides.${up && up.cacheMisses === 0 ? ` On these ${up.bills} bills it changed ${up.verdictsChanged.length === 0 ? "no answers" : `${up.verdictsChanged.length} answers`} (rules catch all 14 disputes by their invoice number) and moved ${up.checkFirstChanged} bills in or out of Check first.` : ""}`,
+    },
+    {
+      lead: "No threats, no invented facts.",
+      rest: "Emails come from Ledgerline's own templates, with the 45-day suspension threat removed and a check for threat words. The AI redraft button can't add facts or ticket details; it's a demo that sends a draft from this fictional data room to Groq.",
+    },
+    {
+      lead: "Every number is checked.",
+      rest: `Every name on bills, payments and tickets was linked to a customer (${byId} by ID, ${byName} by exact name). The headline figures are worked out two ways, and ${crossOk} of ${cross.length} agree.`,
+    },
   ];
 
   return (
@@ -186,9 +204,11 @@ export default function ProofPage() {
         <CardContent>
           <ul className="space-y-2.5 text-sm">
             {guards.map((g) => (
-              <li key={g} className="flex gap-2.5">
+              <li key={g.lead} className="flex gap-2.5">
                 <CircleCheck className="mt-0.5 size-4 shrink-0 text-foreground" aria-hidden="true" />
-                <span className="leading-relaxed">{g}</span>
+                <span className="leading-relaxed">
+                  <span className="font-semibold">{g.lead}</span> <span className="text-muted-foreground">{g.rest}</span>
+                </span>
               </li>
             ))}
           </ul>

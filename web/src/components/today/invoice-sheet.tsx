@@ -315,7 +315,9 @@ function InvoiceDetail({
           </Section>
 
           {inv.hold && (
-            <Section title="Hold: pause and hand to the owner" icon={CalendarClock}>
+            <Section title={
+                inv.hold.ownerRole.startsWith("Finance") && !/^too early/i.test(inv.headline) ? "Hold: yours to fix" : "Hold: who has it, and by when"
+              } icon={CalendarClock}>
               <div className="rounded-lg border border-hold/40 bg-hold-soft/70 p-3 text-sm">
                 <div className="flex flex-wrap items-center justify-between gap-2">
                   <span className="flex items-center gap-2 font-medium">

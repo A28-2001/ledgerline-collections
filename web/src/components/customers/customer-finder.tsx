@@ -80,11 +80,11 @@ export function CustomerFinder({ rows }: { rows: CustomerRow[] }) {
       {visible.length === 0 ? (
         <p className="mt-4 rounded-lg border border-dashed p-4 text-sm text-muted-foreground">No customer matches.</p>
       ) : (
-        <ul className="mt-4 space-y-1.5" aria-label="Customers, biggest first">
+        <ul className="mt-4 space-y-2.5 sm:space-y-1.5" aria-label="Customers, biggest first">
           {visible.map((r) => (
             <li
               key={r.id}
-              className="grid grid-cols-[minmax(0,9rem)_minmax(0,1fr)_4.25rem] items-center gap-2 text-sm sm:grid-cols-[minmax(0,14rem)_minmax(0,1fr)_5rem]"
+              className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-x-2 gap-y-1 text-sm sm:grid-cols-[minmax(0,14rem)_minmax(0,1fr)_5rem]"
             >
               <Link
                 href={customerHref(r.id)}
@@ -94,12 +94,12 @@ export function CustomerFinder({ rows }: { rows: CustomerRow[] }) {
                 {r.name}
                 {r.nearMatch && <span className="text-hold-ink"> · check name</span>}
               </Link>
-              <div className="flex h-3 overflow-hidden rounded-full bg-muted" aria-hidden="true">
+              <span className="tabular text-right text-xs text-muted-foreground sm:order-3">{formatMoney(r.overdue, "USD", true)}</span>
+              <div className="col-span-2 flex h-2.5 overflow-hidden rounded-full bg-muted sm:order-2 sm:col-span-1 sm:h-3" aria-hidden="true">
                 {ORDER.filter((v) => r.byVerdict[v] > 0).map((v) => (
                   <div key={v} className="h-full" style={{ width: `${Math.max(1, (r.byVerdict[v] / max) * 100)}%`, background: VERDICT_META[v].chart }} />
                 ))}
               </div>
-              <span className="tabular text-right text-xs text-muted-foreground">{formatMoney(r.overdue, "USD", true)}</span>
             </li>
           ))}
         </ul>
