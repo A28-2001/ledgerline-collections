@@ -114,6 +114,28 @@ export default function ProofPage() {
         </Card>
       </div>
 
+      {results.monthOne && (
+        <Card className="mt-6">
+          <CardHeader>
+            <CardTitle className="leading-snug">How we&apos;ll know it works, a month from now</CardTitle>
+            <CardDescription>{results.monthOne.source}</CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-3 text-sm">
+            <ol className="grid gap-3 sm:grid-cols-3">
+              {results.monthOne.measures.map((m, idx) => (
+                <li key={m.label} className="rounded-lg border p-3">
+                  <p className="text-xs text-muted-foreground">{idx === 0 ? "The one number" : "The real test"}</p>
+                  <p className="mt-0.5 font-medium">{m.label}</p>
+                  <p className="tabular mt-1 text-base font-semibold">{m.todayText}</p>
+                  <p className="mt-1 text-xs text-muted-foreground">{m.target}</p>
+                </li>
+              ))}
+            </ol>
+            <p className="text-xs leading-relaxed text-muted-foreground">{results.monthOne.timeSaved}</p>
+          </CardContent>
+        </Card>
+      )}
+
       {results.autoSend && <TrustLadder data={results.autoSend} invoices={invoices} />}
 
       <Card className="mt-6">

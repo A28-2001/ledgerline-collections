@@ -2,24 +2,23 @@ invoice_id,customer,tool_verdict,true_verdict,note,why_tool_said_it
 INV-25787,Riverside Partners,hold,,,"The customer disputes this exact invoice in a support ticket and says they're holding payment until it's fixed. The ticket is marked solved in Zendesk, but the bill was never corrected or reissued."
 INV-25730,Westbrook Engineering Group,hold,,,The customer disputes this exact invoice in a support ticket and says they're holding payment until it's fixed. The ticket is still open.
 INV-25765,Okafor & Nakamura LLP,hold,,,"The customer disputes this exact invoice in a support ticket and says they're holding payment until it's fixed. The ticket is marked solved in Zendesk, but the bill was never corrected or reissued."
+INV-25873,Eastman & Wexler CPAs,hold,,,"Open product complaint (not about money): send, but in a softer tone, and tell the account manager."
 INV-25834,"Delacroix, Jessop & Co",hold,,,"The customer disputes this exact invoice in a support ticket and says they're holding payment until it's fixed. The ticket is marked solved in Zendesk, but the bill was never corrected or reissued."
 INV-25822,Brandt Ashby IT,hold,,,The customer disputes this exact invoice in a support ticket and says they're holding payment until it's fixed. The ticket is still open.
 INV-25757,Ellery Consulting,hold,,,"The customer disputes this exact invoice in a support ticket and says they're holding payment until it's fixed. The ticket is marked solved in Zendesk, but the bill was never corrected or reissued."
 INV-25750,Thackeray Accounting,hold,,,"The customer disputes this exact invoice in a support ticket and says they're holding payment until it's fixed. The ticket is marked solved in Zendesk, but the bill was never corrected or reissued."
 INV-25764,Castell Engineering,hold,,,"The customer disputes this exact invoice in a support ticket. The ticket is marked solved in Zendesk, but the bill was never corrected or reissued."
+INV-25852,Kingsway Engineering Group,hold,,,"They have a ticket pending in Zendesk since Jul 20, 2026 (103 days). Chasing payment while their question is unanswered is what gets the tool switched off; the account manager decides when to resume."
 INV-25712,Wexler & Hume Advisory,hold,,,"The customer disputes this exact invoice in a support ticket. The ticket is marked solved in Zendesk, but the bill was never corrected or reissued."
 INV-25718,Mercer & Banerjee LLP,hold,,,"The customer disputes this exact invoice in a support ticket and says they're holding payment until it's fixed. The ticket is marked solved in Zendesk, but the bill was never corrected or reissued."
 INV-25902,Crane IT Partners,hold,,,Serious open escalation with support. Money talk waits until it's resolved.
 INV-25711,Oyelaran Devlin Engineers,hold,,,"The customer disputes this exact invoice in a support ticket. The ticket is marked solved in Zendesk, but the bill was never corrected or reissued."
+INV-25898,Harbor Engineering Group,hold,,,"They have a ticket pending in Zendesk since Jul 24, 2026 (99 days). Chasing payment while their question is unanswered is what gets the tool switched off; the account manager decides when to resume."
+INV-25854,Studio Marsh,hold,,,"They have a ticket pending in Zendesk since Sep 12, 2026 (49 days). Chasing payment while their question is unanswered is what gets the tool switched off; the account manager decides when to resume."
 INV-25811,Wexler Media,hold,,,The customer disputes this exact invoice in a support ticket. The ticket is still open.
+INV-25897,Ambrose & Lowell Advisory,hold,,,"Open product complaint (not about money): send, but in a softer tone, and tell the account manager."
 INV-25784,Jessop & Orwell Agency,paid,,,An unmatched bank payment from this customer equals this bill. It was probably paid but never matched.
 INV-25806,Brandt & Lowell CPAs,paid,,,An unmatched bank payment from this customer equals this bill. It was probably paid but never matched.
-INV-25469,Kingsway Engineering Group,paid,,,An unmatched bank payment from this customer equals this bill. It was probably paid but never matched.
-INV-25845,"Castellano, Crane & Co",paid,,,"An unmatched bank payment names this invoice in its memo (""INV-25845"") and equals the bill. It's paid; it just hasn't been matched yet."
-INV-25867,Yardley & Duarte Advisory,paid,,,"An unmatched bank payment names this invoice in its memo (""inv25867 Yardley"") and equals the bill. It's paid; it just hasn't been matched yet."
-INV-25662,Upton & Bell Advisory,call,,,Call: 66 days overdue
-INV-25539,Banerjee Petrov Engineers,call,,,Call: 92 days overdue
-INV-25873,Eastman & Wexler CPAs,send,,,Send a softer reminder (open product complaint)
 INV-25862,Thornfield Consulting Group,send,,,"First reminder (7 days): 17 days overdue, nothing blocking"
 INV-25869,Hollis & Stanhope Advisory,send,,,"First reminder (7 days): 16 days overdue, nothing blocking"
 INV-25848,Okafor Legal,send,,,"First reminder (7 days): 20 days overdue, nothing blocking"
@@ -28,4 +27,5 @@ INV-25883,Sinclair & Vance LLP,send,,,"First reminder (7 days): 13 days overdue,
 INV-25906,Rosales Engineering,send,,,"First reminder (7 days): 7 days overdue, nothing blocking"
 INV-25859,Voss & Kowalczyk Agency,send,,,"First reminder (7 days): 18 days overdue, nothing blocking"
 INV-25858,Glover Strategy,send,,,"First reminder (7 days): 18 days overdue, nothing blocking"
-INV-25852,Kingsway Engineering Group,send,,,"First reminder (7 days): 19 days overdue, nothing blocking"
+INV-25863,Banerjee Design Partnership,send,,,"First reminder (7 days): 17 days overdue, nothing blocking"
+INV-25890,Oyelaran Strategy,send,,,"First reminder (7 days): 12 days overdue, nothing blocking"

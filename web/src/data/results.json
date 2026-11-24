@@ -1,6 +1,6 @@
 {
  "meta": {
-  "generatedAt": "2026-11-24T06:04:27+00:00",
+  "generatedAt": "2026-11-24T06:08:27+00:00",
   "asOf": "2026-10-31",
   "dataSource": "real",
   "companyName": "Ledgerline",
@@ -45,12 +45,12 @@
   "overdueCount": 54,
   "byVerdict": {
    "send": {
-    "count": 25,
-    "amount": 234427.0
+    "count": 20,
+    "amount": 181746.0
    },
    "hold": {
-    "count": 13,
-    "amount": 265344.0
+    "count": 18,
+    "amount": 318025.0
    },
    "paid": {
     "count": 5,
@@ -71,8 +71,8 @@
    {
     "cause": "simply_late",
     "label": "Simply late",
-    "amount": 228760.0,
-    "count": 18
+    "amount": 220417.0,
+    "count": 15
    },
    {
     "cause": "paid",
@@ -83,8 +83,8 @@
    {
     "cause": "unhappy",
     "label": "Unhappy customer",
-    "amount": 47398.0,
-    "count": 3
+    "amount": 55741.0,
+    "count": 6
    },
    {
     "cause": "card_failed",
@@ -93,109 +93,10 @@
     "count": 16
    }
   ],
-  "shouldNotChaseAmount": 343692.0,
-  "headline": "$343,692 of $633,245 overdue (54%) sits with customers we shouldn't chase today: they've probably paid, they're unhappy, or the bill is wrong."
+  "shouldNotChaseAmount": 396373.0,
+  "headline": "$396,373 of $633,245 overdue (63%) sits with customers we shouldn't chase today: they've probably paid, they're unhappy, or the bill is wrong."
  },
  "invoices": [
-  {
-   "id": "INV-25873",
-   "customerId": "C1282",
-   "customerName": "Eastman & Wexler CPAs",
-   "amount": 43680.0,
-   "currency": "USD",
-   "issueDate": "2026-09-16",
-   "dueDate": "2026-10-16",
-   "daysOverdue": 15,
-   "agingBucket": "1-30",
-   "verdict": "send",
-   "cause": "unhappy",
-   "confidence": "low",
-   "headline": "Send a softer reminder (open product complaint)",
-   "reasons": [
-    {
-     "text": "Open product complaint (not about money): send, but in a softer tone, and tell the account manager.",
-     "evidenceIds": [
-      "ticket:T881016"
-     ],
-     "policyRef": null
-    },
-    {
-     "text": "One of the 50 largest accounts: nothing goes out until a person has read it.",
-     "evidenceIds": [],
-     "policyRef": "collections_policy.md: nothing goes to one of the 50 largest accounts without a person reading it first"
-    },
-    {
-     "text": "Tell Nadia Sinclair (account manager) before this goes out.",
-     "evidenceIds": [],
-     "policyRef": "collections_policy.md: tell the account manager before finance contacts one of their accounts"
-    }
-   ],
-   "evidence": [
-    {
-     "id": "ticket:T881016",
-     "kind": "ticket",
-     "file": "tickets.csv",
-     "recordId": "T881016",
-     "date": "2026-10-28",
-     "status": "open",
-     "title": "Important - please read",
-     "detail": "Hi,\n\nOur external auditor is reviewing invoice delivery as part of year end and wants to know why the send history for one client shows an address that doesn't exist anywhere on that client's file. I don't have an answer for her. Can someone explain what the log is showing?"
-    },
-    {
-     "id": "ticket:T880283",
-     "kind": "ticket",
-     "file": "tickets.csv",
-     "recordId": "T880283",
-     "date": "2026-07-31",
-     "status": "solved",
-     "title": "Is this possible?",
-     "detail": "Hi team,\n\ndoes a scheduled report support a rolling \"last 90 days\" range that moves forward on its own, or am I stuck with fixed dates\n\nNoah"
-    },
-    {
-     "id": "ticket:T880133",
-     "kind": "ticket",
-     "file": "tickets.csv",
-     "recordId": "T880133",
-     "date": "2026-07-15",
-     "status": "solved",
-     "title": "Re:",
-     "detail": "Hi,\n\nMy colleague who monitors the shared billing inbox says we've had a steady trickle of bounce-backs for about three weeks, all from addresses at clients that I'm fairly sure we cleaned up ages ago. Not sure if this is on our side or yours."
-    },
-    {
-     "id": "ticket:T880092",
-     "kind": "ticket",
-     "file": "tickets.csv",
-     "recordId": "T880092",
-     "date": "2026-07-11",
-     "status": "solved",
-     "title": "hi",
-     "detail": "Hello,\n\nNew finance lead at one of our clients asked us to confirm we'd updated their details. We had, and I told her so. Then her predecessor's mailbox got last week's reminder and she's now questioning whether we actually did it. Bit of a credibility issue for us."
-    },
-    {
-     "id": "contract:C1282:2026-09-16",
-     "kind": "contract",
-     "file": "contracts.csv",
-     "recordId": "C1282:2026-09-16",
-     "date": "2026-09-16",
-     "title": "Contract: 30 seats \u00d7 $88.00, Sep 16, 2026 to Sep 15, 2027"
-    }
-   ],
-   "policyRef": "collections_policy.md: nothing goes to one of the 50 largest accounts without a person reading it first",
-   "needsReview": true,
-   "draft": {
-    "to": "anika.langford@eastmanwexlercpas.example",
-    "subject": "Invoice INV-25873: a quick note",
-    "body": "Hi Anika,\n\nI know your team has an open request with our support team, and they're on it. Separately, invoice INV-25873 for $43,680 was due on Oct 16, 2026. When you get a moment, could you check where it is? If anything about the invoice looks wrong, just reply and we'll put it right.\n\nThanks,\nPriya Nair\nLedgerline Billing",
-    "tone": "soft"
-   },
-   "reminderStage": "First reminder (7 days)",
-   "reviewReason": "one of the 50 largest accounts: a person reads or writes this one personally",
-   "autoSend": {
-    "eligible": false,
-    "why": "Top-50 accounts stay with a person",
-    "permanent": true
-   }
-  },
   {
    "id": "INV-25862",
    "customerId": "C1361",
@@ -813,89 +714,6 @@
    }
   },
   {
-   "id": "INV-25852",
-   "customerId": "C1469",
-   "customerName": "Kingsway Engineering Group",
-   "amount": 5100.0,
-   "currency": "USD",
-   "issueDate": "2026-09-12",
-   "dueDate": "2026-10-12",
-   "daysOverdue": 19,
-   "agingBucket": "1-30",
-   "verdict": "send",
-   "cause": "simply_late",
-   "confidence": "high",
-   "headline": "First reminder (7 days): 19 days overdue, nothing blocking",
-   "reasons": [
-    {
-     "text": "A billing ticket from Jul 9, 2026 is closed. Mentioned for context; it doesn't block the reminder.",
-     "evidenceIds": [
-      "ticket:T880078"
-     ],
-     "policyRef": null
-    },
-    {
-     "text": "Tell Nadia Sinclair (account manager) before this goes out.",
-     "evidenceIds": [],
-     "policyRef": "collections_policy.md: tell the account manager before finance contacts one of their accounts"
-    }
-   ],
-   "evidence": [
-    {
-     "id": "ticket:T880284",
-     "kind": "ticket",
-     "file": "tickets.csv",
-     "recordId": "T880284",
-     "date": "2026-07-31",
-     "status": "solved",
-     "title": "Query regarding our setup",
-     "detail": "Does the CRM integration bring in the company owner field? We use it to assign the account lead."
-    },
-    {
-     "id": "ticket:T880184",
-     "kind": "ticket",
-     "file": "tickets.csv",
-     "recordId": "T880184",
-     "date": "2026-07-20",
-     "status": "pending",
-     "title": "Can you check something for me",
-     "detail": "Hi there - The amount the client sees in the portal is 1,950.00 AUD but the PDF they downloaded says 1,949.99. Which one is right? They want to pay today.\n\nSigne"
-    },
-    {
-     "id": "ticket:T880078",
-     "kind": "ticket",
-     "file": "tickets.csv",
-     "recordId": "T880078",
-     "date": "2026-07-09",
-     "status": "solved",
-     "title": "Not working?",
-     "detail": "If I void an invoice, is that number gone for good or does it get reused?\n\nOscar"
-    },
-    {
-     "id": "contract:C1469:2025-12-12",
-     "kind": "contract",
-     "file": "contracts.csv",
-     "recordId": "C1469:2025-12-12",
-     "date": "2025-12-12",
-     "title": "Contract: 25 seats \u00d7 $68.00, Dec 12, 2025 to Dec 11, 2026"
-    }
-   ],
-   "policyRef": "collections_policy.md: tell the account manager before finance contacts one of their accounts",
-   "needsReview": false,
-   "draft": {
-    "to": "marcus.tan@kingswayengineeringgro.example",
-    "subject": "Invoice INV-25852 is overdue",
-    "body": "Hi Marcus,\n\nA quick note that invoice INV-25852 for $5,100 was due on Oct 12, 2026 and is still open on our side.\n\nIf you've already paid, thank you, and please ignore this. If anything on the invoice looks wrong, like the seat count or plan, just reply and we'll fix it before you pay.\n\nThanks,\nPriya Nair\nLedgerline Billing",
-    "tone": "standard"
-   },
-   "reminderStage": "First reminder (7 days)",
-   "autoSend": {
-    "eligible": false,
-    "why": "Customer has an open ticket",
-    "permanent": false
-   }
-  },
-  {
    "id": "INV-25863",
    "customerId": "C1412",
    "customerName": "Banerjee Design Partnership",
@@ -1337,89 +1155,6 @@
    }
   },
   {
-   "id": "INV-25898",
-   "customerId": "C1437",
-   "customerName": "Harbor Engineering Group",
-   "amount": 1833.0,
-   "currency": "USD",
-   "issueDate": "2026-09-21",
-   "dueDate": "2026-10-21",
-   "daysOverdue": 10,
-   "agingBucket": "1-30",
-   "verdict": "send",
-   "cause": "simply_late",
-   "confidence": "high",
-   "headline": "First reminder (7 days): 10 days overdue, nothing blocking",
-   "reasons": [
-    {
-     "text": "A billing ticket from Jul 24, 2026 is closed. Mentioned for context; it doesn't block the reminder.",
-     "evidenceIds": [
-      "ticket:T880226"
-     ],
-     "policyRef": null
-    },
-    {
-     "text": "Tell Nadia Sinclair (account manager) before this goes out.",
-     "evidenceIds": [],
-     "policyRef": "collections_policy.md: tell the account manager before finance contacts one of their accounts"
-    }
-   ],
-   "evidence": [
-    {
-     "id": "ticket:T880226",
-     "kind": "ticket",
-     "file": "tickets.csv",
-     "recordId": "T880226",
-     "date": "2026-07-24",
-     "status": "solved",
-     "title": "Enquiry",
-     "detail": "Hi team,\n\nApologies if this is a silly one. I clicked pay, the page hung, so I clicked again. Now my bank shows two pending amounts from Ledgerline. Is that a genuine second charge or will one just drop off?"
-    },
-    {
-     "id": "ticket:T880229",
-     "kind": "ticket",
-     "file": "tickets.csv",
-     "recordId": "T880229",
-     "date": "2026-07-24",
-     "status": "pending",
-     "title": "Ledgerline question",
-     "detail": "Hi,\n\nThe running timer in the browser tab title shows 'NaN:NaN' after the computer wakes from sleep."
-    },
-    {
-     "id": "ticket:T880194",
-     "kind": "ticket",
-     "file": "tickets.csv",
-     "recordId": "T880194",
-     "date": "2026-07-21",
-     "status": "solved",
-     "title": "confused",
-     "detail": "Hello,\n\nOur auditors want evidence that receipts were issued. How do I resend a receipt for an older payment so the client has a fresh copy?"
-    },
-    {
-     "id": "contract:C1437:2026-03-21",
-     "kind": "contract",
-     "file": "contracts.csv",
-     "recordId": "C1437:2026-03-21",
-     "date": "2026-03-21",
-     "title": "Contract: 13 seats \u00d7 $47.00, Mar 21, 2026 to Mar 20, 2027"
-    }
-   ],
-   "policyRef": "collections_policy.md: tell the account manager before finance contacts one of their accounts",
-   "needsReview": false,
-   "draft": {
-    "to": "samuel.birch@harborengineeringgroup.example",
-    "subject": "Invoice INV-25898 is overdue",
-    "body": "Hi Samuel,\n\nA quick note that invoice INV-25898 for $1,833 was due on Oct 21, 2026 and is still open on our side.\n\nIf you've already paid, thank you, and please ignore this. If anything on the invoice looks wrong, like the seat count or plan, just reply and we'll fix it before you pay.\n\nThanks,\nPriya Nair\nLedgerline Billing",
-    "tone": "standard"
-   },
-   "reminderStage": "First reminder (7 days)",
-   "autoSend": {
-    "eligible": false,
-    "why": "Customer has an open ticket",
-    "permanent": false
-   }
-  },
-  {
    "id": "INV-25975",
    "customerId": "C1341",
    "customerName": "Quill, Mott & Co",
@@ -1495,117 +1230,6 @@
    "autoSend": {
     "eligible": false,
     "why": "Card follow-ups and softer notes stay with a person",
-    "permanent": false
-   }
-  },
-  {
-   "id": "INV-25854",
-   "customerId": "C1022",
-   "customerName": "Studio Marsh",
-   "amount": 1410.0,
-   "currency": "USD",
-   "issueDate": "2026-09-13",
-   "dueDate": "2026-10-13",
-   "daysOverdue": 18,
-   "agingBucket": "1-30",
-   "verdict": "send",
-   "cause": "simply_late",
-   "confidence": "low",
-   "headline": "First reminder (7 days): 18 days overdue, nothing blocking",
-   "reasons": [
-    {
-     "text": "A billing ticket from Oct 29, 2026 is closed. Mentioned for context; it doesn't block the reminder.",
-     "evidenceIds": [
-      "ticket:T881021"
-     ],
-     "policyRef": null
-    },
-    {
-     "text": "A billing ticket from Aug 12, 2026 is closed. Mentioned for context; it doesn't block the reminder.",
-     "evidenceIds": [
-      "ticket:T880375"
-     ],
-     "policyRef": null
-    },
-    {
-     "text": "Tell Nadia Sinclair (account manager) before this goes out.",
-     "evidenceIds": [],
-     "policyRef": "collections_policy.md: tell the account manager before finance contacts one of their accounts"
-    }
-   ],
-   "evidence": [
-    {
-     "id": "ticket:T881021",
-     "kind": "ticket",
-     "file": "tickets.csv",
-     "recordId": "T881021",
-     "date": "2026-10-29",
-     "status": "solved",
-     "title": "Second attempt",
-     "detail": "Morning,\n\nsorry to bother you again about this. you said last week the duplicate refund was approved but i still don't see it and my manager keeps asking. is there a reference number i can give our bank?"
-    },
-    {
-     "id": "ticket:T880643",
-     "kind": "ticket",
-     "file": "tickets.csv",
-     "recordId": "T880643",
-     "date": "2026-09-12",
-     "status": "pending",
-     "title": "Support",
-     "detail": "Morning,\n\nmy colleague noticed the invoice email says due the 14th, i definitely typed 15th. retyped it, saved, same thing in the email preview\n\nRhys"
-    },
-    {
-     "id": "ticket:T880375",
-     "kind": "ticket",
-     "file": "tickets.csv",
-     "recordId": "T880375",
-     "date": "2026-08-12",
-     "status": "solved",
-     "title": "ticket",
-     "detail": "Hi,\n\nIs there a way to preview the prorated amount before confirming a plan change? I'd have held off if I'd known it would be charged immediately."
-    },
-    {
-     "id": "ticket:T880316",
-     "kind": "ticket",
-     "file": "tickets.csv",
-     "recordId": "T880316",
-     "date": "2026-08-05",
-     "status": "solved",
-     "title": "please advise",
-     "detail": "Hi,\n\nIs there a setting to force people to change their password every 90 days? Our professional indemnity insurer has asked whether we have something like that in place."
-    },
-    {
-     "id": "ticket:T880056",
-     "kind": "ticket",
-     "file": "tickets.csv",
-     "recordId": "T880056",
-     "date": "2026-07-07",
-     "status": "solved",
-     "title": "FYI",
-     "detail": "Is the reminder schedule set per invoice or globally? I'd like to tweak it for one large invoice without affecting the rest."
-    },
-    {
-     "id": "contract:C1022:2026-09-13",
-     "kind": "contract",
-     "file": "contracts.csv",
-     "recordId": "C1022:2026-09-13",
-     "date": "2026-09-13",
-     "title": "Contract: 10 seats \u00d7 $47.00, Sep 13, 2026 to Sep 12, 2027"
-    }
-   ],
-   "policyRef": "collections_policy.md: tell the account manager before finance contacts one of their accounts",
-   "needsReview": true,
-   "draft": {
-    "to": "rhys.underhill@studiomarsh.example",
-    "subject": "Invoice INV-25854 is overdue",
-    "body": "Hi Rhys,\n\nA quick note that invoice INV-25854 for $1,410 was due on Oct 13, 2026 and is still open on our side.\n\nIf you've already paid, thank you, and please ignore this. If anything on the invoice looks wrong, like the seat count or plan, just reply and we'll fix it before you pay.\n\nThanks,\nPriya Nair\nLedgerline Billing",
-    "tone": "standard"
-   },
-   "reminderStage": "First reminder (7 days)",
-   "reviewReason": "a billing ticket from Oct 29, 2026 is marked solved: check it was really fixed",
-   "autoSend": {
-    "eligible": false,
-    "why": "Customer has an open ticket",
     "permanent": false
    }
   },
@@ -1820,79 +1444,6 @@
    "autoSend": {
     "eligible": false,
     "why": "Card follow-ups and softer notes stay with a person",
-    "permanent": false
-   }
-  },
-  {
-   "id": "INV-25897",
-   "customerId": "C1407",
-   "customerName": "Ambrose & Lowell Advisory",
-   "amount": 658.0,
-   "currency": "USD",
-   "issueDate": "2026-09-21",
-   "dueDate": "2026-10-21",
-   "daysOverdue": 10,
-   "agingBucket": "1-30",
-   "verdict": "send",
-   "cause": "unhappy",
-   "confidence": "high",
-   "headline": "Send a softer reminder (open product complaint)",
-   "reasons": [
-    {
-     "text": "Open product complaint (not about money): send, but in a softer tone, and tell the account manager.",
-     "evidenceIds": [
-      "ticket:T880474"
-     ],
-     "policyRef": null
-    },
-    {
-     "text": "Tell Maria Yardley (account manager) before this goes out.",
-     "evidenceIds": [],
-     "policyRef": "collections_policy.md: tell the account manager before finance contacts one of their accounts"
-    }
-   ],
-   "evidence": [
-    {
-     "id": "ticket:T880474",
-     "kind": "ticket",
-     "file": "tickets.csv",
-     "recordId": "T880474",
-     "date": "2026-08-24",
-     "status": "pending",
-     "title": "???",
-     "detail": "Card payments are going through, money is arriving, but the invoices stay marked unpaid in Ledgerline. My team spent this morning matching them manually. Something is wrong with payment status updates.\n\nTomas"
-    },
-    {
-     "id": "ticket:T880152",
-     "kind": "ticket",
-     "file": "tickets.csv",
-     "recordId": "T880152",
-     "date": "2026-07-17",
-     "status": "pending",
-     "title": "(no subject)",
-     "detail": "Hello,\n\nWe're opening a satellite office in Bristol and need a new location added so staff there can raise invoices with the local address in the footer."
-    },
-    {
-     "id": "contract:C1407:2026-08-21",
-     "kind": "contract",
-     "file": "contracts.csv",
-     "recordId": "C1407:2026-08-21",
-     "date": "2026-08-21",
-     "title": "Contract: 14 seats \u00d7 $47.00, Aug 21, 2026 to Aug 20, 2027"
-    }
-   ],
-   "policyRef": "collections_policy.md: tell the account manager before finance contacts one of their accounts",
-   "needsReview": false,
-   "draft": {
-    "to": "tomas.castellano@ambroselowelladvisory.example",
-    "subject": "Invoice INV-25897: a quick note",
-    "body": "Hi Tomas,\n\nI know your team has an open request with our support team, and they're on it. Separately, invoice INV-25897 for $658 was due on Oct 21, 2026. When you get a moment, could you check where it is? If anything about the invoice looks wrong, just reply and we'll put it right.\n\nThanks,\nPriya Nair\nLedgerline Billing",
-    "tone": "soft"
-   },
-   "reminderStage": "First reminder (7 days)",
-   "autoSend": {
-    "eligible": false,
-    "why": "Customer has an open ticket",
     "permanent": false
    }
   },
@@ -2461,6 +2012,106 @@
    }
   },
   {
+   "id": "INV-25873",
+   "customerId": "C1282",
+   "customerName": "Eastman & Wexler CPAs",
+   "amount": 43680.0,
+   "currency": "USD",
+   "issueDate": "2026-09-16",
+   "dueDate": "2026-10-16",
+   "daysOverdue": 15,
+   "agingBucket": "1-30",
+   "verdict": "hold",
+   "cause": "unhappy",
+   "confidence": "high",
+   "headline": "Open product complaint (not about money): send, but in a softer tone, and tell the account manager.",
+   "reasons": [
+    {
+     "text": "They have a ticket open in Zendesk since Oct 28, 2026 (3 days). Chasing payment while their question is unanswered is what gets the tool switched off; the account manager decides when to resume.",
+     "evidenceIds": [
+      "ticket:T881016"
+     ],
+     "policyRef": "collections_policy.md: tell the account manager before finance contacts one of their accounts"
+    },
+    {
+     "text": "Open product complaint (not about money): send, but in a softer tone, and tell the account manager.",
+     "evidenceIds": [
+      "ticket:T881016"
+     ],
+     "policyRef": null
+    }
+   ],
+   "evidence": [
+    {
+     "id": "ticket:T881016",
+     "kind": "ticket",
+     "file": "tickets.csv",
+     "recordId": "T881016",
+     "date": "2026-10-28",
+     "status": "open",
+     "title": "Important - please read",
+     "detail": "Hi,\n\nOur external auditor is reviewing invoice delivery as part of year end and wants to know why the send history for one client shows an address that doesn't exist anywhere on that client's file. I don't have an answer for her. Can someone explain what the log is showing?"
+    },
+    {
+     "id": "ticket:T880283",
+     "kind": "ticket",
+     "file": "tickets.csv",
+     "recordId": "T880283",
+     "date": "2026-07-31",
+     "status": "solved",
+     "title": "Is this possible?",
+     "detail": "Hi team,\n\ndoes a scheduled report support a rolling \"last 90 days\" range that moves forward on its own, or am I stuck with fixed dates\n\nNoah"
+    },
+    {
+     "id": "ticket:T880133",
+     "kind": "ticket",
+     "file": "tickets.csv",
+     "recordId": "T880133",
+     "date": "2026-07-15",
+     "status": "solved",
+     "title": "Re:",
+     "detail": "Hi,\n\nMy colleague who monitors the shared billing inbox says we've had a steady trickle of bounce-backs for about three weeks, all from addresses at clients that I'm fairly sure we cleaned up ages ago. Not sure if this is on our side or yours."
+    },
+    {
+     "id": "ticket:T880092",
+     "kind": "ticket",
+     "file": "tickets.csv",
+     "recordId": "T880092",
+     "date": "2026-07-11",
+     "status": "solved",
+     "title": "hi",
+     "detail": "Hello,\n\nNew finance lead at one of our clients asked us to confirm we'd updated their details. We had, and I told her so. Then her predecessor's mailbox got last week's reminder and she's now questioning whether we actually did it. Bit of a credibility issue for us."
+    },
+    {
+     "id": "contract:C1282:2026-09-16",
+     "kind": "contract",
+     "file": "contracts.csv",
+     "recordId": "C1282:2026-09-16",
+     "date": "2026-09-16",
+     "title": "Contract: 30 seats \u00d7 $88.00, Sep 16, 2026 to Sep 15, 2027"
+    }
+   ],
+   "policyRef": "collections_policy.md: tell the account manager before finance contacts one of their accounts",
+   "needsReview": false,
+   "draft": {
+    "to": "anika.langford@eastmanwexlercpas.example",
+    "subject": "",
+    "body": "",
+    "tone": "none"
+   },
+   "hold": {
+    "owner": "Nadia Sinclair",
+    "ownerRole": "Account manager",
+    "deadline": "2026-11-09",
+    "action": "Talk to the customer about the open issue, then release or keep the hold. If nobody acts by the deadline, it returns to finance."
+   },
+   "autoSend": {
+    "eligible": false,
+    "why": "Disputed or held bills stay with a person",
+    "permanent": true
+   }
+  },
+  {
    "id": "INV-25834",
    "customerId": "C1161",
    "customerName": "Delacroix, Jessop & Co",
@@ -3015,6 +2666,96 @@
    }
   },
   {
+   "id": "INV-25852",
+   "customerId": "C1469",
+   "customerName": "Kingsway Engineering Group",
+   "amount": 5100.0,
+   "currency": "USD",
+   "issueDate": "2026-09-12",
+   "dueDate": "2026-10-12",
+   "daysOverdue": 19,
+   "agingBucket": "1-30",
+   "verdict": "hold",
+   "cause": "unhappy",
+   "confidence": "high",
+   "headline": "They have a ticket pending in Zendesk since Jul 20, 2026 (103 days). Chasing payment while their question is unanswered is what gets the tool switched off; the account manager decides when to resume.",
+   "reasons": [
+    {
+     "text": "They have a ticket pending in Zendesk since Jul 20, 2026 (103 days). Chasing payment while their question is unanswered is what gets the tool switched off; the account manager decides when to resume.",
+     "evidenceIds": [
+      "ticket:T880184"
+     ],
+     "policyRef": "collections_policy.md: tell the account manager before finance contacts one of their accounts"
+    },
+    {
+     "text": "A billing ticket from Jul 9, 2026 is closed. Mentioned for context; it doesn't block the reminder.",
+     "evidenceIds": [
+      "ticket:T880078"
+     ],
+     "policyRef": null
+    }
+   ],
+   "evidence": [
+    {
+     "id": "ticket:T880284",
+     "kind": "ticket",
+     "file": "tickets.csv",
+     "recordId": "T880284",
+     "date": "2026-07-31",
+     "status": "solved",
+     "title": "Query regarding our setup",
+     "detail": "Does the CRM integration bring in the company owner field? We use it to assign the account lead."
+    },
+    {
+     "id": "ticket:T880184",
+     "kind": "ticket",
+     "file": "tickets.csv",
+     "recordId": "T880184",
+     "date": "2026-07-20",
+     "status": "pending",
+     "title": "Can you check something for me",
+     "detail": "Hi there - The amount the client sees in the portal is 1,950.00 AUD but the PDF they downloaded says 1,949.99. Which one is right? They want to pay today.\n\nSigne"
+    },
+    {
+     "id": "ticket:T880078",
+     "kind": "ticket",
+     "file": "tickets.csv",
+     "recordId": "T880078",
+     "date": "2026-07-09",
+     "status": "solved",
+     "title": "Not working?",
+     "detail": "If I void an invoice, is that number gone for good or does it get reused?\n\nOscar"
+    },
+    {
+     "id": "contract:C1469:2025-12-12",
+     "kind": "contract",
+     "file": "contracts.csv",
+     "recordId": "C1469:2025-12-12",
+     "date": "2025-12-12",
+     "title": "Contract: 25 seats \u00d7 $68.00, Dec 12, 2025 to Dec 11, 2026"
+    }
+   ],
+   "policyRef": "collections_policy.md: tell the account manager before finance contacts one of their accounts",
+   "needsReview": false,
+   "draft": {
+    "to": "marcus.tan@kingswayengineeringgro.example",
+    "subject": "",
+    "body": "",
+    "tone": "none"
+   },
+   "hold": {
+    "owner": "Nadia Sinclair",
+    "ownerRole": "Account manager",
+    "deadline": "2026-11-09",
+    "action": "Talk to the customer about the open issue, then release or keep the hold. If nobody acts by the deadline, it returns to finance."
+   },
+   "autoSend": {
+    "eligible": false,
+    "why": "Disputed or held bills stay with a person",
+    "permanent": true
+   }
+  },
+  {
    "id": "INV-25712",
    "customerId": "C1261",
    "customerName": "Wexler & Hume Advisory",
@@ -3410,6 +3151,214 @@
    }
   },
   {
+   "id": "INV-25898",
+   "customerId": "C1437",
+   "customerName": "Harbor Engineering Group",
+   "amount": 1833.0,
+   "currency": "USD",
+   "issueDate": "2026-09-21",
+   "dueDate": "2026-10-21",
+   "daysOverdue": 10,
+   "agingBucket": "1-30",
+   "verdict": "hold",
+   "cause": "unhappy",
+   "confidence": "high",
+   "headline": "They have a ticket pending in Zendesk since Jul 24, 2026 (99 days). Chasing payment while their question is unanswered is what gets the tool switched off; the account manager decides when to resume.",
+   "reasons": [
+    {
+     "text": "They have a ticket pending in Zendesk since Jul 24, 2026 (99 days). Chasing payment while their question is unanswered is what gets the tool switched off; the account manager decides when to resume.",
+     "evidenceIds": [
+      "ticket:T880229"
+     ],
+     "policyRef": "collections_policy.md: tell the account manager before finance contacts one of their accounts"
+    },
+    {
+     "text": "A billing ticket from Jul 24, 2026 is closed. Mentioned for context; it doesn't block the reminder.",
+     "evidenceIds": [
+      "ticket:T880226"
+     ],
+     "policyRef": null
+    }
+   ],
+   "evidence": [
+    {
+     "id": "ticket:T880226",
+     "kind": "ticket",
+     "file": "tickets.csv",
+     "recordId": "T880226",
+     "date": "2026-07-24",
+     "status": "solved",
+     "title": "Enquiry",
+     "detail": "Hi team,\n\nApologies if this is a silly one. I clicked pay, the page hung, so I clicked again. Now my bank shows two pending amounts from Ledgerline. Is that a genuine second charge or will one just drop off?"
+    },
+    {
+     "id": "ticket:T880229",
+     "kind": "ticket",
+     "file": "tickets.csv",
+     "recordId": "T880229",
+     "date": "2026-07-24",
+     "status": "pending",
+     "title": "Ledgerline question",
+     "detail": "Hi,\n\nThe running timer in the browser tab title shows 'NaN:NaN' after the computer wakes from sleep."
+    },
+    {
+     "id": "ticket:T880194",
+     "kind": "ticket",
+     "file": "tickets.csv",
+     "recordId": "T880194",
+     "date": "2026-07-21",
+     "status": "solved",
+     "title": "confused",
+     "detail": "Hello,\n\nOur auditors want evidence that receipts were issued. How do I resend a receipt for an older payment so the client has a fresh copy?"
+    },
+    {
+     "id": "contract:C1437:2026-03-21",
+     "kind": "contract",
+     "file": "contracts.csv",
+     "recordId": "C1437:2026-03-21",
+     "date": "2026-03-21",
+     "title": "Contract: 13 seats \u00d7 $47.00, Mar 21, 2026 to Mar 20, 2027"
+    }
+   ],
+   "policyRef": "collections_policy.md: tell the account manager before finance contacts one of their accounts",
+   "needsReview": false,
+   "draft": {
+    "to": "samuel.birch@harborengineeringgroup.example",
+    "subject": "",
+    "body": "",
+    "tone": "none"
+   },
+   "hold": {
+    "owner": "Nadia Sinclair",
+    "ownerRole": "Account manager",
+    "deadline": "2026-11-09",
+    "action": "Talk to the customer about the open issue, then release or keep the hold. If nobody acts by the deadline, it returns to finance."
+   },
+   "autoSend": {
+    "eligible": false,
+    "why": "Disputed or held bills stay with a person",
+    "permanent": true
+   }
+  },
+  {
+   "id": "INV-25854",
+   "customerId": "C1022",
+   "customerName": "Studio Marsh",
+   "amount": 1410.0,
+   "currency": "USD",
+   "issueDate": "2026-09-13",
+   "dueDate": "2026-10-13",
+   "daysOverdue": 18,
+   "agingBucket": "1-30",
+   "verdict": "hold",
+   "cause": "unhappy",
+   "confidence": "low",
+   "headline": "They have a ticket pending in Zendesk since Sep 12, 2026 (49 days). Chasing payment while their question is unanswered is what gets the tool switched off; the account manager decides when to resume.",
+   "reasons": [
+    {
+     "text": "They have a ticket pending in Zendesk since Sep 12, 2026 (49 days). Chasing payment while their question is unanswered is what gets the tool switched off; the account manager decides when to resume.",
+     "evidenceIds": [
+      "ticket:T880643"
+     ],
+     "policyRef": "collections_policy.md: tell the account manager before finance contacts one of their accounts"
+    },
+    {
+     "text": "A billing ticket from Oct 29, 2026 is closed. Mentioned for context; it doesn't block the reminder.",
+     "evidenceIds": [
+      "ticket:T881021"
+     ],
+     "policyRef": null
+    },
+    {
+     "text": "A billing ticket from Aug 12, 2026 is closed. Mentioned for context; it doesn't block the reminder.",
+     "evidenceIds": [
+      "ticket:T880375"
+     ],
+     "policyRef": null
+    }
+   ],
+   "evidence": [
+    {
+     "id": "ticket:T881021",
+     "kind": "ticket",
+     "file": "tickets.csv",
+     "recordId": "T881021",
+     "date": "2026-10-29",
+     "status": "solved",
+     "title": "Second attempt",
+     "detail": "Morning,\n\nsorry to bother you again about this. you said last week the duplicate refund was approved but i still don't see it and my manager keeps asking. is there a reference number i can give our bank?"
+    },
+    {
+     "id": "ticket:T880643",
+     "kind": "ticket",
+     "file": "tickets.csv",
+     "recordId": "T880643",
+     "date": "2026-09-12",
+     "status": "pending",
+     "title": "Support",
+     "detail": "Morning,\n\nmy colleague noticed the invoice email says due the 14th, i definitely typed 15th. retyped it, saved, same thing in the email preview\n\nRhys"
+    },
+    {
+     "id": "ticket:T880375",
+     "kind": "ticket",
+     "file": "tickets.csv",
+     "recordId": "T880375",
+     "date": "2026-08-12",
+     "status": "solved",
+     "title": "ticket",
+     "detail": "Hi,\n\nIs there a way to preview the prorated amount before confirming a plan change? I'd have held off if I'd known it would be charged immediately."
+    },
+    {
+     "id": "ticket:T880316",
+     "kind": "ticket",
+     "file": "tickets.csv",
+     "recordId": "T880316",
+     "date": "2026-08-05",
+     "status": "solved",
+     "title": "please advise",
+     "detail": "Hi,\n\nIs there a setting to force people to change their password every 90 days? Our professional indemnity insurer has asked whether we have something like that in place."
+    },
+    {
+     "id": "ticket:T880056",
+     "kind": "ticket",
+     "file": "tickets.csv",
+     "recordId": "T880056",
+     "date": "2026-07-07",
+     "status": "solved",
+     "title": "FYI",
+     "detail": "Is the reminder schedule set per invoice or globally? I'd like to tweak it for one large invoice without affecting the rest."
+    },
+    {
+     "id": "contract:C1022:2026-09-13",
+     "kind": "contract",
+     "file": "contracts.csv",
+     "recordId": "C1022:2026-09-13",
+     "date": "2026-09-13",
+     "title": "Contract: 10 seats \u00d7 $47.00, Sep 13, 2026 to Sep 12, 2027"
+    }
+   ],
+   "policyRef": "collections_policy.md: tell the account manager before finance contacts one of their accounts",
+   "needsReview": true,
+   "draft": {
+    "to": "rhys.underhill@studiomarsh.example",
+    "subject": "",
+    "body": "",
+    "tone": "none"
+   },
+   "reviewReason": "a billing ticket from Oct 29, 2026 is marked solved: check it was really fixed",
+   "hold": {
+    "owner": "Nadia Sinclair",
+    "ownerRole": "Account manager",
+    "deadline": "2026-11-09",
+    "action": "Talk to the customer about the open issue, then release or keep the hold. If nobody acts by the deadline, it returns to finance."
+   },
+   "autoSend": {
+    "eligible": false,
+    "why": "Disputed or held bills stay with a person",
+    "permanent": true
+   }
+  },
+  {
    "id": "INV-25811",
    "customerId": "C1409",
    "customerName": "Wexler Media",
@@ -3490,6 +3439,86 @@
     "ownerRole": "Finance (AR), with Hannah Drummond for the customer's agreement",
     "deadline": "2026-10-31",
     "action": "Send a corrected invoice or a clear answer to the customer, agreeing seats or price with Hannah Drummond first. Target: 5 working days from when they raised it."
+   },
+   "autoSend": {
+    "eligible": false,
+    "why": "Disputed or held bills stay with a person",
+    "permanent": true
+   }
+  },
+  {
+   "id": "INV-25897",
+   "customerId": "C1407",
+   "customerName": "Ambrose & Lowell Advisory",
+   "amount": 658.0,
+   "currency": "USD",
+   "issueDate": "2026-09-21",
+   "dueDate": "2026-10-21",
+   "daysOverdue": 10,
+   "agingBucket": "1-30",
+   "verdict": "hold",
+   "cause": "unhappy",
+   "confidence": "high",
+   "headline": "Open product complaint (not about money): send, but in a softer tone, and tell the account manager.",
+   "reasons": [
+    {
+     "text": "They have a ticket pending in Zendesk since Jul 17, 2026 (106 days). Chasing payment while their question is unanswered is what gets the tool switched off; the account manager decides when to resume.",
+     "evidenceIds": [
+      "ticket:T880152"
+     ],
+     "policyRef": "collections_policy.md: tell the account manager before finance contacts one of their accounts"
+    },
+    {
+     "text": "Open product complaint (not about money): send, but in a softer tone, and tell the account manager.",
+     "evidenceIds": [
+      "ticket:T880474"
+     ],
+     "policyRef": null
+    }
+   ],
+   "evidence": [
+    {
+     "id": "ticket:T880474",
+     "kind": "ticket",
+     "file": "tickets.csv",
+     "recordId": "T880474",
+     "date": "2026-08-24",
+     "status": "pending",
+     "title": "???",
+     "detail": "Card payments are going through, money is arriving, but the invoices stay marked unpaid in Ledgerline. My team spent this morning matching them manually. Something is wrong with payment status updates.\n\nTomas"
+    },
+    {
+     "id": "ticket:T880152",
+     "kind": "ticket",
+     "file": "tickets.csv",
+     "recordId": "T880152",
+     "date": "2026-07-17",
+     "status": "pending",
+     "title": "(no subject)",
+     "detail": "Hello,\n\nWe're opening a satellite office in Bristol and need a new location added so staff there can raise invoices with the local address in the footer."
+    },
+    {
+     "id": "contract:C1407:2026-08-21",
+     "kind": "contract",
+     "file": "contracts.csv",
+     "recordId": "C1407:2026-08-21",
+     "date": "2026-08-21",
+     "title": "Contract: 14 seats \u00d7 $47.00, Aug 21, 2026 to Aug 20, 2027"
+    }
+   ],
+   "policyRef": "collections_policy.md: tell the account manager before finance contacts one of their accounts",
+   "needsReview": false,
+   "draft": {
+    "to": "tomas.castellano@ambroselowelladvisory.example",
+    "subject": "",
+    "body": "",
+    "tone": "none"
+   },
+   "hold": {
+    "owner": "Maria Yardley",
+    "ownerRole": "Account manager",
+    "deadline": "2026-11-09",
+    "action": "Talk to the customer about the open issue, then release or keep the hold. If nobody acts by the deadline, it returns to finance."
    },
    "autoSend": {
     "eligible": false,
@@ -3690,8 +3719,15 @@
    "verdict": "paid",
    "cause": "paid",
    "confidence": "low",
-   "headline": "An unmatched bank payment from this customer equals this bill. It was probably paid but never matched.",
+   "headline": "They have a ticket pending in Zendesk since Jul 20, 2026 (103 days). Chasing payment while their question is unanswered is what gets the tool switched off; the account manager decides when to resume.",
    "reasons": [
+    {
+     "text": "They have a ticket pending in Zendesk since Jul 20, 2026 (103 days). Chasing payment while their question is unanswered is what gets the tool switched off; the account manager decides when to resume.",
+     "evidenceIds": [
+      "ticket:T880184"
+     ],
+     "policyRef": "collections_policy.md: tell the account manager before finance contacts one of their accounts"
+    },
     {
      "text": "An unmatched bank payment from this customer equals this bill. It was probably paid but never matched.",
      "evidenceIds": [
@@ -3756,7 +3792,7 @@
      "title": "Contract: 25 seats \u00d7 $68.00, Dec 12, 2025 to Dec 11, 2026"
     }
    ],
-   "policyRef": "collections_policy.md: bank transfers take three to five working days to show as paid",
+   "policyRef": "collections_policy.md: tell the account manager before finance contacts one of their accounts",
    "needsReview": true,
    "draft": {
     "to": "marcus.tan@kingswayengineeringgro.example",
@@ -13599,9 +13635,9 @@
    {
     "label": "Shouldn't chase today",
     "methodA": "Sum of Hold + Probably paid verdicts",
-    "valueA": 343692.0,
+    "valueA": 396373.0,
     "methodB": "Recounted from the raw evidence flags",
-    "valueB": 343692.0,
+    "valueB": 396373.0,
     "ok": true
    },
    {
@@ -13609,6 +13645,14 @@
     "methodA": "Bills with a matching or recent unmatched payment that would get a reminder",
     "valueA": 0,
     "methodB": "Allowed (Maya: chasing someone who has paid gets the tool switched off)",
+    "valueB": 0,
+    "ok": true
+   },
+   {
+    "label": "Complaint open but chased",
+    "methodA": "Reminders going to a customer with an open or pending ticket",
+    "valueA": 0,
+    "methodB": "Allowed (Maya: nobody chased who had a complaint open)",
     "valueB": 0,
     "ok": true
    },
@@ -13622,18 +13666,42 @@
    }
   ],
   "failures": [],
-  "runtimeSeconds": 0.46
+  "runtimeSeconds": 0.41
  },
  "morningSummary": {
   "title": "Collections check, 2026-10-31",
   "bullets": [
-   "25 reminders ready to send ($234,427). Approve all in one click.",
-   "13 on hold ($265,344): owners have until 2026-10-31.",
+   "20 reminders ready to send ($181,746). Approve all in one click.",
+   "18 on hold ($318,025): owners have until 2026-10-31.",
    "5 probably paid already ($78,348): confirm and close.",
    "11 need a phone call ($55,126).",
-   "18 need a second look before anything goes out."
+   "17 need a second look before anything goes out."
   ],
-  "text": "Good morning. $343,692 of $633,245 overdue (54%) sits with customers we shouldn't chase today: they've probably paid, they're unhappy, or the bill is wrong. Today: 25 reminders ready to send ($234,427). Approve all in one click. 13 on hold ($265,344): owners have until 2026-10-31. 5 probably paid already ($78,348): confirm and close. 11 need a phone call ($55,126). 18 need a second look before anything goes out."
+  "text": "Good morning. $396,373 of $633,245 overdue (63%) sits with customers we shouldn't chase today: they've probably paid, they're unhappy, or the bill is wrong. Today: 20 reminders ready to send ($181,746). Approve all in one click. 18 on hold ($318,025): owners have until 2026-10-31. 5 probably paid already ($78,348): confirm and close. 11 need a phone call ($55,126). 17 need a second look before anything goes out."
+ },
+ "monthOne": {
+  "source": "Maya (COO), 24 Nov: the one number to watch, and her real test behind it",
+  "measures": [
+   {
+    "label": "Overdue dollars over 60 days",
+    "today": 57685.0,
+    "todayText": "$57,685 across 10 bills today",
+    "target": "Should start coming down from today's figure"
+   },
+   {
+    "label": "Priya opens it every morning",
+    "today": null,
+    "todayText": "Counting starts on day one",
+    "target": "Still opened every working morning a month from now"
+   },
+   {
+    "label": "Nobody chased who had paid or had a complaint open",
+    "today": 0,
+    "todayText": "0 today (both checks on this page)",
+    "target": "Still 0 after a month. If this slips, a good receivables number won't save it"
+   }
+  ],
+  "timeSaved": "The tool replaces the 'asking around' step: about 3 to 4 of the team's 16 hours a week, by the COO's estimate. Priya to confirm before anyone quotes it."
  },
  "autoSend": {
   "on": false,
@@ -13642,7 +13710,7 @@
   "maxAmount": 5000,
   "eligibleCount": 3,
   "eligibleAmount": 11884.0,
-  "permanentCount": 30,
+  "permanentCount": 34,
   "rule": "Maya (COO): only after a month of Priya's approvals on record showing she almost never changed them; only small, polite first or second reminders outside the top 50 with no open ticket and no unmatched payment. Top-50, disputed, probably paid, anything firmer than a friendly nudge and every phone call stay with a person permanently. Priya or Dana can switch it off in one click."
  }
 }

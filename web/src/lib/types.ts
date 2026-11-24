@@ -142,6 +142,11 @@ export interface Results {
     runtimeSeconds: number;
   };
   morningSummary: { title: string; bullets: string[]; text: string };
+  monthOne?: {
+    source: string;
+    measures: { label: string; today: number | null; todayText: string; target: string }[];
+    timeSaved: string;
+  };
   autoSend?: {
     on: boolean;
     daysOnRecord: number;

@@ -392,6 +392,24 @@ class Engine:
                     rs.append({"text": "Open product complaint (not about money): send, but in a softer tone, and tell the account manager.",
                                "evidenceIds": [eid], "policyRef": None})
 
+            # Maya's real test: nobody chased who had a complaint open. Zendesk tags are often wrong (a bug tagged How-to,
+            # 23% untagged), so ANY open or pending ticket pauses the reminder and the account manager decides (process_maps FIN-1).
+            if not (row.flags.get("dispute_hold") or row.flags.get("complaint_hold") or row.flags.get("disputed_hold")):
+                still_open = [t for t in tickets.get(cid, []) if t.get("relevant") and t.get("is_open")]
+                if still_open:
+                    t = sorted(still_open, key=lambda t: t.get("created") or self.as_of)[0]
+                    eid = f"ticket:{t['id']}"
+                    if not any(e["id"] == eid for e in ev):
+                        body = t.get("body") or ""
+                        ev.append({"id": eid, "kind": "ticket", "file": self.cfg["files"]["tickets"]["file"], "recordId": str(t["id"]),
+                                   "date": iso(t.get("created")), "status": t.get("status") or "", "title": t.get("subject") or "(no subject)",
+                                   "detail": body[:400] + ("…" if len(body) > 400 else "")})
+                    waited = (self.as_of - t["created"]).days if pd.notna(t.get("created")) else 0
+                    row.flags["open_ticket_hold"] = True
+                    rs.insert(0, {"text": f"They have a ticket {t.get('status') or 'open'} in Zendesk since {nice(t['created'])} ({waited} days). "
+                                          "Chasing payment while their question is unanswered is what gets the tool switched off; the account manager decides when to resume.",
+                                  "evidenceIds": [eid], "policyRef": "collections_policy.md: tell the account manager before finance contacts one of their accounts"})
+
             # 3. Bill vs contract
             if row.inv is not None and cid:
                 k = self.contract_for(cid, row.issue)
@@ -528,7 +546,7 @@ class Engine:
                 verdict, cause = "paid", "paid"
             elif f.get("dispute_hold"):
                 verdict, cause = "hold", "wrong_bill"
-            elif f.get("complaint_hold") or f.get("disputed_hold"):
+            elif f.get("complaint_hold") or f.get("disputed_hold") or f.get("open_ticket_hold"):
                 verdict, cause = "hold", "unhappy"
             elif f.get("wrong_bill"):
                 verdict, cause = "hold", "wrong_bill"

@@ -60,3 +60,13 @@ I'd switch yours off for the same kind of thing: chasing someone who's paid, or 
 **What it changes:**
 - "Small" starts at under $5,000, as a setting Priya changes herself on the page, not a number in the code.
 - Start tight, loosen after a quiet month: the setting only matters once the ladder unlocks; until then every reminder is approved by a person.
+
+## 6. The "before" number and how she'd judge it in a month
+
+**Us:** Two quick ones so I measure this honestly. Your process notes say the team spends about 16 hours a week on collections, and one step is checking each overdue account for disputes by asking support and the account managers. Roughly how much of those 16 hours is that asking around? And a month from now, what one number would tell you this is working?
+
+**Maya:** My guess is three to four hours of the sixteen go on chasing support and the account managers on Slack and waiting for answers, but Priya would know better, so ask her to sanity-check it before you put it in front of anyone. The one number I'd watch is overdue dollars over 60 days, which should start coming down from where it is today. Behind that number, my real test is whether Priya is still opening it every morning a month from now and nobody has been chased who'd paid or had a complaint open. If either of those slips, a good receivables number won't save it.
+
+**What it changes:**
+- Time saved, said honestly: the tool replaces the "asking around" step, which Maya estimates at 3 to 4 hours of the team's 16 a week. Labelled as her estimate, for Priya to confirm.
+- Month-1 test on the proof page, in her order: overdue dollars over 60 days (today's figure as the starting point), Priya opening it every morning, and zero customers chased who had paid or had a complaint open.
