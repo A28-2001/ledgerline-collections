@@ -31,9 +31,10 @@ The fictional Ledgerline people (Maya, Dana, Tom, Sam, Renata) can stay.
 
 ## List
 
+The redacted exports are uploaded with the hand-in form rather than kept in this repo. Each file says what was left out: tool output, file contents, and private details such as names, email addresses and keys.
+
 | # | File | Tool | What happened | Before or after Begin |
 |---|---|---|---|---|
-| 01 | [ ] | Claude Code | Prep: read the challenge, picked the process, critic round 1, plan v2, checklist, generic kit, build-vs-buy research. Started in a temporary app folder, moved to this project at about 4:10 pm on 23 Nov | Before |
-| 02 | [ ] | | | |
-| 03 | [ ] | | | |
-| 04 | [ ] | | | |
+| 01 | `01-claude-code-session-2026-11-23.md` | Claude Code | One session from start to hand-in. It covers the prep (reading the challenge, picking the process, the plan), the build, Maya's questions, the review rounds and every fix. It started in a temporary folder and moved into this project at about 4:10 pm on 23 Nov. | Both (Begin is marked in the git history) |
+| 02 | `02-subagents.md` | Claude Code | The independent reviews and helpers that session started: the blind review of all 54 bills, the critic rounds, the voice-note changes and the export. Each has its task and its final report. | After |
+| 03 | (inside 01) | Groq | AI reading masked tickets, in testing only. The prompts and answers are cached in `data/cache/ai_cache.json`, and `pipeline/measure_ai.py` replays them without calling the API. | After |
