@@ -7,6 +7,7 @@ Every morning it reads the overdue bills, bank and Stripe payments, support tick
 - **Live tool:** https://ledgerline-collections.vercel.app/story (start with the story)
 - **One-page description:** [`docs/one-pager.md`](docs/one-pager.md)
 - **What was built before the clock started:** [`docs/disclosure.md`](docs/disclosure.md); the git history shows the rest
+- **The shadow week, each morning:** [`docs/shadow-week-runbook.md`](docs/shadow-week-runbook.md)
 
 Built for the Scaleworks AI Operator Challenge. Ledgerline and its data room are fictional.
 
@@ -15,7 +16,7 @@ Built for the Scaleworks AI Operator Challenge. Ledgerline and its data room are
 | # | Question | If yes | Who acts |
 |---|---|---|---|
 | 1 | Already paid? | **Probably paid** | Marcus matches the payment in 2 working days; no reminder |
-| 2 | A reason not to talk about money? (dispute, open ticket, chargeback or regulator threat, refund owed, unclear payment) | **Hold** | Priya fixes disputes in 5 working days; account managers get 3 days on open tickets; Marcus gets 2 on an unclear payment |
+| 2 | A reason not to talk about money? (dispute, open ticket, chargeback or regulator threat, refund owed, unclear payment) | **Hold** | Priya fixes disputes in 5 working days; account managers get 3 days on open tickets; Marcus gets 2 on an unclear payment; the Head of Support confirms chargeback or regulator threats |
 | 3 | Under 7 days late? | **Wait** | Comes back on day 7 |
 | 4 | 45+ days late, or already calling them? | **Call** | Priya calls, with the customer's tickets in front of her |
 | 5 | None of the above | **Send** | Priya approves a polite reminder from Ledgerline's own templates |
