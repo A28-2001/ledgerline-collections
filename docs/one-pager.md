@@ -22,7 +22,7 @@ Each morning it reads QuickBooks, bank and Stripe payments, Zendesk tickets and 
 To use it, read the story, then open Today:
 
 1. Priya's morning is 11 decisions: 7 bills in Check first, then one agreement per step.
-2. Then comes the day's work: 14 disputes, oldest first, each with a reply that names the issue.
+2. Then comes the day's work: 14 disputes, oldest first, each with a drafted first reply.
 3. Every bill opens with its evidence.
 
 During the shadow week (the COO's decision), nothing goes out from the tool. Priya compares its suggestions with her own calls and downloads the day's decisions. After that week, approved reminders open in her own email app, ready to send.
@@ -37,7 +37,7 @@ During the shadow week (the COO's decision), nothing goes out from the tool. Pri
 ## What it gets wrong
 
 - It agreed with an independent review on 46 of 54 bills (85%) at first, and 52 of 54 (96%) after the fixes. Those are the same bills the rules were fixed on, so the shadow week is the real test.
-- The checks found 13 misses. Each became a rule fix, a confirmed rule or an explained choice. Two still differ on purpose:
+- The checks found 13 misses. Each became a rule fix, a confirmed rule or an explained choice, except one that's still open: disputes emailed to billing@. Two still differ on purpose:
   - Eastman & Wexler, which has an open ticket waiting on us.
   - Kingsway, where one $5,100 payment fits two bills, so Marcus confirms which one it paid.
 - Disputes emailed to billing@ are invisible to it.

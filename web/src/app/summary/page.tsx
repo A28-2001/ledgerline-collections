@@ -66,7 +66,9 @@ export default function SummaryPage() {
             </Link>
           </div>
         </div>
-        <p className="mt-2 text-center text-xs text-muted-foreground">Nothing has been sent. Priya approves everything in the app.</p>
+        <p className="mt-2 text-center text-xs text-muted-foreground">
+          {meta.shadowWeek ? "Nothing has been sent. This week nothing goes out from the tool: Priya compares its list with her own calls." : "Nothing has been sent. Priya approves everything in the app."}
+        </p>
 
         {s.routing && s.routing.length > 1 && (
           <section className="mt-8" aria-label="Everyone else">

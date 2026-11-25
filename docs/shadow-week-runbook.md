@@ -4,8 +4,8 @@ Until the read-only connections exist, the tool runs on exports. One person owns
 
 | When | Who | What |
 |---|---|---|
-| By 7:45 | Dana Ruiz (QuickBooks, Stripe) and Sam Whitfield (Zendesk) | Export the AR aging, invoices, payments, Stripe payouts and tickets into `data/raw`, replacing the files of the same name. |
-| 7:50 | The tool's builder, during the shadow week | Run `python pipeline/run.py --data raw --publish` and push. The site updates in about 40 seconds. |
+| By 7:45 | Dana Ruiz (QuickBooks, Stripe, contracts) and Sam Whitfield (Zendesk) | Export the 7 files the tool reads into `data/raw`, replacing the files of the same name: invoices, payments (bank and Stripe), AR aging, customers, contacts, contracts and tickets. |
+| 7:50 | The tool's builder, during the shadow week | Set `as_of` in `pipeline/config.yaml` to today's date, so the run, the missed-save check and the browser's saved decisions all use today. Then run `python pipeline/run.py --data raw --publish` and push. The site updates in about 40 seconds. |
 | 8:00 | Priya Nair (Dana Ruiz when covering) | Open Today, compare each suggestion with her own call, and download the decision list into `data/history` before noon. |
 | Next morning | The tool | Reads yesterday's list. A missed save is flagged in the morning message. Shadow-week rows are comparisons only, so nothing counts as sent or handed off. |
 
